@@ -1,0 +1,7 @@
+at System.Diagnostics.Process.StartWithShellExecuteEx(ProcessStartInfo startInfo)
+ at System.Diagnostics.Process.Start()
+ at System.Diagnostics.Process.Start(ProcessStartInfo startInfo)
+ at System.Diagnostics.Process.Start(String fileName)
+ at b.bm.A(Object , LinkLabelLinkClickedEventArgs )
+ at System.Windows.Forms.LinkLabel.OnLinkClicked(LinkLabelLinkClickedEventArgs e)
+ at System.Windows.Forms.LinkLabel.OnMouseUp(MouseEventArgs e)

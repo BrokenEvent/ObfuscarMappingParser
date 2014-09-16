@@ -1,0 +1,22 @@
+﻿<mapping>
+  <renamedTypes>
+    <renamedClass oldName="[ModuleOld]NsOld.ClassOld" newName="[ModuleNew]NsNew.ClassNew">
+      <renamedField oldName="[ModuleOld]NsOld.ClassOld NsOld.ClassOld::ClassFieldOld" newName="ClassFieldNew" />
+      <renamedField oldName="[ModuleOld]System.Collections.Generic.Dictionary`2&lt;System.String,System.String&gt; NsOld.ClassOld::GenericFieldOld" newName="GenericFieldNew"/>
+      <renamedProperty oldName="[ModuleOld]System.String NsOld.ClassOld::StringFieldOld" newName="StringFieldNew" />
+      <renamedMethod oldName="[ModuleOld]System.String NsOld.ClassOld::StringMethodOld()" newName="StringMethodNew" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::MethodWithParamOld(System.String)" newName="MethodWithParamNew" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::GenericMethodOld(System.Collections.Generic.Dictionary`2&lt;System.String,NsOld.ClassOld&gt;)" newName="GenericMethodNew" />
+      <renamedMethod oldName="[ModuleOld]System.String NsOld.ClassOld::MethodWithParam2Old([ModuleOld]NsOld.ClassOld,System.String)" newName="MethodWithParam2New" />
+    </renamedClass>
+    <renamedClass oldName="[ModuleOld]NsOld.ClassOld/SubclassOld" newName="[ModuleNew]NsNew.ClassNew/SubclassNew">
+      <renamedMethod oldName="[ModuleOld]System.String NsOld.ClassOld/SubclassOld::StringMethodOld()" newName="StringMethodNew" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld/SubclassOld::SubclassMethodOld(NsOld.ClassOld/SubclassOld)" newName="SubclassMethodNew" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld/SubclassOld NsOld.ClassOld/SubclassOld::SubclassResultMethodOld()" newName="SubclassResultMethodNew" />
+    </renamedClass>
+  </renamedTypes>
+  <skippedTypes>
+    <skippedClass name="[ModuleOld]NsOld.ClassOld/SkippedSubclass1" reason="test purpose" />
+    <skippedClass name="[ModuleNew]NsNew.ClassNew/SkippedSubclass2" reason="test purpose" />
+  </skippedTypes>
+</mapping>

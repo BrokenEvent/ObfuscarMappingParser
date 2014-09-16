@@ -1,0 +1,10 @@
+/MappingParser.Tests/bin
+/MappingParser.Tests/obj
+/*.suo
+/ObfuscarMappingParser/obj
+/ObfuscarMappingParser/*.user
+/ObfuscarMappingParser/bin/Debug
+/ObfuscarMappingParser/bin/Release/ObfuscarMappingParser.vshost.exe
+/ObfuscarMappingParser/bin/Release/ObfuscarMappingParser.vshost.exe.manifest
+/ObfuscarMappingParser/bin/Release/envdte.xml
+/ObfuscarMappingParser/bin/Release/ObfuscarMappingParser.pdb
