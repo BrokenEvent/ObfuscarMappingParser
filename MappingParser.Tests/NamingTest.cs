@@ -14,7 +14,7 @@ namespace MappingParser.Tests
 
       // [ModuleOld]NsOld.ClassOld -> [ModuleNew]NsNew.ClassNew
       RenamedClass renamedClass = mapping.Classes[0];
-      Assert.AreEqual(10, renamedClass.Items.Count);
+      Assert.AreEqual(11, renamedClass.Items.Count);
       Assert.AreEqual("ModuleOld", renamedClass.ModuleOld);
       Assert.AreEqual("ModuleNew", renamedClass.ModuleNew);
       Assert.AreEqual("NsOld.ClassOld", renamedClass.NameOld);
@@ -265,6 +265,37 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void SomethingWickedTest()
+    {
+      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::<Initialize>m__D[0]() -> I
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[7];
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(0, renamedItem.MethodParams.Count);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void <Initialize>m__D()", renamedItem.NameOld);
+      Assert.AreEqual("void I()", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.<Initialize>m__D", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.I", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.<Initialize>m__D()", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.I()", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.<Initialize>m__D()", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.I()", renamedItem.NameNewSimple);
+      Assert.AreEqual("void <Initialize>m__D() → void I()", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.<Initialize>m__D() → void NsNew.ClassNew.I()", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.<Initialize>m__D() → void NsNew.ClassNew.I()", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.<Initialize>m__D() → void NsNew.ClassNew.I()", renamedItem.ToString());     
+    }
+
+    [Test]
     public void SubclassTest()
     {
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
@@ -272,7 +303,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld -> [ModuleNew]NsNew.ClassNew/SubclassNew
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[7];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
       Assert.AreEqual(3, subclass.Items.Count);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
       Assert.AreEqual("ModuleNew", subclass.ModuleNew);
@@ -297,7 +328,7 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[7];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
 
       // [ModuleOld]System.String NsOld.ClassOld/SubclassOld::StringMethodOld() -> StringMethodNew
       RenamedItem renamedItem = (RenamedItem)subclass.Items[0];
@@ -331,7 +362,7 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[7];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld::SubclassMethodOld(NsOld.ClassOld/SubclassOld) -> SubclassMethodNew
       RenamedItem renamedItem = (RenamedItem)subclass.Items[1];
@@ -367,7 +398,7 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[7];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld NsOld.ClassOld/SubclassOld::SubclassResultMethodOld() -> SubclassResultMethodNew
       RenamedItem renamedItem = (RenamedItem)subclass.Items[2];
@@ -403,7 +434,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // skipped [ModuleOld]NsOld.ClassOld/SkippedSubclass1
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[9];
       Assert.AreEqual(0, subclass.Items.Count);
       Assert.IsNotNull(subclass.SkipReason);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
@@ -431,7 +462,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // skipped [ModuleOld]NsOld.ClassOld/SkippedSubclass2
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[9];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[10];
       Assert.AreEqual(0, subclass.Items.Count);
       Assert.IsNotNull(subclass.SkipReason);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
@@ -455,7 +486,7 @@ namespace MappingParser.Tests
     public void StatisticsTest()
     {
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
-      Assert.AreEqual(7, mapping.TotalMethodsCount);
+      Assert.AreEqual(8, mapping.TotalMethodsCount);
       Assert.AreEqual(4, mapping.TotalClassesCount);
       Assert.AreEqual(3, mapping.TotalSubclassesCount);
       Assert.AreEqual(1, mapping.NamespacesCount);

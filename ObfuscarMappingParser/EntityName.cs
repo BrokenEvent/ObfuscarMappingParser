@@ -66,7 +66,7 @@ namespace ObfuscarMappingParser
       }
 
       int j = value.IndexOf('<');
-      if (j != -1)
+      if (j != -1 && value[value.Length - 1] == '>')
       {
         List<string> p = new List<string>(ParseList(value, j + 1, '>'));
         value = value.Substring(0, j);
@@ -82,9 +82,13 @@ namespace ObfuscarMappingParser
       if (value.IndexOf('.') != -1)
       {
         int i = value.LastIndexOf('.');
+        while (i > 0 && value[i - 1] == '.')
+          i--;
         @namespace = value.Substring(0, i);
         nsCache = @namespace.Split('.');
-        value = value.Substring(i + 1);
+        while (i < value.Length && value[i] == '.')
+          i++;
+        value = value.Substring(i);
       }
 
       name = value;
@@ -247,7 +251,7 @@ namespace ObfuscarMappingParser
 
     public bool CompareNamespace(string[] values, ref int start)
     {
-      if (nsCache.Length == 0)
+      if (nsCache.Length == 0 || values.Length == 0)
         return true;
 
       int result = 0;

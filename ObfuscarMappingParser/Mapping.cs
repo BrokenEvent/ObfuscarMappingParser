@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using BrokenEvent.NanoXml;
 
@@ -25,15 +26,19 @@ namespace ObfuscarMappingParser
     private List<string> namespaces = new List<string>();
     private List<string> namespacesObfuscated = new List<string>();
 
+    private static string[] emptyArray = new string[0];
+
     private bool haveSystemEntities;
 
     public Mapping(string filename)
     {
+      if (!File.Exists(filename))
+        throw new ObfuscarParserException("File not exists", filename);
+
       Stopwatch sw = new Stopwatch();
       this.filename = filename;
       sw.Start();
-      NanoXmlDocument xml;
-      xml = NanoXmlDocument.LoadFromFile(filename);
+      NanoXmlDocument xml = NanoXmlDocument.LoadFromFile(filename);
 
       timingXML = sw.ElapsedMilliseconds;
       Debug.WriteLine("XML Loading: " + timingXML + " ms");
@@ -162,8 +167,8 @@ namespace ObfuscarMappingParser
         return null;
 
       Entity entity = s;
-      if (entity.EntityType != EntityType.Method)
-        return new SearchResults(s, entity, SearchItem(entity));
+      if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
+        return new SearchResults(s, entity, SearchItem(entity.Name));
 
       return new SearchResults(s, entity, SearchMethod(entity, allowSubstitution));
     }
@@ -171,7 +176,7 @@ namespace ObfuscarMappingParser
     private IEnumerable<INamedEntity> SearchMethod(Entity entity, bool allowSubstitution)
     {
       bool hasAdded = false;
-      foreach (RenamedBase item in SearchItem(entity))
+      foreach (RenamedBase item in SearchItem(entity.Name))
       {
         if (item.EntityType != EntityType.Method)
           continue;
@@ -187,31 +192,72 @@ namespace ObfuscarMappingParser
       if(hasAdded || !allowSubstitution)
         yield break;
 
-      string[] values = entity.Name.Namespace.Split('.');
+      string[] values = entity.Name.Namespace != null ? entity.Name.Namespace.Split('.') : emptyArray;
+
+      List<EntityName> methodParams = new List<EntityName>(entity.MethodParams);
+      SubstituteParams(methodParams);
 
       foreach (RenamedClass renamedClass in classes)
       {
         foreach (RenamedBase item in renamedClass.Search(values, 0))
-          yield return new Entity(entity, item);
+          yield return new Entity(entity, item, methodParams);
       }
     }
 
-    private IEnumerable<RenamedBase> SearchItem(Entity entity)
+    private void SubstituteParams(IList<EntityName> p)
+    {
+      for (int i = 0; i < p.Count; i++)
+      {
+        EntityName paramName = null;
+
+        try
+        {
+          string[] values = p[i].PathName.Split('.');
+          foreach (RenamedBase item in SearchItem(values))
+            paramName = item.Name.NameOld;
+        }
+        catch { }
+
+        if (paramName == null)
+          foreach (RenamedClass item in SearchClassNoNs(p[i].Name))
+            paramName = item.Name.NameOld;
+
+        if (paramName != null)
+          p[i] = paramName;
+      }
+    }
+
+    private IEnumerable<RenamedBase> SearchItem(string[] values)
+    {
+      foreach (RenamedClass renamedClass in classes)
+      {
+        foreach (RenamedBase item in renamedClass.Search(values, 0))
+          yield return item;
+      }
+    }
+
+    private IEnumerable<RenamedBase> SearchItem(EntityName name)
     {
       string[] values;
       try
       {
-        values = entity.Name.PathName.Split('.');
+        values = name.PathName.Split('.');
       }
       catch
       {
         yield break;
       }
 
-      foreach (RenamedClass renamedClass in classes)
+      foreach (RenamedBase renamedItem in SearchItem(values))
+        yield return renamedItem;
+    }
+
+    private IEnumerable<RenamedClass> SearchClassNoNs(string name)
+    {
+      foreach (RenamedClass c in classes)
       {
-        foreach (RenamedBase item in renamedClass.Search(values, 0))
-          yield return item;
+        if (string.Compare(c.Name.NameNew.Name, name, StringComparison.Ordinal) == 0)
+          yield return c;
       }
     }
 

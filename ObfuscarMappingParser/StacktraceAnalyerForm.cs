@@ -27,14 +27,14 @@ namespace ObfuscarMappingParser
       }
       catch (Exception e)
       {
-        throw new ObfuscarParserException("Failed to process crashlog:\n" + data, e);
+        throw new ObfuscarParserException("Failed to process crashlog", e, data);
       }
 
       BuildTree();
 
       pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.FromArgb(255, 224, 224))); // unknown
       pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.FromArgb(224, 255, 224))); // substitution
-      pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.LightYellow)); // ambiguos
+      pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.LightYellow)); // ambiguous
     }
 
     private enum Highlights
@@ -154,7 +154,7 @@ namespace ObfuscarMappingParser
           case SearchResultMessage.Normal:
             BuildNormalNode(node, result.Result, result.Original);
             break;
-          case SearchResultMessage.Ambigous:
+          case SearchResultMessage.Ambiguous:
             BuildAmbigousNode(node, result);
             break;
           case SearchResultMessage.Substitution:

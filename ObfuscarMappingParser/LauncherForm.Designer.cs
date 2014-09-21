@@ -136,6 +136,7 @@
       // LauncherForm
       // 
       this.AcceptButton = this.btnOk;
+      this.AllowDrop = true;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
@@ -153,6 +154,8 @@
       this.Name = "LauncherForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Obfuscar Mapping Parser launcher";
+      this.DragDrop += new System.Windows.Forms.DragEventHandler(this.LauncherForm_DragDrop);
+      this.DragOver += new System.Windows.Forms.DragEventHandler(this.LauncherForm_DragOver);
       this.ResumeLayout(false);
       this.PerformLayout();
 

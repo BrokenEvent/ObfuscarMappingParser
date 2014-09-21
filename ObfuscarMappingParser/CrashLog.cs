@@ -22,7 +22,7 @@ namespace ObfuscarMappingParser
       }
       catch (Exception ex)
       {
-        throw new ObfuscarParserException("Failed to process crashlog:\n" + tbValue.Text, ex);
+        MessageBox.Show(this, "Unable to process crashlog. Reason: " + ex.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
 

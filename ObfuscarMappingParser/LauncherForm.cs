@@ -49,5 +49,18 @@ namespace ObfuscarMappingParser
         Close();
       }
     }
+
+    private void LauncherForm_DragOver(object sender, DragEventArgs e)
+    {
+      e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
+    }
+
+    private void LauncherForm_DragDrop(object sender, DragEventArgs e)
+    {
+      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+        return;
+
+      lvFiles.Items.Add(((string[])e.Data.GetData(DataFormats.FileDrop))[0], 0).Selected = true;
+    }
   }
 }

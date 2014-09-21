@@ -24,6 +24,23 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void ConstructorTest()
+    {
+      Entity name = "a.aM.ctor(IDbCommand , String )";
+      Assert.IsNull(name.EntityResultType);
+      Assert.AreEqual(EntityType.Constructor, name.EntityType);
+      Assert.AreEqual("a.aM.ctor", name.Name.PathName);
+      Assert.AreEqual("ctor", name.Name.Name);
+      Assert.AreEqual("a.aM", name.Name.Namespace);
+      Assert.AreEqual(2, name.MethodParamsCount);
+      Assert.AreEqual("IDbCommand", name.GetMethodParam(0).ToString());
+      Assert.AreEqual("String", name.GetMethodParam(1).ToString());
+      Assert.AreEqual("ctor(IDbCommand, String)", name.NameShort);
+      Assert.AreEqual("a.aM.ctor(IDbCommand, String)", name.NameSimple);
+      Assert.AreEqual("a.aM.ctor(IDbCommand, String)", name.NameFull);
+    }
+
+    [Test]
     public void NsMethodTest()
     {
       Entity name = "System.String   a.aM.A(IDbCommand a, System.String b)";

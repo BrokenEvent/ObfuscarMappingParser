@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ObfuscarMappingParser
@@ -26,7 +27,14 @@ namespace ObfuscarMappingParser
 
     public Entity(Entity entity, RenamedBase item)
     {
-      methodParams = entity.methodParams;
+      methodParams = new List<EntityName>(entity.methodParams);
+      result = entity.result;
+      name = item.NameOldFull + "." + entity.name.Name;
+    }
+
+    public Entity(Entity entity, RenamedBase item, IList<EntityName> methodParams)
+    {
+      this.methodParams = new List<EntityName>(methodParams);
       result = entity.result;
       name = item.NameOldFull + "." + entity.name.Name;
     }
@@ -85,7 +93,9 @@ namespace ObfuscarMappingParser
 
     public EntityType EntityType
     {
-      get { return methodParams != null ? EntityType.Method : (result == null ? EntityType.Class : EntityType.Field); }
+      get { return methodParams != null ?
+        (string.Compare(name.Name, "ctor", StringComparison.Ordinal) == 0 ? EntityType.Constructor : EntityType.Method) :
+        (result == null ? EntityType.Class : EntityType.Field); }
     }
 
     public EntityName EntityResultType
@@ -124,7 +134,7 @@ namespace ObfuscarMappingParser
         sb.Append(isShort ? result.Name : result.PathName);
         sb.Append(' ');
       }
-      else if (methodParams != null) // method with no result - void
+      else if (methodParams != null && string.Compare(name.Name, "ctor", StringComparison.Ordinal) != 0) // method with no result - void
         sb.Append("void ");
 
       sb.Append(ownName);

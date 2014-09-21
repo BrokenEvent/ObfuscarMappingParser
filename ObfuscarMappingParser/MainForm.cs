@@ -20,6 +20,7 @@ namespace ObfuscarMappingParser
   {
     private Mapping mapping;
     private List<PDBFile> pdbfiles = new List<PDBFile>();
+    private List<string> pdbToAttach;
 
     public MainForm(string filename)
     {
@@ -103,18 +104,8 @@ namespace ObfuscarMappingParser
       tsTools.Enabled = enable;
     }
 
-    private void MappingLoadingCompletedInternal(object mappingObj, string filename)
+    private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
     {
-      mapping = (Mapping)mappingObj;
-      pdbfiles.Clear();
-      BuildMapping();
-      btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = miAttachPDB.Enabled = miStatistics.Enabled = true;
-      spbLoading.Visible = false;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
-      slblSelected.Text = "Mapping loaded in " + mapping.TimingTotal + " ms";
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
-
-      IList<string> pdb = Configs.Instance.GetRecentPdb(mapping.Filename);
       if (pdb == null)
         return;
 
@@ -127,7 +118,8 @@ namespace ObfuscarMappingParser
         switch (d)
         {
           case DialogResult.Yes:
-            AttachPDB(s);
+            if (AttachPDB(s, this) && addToRecent)
+              Configs.Instance.AddRecentPdb(mapping.Filename, s);
             break;
           case DialogResult.No:
             break;
@@ -137,9 +129,26 @@ namespace ObfuscarMappingParser
       }
     }
 
+    private void MappingLoadingCompletedInternal(object mappingObj, string filename)
+    {
+      mapping = (Mapping)mappingObj;
+      pdbfiles.Clear();
+      BuildMapping();
+      btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = miAttachPDB.Enabled = miStatistics.Enabled = true;
+      spbLoading.Visible = false;
+      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
+      slblSelected.Text = "Mapping loaded in " + mapping.TimingTotal + " ms";
+      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
+
+      AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Filename), false);
+      AttachRelatedPdbs(pdbToAttach, true);
+      pdbToAttach = null;      
+    }
+
     private void MappingLoadingFailedInternal(object e, string filename)
     {      
       btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = true;
+      pdbToAttach = null;
       spbLoading.Visible = false;
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
       this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
@@ -264,6 +273,8 @@ namespace ObfuscarMappingParser
       }
 
       miRecents.Enabled = miRecents.DropDownItems.Count > 0;
+
+      miManagePDBs.Enabled = miAttachPDB.Enabled = mapping != null;
     }
 
     private void RecentItem_Click(object sender, EventArgs eventArgs)
@@ -527,23 +538,45 @@ namespace ObfuscarMappingParser
 
     private void miAttachPDB_Click(object sender, EventArgs e)
     {
-      if (odPDB.ShowDialog(this) != DialogResult.OK)
-        return;
-
-      foreach (string fileName in odPDB.FileNames)
-        if (AttachPDB(fileName))
-          Configs.Instance.AddRecentPdb(mapping.Filename, fileName);
+      CallAttachPdb(this);
     }
 
-    private bool AttachPDB(string filename)
+    public bool CallAttachPdb(IWin32Window owner)
     {
+      if (odPDB.ShowDialog(owner) != DialogResult.OK)
+        return false;
+
+      foreach (string fileName in odPDB.FileNames)
+        if (AttachPDB(fileName, owner))
+          Configs.Instance.AddRecentPdb(mapping.Filename, fileName);
+
+      return true;
+    }
+
+    private bool SearchForLoadedPdb(string filename)
+    {
+      foreach (PDBFile file in pdbfiles)
+        if (string.Compare(file.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
+          return true;
+
+      return false;
+    }
+
+    public bool AttachPDB(string filename, IWin32Window owner)
+    {
+      if (SearchForLoadedPdb(filename))
+      {
+        slblSelected.Text = "PDB file already attached: " + PathUtils.GetFilename(filename);
+        return false;
+      }
+
       try
       {
         pdbfiles.Add(new PDBFile(filename));
       }
       catch (Exception ex)
       {
-        MessageBox.Show(this, "Failed to load PDB file: " + ex.Message, "Failed to load PDB", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        MessageBox.Show(owner, "Failed to load PDB file: " + ex.Message, "Failed to load PDB", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return false;
       }
 
@@ -580,26 +613,15 @@ namespace ObfuscarMappingParser
       if (source.ShowDialog(this) != DialogResult.OK)
         return;
 
-      StacktraceAnalyerForm analyer = new StacktraceAnalyerForm(this, source.Result, source.ResultSource);
-      analyer.ShowDialog(this);
-    }
-
-    private void MainForm_DragOver(object sender, DragEventArgs e)
-    {
-      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+      try
       {
-        e.Effect = DragDropEffects.None;
-        return;
+        StacktraceAnalyerForm analyer = new StacktraceAnalyerForm(this, source.Result, source.ResultSource);
+        analyer.ShowDialog(this);
       }
-
-      string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-      if (files.Length != 1)
+      catch (ObfuscarParserException ex)
       {
-        e.Effect = DragDropEffects.None;
-        return;
+        MessageBox.Show(this, ex.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
-
-      e.Effect = DragDropEffects.Move;
     }
 
     private void MainForm_DragDrop(object sender, DragEventArgs e)
@@ -607,13 +629,63 @@ namespace ObfuscarMappingParser
       if (!e.Data.GetDataPresent(DataFormats.FileDrop))
         return;
 
-      string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+      List<string> files = new List<string>((string[])e.Data.GetData(DataFormats.FileDrop));
 
-      string filename = files[0];
-      if (MessageBox.Show(this, "Open file\n" + filename + "\n?", "Open file", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+      string fileToOpen = null;
+      int i = 0;
+      do
+      {
+        // search for xml files to open
+        if (string.Compare(Path.GetExtension(files[i]).ToLower(), ".xml", StringComparison.Ordinal) == 0)
+        {
+          fileToOpen = files[i];
+          files.RemoveAt(i);
+          continue;
+        }
+        
+        // search for pdb files to attach after open
+        if (string.Compare(Path.GetExtension(files[i]).ToLower(), ".pdb", StringComparison.Ordinal) == 0)
+        {
+          if (pdbToAttach == null)
+            pdbToAttach = new List<string>();
+          pdbToAttach.Add(files[i]);
+        }
+
+        i++;
+      }
+      while (i < files.Count);
+
+      // open file if found. found pdbs will be attached after open (pdbToAttach)
+      if (fileToOpen != null)
+      {
+        if (MessageBox.Show(this, "Open file\n" + fileToOpen + "\n?", "Open file", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+          return;
+
+        OpenFile(fileToOpen);
+        return;
+      }
+
+      if (mapping == null)
         return;
 
-      OpenFile(filename);
+      // attach pdb files
+      foreach (string file in files)
+      {
+        if (string.Compare(Path.GetExtension(file).ToLower(), ".pdb", StringComparison.Ordinal) == 0)
+        {
+          DialogResult d = MessageBox.Show(this, "Attach related PDB file?\n" + file, "Attach PDB file", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+          switch (d)
+          {
+            case DialogResult.Yes:
+              AttachPDB(file, this);
+              break;
+            case DialogResult.No:
+              break;
+            default:
+              return;
+          }
+        }
+      }
     }
 
     private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs args)
@@ -626,6 +698,26 @@ namespace ObfuscarMappingParser
             ),
           false
         );
+    }
+
+    private void miManagePDBs_Click(object sender, EventArgs e)
+    {
+      lockDragNDrop = true;
+      new PDBManagerForm(pdbfiles, this).ShowDialog(this);
+      lockDragNDrop = false;
+    }
+
+    private bool lockDragNDrop;
+
+    private void MainForm_DragEnter(object sender, DragEventArgs e)
+    {
+      if (!lockDragNDrop && !e.Data.GetDataPresent(DataFormats.FileDrop))
+      {
+        e.Effect = DragDropEffects.None;
+        return;
+      }
+
+      e.Effect = DragDropEffects.Move;
     }
   }
 }

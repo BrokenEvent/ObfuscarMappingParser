@@ -38,7 +38,7 @@ namespace ObfuscarMappingParser
       }
       catch (Exception e)
       {
-        throw new ObfuscarParserException("Failed to process element: " + el.Path, e);
+        throw new ObfuscarParserException("Failed to process element", e, el.Path);
       }
     }
 
@@ -64,7 +64,7 @@ namespace ObfuscarMappingParser
       }
       catch (Exception e)
       {
-        throw new ObfuscarParserException("Failed to process class element: " + el.Path, e);
+        throw new ObfuscarParserException("Failed to process class element: ", e, el.Path);
       }
 
       foreach (NanoXmlElement element in el.ChildElements)
@@ -122,6 +122,9 @@ namespace ObfuscarMappingParser
         yield break;
 
       if (!name.NameNew.CompareNamespace(values, ref index)) // namespace check
+        yield break;
+
+      if (values.Length == 0) // no namespace, unable to search
         yield break;
 
       if (string.Compare(values[index], name.NameNew.Name, StringComparison.Ordinal) != 0) // correct namespace, wrong class name

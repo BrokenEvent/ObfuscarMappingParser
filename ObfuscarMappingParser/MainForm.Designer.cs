@@ -48,6 +48,7 @@
       this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
       this.miRecents = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+      this.miManagePDBs = new System.Windows.Forms.ToolStripMenuItem();
       this.miAttachPDB = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.miExit = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,6 +131,7 @@
       this.ilIcons.Images.SetKeyName(6, "Property.png");
       this.ilIcons.Images.SetKeyName(7, "Assembly.png");
       this.ilIcons.Images.SetKeyName(8, "multiple.png");
+      this.ilIcons.Images.SetKeyName(9, "pdb.png");
       // 
       // tsTools
       // 
@@ -220,6 +222,7 @@
             this.miOpen,
             this.miRecents,
             this.toolStripSeparator6,
+            this.miManagePDBs,
             this.miAttachPDB,
             this.toolStripSeparator2,
             this.miExit});
@@ -233,38 +236,46 @@
       this.miOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
       this.miOpen.Name = "miOpen";
       this.miOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-      this.miOpen.Size = new System.Drawing.Size(165, 22);
+      this.miOpen.Size = new System.Drawing.Size(169, 22);
       this.miOpen.Text = "Open...";
       this.miOpen.Click += new System.EventHandler(this.btnOpen_Click);
       // 
       // miRecents
       // 
       this.miRecents.Name = "miRecents";
-      this.miRecents.Size = new System.Drawing.Size(165, 22);
+      this.miRecents.Size = new System.Drawing.Size(169, 22);
       this.miRecents.Text = "Recent";
       // 
       // toolStripSeparator6
       // 
       this.toolStripSeparator6.Name = "toolStripSeparator6";
-      this.toolStripSeparator6.Size = new System.Drawing.Size(162, 6);
+      this.toolStripSeparator6.Size = new System.Drawing.Size(166, 6);
+      // 
+      // miManagePDBs
+      // 
+      this.miManagePDBs.Enabled = false;
+      this.miManagePDBs.Name = "miManagePDBs";
+      this.miManagePDBs.Size = new System.Drawing.Size(169, 22);
+      this.miManagePDBs.Text = "Manage .PDB files";
+      this.miManagePDBs.Click += new System.EventHandler(this.miManagePDBs_Click);
       // 
       // miAttachPDB
       // 
       this.miAttachPDB.Enabled = false;
       this.miAttachPDB.Name = "miAttachPDB";
-      this.miAttachPDB.Size = new System.Drawing.Size(165, 22);
+      this.miAttachPDB.Size = new System.Drawing.Size(169, 22);
       this.miAttachPDB.Text = "Attach .PDB file...";
       this.miAttachPDB.Click += new System.EventHandler(this.miAttachPDB_Click);
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(162, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
       // 
       // miExit
       // 
       this.miExit.Name = "miExit";
-      this.miExit.Size = new System.Drawing.Size(165, 22);
+      this.miExit.Size = new System.Drawing.Size(169, 22);
       this.miExit.Text = "Exit";
       this.miExit.Click += new System.EventHandler(this.miExit_Click);
       // 
@@ -498,7 +509,7 @@
       // ptvElements
       // 
       this.ptvElements.AutoScroll = true;
-      this.ptvElements.AutoScrollMinSize = new System.Drawing.Size(-17, 0);
+      this.ptvElements.AutoScrollMinSize = new System.Drawing.Size(710, 0);
       this.ptvElements.AutoSizeColumns = true;
       this.ptvElements.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
       this.ptvElements.ContextMenuStrip = this.contextMenuStrip;
@@ -536,7 +547,7 @@
       this.Name = "MainForm";
       this.Text = "Obfuscar Mapping Parser";
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
-      this.DragOver += new System.Windows.Forms.DragEventHandler(this.MainForm_DragOver);
+      this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
       this.statusStrip.ResumeLayout(false);
       this.statusStrip.PerformLayout();
       this.tsTools.ResumeLayout(false);
@@ -602,6 +613,7 @@
     private System.Windows.Forms.ToolStripMenuItem miStacktrace;
     private System.Windows.Forms.ToolStripMenuItem miUseColumns;
     private System.Windows.Forms.OpenFileDialog odSourceFile;
+    private System.Windows.Forms.ToolStripMenuItem miManagePDBs;
   }
 }
 

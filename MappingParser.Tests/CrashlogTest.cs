@@ -58,12 +58,12 @@ namespace MappingParser.Tests
 
     private static void ResultTestHelperMultiple(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
     {
-      const string POSTFIX = "/* ambigous */";
+      const string POSTFIX = "/* ambiguous */";
       SearchResults results = list[index];
       Assert.IsFalse(results.IsSingleResult, "Not a single result");
       Assert.IsNotNull(results.Results, "Not null result list");
       Assert.Greater(results.Results.Count, 0, "More than zero elements in result");
-      Assert.AreEqual(SearchResultMessage.Ambigous, results.Message, "Result type");
+      Assert.AreEqual(SearchResultMessage.Ambiguous, results.Message, "Result type");
       Assert.AreEqual(nameSimple + POSTFIX, results.ToString(), "results.ToString");
       Assert.AreEqual(name + POSTFIX, results.ToString(OutputType.Short), "ToString(Short)");
       Assert.AreEqual(nameSimple + POSTFIX, results.ToString(OutputType.Simple), "ToString(Simple)");
@@ -373,6 +373,64 @@ namespace MappingParser.Tests
           "void MainForm_Load(Object, EventArgs)",
           "void AntiFreeze.NET.MainForm.MainForm_Load(Object, EventArgs)",
           "void AntiFreeze.NET.MainForm.MainForm_Load(System.Object, System.EventArgs)"
+        );
+    }
+
+    [Test]
+    public void Test6()
+    {
+      Mapping mapping = new Mapping(@"Data\Mapping_Parser.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test6.txt"));
+
+      Assert.AreEqual(6, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(MainForm, String, String)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(MainForm, String, String)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, String, String)"
+        );
+
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void miStacktrace_Click(Object, EventArgs)",
+          "void ObfuscarMappingParser.MainForm.miStacktrace_Click(Object, EventArgs)",
+          "void ObfuscarMappingParser.MainForm.miStacktrace_Click(System.Object, System.EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          2,
+          "void RaiseEvent(Object, EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.RaiseEvent(Object, EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.RaiseEvent(Object, EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          3,
+          "void OnClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripMenuItem.OnClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripMenuItem.OnClick(EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          4,
+          "void HandleClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleClick(EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          5,
+          "void HandleMouseUp(MouseEventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs)"
         );
     }
   }

@@ -6,7 +6,7 @@ namespace ObfuscarMappingParser
   enum SearchResultMessage: uint
   {
     Normal,
-    Ambigous,
+    Ambiguous,
     Substitution,
     Failed,
   }

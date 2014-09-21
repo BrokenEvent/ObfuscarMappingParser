@@ -44,7 +44,7 @@ namespace ObfuscarMappingParser
         results.Add(resultItem);
         results.Add(item);
         resultItem = null;
-        message = SearchResultMessage.Ambigous;
+        message = SearchResultMessage.Ambiguous;
         return;
       }
 
@@ -123,8 +123,8 @@ namespace ObfuscarMappingParser
           break;
       }
 
-      if (message == SearchResultMessage.Ambigous)
-        resultStr += "/* ambigous */";
+      if (message == SearchResultMessage.Ambiguous)
+        resultStr += "/* ambiguous */";
       return resultStr;
     }
   }

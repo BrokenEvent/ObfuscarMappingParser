@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!--This file represents the results of running a test suite-->
+<test-results name="C:\projects\github\ObfuscarMappingParser\MappingParser.Tests\MappingParser.Tests.csproj" total="30" errors="0" failures="0" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2014-09-22" time="00:51:21">
+  <environment nunit-version="2.6.3.13283" clr-version="2.0.50727.4927" os-version="Microsoft Windows NT 6.1.7600.0" platform="Win32NT" cwd="C:\Program Files\NUnit 2.6.3\bin" machine-name="WIN7" user="rattler" user-domain="win7" />
+  <culture-info current-culture="ru-RU" current-uiculture="ru-RU" />
+  <test-suite type="Project" name="C:\projects\github\ObfuscarMappingParser\MappingParser.Tests\MappingParser.Tests.csproj" executed="True" result="Success" success="True" time="2.929" asserts="0">
+    <results>
+      <test-suite type="Assembly" name="C:\projects\github\ObfuscarMappingParser\MappingParser.Tests\bin\Debug\MappingParser.Tests.exe" executed="True" result="Success" success="True" time="2.922" asserts="0">
+        <results>
+          <test-suite type="Namespace" name="MappingParser" executed="True" result="Success" success="True" time="2.921" asserts="0">
+            <results>
+              <test-suite type="Namespace" name="Tests" executed="True" result="Success" success="True" time="2.921" asserts="0">
+                <results>
+                  <test-suite type="TestFixture" name="CrashlogTest" executed="True" result="Success" success="True" time="2.803" asserts="0">
+                    <results>
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test1" executed="True" result="Success" success="True" time="0.641" asserts="61" />
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test1Broken" executed="True" result="Success" success="True" time="0.375" asserts="45" />
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test2" executed="True" result="Success" success="True" time="0.362" asserts="13" />
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test3" executed="True" result="Success" success="True" time="0.371" asserts="55" />
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test4" executed="True" result="Success" success="True" time="0.377" asserts="53" />
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test5" executed="True" result="Success" success="True" time="0.358" asserts="36" />
+                      <test-case name="MappingParser.Tests.CrashlogTest.Test6" executed="True" result="Success" success="True" time="0.275" asserts="52" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="EntityFullNameTest" executed="True" result="Success" success="True" time="0.028" asserts="0">
+                    <results>
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.ClassTest" executed="True" result="Success" success="True" time="0.001" asserts="9" />
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.ConstructorTest" executed="True" result="Success" success="True" time="0.001" asserts="11" />
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.FieldTest" executed="True" result="Success" success="True" time="0.000" asserts="9" />
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.NsMethodTest" executed="True" result="Success" success="True" time="0.000" asserts="11" />
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.SimpleMethodTest" executed="True" result="Success" success="True" time="0.000" asserts="11" />
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.SimpleNameTest" executed="True" result="Success" success="True" time="0.000" asserts="9" />
+                      <test-case name="MappingParser.Tests.EntityFullNameTest.VoidMethodTest" executed="True" result="Success" success="True" time="0.000" asserts="9" />
+                    </results>
+                  </test-suite>
+                  <test-suite type="TestFixture" name="NamingTest" executed="True" result="Success" success="True" time="0.082" asserts="0">
+                    <results>
+                      <test-case name="MappingParser.Tests.NamingTest.ClassTest" executed="True" result="Success" success="True" time="0.002" asserts="17" />
+                      <test-case name="MappingParser.Tests.NamingTest.FieldTest" executed="True" result="Success" success="True" time="0.002" asserts="22" />
+                      <test-case name="MappingParser.Tests.NamingTest.GenericFieldTest" executed="True" result="Success" success="True" time="0.001" asserts="22" />
+                      <test-case name="MappingParser.Tests.NamingTest.GenericMethodTest" executed="True" result="Success" success="True" time="0.001" asserts="23" />
+                      <test-case name="MappingParser.Tests.NamingTest.PropertyTest" executed="True" result="Success" success="True" time="0.003" asserts="22" />
+                      <test-case name="MappingParser.Tests.NamingTest.SkippedByNewNameSubclassTest" executed="True" result="Success" success="True" time="0.001" asserts="18" />
+                      <test-case name="MappingParser.Tests.NamingTest.SkippedByOldNameSubclassTest" executed="True" result="Success" success="True" time="0.001" asserts="18" />
+                      <test-case name="MappingParser.Tests.NamingTest.SomethingWickedTest" executed="True" result="Success" success="True" time="0.001" asserts="21" />
+                      <test-case name="MappingParser.Tests.NamingTest.StatisticsTest" executed="True" result="Success" success="True" time="0.001" asserts="7" />
+                      <test-case name="MappingParser.Tests.NamingTest.StringParamMethodTest" executed="True" result="Success" success="True" time="0.001" asserts="23" />
+                      <test-case name="MappingParser.Tests.NamingTest.StringResultMethodTest" executed="True" result="Success" success="True" time="0.001" asserts="23" />
+                      <test-case name="MappingParser.Tests.NamingTest.SubclassMethodTest" executed="True" result="Success" success="True" time="0.001" asserts="23" />
+                      <test-case name="MappingParser.Tests.NamingTest.SubclassMethodWithParamTest" executed="True" result="Success" success="True" time="0.001" asserts="25" />
+                      <test-case name="MappingParser.Tests.NamingTest.SubclassMethodWithResultTest" executed="True" result="Success" success="True" time="0.001" asserts="23" />
+                      <test-case name="MappingParser.Tests.NamingTest.SubclassTest" executed="True" result="Success" success="True" time="0.001" asserts="17" />
+                      <test-case name="MappingParser.Tests.NamingTest.TwoParamMethodTest" executed="True" result="Success" success="True" time="0.001" asserts="27" />
+                    </results>
+                  </test-suite>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>

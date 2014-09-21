@@ -62,7 +62,7 @@ namespace ObfuscarMappingParser
       }
       catch (Exception e)
       {
-        throw new ObfuscarParserException("Failed to process item element: " + el, e);
+        throw new ObfuscarParserException("Failed to process item element", e, el.Path);
       }
     }
 

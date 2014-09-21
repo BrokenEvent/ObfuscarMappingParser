@@ -5,6 +5,7 @@ namespace ObfuscarMappingParser
   [Obfuscation(Exclude = true)]
   enum EntityType
   {
+    Constructor,
     Method,
     Property,
     Field,
