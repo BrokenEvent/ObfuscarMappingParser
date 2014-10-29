@@ -6,6 +6,8 @@ namespace ObfuscarMappingParser
 {
   partial class LauncherForm : BaseForm
   {
+    private const int FILENAME_LENGTH = 75;
+
     public LauncherForm()
     {
       InitializeComponent();
@@ -13,7 +15,10 @@ namespace ObfuscarMappingParser
       VersionLabel = lblAppVersion;
 
       foreach (string s in Configs.Instance.Recents)
-        lvFiles.Items.Add(s, 0);
+      {
+        ListViewItem lv = lvFiles.Items.Add(PathUtils.ShortenPath(s, FILENAME_LENGTH), 0);
+        lv.Tag = lv.ToolTipText = s;
+      }
 
       lvFiles.Items[0].Selected = true;
     }
@@ -28,7 +33,16 @@ namespace ObfuscarMappingParser
       if (odFile.ShowDialog(this) != DialogResult.OK)
         return;
 
-      lvFiles.Items.Add(odFile.FileName, 0).Selected = true;
+      foreach (ListViewItem item in lvFiles.Items)
+        if (string.Compare((string)item.Tag, odFile.FileName, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+          item.Selected = true;
+          return;
+        }
+
+      ListViewItem lv = lvFiles.Items.Add(PathUtils.ShortenPath(odFile.FileName, FILENAME_LENGTH), 0);
+      lv.Tag = lv.ToolTipText = odFile.FileName;
+      lv.Selected = true;
     }
 
     private void lvFiles_SelectedIndexChanged(object sender, EventArgs e)
@@ -38,7 +52,7 @@ namespace ObfuscarMappingParser
 
     public string SelectedFilename
     {
-      get { return lvFiles.SelectedItems.Count == 0 ? null : lvFiles.SelectedItems[0].Text; }
+      get { return lvFiles.SelectedItems.Count == 0 ? null : (string)lvFiles.SelectedItems[0].Tag; }
     }
 
     private void lvFiles_DoubleClick(object sender, EventArgs e)
@@ -60,7 +74,10 @@ namespace ObfuscarMappingParser
       if (!e.Data.GetDataPresent(DataFormats.FileDrop))
         return;
 
-      lvFiles.Items.Add(((string[])e.Data.GetData(DataFormats.FileDrop))[0], 0).Selected = true;
+      string s = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+      ListViewItem lv = lvFiles.Items.Add(PathUtils.ShortenPath(s, FILENAME_LENGTH), 0);
+      lv.Tag = lv.ToolTipText = s;
+      lv.Selected = true;
     }
   }
 }

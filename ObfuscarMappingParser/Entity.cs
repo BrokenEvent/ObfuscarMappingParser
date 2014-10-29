@@ -13,6 +13,7 @@ namespace ObfuscarMappingParser
     public Entity(string s)
     {
       methodParams = BuildParams(ref s);
+      s = s.TrimEnd(' ');
       int i = s.IndexOf(' ');
       if (i == -1)
         name = s;
@@ -59,7 +60,7 @@ namespace ObfuscarMappingParser
         string[] p = s.Substring(i, j).Split(',');
         foreach (string s1 in p)
         {
-          string s2 = s1.Trim();
+          string s2 = s1.Trim(' ');
           int k = s2.IndexOf(' ');
           result.Add(k == -1 ? s2 : s2.Substring(0, k));
         }
@@ -119,7 +120,7 @@ namespace ObfuscarMappingParser
       {
         if (paramAdded)
           sb.Append(", ");
-        sb.Append(isShort ? param.Name : param.PathName);
+        sb.Append(SystemTypeProcessor.SimplifyType(param, !isShort));
         paramAdded = true;
       }
 
@@ -131,7 +132,7 @@ namespace ObfuscarMappingParser
       StringBuilder sb = new StringBuilder();
       if (result != null)
       {
-        sb.Append(isShort ? result.Name : result.PathName);
+        sb.Append(SystemTypeProcessor.SimplifyType(result, !isShort));
         sb.Append(' ');
       }
       else if (methodParams != null && string.Compare(name.Name, "ctor", StringComparison.Ordinal) != 0) // method with no result - void

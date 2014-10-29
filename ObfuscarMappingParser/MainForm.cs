@@ -21,6 +21,7 @@ namespace ObfuscarMappingParser
     private Mapping mapping;
     private List<PDBFile> pdbfiles = new List<PDBFile>();
     private List<string> pdbToAttach;
+    private List<Form> openedForms = new List<Form>();
 
     public MainForm(string filename)
     {
@@ -95,6 +96,9 @@ namespace ObfuscarMappingParser
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = false;
       slblSelected.Text = "Loading: " + filename;
       new MappingLoaderThread(filename).Start(MappingLoadingCompleted);
+
+      while (openedForms.Count > 0)
+        openedForms[0].Close();
     }
 
     private void EnableCommonControls(bool enable)
@@ -240,7 +244,19 @@ namespace ObfuscarMappingParser
 
     private void btnCrashLogs_Click(object sender, EventArgs e)
     {
-      new CrashLog(mapping).Show(this);
+      AddFormToOpened(new CrashLogForm(mapping)).Show(this);
+    }
+
+    private FormType AddFormToOpened<FormType>(FormType form) where FormType: Form
+    {
+      openedForms.Add(form);
+      form.Closed += OpenedForm_Closed;
+      return form;
+    }
+
+    private void OpenedForm_Closed(object sender, EventArgs eventArgs)
+    {
+      openedForms.Remove((Form)sender);
     }
 
     private void ptvElements_NodeSelect(object sender, NodeSelectEventArgs e)
@@ -587,6 +603,8 @@ namespace ObfuscarMappingParser
     private void miSettings_Click(object sender, EventArgs e)
     {
       new SettingsForm().ShowDialog(this);
+      if (mapping != null)
+        BuildMapping();
     }
 
     private void ptvElements_DoubleClick(object sender, EventArgs e)

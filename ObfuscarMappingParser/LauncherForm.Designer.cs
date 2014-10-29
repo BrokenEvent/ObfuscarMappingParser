@@ -109,6 +109,7 @@
       this.lvFiles.Location = new System.Drawing.Point(12, 75);
       this.lvFiles.MultiSelect = false;
       this.lvFiles.Name = "lvFiles";
+      this.lvFiles.ShowItemToolTips = true;
       this.lvFiles.Size = new System.Drawing.Size(431, 186);
       this.lvFiles.SmallImageList = this.ilIcon;
       this.lvFiles.TabIndex = 5;

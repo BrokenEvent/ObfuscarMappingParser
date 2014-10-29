@@ -126,9 +126,10 @@ namespace ObfuscarMappingParser
       c.TreeNode = classNode;
       if (c.NameNew != null)
       {
-        classNode.Subitems.Add(showModules ? c.NameNewFull : c.NameNew);
         if (c.Name.NameNew.Equals(c.Name.NameOld))
           classNode.HighlightColorIndex = (int)Highlights.NotRenamed;
+        else
+          classNode.Subitems.Add(CheckIfUnicode(showModules ? c.NameNewFull : c.NameNew));
       }
       else
       {
@@ -163,7 +164,8 @@ namespace ObfuscarMappingParser
         {
           if (item.NameNew.Equals(item.NameOld))
             node.HighlightColorIndex = (int)Highlights.NotRenamed;
-          node.Subitems.Add(item.NameNew);
+          else
+            node.Subitems.Add(CheckIfUnicode(item.NameNew));
         }
       }
     }
@@ -177,18 +179,18 @@ namespace ObfuscarMappingParser
       sb.Append("Old name: ");
       sb.AppendLine(c.NameOldFull);
       sb.Append("New name: ");
-      sb.AppendLine(c.NameNewFull);
+      sb.AppendLine(CheckIfUnicode(c.NameNewFull));
       sb.Append("Name transform: ");
       sb.AppendLine(c.TransformName);
       if (c.OwnerClass != null)
       {
         sb.Append("Owner class: ");
-        sb.AppendLine(c.OwnerClass.TransformNameFull);
+        sb.AppendLine(CheckIfUnicode(c.OwnerClass.TransformNameFull));
       }
       else
       {
         sb.Append("Namespace transform: ");
-        sb.AppendLine(c.TransformNamespace);        
+        sb.AppendLine(CheckIfUnicode(c.TransformNamespace));
       }
       sb.Append("Subitems: ");
       sb.AppendLine(c.Items.Count.ToString());
@@ -203,9 +205,9 @@ namespace ObfuscarMappingParser
       sb.AppendLine("Old name:");
       sb.AppendLine(item.NameOldSimple);
       sb.AppendLine("New name:");
-      sb.AppendLine(item.NameNewSimple);
+      sb.AppendLine(CheckIfUnicode(item.NameNewSimple));
       sb.AppendLine("Owner class:");
-      sb.AppendLine(item.Owner.TransformNameFull);
+      sb.AppendLine(CheckIfUnicode(item.Owner.TransformNameFull));
       return sb.ToString();
     }
 
@@ -261,10 +263,7 @@ namespace ObfuscarMappingParser
         node.HighlightColorIndex = (int)Highlights.NoNewName;
         node.Subitems.Add("n/a");
       } else if (c.Name.NameNew.CompareNamespace(c.Name.NameOld))
-      {
         node.HighlightColorIndex = (int)Highlights.NotRenamed;
-        node.Subitems.Add(c.Name.NameNew.Namespace);
-      }
       else
         node.Subitems.Add(c.Name.NameNew.Namespace);
 
@@ -297,7 +296,36 @@ namespace ObfuscarMappingParser
       }
     }
 
-    public enum Icons: int
+    private static string CheckIfUnicode(string str)
+    {
+      if (Configs.Instance.ShowUnicode)
+        return str;
+
+      bool containsUnicode = false;
+      for (int i = 0; i < str.Length; i++)
+        if (str[i] > 255)
+        {
+          containsUnicode = true;
+          break;
+        }
+
+      if (!containsUnicode)
+        return str;
+
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < str.Length; i++)
+        if (str[i] > 255)
+        {
+          sb.Append("\\u");
+          sb.Append(((int)str[i]).ToString("X4"));
+        }
+        else
+          sb.Append(str[i]);
+
+      return sb.ToString();
+    }
+
+    public enum Icons
     {
       Ns,
       NoNs,
@@ -309,7 +337,7 @@ namespace ObfuscarMappingParser
       Module
     }
 
-    private enum Highlights: int
+    private enum Highlights
     {
       NoNewName,
       NotRenamed,

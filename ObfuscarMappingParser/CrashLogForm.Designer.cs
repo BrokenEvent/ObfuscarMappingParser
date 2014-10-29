@@ -1,6 +1,6 @@
 ﻿namespace ObfuscarMappingParser
 {
-  partial class CrashLog
+  partial class CrashLogForm
   {
     /// <summary>
     /// Required designer variable.

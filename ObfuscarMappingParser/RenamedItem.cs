@@ -91,9 +91,9 @@ namespace ObfuscarMappingParser
       for (int i = 0; i < methodParams.Count; i++)
       {
         if (useNew)
-          sb.Append(isShort ? methodParams[i].NameNew.Name : methodParams[i].NameNew.PathName);
+          sb.Append(SystemTypeProcessor.SimplifyType(methodParams[i].NameNew, !isShort));
         else
-          sb.Append(isShort ? methodParams[i].NameOld.Name : methodParams[i].NameOld.PathName);
+          sb.Append(SystemTypeProcessor.SimplifyType(methodParams[i].NameOld, !isShort));
         if (i < methodParams.Count - 1)
           sb.Append(", ");
       }
@@ -119,7 +119,7 @@ namespace ObfuscarMappingParser
       else
       {
         EntityName resultName = useNew ? resultType.NameNew : resultType.NameOld;
-        result = isShort ? resultName.Name : resultName.PathName;
+        result = SystemTypeProcessor.SimplifyType(resultName, !isShort);
       }
 
       if (entityType == EntityType.Method)
@@ -245,7 +245,7 @@ namespace ObfuscarMappingParser
 
       for (int k = 0; k < strings.Length; k++)
       {
-        string s = strings[k].Trim();
+        string s = strings[k].Trim(' ');
         if (s == "*")
           continue;
 

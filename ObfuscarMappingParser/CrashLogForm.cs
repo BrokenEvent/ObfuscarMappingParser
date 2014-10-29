@@ -4,11 +4,11 @@ using System.Windows.Forms;
 
 namespace ObfuscarMappingParser
 {
-  partial class CrashLog : Form
+  partial class CrashLogForm : Form
   {
     private Mapping mapping;
 
-    public CrashLog(Mapping mapping)
+    public CrashLogForm(Mapping mapping)
     {
       this.mapping = mapping;
       InitializeComponent();

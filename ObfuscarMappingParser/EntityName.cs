@@ -79,14 +79,20 @@ namespace ObfuscarMappingParser
       if (j != -1)
         value = value.Substring(0, j);
 
-      if (value.IndexOf('.') != -1)
+      char delimiter = '\0';
+      if (value.IndexOf(':') != -1)
+        delimiter = ':';
+      else if (value.IndexOf('.') != -1)
+        delimiter = '.';
+
+      if (delimiter != '\0')
       {
-        int i = value.LastIndexOf('.');
-        while (i > 0 && value[i - 1] == '.')
+        int i = value.LastIndexOf(delimiter);
+        while (i > 0 && value[i - 1] == delimiter)
           i--;
-        @namespace = value.Substring(0, i);
+        @namespace = value.Substring(0, i);        
         nsCache = @namespace.Split('.');
-        while (i < value.Length && value[i] == '.')
+        while (i < value.Length && value[i] == delimiter)
           i++;
         value = value.Substring(i);
       }
@@ -146,7 +152,7 @@ namespace ObfuscarMappingParser
       {
         if (i > 0)
           sb.Append(", ");
-        sb.Append(full ? genericParams[i].PathName : genericParams[i].Name);
+        sb.Append(SystemTypeProcessor.SimplifyType(genericParams[i], full));
       }
       sb.Append('>');
 

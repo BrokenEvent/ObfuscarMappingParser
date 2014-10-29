@@ -24,6 +24,40 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void SimpleMethodWithColonTest()
+    {
+      Entity name = "a.aM:A(IDbCommand , String )";
+      Assert.IsNull(name.EntityResultType);
+      Assert.AreEqual(EntityType.Method, name.EntityType);
+      Assert.AreEqual("a.aM.A", name.Name.PathName);
+      Assert.AreEqual("A", name.Name.Name);
+      Assert.AreEqual("a.aM", name.Name.Namespace);
+      Assert.AreEqual(2, name.MethodParamsCount);
+      Assert.AreEqual("IDbCommand", name.GetMethodParam(0).ToString());
+      Assert.AreEqual("String", name.GetMethodParam(1).ToString());
+      Assert.AreEqual("void A(IDbCommand, String)", name.NameShort);
+      Assert.AreEqual("void a.aM.A(IDbCommand, String)", name.NameSimple);
+      Assert.AreEqual("void a.aM.A(IDbCommand, String)", name.NameFull);
+    }
+
+    [Test]
+    public void SimpleMethodWithSpaceTest()
+    {
+      Entity name = "a.aM.A ( IDbCommand , String )";
+      Assert.IsNull(name.EntityResultType);
+      Assert.AreEqual(EntityType.Method, name.EntityType);
+      Assert.AreEqual("a.aM.A", name.Name.PathName);
+      Assert.AreEqual("A", name.Name.Name);
+      Assert.AreEqual("a.aM", name.Name.Namespace);
+      Assert.AreEqual(2, name.MethodParamsCount);
+      Assert.AreEqual("IDbCommand", name.GetMethodParam(0).ToString());
+      Assert.AreEqual("String", name.GetMethodParam(1).ToString());
+      Assert.AreEqual("void A(IDbCommand, String)", name.NameShort);
+      Assert.AreEqual("void a.aM.A(IDbCommand, String)", name.NameSimple);
+      Assert.AreEqual("void a.aM.A(IDbCommand, String)", name.NameFull);
+    }
+
+    [Test]
     public void ConstructorTest()
     {
       Entity name = "a.aM.ctor(IDbCommand , String )";

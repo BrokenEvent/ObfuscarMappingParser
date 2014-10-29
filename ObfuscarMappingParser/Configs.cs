@@ -7,7 +7,7 @@ using BrokenEvent.Shared;
 
 namespace ObfuscarMappingParser
 {
-  class Configs: DefaultConfigs
+  internal class Configs: DefaultConfigs
   {
     #region Singletone
 
@@ -51,6 +51,8 @@ namespace ObfuscarMappingParser
     private VSOpener.VisualStudioVersion visualStudioVersion;
     private bool useColumns;
     private bool showOriginal;
+    private bool showUnicode;
+    private bool simplifySystemNames;
 
     [Obfuscation(Exclude = true)]
     public enum SortingTypes
@@ -89,6 +91,18 @@ namespace ObfuscarMappingParser
     {
       get { return showOriginal; }
       set { showOriginal = value; }
+    }
+
+    public bool ShowUnicode
+    {
+      get { return showUnicode; }
+      set { showUnicode = value; }
+    }
+
+    public bool SimplifySystemNames
+    {
+      get { return simplifySystemNames; }
+      set { simplifySystemNames = value; }
     }
 
     public VSOpener.VisualStudioVersion VisualStudioVersion
@@ -210,16 +224,15 @@ namespace ObfuscarMappingParser
       }
 
       NanoXmlElement settingsEl = (NanoXmlElement)doc["Settings"];
-      showModules = Convert.ToBoolean(settingsEl["ShowModules"].Value);
-      groupNamespaces = Convert.ToBoolean(settingsEl["GroupNamespaces"].Value);
-      groupModules = Convert.ToBoolean(settingsEl["GroupModules"].Value);
-      useColumns = Convert.ToBoolean(settingsEl["UseColumns"].Value);
-      showOriginal = Convert.ToBoolean(settingsEl["ShowOriginal"].Value);
-      sortingType = (SortingTypes)Enum.Parse(typeof(SortingTypes), settingsEl["SortingType"].Value);
-
-      string s = settingsEl["VisualStudioVersion"].Value;
-      if (!string.IsNullOrEmpty(s))
-        visualStudioVersion = (VSOpener.VisualStudioVersion)Enum.Parse(typeof (VSOpener.VisualStudioVersion), s);
+      settingsEl.GetValueIfExists("ShowModules", ref showModules);
+      settingsEl.GetValueIfExists("GroupNamespaces", ref groupNamespaces);
+      settingsEl.GetValueIfExists("GroupModules", ref groupModules);
+      settingsEl.GetValueIfExists("UseColumns", ref useColumns);
+      settingsEl.GetValueIfExists("ShowOriginal", ref showOriginal);
+      settingsEl.GetValueIfExists("ShowUnicode", ref showUnicode);
+      settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
+      settingsEl.GetEnumValueIfExists("SortingType", ref sortingType);
+      settingsEl.GetEnumValueIfExists("VisualStudioVersion", ref visualStudioVersion);
     }
 
     protected override void Save(NanoXmlElement doc)
@@ -234,6 +247,8 @@ namespace ObfuscarMappingParser
       settingsEl.AppendChild(new NanoXmlElement("GroupModules", groupModules.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("UseColumns", useColumns.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("ShowOriginal", showOriginal.ToString()));
+      settingsEl.AppendChild(new NanoXmlElement("ShowUnicode", showUnicode.ToString()));
+      settingsEl.AppendChild(new NanoXmlElement("SimplifySystem", simplifySystemNames.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("SortingType", sortingType.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("VisualStudioVersion", visualStudioVersion.ToString()));
     }
@@ -246,6 +261,8 @@ namespace ObfuscarMappingParser
       sortingType = SortingTypes.OriginalNameAscending;
       visualStudioVersion = VSOpener.HighestVersion;
       showOriginal = true;
+      showUnicode = false;
+      simplifySystemNames = true;
     }
   }
 }

@@ -16,11 +16,15 @@ namespace ObfuscarMappingParser
           lbVS.Items.Add(version);
 
       lbVS.SelectedItem = Configs.Instance.VisualStudioVersion;
+      cbShowUnicode.Checked = Configs.Instance.ShowUnicode;
+      cbSimplifySystemNames.Checked = Configs.Instance.SimplifySystemNames;
     }
 
     private void btnOk_Click(object sender, EventArgs e)
     {
       Configs.Instance.VisualStudioVersion = (VSOpener.VisualStudioVersion)lbVS.SelectedItem;
+      Configs.Instance.ShowUnicode = cbShowUnicode.Checked;
+      Configs.Instance.SimplifySystemNames = cbSimplifySystemNames.Checked;
 
       DialogResult = DialogResult.OK;
     }

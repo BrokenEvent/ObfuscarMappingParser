@@ -9,6 +9,7 @@ namespace MappingParser.Tests
     [Test]
     public void ClassTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
 
@@ -35,6 +36,7 @@ namespace MappingParser.Tests
     [Test]
     public void FieldTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -67,6 +69,7 @@ namespace MappingParser.Tests
     [Test]
     public void GenericFieldTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -97,8 +100,42 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void GenericFieldSimplfyTest()
+    {
+      Configs.Instance.SimplifySystemNames = true;
+      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]System.Collections.Generic.Dictionary`2<System.String,System.String> NsOld.ClassOld::GenericFieldOld -> GenericFieldNew
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[1];
+      Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
+      Assert.IsNotNull(renamedItem.ResultType);
+      Assert.AreEqual("System.Collections.Generic.Dictionary<string, string>", renamedItem.ResultType.NameOld.ToString());
+      Assert.AreEqual("System.Collections.Generic.Dictionary<string, string>", renamedItem.ResultType.NameNew.ToString());
+      Assert.IsNull(renamedItem.MethodParams);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("Dictionary<string, string> GenericFieldOld", renamedItem.NameOld);
+      Assert.AreEqual("Dictionary<string, string> GenericFieldNew", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.GenericFieldOld", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericFieldNew", renamedItem.NameNewPlain);
+      Assert.AreEqual("System.Collections.Generic.Dictionary<string, string> NsOld.ClassOld.GenericFieldOld", renamedItem.NameOldFull);
+      Assert.AreEqual("System.Collections.Generic.Dictionary<string, string> NsNew.ClassNew.GenericFieldNew", renamedItem.NameNewFull);
+      Assert.AreEqual("Dictionary<string, string> NsOld.ClassOld.GenericFieldOld", renamedItem.NameOldSimple);
+      Assert.AreEqual("Dictionary<string, string> NsNew.ClassNew.GenericFieldNew", renamedItem.NameNewSimple);
+      Assert.AreEqual("Dictionary<string, string> GenericFieldOld → Dictionary<string, string> GenericFieldNew", renamedItem.TransformName);
+      Assert.AreEqual("System.Collections.Generic.Dictionary<string, string> NsOld.ClassOld.GenericFieldOld → System.Collections.Generic.Dictionary<string, string> NsNew.ClassNew.GenericFieldNew", renamedItem.TransformNameFull);
+      Assert.AreEqual("Dictionary<string, string> NsOld.ClassOld.GenericFieldOld → Dictionary<string, string> NsNew.ClassNew.GenericFieldNew", renamedItem.TransformSimple);
+      Assert.AreEqual("Dictionary<string, string> NsOld.ClassOld.GenericFieldOld → Dictionary<string, string> NsNew.ClassNew.GenericFieldNew", renamedItem.ToString());
+    }
+
+    [Test]
     public void PropertyTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -129,8 +166,42 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void PropertySimplifyTest()
+    {
+      Configs.Instance.SimplifySystemNames = true;
+      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]System.String NsOld.ClassOld::StringFieldOld -> StringFieldNew
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[2];
+      Assert.AreEqual(EntityType.Property, renamedItem.EntityType);
+      Assert.IsNotNull(renamedItem.ResultType);
+      Assert.AreEqual("System.String", renamedItem.ResultType.NameOld.ToString());
+      Assert.AreEqual("System.String", renamedItem.ResultType.NameNew.ToString());
+      Assert.IsNull(renamedItem.MethodParams);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("string StringFieldOld", renamedItem.NameOld);
+      Assert.AreEqual("string StringFieldNew", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.StringFieldOld", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.StringFieldNew", renamedItem.NameNewPlain);
+      Assert.AreEqual("string NsOld.ClassOld.StringFieldOld", renamedItem.NameOldFull);
+      Assert.AreEqual("string NsNew.ClassNew.StringFieldNew", renamedItem.NameNewFull);
+      Assert.AreEqual("string NsOld.ClassOld.StringFieldOld", renamedItem.NameOldSimple);
+      Assert.AreEqual("string NsNew.ClassNew.StringFieldNew", renamedItem.NameNewSimple);
+      Assert.AreEqual("string StringFieldOld → string StringFieldNew", renamedItem.TransformName);
+      Assert.AreEqual("string NsOld.ClassOld.StringFieldOld → string NsNew.ClassNew.StringFieldNew", renamedItem.TransformNameFull);
+      Assert.AreEqual("string NsOld.ClassOld.StringFieldOld → string NsNew.ClassNew.StringFieldNew", renamedItem.TransformSimple);
+      Assert.AreEqual("string NsOld.ClassOld.StringFieldOld → string NsNew.ClassNew.StringFieldNew", renamedItem.ToString());
+    }
+
+    [Test]
     public void StringResultMethodTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -164,6 +235,7 @@ namespace MappingParser.Tests
     [Test]
     public void StringParamMethodTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -197,6 +269,7 @@ namespace MappingParser.Tests
     [Test]
     public void GenericMethodTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -230,6 +303,7 @@ namespace MappingParser.Tests
     [Test]
     public void TwoParamMethodTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -267,6 +341,7 @@ namespace MappingParser.Tests
     [Test]
     public void SomethingWickedTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -298,6 +373,7 @@ namespace MappingParser.Tests
     [Test]
     public void SubclassTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -325,6 +401,7 @@ namespace MappingParser.Tests
     [Test]
     public void SubclassMethodTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -359,6 +436,7 @@ namespace MappingParser.Tests
     [Test]
     public void SubclassMethodWithParamTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -395,6 +473,7 @@ namespace MappingParser.Tests
     [Test]
     public void SubclassMethodWithResultTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -429,6 +508,7 @@ namespace MappingParser.Tests
     [Test]
     public void SkippedByOldNameSubclassTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
@@ -457,6 +537,7 @@ namespace MappingParser.Tests
     [Test]
     public void SkippedByNewNameSubclassTest()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];

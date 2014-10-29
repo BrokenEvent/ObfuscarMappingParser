@@ -76,11 +76,11 @@
     </Compile>
     <Compile Include="Configs.cs" />
     <Compile Include="CrashHandler.cs" />
-    <Compile Include="CrashLog.cs">
+    <Compile Include="CrashLogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CrashLog.Designer.cs">
-      <DependentUpon>CrashLog.cs</DependentUpon>
+    <Compile Include="CrashLogForm.Designer.cs">
+      <DependentUpon>CrashLogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EntityType.cs" />
     <Compile Include="IEntitySearcher.cs" />
@@ -152,12 +152,13 @@
     <Compile Include="StatisticsForm.Designer.cs">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SystemTypeProcessor.cs" />
     <Compile Include="TreeBuilder.cs" />
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrashLog.resx">
-      <DependentUpon>CrashLog.cs</DependentUpon>
+    <EmbeddedResource Include="CrashLogForm.resx">
+      <DependentUpon>CrashLogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LauncherForm.resx">
       <DependentUpon>LauncherForm.cs</DependentUpon>

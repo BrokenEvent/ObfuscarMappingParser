@@ -73,6 +73,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test1()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test1.txt"));
 
@@ -127,6 +128,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test2()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test2.txt"));
 
@@ -145,6 +147,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test3()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test3.txt"));
 
@@ -211,6 +214,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test4()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test4.txt"));
       Assert.AreEqual(9, results.Count);
@@ -295,6 +299,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test5()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test5.txt"));
       Assert.AreEqual(3, results.Count);
@@ -329,6 +334,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test1Broken()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test1_broken.txt"));
 
@@ -379,6 +385,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test6()
     {
+      Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping_Parser.xml");
       List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test6.txt"));
 
@@ -431,6 +438,297 @@ namespace MappingParser.Tests
           "void HandleMouseUp(MouseEventArgs)",
           "void System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs)",
           "void System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs)"
+        );
+    }
+
+    [Test]
+    public void Test6Simpify()
+    {
+      Configs.Instance.SimplifySystemNames = true;
+      Mapping mapping = new Mapping(@"Data\Mapping_Parser.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test6.txt"));
+
+      Assert.AreEqual(6, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(MainForm, string, string)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(MainForm, string, string)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, string, string)"
+        );
+
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void miStacktrace_Click(object, EventArgs)",
+          "void ObfuscarMappingParser.MainForm.miStacktrace_Click(object, EventArgs)",
+          "void ObfuscarMappingParser.MainForm.miStacktrace_Click(object, System.EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          2,
+          "void RaiseEvent(object, EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.RaiseEvent(object, EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.RaiseEvent(object, EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          3,
+          "void OnClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripMenuItem.OnClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripMenuItem.OnClick(EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          4,
+          "void HandleClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleClick(EventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleClick(EventArgs)"
+        );
+
+      ResultTestHelper(
+          results,
+          5,
+          "void HandleMouseUp(MouseEventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs)",
+          "void System.Windows.Forms.ToolStripItem.HandleMouseUp(MouseEventArgs)"
+        );
+    }
+
+    [Test]
+    public void UnicodeTest1()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(@"Data\unicode_mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\unicode_test1.txt"));
+
+      Assert.AreEqual(5, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)"
+        );
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
+        );
+      ResultTestHelperOk(
+          results,
+          2,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
+        );
+      ResultTestHelperOk(
+          results,
+          3,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlogText(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(System.String)"
+        );
+      ResultTestHelperOk(
+          results,
+          4,
+          "ObfuscarMappingParser",
+          "void btnProcess_Click(Object, EventArgs)",
+          "void ObfuscarMappingParser.CrashLog.btnProcess_Click(Object, EventArgs)",
+          "void ObfuscarMappingParser.CrashLog.btnProcess_Click(System.Object, System.EventArgs)"
+        );
+    }
+
+    [Test]
+    public void UnicodeTest1Simplify()
+    {
+      Configs.Instance.SimplifySystemNames = true;
+      Mapping mapping = new Mapping(@"Data\unicode_mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\unicode_test1.txt"));
+
+      Assert.AreEqual(5, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(string)",
+          "ObfuscarMappingParser.Entity.ctor(string)",
+          "ObfuscarMappingParser.Entity.ctor(string)"
+        );
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void Search(string, bool)",
+          "void ObfuscarMappingParser.Mapping.Search(string, bool)",
+          "void ObfuscarMappingParser.Mapping.Search(string, bool)"
+        );
+      ResultTestHelperOk(
+          results,
+          2,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlog(string)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(string)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(string)"
+        );
+      ResultTestHelperOk(
+          results,
+          3,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlogText(string)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(string)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(string)"
+        );
+      ResultTestHelperOk(
+          results,
+          4,
+          "ObfuscarMappingParser",
+          "void btnProcess_Click(object, EventArgs)",
+          "void ObfuscarMappingParser.CrashLog.btnProcess_Click(object, EventArgs)",
+          "void ObfuscarMappingParser.CrashLog.btnProcess_Click(object, System.EventArgs)"
+        );
+    }
+
+    [Test]
+    public void UnicodeTest2()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(@"Data\unicode_mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\unicode_test2.txt"));
+
+      Assert.AreEqual(4, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)"
+        );
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
+        );
+      ResultTestHelperOk(
+          results,
+          2,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
+        );
+      ResultTestHelperSubstitution(
+          results,
+          3,
+          "ctor(MainForm, String, String)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(MainForm, String, String)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, String, String)"
+        );
+    }
+
+    [Test]
+    public void KoreanTest1()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(@"Data\korean_mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\korean_test1.txt"));
+
+      Assert.AreEqual(5, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)"
+        );
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
+        );
+      ResultTestHelperOk(
+          results,
+          2,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
+        );
+      ResultTestHelperOk(
+          results,
+          3,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlogText(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(System.String)"
+        );
+      ResultTestHelperOk(
+          results,
+          4,
+          "ObfuscarMappingParser",
+          "void btnProcess_Click(Object, EventArgs)",
+          "void ObfuscarMappingParser.CrashLog.btnProcess_Click(Object, EventArgs)",
+          "void ObfuscarMappingParser.CrashLog.btnProcess_Click(System.Object, System.EventArgs)"
+        );
+    }
+
+    [Test]
+    public void KoreanTest2()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(@"Data\korean_mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\korean_test2.txt"));
+
+      Assert.AreEqual(4, results.Count);
+
+      ResultTestHelperSubstitution(
+          results,
+          0,
+          "ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)",
+          "ObfuscarMappingParser.Entity.ctor(String)"
+        );
+      ResultTestHelperOk(
+          results,
+          1,
+          "ObfuscarMappingParser",
+          "void Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
+          "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
+        );
+      ResultTestHelperOk(
+          results,
+          2,
+          "ObfuscarMappingParser",
+          "void ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
+          "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
+        );
+      ResultTestHelperSubstitution(
+          results,
+          3,
+          "ctor(MainForm, String, String)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(MainForm, String, String)",
+          "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, String, String)"
         );
     }
   }
