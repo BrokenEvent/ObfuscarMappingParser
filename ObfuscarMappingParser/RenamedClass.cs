@@ -161,6 +161,48 @@ namespace ObfuscarMappingParser
       }
     }
 
+    public IEnumerable<RenamedBase> SearchOriginal(string[] values, int index)
+    {
+      if (!name.NameOld.CompareNamespace(values, ref index)) // namespace check
+        yield break;
+
+      if (values.Length == 0) // no namespace, unable to search
+        yield break;
+
+      if (string.Compare(values[index], name.NameOld.Name, StringComparison.Ordinal) != 0) // correct namespace, wrong class name
+        yield break;
+
+      index++; // skip own name
+
+      if (index >= values.Length) // last value is own name, so this is the target
+      {
+        yield return this;
+        yield break;
+      }
+
+      if (index == values.Length - 1) // the last index, so we're searching in this class
+      {
+        foreach (RenamedBase item in items)
+        {
+          if (item.NameNew == null)
+            continue; // unable to search, no new name
+
+          if (string.Compare(values[index], item.Name.NameOld.Name, StringComparison.Ordinal) == 0)
+            yield return item;
+        }
+        yield break;
+      }
+
+      foreach (RenamedBase item in items)
+      {
+        if (item.EntityType != EntityType.Class)
+          continue; // only search subclasses
+
+        foreach (RenamedBase i in ((RenamedClass)item).SearchOriginal(values, index))
+          yield return i;
+      }
+    }
+
     public RenamedClass SearchForOldName(EntityName target)
     {
       if (target.Compare(NameOld))
@@ -276,7 +318,6 @@ namespace ObfuscarMappingParser
       get { return NameOld; }
     }
 
-
     public override string NameNewFull
     {
       get
@@ -314,6 +355,14 @@ namespace ObfuscarMappingParser
 
       foreach (RenamedBase item in items)
         item.PurgeTreeNodes();
+    }
+
+    public override IEnumerable<RenamedBase> GetChildItems()
+    {
+      yield return this;
+      foreach (RenamedBase item in items)
+        foreach (RenamedBase childItem in item.GetChildItems())
+          yield return childItem;
     }
   }
 }

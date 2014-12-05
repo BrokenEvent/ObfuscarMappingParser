@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 using BrokenEvent.NanoXml;
 
 namespace ObfuscarMappingParser
@@ -10,6 +11,7 @@ namespace ObfuscarMappingParser
   internal class Mapping: IEntitySearcher
   {
     private readonly string filename;
+    private DateTime lastModified;
     private List<RenamedClass> classes = new List<RenamedClass>();
 
     private long timingXML;
@@ -35,8 +37,13 @@ namespace ObfuscarMappingParser
       if (!File.Exists(filename))
         throw new ObfuscarParserException("File not exists", filename);
 
-      Stopwatch sw = new Stopwatch();
       this.filename = filename;
+      LoadFile();
+    }
+
+    private void LoadFile()
+    {      
+      Stopwatch sw = new Stopwatch();
       sw.Start();
       NanoXmlDocument xml = NanoXmlDocument.LoadFromFile(filename);
 
@@ -47,6 +54,14 @@ namespace ObfuscarMappingParser
 
       NanoXmlElement doc = xml.DocumentElement;
       NanoXmlElement types = (NanoXmlElement)doc["renamedTypes"];
+
+      modules.Clear();
+      namespaces.Clear();
+      namespacesObfuscated.Clear();
+      classes.Clear();
+      haveSystemEntities = false;
+      methodsCount = classesCount = subclassesCount = skippedCount = 0;
+      lastModified = File.GetLastWriteTime(filename);
 
       List<RenamedClass> subclasses = new List<RenamedClass>();
 
@@ -128,6 +143,18 @@ namespace ObfuscarMappingParser
       sw.Stop();
     }
 
+    public void Reload()
+    {
+      LoadFile();
+    }
+
+    public bool CheckModifications()
+    {
+      DateTime m = lastModified;
+      lastModified = File.GetLastWriteTime(filename);
+      return File.GetLastWriteTime(filename) > m;
+    }
+
     public string Filename
     {
       get { return filename; }
@@ -159,6 +186,34 @@ namespace ObfuscarMappingParser
         renamedClass.PurgeTreeNodes();
     }
 
+    #region Autocomplete
+
+    public AutoCompleteStringCollection GetNewNamesCollection()
+    {
+      AutoCompleteStringCollection result = new AutoCompleteStringCollection();
+      foreach (RenamedClass renamedClass in classes)
+        foreach (RenamedBase item in renamedClass.GetChildItems())
+        {
+          if (item.Name.NameNew != null)
+            result.Add(item.NameNewPlain);
+        }
+
+      return result;
+    }
+
+    public AutoCompleteStringCollection GetOldNamesCollection()
+    {
+      AutoCompleteStringCollection result = new AutoCompleteStringCollection();
+      foreach (RenamedClass renamedClass in classes)
+        foreach (RenamedBase item in renamedClass.GetChildItems())
+          if (item.Name.NameOld != null)
+          result.Add(item.NameOldPlain);
+
+      return result;
+    }
+
+    #endregion
+
     #region Search
 
     public SearchResults Search(string s, bool allowSubstitution)
@@ -171,6 +226,18 @@ namespace ObfuscarMappingParser
         return new SearchResults(s, entity, SearchItem(entity.Name));
 
       return new SearchResults(s, entity, SearchMethod(entity, allowSubstitution));
+    }
+
+    public SearchResults SearchOriginal(string s)
+    {
+      if (string.IsNullOrEmpty(s))
+        return null;
+
+      Entity entity = s;
+      if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
+        return new SearchResults(s, entity, SearchItemOriginal(entity.Name));
+
+      return new SearchResults(s, entity, SearchMethodOriginal(entity));
     }
 
     private IEnumerable<INamedEntity> SearchMethod(Entity entity, bool allowSubstitution)
@@ -201,6 +268,21 @@ namespace ObfuscarMappingParser
       {
         foreach (RenamedBase item in renamedClass.Search(values, 0))
           yield return new Entity(entity, item, methodParams);
+      }
+    }
+
+    private IEnumerable<INamedEntity> SearchMethodOriginal(Entity entity)
+    {
+      foreach (RenamedBase item in SearchItemOriginal(entity.Name))
+      {
+        if (item.EntityType != EntityType.Method)
+          continue;
+
+        RenamedItem i = (RenamedItem)item;
+        if (i.CompareParams(entity.MethodParams))
+        {
+          yield return i;
+        }
       }
     }
 
@@ -249,6 +331,31 @@ namespace ObfuscarMappingParser
       }
 
       foreach (RenamedBase renamedItem in SearchItem(values))
+        yield return renamedItem;
+    }
+
+    private IEnumerable<RenamedBase> SearchItemOriginal(string[] values)
+    {
+      foreach (RenamedClass renamedClass in classes)
+      {
+        foreach (RenamedBase item in renamedClass.SearchOriginal(values, 0))
+          yield return item;
+      }
+    }
+
+    private IEnumerable<RenamedBase> SearchItemOriginal(EntityName name)
+    {
+      string[] values;
+      try
+      {
+        values = name.PathName.Split('.');
+      }
+      catch
+      {
+        yield break;
+      }
+
+      foreach (RenamedBase renamedItem in SearchItemOriginal(values))
         yield return renamedItem;
     }
 

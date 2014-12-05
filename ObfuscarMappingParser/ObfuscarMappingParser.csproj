@@ -68,43 +68,45 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutForm.cs">
+    <Compile Include="CommandLine.cs" />
+    <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutForm.designer.cs">
+    <Compile Include="Forms\AboutForm.designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Configs.cs" />
     <Compile Include="CrashHandler.cs" />
-    <Compile Include="CrashLogForm.cs">
+    <Compile Include="Forms\CrashLogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CrashLogForm.Designer.cs">
+    <Compile Include="Forms\CrashLogForm.Designer.cs">
       <DependentUpon>CrashLogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EntityType.cs" />
     <Compile Include="IEntitySearcher.cs" />
     <Compile Include="INamedEntity.cs" />
-    <Compile Include="LauncherForm.cs">
+    <Compile Include="Forms\LauncherForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="LauncherForm.Designer.cs">
+    <Compile Include="Forms\LauncherForm.Designer.cs">
       <DependentUpon>LauncherForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
+    <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Mapping.cs" />
     <Compile Include="EntityName.cs" />
     <Compile Include="MappingLoaderThread.cs" />
+    <Compile Include="MappingReloaderThread.cs" />
     <Compile Include="ObfuscarParserException.cs" />
-    <Compile Include="PDBManagerForm.cs">
+    <Compile Include="Forms\PDBManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PDBManagerForm.Designer.cs">
+    <Compile Include="Forms\PDBManagerForm.Designer.cs">
       <DependentUpon>PDBManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -114,59 +116,59 @@
     <Compile Include="RenamedClass.cs" />
     <Compile Include="RenamedItem.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="SearchDialog.cs">
+    <Compile Include="Forms\SearchDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SearchDialog.Designer.cs">
+    <Compile Include="Forms\SearchDialog.Designer.cs">
       <DependentUpon>SearchDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="SearchResultMessage.cs" />
     <Compile Include="SearchResults.cs" />
-    <Compile Include="SearchResultsForm.cs">
+    <Compile Include="Forms\SearchResultsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SearchResultsForm.Designer.cs">
+    <Compile Include="Forms\SearchResultsForm.Designer.cs">
       <DependentUpon>SearchResultsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SettingsForm.cs">
+    <Compile Include="Forms\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SettingsForm.Designer.cs">
+    <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StacktraceAnalyerForm.cs">
+    <Compile Include="Forms\StacktraceAnalyerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StacktraceAnalyerForm.Designer.cs">
+    <Compile Include="Forms\StacktraceAnalyerForm.Designer.cs">
       <DependentUpon>StacktraceAnalyerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StacktraceSource.cs">
+    <Compile Include="Forms\StacktraceSource.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StacktraceSource.Designer.cs">
+    <Compile Include="Forms\StacktraceSource.Designer.cs">
       <DependentUpon>StacktraceSource.cs</DependentUpon>
     </Compile>
-    <Compile Include="StatisticsForm.cs">
+    <Compile Include="Forms\StatisticsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StatisticsForm.Designer.cs">
+    <Compile Include="Forms\StatisticsForm.Designer.cs">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SystemTypeProcessor.cs" />
     <Compile Include="TreeBuilder.cs" />
-    <EmbeddedResource Include="AboutForm.resx">
+    <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CrashLogForm.resx">
+    <EmbeddedResource Include="Forms\CrashLogForm.resx">
       <DependentUpon>CrashLogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="LauncherForm.resx">
+    <EmbeddedResource Include="Forms\LauncherForm.resx">
       <DependentUpon>LauncherForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
+    <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PDBManagerForm.resx">
+    <EmbeddedResource Include="Forms\PDBManagerForm.resx">
       <DependentUpon>PDBManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -179,22 +181,22 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SearchDialog.resx">
+    <EmbeddedResource Include="Forms\SearchDialog.resx">
       <DependentUpon>SearchDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SearchResultsForm.resx">
+    <EmbeddedResource Include="Forms\SearchResultsForm.resx">
       <DependentUpon>SearchResultsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SettingsForm.resx">
+    <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StacktraceAnalyerForm.resx">
+    <EmbeddedResource Include="Forms\StacktraceAnalyerForm.resx">
       <DependentUpon>StacktraceAnalyerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StacktraceSource.resx">
+    <EmbeddedResource Include="Forms\StacktraceSource.resx">
       <DependentUpon>StacktraceSource.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StatisticsForm.resx">
+    <EmbeddedResource Include="Forms\StatisticsForm.resx">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

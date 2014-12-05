@@ -55,7 +55,7 @@ namespace ObfuscarMappingParser
         }
 
         string strNew = el.GetAttribute("newName");
-        if (str != "dropped")
+        if (strNew != "dropped")
           name = new Renamed(str, strNew);
         else
           name = new Renamed(str);

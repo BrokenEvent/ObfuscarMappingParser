@@ -1,4 +1,5 @@
-﻿using BrokenEvent.Shared.TreeView;
+﻿using System.Collections.Generic;
+using BrokenEvent.Shared.TreeView;
 
 namespace ObfuscarMappingParser
 {
@@ -90,6 +91,12 @@ namespace ObfuscarMappingParser
     {
       treeNode = null;
     }
+
+    public virtual IEnumerable<RenamedBase> GetChildItems()
+    {
+      yield return this;
+    }
+
 
     #region INamedEntity
 

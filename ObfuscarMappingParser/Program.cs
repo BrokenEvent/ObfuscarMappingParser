@@ -14,10 +14,11 @@ namespace ObfuscarMappingParser
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
 
-      string filename = null;
-      if (args.Length > 0)
-        filename = args[0];
-      else if (Configs.Instance.HaveRecents)
+      string filename;
+      if (!CommandLine.ProcessCommandline(out filename, args))
+        return;
+
+      if (filename == null)
       {
         LauncherForm launcher = new LauncherForm();
         if (launcher.ShowDialog() != DialogResult.OK)

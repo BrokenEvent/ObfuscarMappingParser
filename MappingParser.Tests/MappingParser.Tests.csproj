@@ -28,6 +28,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLineTest.cs" />
     <Compile Include="CrashlogTest.cs" />
     <Compile Include="EntityFullNameTest.cs" />
     <Compile Include="NamingTest.cs" />

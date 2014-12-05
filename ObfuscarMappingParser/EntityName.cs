@@ -257,7 +257,7 @@ namespace ObfuscarMappingParser
 
     public bool CompareNamespace(string[] values, ref int start)
     {
-      if (nsCache.Length == 0 || values.Length == 0)
+      if (nsCache == null || nsCache.Length == 0 || values.Length == 0)
         return true;
 
       int result = 0;
