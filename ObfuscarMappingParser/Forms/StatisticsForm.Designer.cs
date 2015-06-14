@@ -48,7 +48,7 @@
       // 
       // lblClasses
       // 
-      this.lblClasses.Location = new System.Drawing.Point(29, 49);
+      this.lblClasses.Location = new System.Drawing.Point(52, 114);
       this.lblClasses.Name = "lblClasses";
       this.lblClasses.Size = new System.Drawing.Size(150, 23);
       this.lblClasses.TabIndex = 0;
@@ -57,7 +57,7 @@
       // 
       // lblMethods
       // 
-      this.lblMethods.Location = new System.Drawing.Point(29, 72);
+      this.lblMethods.Location = new System.Drawing.Point(52, 137);
       this.lblMethods.Name = "lblMethods";
       this.lblMethods.Size = new System.Drawing.Size(150, 23);
       this.lblMethods.TabIndex = 1;
@@ -66,7 +66,7 @@
       // 
       // lblSubclasses
       // 
-      this.lblSubclasses.Location = new System.Drawing.Point(29, 95);
+      this.lblSubclasses.Location = new System.Drawing.Point(52, 160);
       this.lblSubclasses.Name = "lblSubclasses";
       this.lblSubclasses.Size = new System.Drawing.Size(150, 23);
       this.lblSubclasses.TabIndex = 2;
@@ -75,7 +75,7 @@
       // 
       // lblNs
       // 
-      this.lblNs.Location = new System.Drawing.Point(29, 118);
+      this.lblNs.Location = new System.Drawing.Point(52, 183);
       this.lblNs.Name = "lblNs";
       this.lblNs.Size = new System.Drawing.Size(150, 23);
       this.lblNs.TabIndex = 3;
@@ -84,7 +84,7 @@
       // 
       // lblNs2
       // 
-      this.lblNs2.Location = new System.Drawing.Point(29, 141);
+      this.lblNs2.Location = new System.Drawing.Point(52, 206);
       this.lblNs2.Name = "lblNs2";
       this.lblNs2.Size = new System.Drawing.Size(150, 23);
       this.lblNs2.TabIndex = 4;
@@ -93,7 +93,7 @@
       // 
       // lblModules
       // 
-      this.lblModules.Location = new System.Drawing.Point(29, 164);
+      this.lblModules.Location = new System.Drawing.Point(52, 229);
       this.lblModules.Name = "lblModules";
       this.lblModules.Size = new System.Drawing.Size(150, 23);
       this.lblModules.TabIndex = 5;
@@ -102,7 +102,7 @@
       // 
       // lblSkipped
       // 
-      this.lblSkipped.Location = new System.Drawing.Point(29, 187);
+      this.lblSkipped.Location = new System.Drawing.Point(52, 252);
       this.lblSkipped.Name = "lblSkipped";
       this.lblSkipped.Size = new System.Drawing.Size(150, 23);
       this.lblSkipped.TabIndex = 6;
@@ -111,7 +111,7 @@
       // 
       // lblClassesValue
       // 
-      this.lblClassesValue.Location = new System.Drawing.Point(185, 49);
+      this.lblClassesValue.Location = new System.Drawing.Point(208, 114);
       this.lblClassesValue.Name = "lblClassesValue";
       this.lblClassesValue.Size = new System.Drawing.Size(100, 23);
       this.lblClassesValue.TabIndex = 7;
@@ -119,7 +119,7 @@
       // 
       // lblMethodsValue
       // 
-      this.lblMethodsValue.Location = new System.Drawing.Point(185, 72);
+      this.lblMethodsValue.Location = new System.Drawing.Point(208, 137);
       this.lblMethodsValue.Name = "lblMethodsValue";
       this.lblMethodsValue.Size = new System.Drawing.Size(100, 23);
       this.lblMethodsValue.TabIndex = 8;
@@ -127,7 +127,7 @@
       // 
       // lblSubclassesValue
       // 
-      this.lblSubclassesValue.Location = new System.Drawing.Point(185, 95);
+      this.lblSubclassesValue.Location = new System.Drawing.Point(208, 160);
       this.lblSubclassesValue.Name = "lblSubclassesValue";
       this.lblSubclassesValue.Size = new System.Drawing.Size(100, 23);
       this.lblSubclassesValue.TabIndex = 9;
@@ -135,7 +135,7 @@
       // 
       // lblNsValue
       // 
-      this.lblNsValue.Location = new System.Drawing.Point(185, 118);
+      this.lblNsValue.Location = new System.Drawing.Point(208, 183);
       this.lblNsValue.Name = "lblNsValue";
       this.lblNsValue.Size = new System.Drawing.Size(100, 23);
       this.lblNsValue.TabIndex = 10;
@@ -143,7 +143,7 @@
       // 
       // lblNs2Value
       // 
-      this.lblNs2Value.Location = new System.Drawing.Point(185, 141);
+      this.lblNs2Value.Location = new System.Drawing.Point(208, 206);
       this.lblNs2Value.Name = "lblNs2Value";
       this.lblNs2Value.Size = new System.Drawing.Size(100, 23);
       this.lblNs2Value.TabIndex = 11;
@@ -151,7 +151,7 @@
       // 
       // lblModulesValue
       // 
-      this.lblModulesValue.Location = new System.Drawing.Point(185, 164);
+      this.lblModulesValue.Location = new System.Drawing.Point(208, 229);
       this.lblModulesValue.Name = "lblModulesValue";
       this.lblModulesValue.Size = new System.Drawing.Size(100, 23);
       this.lblModulesValue.TabIndex = 12;
@@ -159,7 +159,7 @@
       // 
       // lblSkippedValue
       // 
-      this.lblSkippedValue.Location = new System.Drawing.Point(185, 187);
+      this.lblSkippedValue.Location = new System.Drawing.Point(208, 252);
       this.lblSkippedValue.Name = "lblSkippedValue";
       this.lblSkippedValue.Size = new System.Drawing.Size(100, 23);
       this.lblSkippedValue.TabIndex = 13;
@@ -167,8 +167,9 @@
       // 
       // btnOk
       // 
+      this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnOk.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnOk.Location = new System.Drawing.Point(259, 213);
+      this.btnOk.Location = new System.Drawing.Point(289, 289);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(75, 23);
       this.btnOk.TabIndex = 14;
@@ -177,9 +178,9 @@
       // 
       // llblFilename
       // 
-      this.llblFilename.Location = new System.Drawing.Point(12, 9);
+      this.llblFilename.Location = new System.Drawing.Point(12, 60);
       this.llblFilename.Name = "llblFilename";
-      this.llblFilename.Size = new System.Drawing.Size(322, 40);
+      this.llblFilename.Size = new System.Drawing.Size(352, 40);
       this.llblFilename.TabIndex = 15;
       this.llblFilename.TabStop = true;
       this.llblFilename.Text = "linkLabel1";
@@ -191,7 +192,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnOk;
-      this.ClientSize = new System.Drawing.Size(346, 243);
+      this.ClientSize = new System.Drawing.Size(376, 321);
       this.Controls.Add(this.llblFilename);
       this.Controls.Add(this.btnOk);
       this.Controls.Add(this.lblSkippedValue);
@@ -208,15 +209,20 @@
       this.Controls.Add(this.lblSubclasses);
       this.Controls.Add(this.lblMethods);
       this.Controls.Add(this.lblClasses);
+      this.FillColor = System.Drawing.Color.RoyalBlue;
       this.Font = new System.Drawing.Font("Tahoma", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.HeaderColor = System.Drawing.Color.White;
+      this.HeaderFont = new System.Drawing.Font("Segoe UI", 16F);
+      this.HeaderPosition = new System.Drawing.Point(55, 7);
+      this.HeaderText = "Mapping Statistics";
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "StatisticsForm";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "Mapping statistics";
+      this.Text = "Mapping Statistics";
       this.ResumeLayout(false);
 
     }

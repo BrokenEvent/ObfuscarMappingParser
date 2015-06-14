@@ -5,7 +5,7 @@ using BrokenEvent.Shared;
 
 namespace ObfuscarMappingParser
 {
-  partial class SearchDialog : Form
+  partial class SearchDialog : BaseForm
   {
     private readonly MainForm mainForm;
     private readonly bool searchOriginal;
@@ -50,11 +50,16 @@ namespace ObfuscarMappingParser
       tbSearch.SetCueText("Type name of the obfuscated element");
 
       if (searchOriginal)
-        Text = "Search for original name";
+      {
+        Text = "Search for Original Name";
+        HeaderText = "Search for Original Name";
+      }
 
       tbSearch.AutoCompleteCustomSource = searchOriginal ?
         mainForm.Mapping.GetOldNamesCollection() :
         mainForm.Mapping.GetNewNamesCollection();
+
+      controlHighlight.OwnerForm = this;
     }
 
     private void lvResults_Resize(object sender, EventArgs e)
@@ -64,6 +69,12 @@ namespace ObfuscarMappingParser
 
     private void btnSearch_Click(object sender, EventArgs e)
     {
+      if (string.IsNullOrEmpty(tbSearch.Text))
+      {
+        controlHighlight.Show(tbSearch, "This field cannot be empty");
+        return;
+      }
+
       Search();
     }
 
@@ -71,7 +82,7 @@ namespace ObfuscarMappingParser
     {
       lvResults.Items.Clear();
 
-      SearchResults results = searchOriginal ? mainForm.Mapping.SearchOriginal(tbSearch.Text) : mainForm.Mapping.Search(tbSearch.Text, false);
+      SearchResults results = searchOriginal ? mainForm.Mapping.SearchOriginal(tbSearch.Text) : mainForm.Mapping.Search(tbSearch.Text, false, false);
       if (results == null || !results.HasValue)
         return;
 
@@ -157,6 +168,16 @@ namespace ObfuscarMappingParser
         return;
 
       Search();
+    }
+
+    private void Control_Enter(object sender, EventArgs e)
+    {
+      controlHighlight.Hide();
+    }
+
+    private void SearchDialog_Click(object sender, EventArgs e)
+    {
+      controlHighlight.Hide();
     }
   }
 }

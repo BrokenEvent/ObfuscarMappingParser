@@ -39,18 +39,18 @@
       // 
       // lvList
       // 
-      this.lvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                  | System.Windows.Forms.AnchorStyles.Left)
-                  | System.Windows.Forms.AnchorStyles.Right)));
+      this.lvList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.lvList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chFilename,
             this.chGuid});
       this.lvList.FullRowSelect = true;
       this.lvList.HideSelection = false;
-      this.lvList.Location = new System.Drawing.Point(15, 25);
+      this.lvList.Location = new System.Drawing.Point(12, 74);
       this.lvList.Name = "lvList";
       this.lvList.ShowItemToolTips = true;
-      this.lvList.Size = new System.Drawing.Size(433, 218);
+      this.lvList.Size = new System.Drawing.Size(477, 196);
       this.lvList.TabIndex = 0;
       this.lvList.UseCompatibleStateImageBehavior = false;
       this.lvList.View = System.Windows.Forms.View.Details;
@@ -68,9 +68,9 @@
       // 
       // btnClose
       // 
-      this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnClose.Location = new System.Drawing.Point(454, 25);
+      this.btnClose.Location = new System.Drawing.Point(417, 291);
       this.btnClose.Name = "btnClose";
       this.btnClose.Size = new System.Drawing.Size(75, 23);
       this.btnClose.TabIndex = 1;
@@ -80,7 +80,7 @@
       // lblLoadedPDBs
       // 
       this.lblLoadedPDBs.AutoSize = true;
-      this.lblLoadedPDBs.Location = new System.Drawing.Point(12, 9);
+      this.lblLoadedPDBs.Location = new System.Drawing.Point(12, 58);
       this.lblLoadedPDBs.Name = "lblLoadedPDBs";
       this.lblLoadedPDBs.Size = new System.Drawing.Size(82, 13);
       this.lblLoadedPDBs.TabIndex = 2;
@@ -88,8 +88,8 @@
       // 
       // btnAttach
       // 
-      this.btnAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnAttach.Location = new System.Drawing.Point(454, 191);
+      this.btnAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.btnAttach.Location = new System.Drawing.Point(15, 291);
       this.btnAttach.Name = "btnAttach";
       this.btnAttach.Size = new System.Drawing.Size(75, 23);
       this.btnAttach.TabIndex = 3;
@@ -99,9 +99,9 @@
       // 
       // btnDetach
       // 
-      this.btnDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.btnDetach.Enabled = false;
-      this.btnDetach.Location = new System.Drawing.Point(454, 220);
+      this.btnDetach.Location = new System.Drawing.Point(96, 291);
       this.btnDetach.Name = "btnDetach";
       this.btnDetach.Size = new System.Drawing.Size(75, 23);
       this.btnDetach.TabIndex = 4;
@@ -115,13 +115,18 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnClose;
-      this.ClientSize = new System.Drawing.Size(541, 255);
+      this.ClientSize = new System.Drawing.Size(504, 322);
       this.Controls.Add(this.btnDetach);
       this.Controls.Add(this.btnAttach);
       this.Controls.Add(this.lblLoadedPDBs);
       this.Controls.Add(this.btnClose);
       this.Controls.Add(this.lvList);
+      this.FillColor = System.Drawing.Color.RoyalBlue;
       this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+      this.HeaderColor = System.Drawing.Color.White;
+      this.HeaderFont = new System.Drawing.Font("Segoe UI", 16F);
+      this.HeaderPosition = new System.Drawing.Point(55, 7);
+      this.HeaderText = "PDB Manager";
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "PDBManagerForm";

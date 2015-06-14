@@ -5,8 +5,8 @@
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1000]C:\projects\github\ObfuscarMappingParser\MappingParser.Tests\MappingParser.Tests.csproj" Expanded="true" />
-    <Node UniqueName="[0-1048]C:\projects\github\ObfuscarMappingParser\MappingParser.Tests\bin\Debug\MappingParser.Tests.exe" Expanded="true" />
-    <Node UniqueName="[0-1049]MappingParser" Expanded="true" />
-    <Node UniqueName="[0-1050]MappingParser.Tests" Expanded="true" />
+    <Node UniqueName="[0-1050]C:\projects\github\ObfuscarMappingParser\MappingParser.Tests\bin\Debug\MappingParser.Tests.exe" Expanded="true" />
+    <Node UniqueName="[0-1051]MappingParser" Expanded="true" />
+    <Node UniqueName="[0-1052]MappingParser.Tests" Expanded="true" />
   </Nodes>
 </VisualState>

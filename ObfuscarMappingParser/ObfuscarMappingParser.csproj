@@ -57,15 +57,13 @@
       <HintPath>Shared\BrokenEvent.Shared.dll</HintPath>
     </Reference>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <Private>True</Private>
+      <HintPath>Shared\envdte.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLine.cs" />
@@ -83,9 +81,9 @@
     <Compile Include="Forms\CrashLogForm.Designer.cs">
       <DependentUpon>CrashLogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EntityType.cs" />
+    <Compile Include="Items\EntityType.cs" />
     <Compile Include="IEntitySearcher.cs" />
-    <Compile Include="INamedEntity.cs" />
+    <Compile Include="Items\INamedEntity.cs" />
     <Compile Include="Forms\LauncherForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,7 +97,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Mapping.cs" />
-    <Compile Include="EntityName.cs" />
+    <Compile Include="Items\EntityName.cs" />
     <Compile Include="MappingLoaderThread.cs" />
     <Compile Include="MappingReloaderThread.cs" />
     <Compile Include="ObfuscarParserException.cs" />
@@ -111,11 +109,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renamed.cs" />
-    <Compile Include="RenamedBase.cs" />
-    <Compile Include="RenamedClass.cs" />
-    <Compile Include="RenamedItem.cs" />
-    <Compile Include="Entity.cs" />
+    <Compile Include="Items\Renamed.cs" />
+    <Compile Include="Items\RenamedBase.cs" />
+    <Compile Include="Items\RenamedClass.cs" />
+    <Compile Include="Items\RenamedItem.cs" />
+    <Compile Include="Items\Entity.cs" />
     <Compile Include="Forms\SearchDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -227,6 +225,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\SkipPrefix.png" />
+    <None Include="res\github.png" />
+    <None Include="res\brokenevent.png" />
+    <None Include="res\trello.png" />
     <None Include="res\Collapse.png" />
     <None Include="res\Expand.png" />
     <None Include="res\Open.png" />
@@ -246,6 +248,7 @@
     <None Include="res\SimpleView.png" />
     <None Include="res\Method.png" />
     <None Include="res\Class.png" />
+    <Content Include="envdte.dll" />
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -216,10 +216,19 @@ namespace ObfuscarMappingParser
 
     #region Search
 
-    public SearchResults Search(string s, bool allowSubstitution)
+    public SearchResults Search(string s, bool allowSubstitution, bool filterPrefix)
     {
       if (string.IsNullOrEmpty(s))
         return null;
+
+      s = s.TrimStart(' ');
+
+      if (filterPrefix)
+      {
+        int i = s.IndexOf(' ');
+        if (i != -1)
+          s = s.Substring(i).TrimStart(' ');
+      }
 
       Entity entity = s;
       if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
@@ -372,9 +381,9 @@ namespace ObfuscarMappingParser
 
     #region Crashlog processing
 
-    public string ProcessCrashlogText(string text)
+    public string ProcessCrashlogText(string text, bool filterPrefix = true)
     {
-      List<SearchResults> results = ProcessCrashlog(text);
+      List<SearchResults> results = ProcessCrashlog(text, filterPrefix);
       StringBuilder sb = new StringBuilder();
       foreach (SearchResults result in results)
         sb.AppendLine(result.ToString());
@@ -382,23 +391,20 @@ namespace ObfuscarMappingParser
       return sb.ToString();
     }
 
-    public List<SearchResults> ProcessCrashlog(string text)
+    public List<SearchResults> ProcessCrashlog(string text, bool filterPrefix = true)
     {
       string[] strings = text.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
       List<SearchResults> results = new List<SearchResults>();
 
       foreach (string s in strings)
-        results.Add(ProcessCrashlogLine(s));
+        results.Add(ProcessCrashlogLine(s, filterPrefix));
 
       return results;
     }
 
-    private SearchResults ProcessCrashlogLine(string text)
+    private SearchResults ProcessCrashlogLine(string text, bool filterPrefix)
     {
-      text = text.TrimStart(' ');
-      if (text.StartsWith("at "))
-        text = text.Substring(3).TrimStart(' ');
-      return Search(text, true);
+      return Search(text, true, filterPrefix);
     }
 
     #endregion

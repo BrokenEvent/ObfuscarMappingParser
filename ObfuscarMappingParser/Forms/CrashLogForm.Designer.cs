@@ -31,6 +31,7 @@
       this.toolStrip1 = new System.Windows.Forms.ToolStrip();
       this.btnProcess = new System.Windows.Forms.ToolStripButton();
       this.btnOpen = new System.Windows.Forms.ToolStripButton();
+      this.btnSkipPrefix = new System.Windows.Forms.ToolStripButton();
       this.tbValue = new System.Windows.Forms.TextBox();
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.toolStrip1.SuspendLayout();
@@ -40,7 +41,8 @@
       // 
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnProcess,
-            this.btnOpen});
+            this.btnOpen,
+            this.btnSkipPrefix});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(587, 25);
@@ -61,10 +63,22 @@
       this.btnOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
       this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.btnOpen.Name = "btnOpen";
-      this.btnOpen.Size = new System.Drawing.Size(101, 22);
-      this.btnOpen.Text = "Load from file";
+      this.btnOpen.Size = new System.Drawing.Size(103, 22);
+      this.btnOpen.Text = "Load from File";
       this.btnOpen.ToolTipText = "Load crashlog from file";
       this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+      // 
+      // btnSkipPrefix
+      // 
+      this.btnSkipPrefix.Checked = true;
+      this.btnSkipPrefix.CheckOnClick = true;
+      this.btnSkipPrefix.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.btnSkipPrefix.Image = global::ObfuscarMappingParser.Properties.Resources.SkipPrefix;
+      this.btnSkipPrefix.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnSkipPrefix.Name = "btnSkipPrefix";
+      this.btnSkipPrefix.Size = new System.Drawing.Size(81, 22);
+      this.btnSkipPrefix.Text = "Skip prefix";
+      this.btnSkipPrefix.ToolTipText = "Enables skipping line prefix (at ...)";
       // 
       // tbValue
       // 
@@ -80,17 +94,20 @@
       // 
       this.openFileDialog.Filter = "All files (*.*)|*.*";
       // 
-      // CrashLog
+      // CrashLogForm
       // 
+      this.AllowDrop = true;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(587, 297);
       this.Controls.Add(this.tbValue);
       this.Controls.Add(this.toolStrip1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-      this.Name = "CrashLog";
+      this.Name = "CrashLogForm";
       this.ShowInTaskbar = false;
-      this.Text = "Stacktrace processor";
+      this.Text = "Stacktrace Processor";
+      this.DragDrop += new System.Windows.Forms.DragEventHandler(this.CrashLogForm_DragDrop);
+      this.DragOver += new System.Windows.Forms.DragEventHandler(this.CrashLogForm_DragOver);
       this.toolStrip1.ResumeLayout(false);
       this.toolStrip1.PerformLayout();
       this.ResumeLayout(false);
@@ -105,5 +122,6 @@
     private System.Windows.Forms.ToolStripButton btnProcess;
     private System.Windows.Forms.ToolStripButton btnOpen;
     private System.Windows.Forms.OpenFileDialog openFileDialog;
+    private System.Windows.Forms.ToolStripButton btnSkipPrefix;
   }
 }

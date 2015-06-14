@@ -38,6 +38,7 @@
       this.tbtnFull = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.tbtnShowOriginal = new System.Windows.Forms.ToolStripButton();
+      this.tbtnSkipPrefix = new System.Windows.Forms.ToolStripButton();
       this.pineappleTreeView = new BrokenEvent.Shared.TreeView.PineappleTreeView();
       this.toolStrip.SuspendLayout();
       this.SuspendLayout();
@@ -52,7 +53,8 @@
             this.tbtnSimple,
             this.tbtnFull,
             this.toolStripSeparator2,
-            this.tbtnShowOriginal});
+            this.tbtnShowOriginal,
+            this.tbtnSkipPrefix});
       this.toolStrip.Location = new System.Drawing.Point(0, 0);
       this.toolStrip.Name = "toolStrip";
       this.toolStrip.Size = new System.Drawing.Size(612, 25);
@@ -65,8 +67,8 @@
       this.tbtnOpenInTree.Image = global::ObfuscarMappingParser.Properties.Resources.Tree;
       this.tbtnOpenInTree.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tbtnOpenInTree.Name = "tbtnOpenInTree";
-      this.tbtnOpenInTree.Size = new System.Drawing.Size(92, 22);
-      this.tbtnOpenInTree.Text = "Open in tree";
+      this.tbtnOpenInTree.Size = new System.Drawing.Size(95, 22);
+      this.tbtnOpenInTree.Text = "Open in Tree";
       this.tbtnOpenInTree.Click += new System.EventHandler(this.tbtnOpenInTree_Click);
       // 
       // tbtnOpenInVS
@@ -76,7 +78,7 @@
       this.tbtnOpenInVS.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tbtnOpenInVS.Name = "tbtnOpenInVS";
       this.tbtnOpenInVS.Size = new System.Drawing.Size(103, 22);
-      this.tbtnOpenInVS.Text = "Open in editor";
+      this.tbtnOpenInVS.Text = "Open in Editor";
       this.tbtnOpenInVS.Click += new System.EventHandler(this.tbtnOpenInVS_Click);
       // 
       // toolStripSeparator1
@@ -134,10 +136,22 @@
       this.tbtnShowOriginal.ToolTipText = "Show original lines";
       this.tbtnShowOriginal.Click += new System.EventHandler(this.tbtnShowOriginal_Click);
       // 
+      // tbtnSkipPrefix
+      // 
+      this.tbtnSkipPrefix.Checked = true;
+      this.tbtnSkipPrefix.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.tbtnSkipPrefix.Image = global::ObfuscarMappingParser.Properties.Resources.SkipPrefix;
+      this.tbtnSkipPrefix.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.tbtnSkipPrefix.Name = "tbtnSkipPrefix";
+      this.tbtnSkipPrefix.Size = new System.Drawing.Size(92, 22);
+      this.tbtnSkipPrefix.Text = "Skip prefixex";
+      this.tbtnSkipPrefix.ToolTipText = "Skip prefixex in lines (at ...)";
+      this.tbtnSkipPrefix.Click += new System.EventHandler(this.tbtnSkipPrefix_Click);
+      // 
       // pineappleTreeView
       // 
       this.pineappleTreeView.AutoScroll = true;
-      this.pineappleTreeView.AutoScrollMinSize = new System.Drawing.Size(-17, 0);
+      this.pineappleTreeView.AutoScrollMinSize = new System.Drawing.Size(595, 0);
       this.pineappleTreeView.AutoSizeColumns = true;
       this.pineappleTreeView.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
       pineappleTreeColumn1.Width = 150;
@@ -150,11 +164,11 @@
       this.pineappleTreeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.pineappleTreeView.Location = new System.Drawing.Point(0, 25);
       this.pineappleTreeView.Name = "pineappleTreeView";
-      this.pineappleTreeView.SelectedNode = null;
       this.pineappleTreeView.ShowToolTip = true;
       this.pineappleTreeView.Size = new System.Drawing.Size(612, 347);
       this.pineappleTreeView.TabIndex = 1;
       this.pineappleTreeView.Text = "pineappleTreeView1";
+      this.pineappleTreeView.UseWindowsThemes = false;
       this.pineappleTreeView.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.pineappleTreeView_NodeSelect);
       // 
       // StacktraceAnalyerForm
@@ -164,6 +178,7 @@
       this.ClientSize = new System.Drawing.Size(612, 372);
       this.Controls.Add(this.pineappleTreeView);
       this.Controls.Add(this.toolStrip);
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
       this.Name = "StacktraceAnalyerForm";
@@ -189,6 +204,7 @@
     private System.Windows.Forms.ToolStripButton tbtnOpenInVS;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     private System.Windows.Forms.ToolStripButton tbtnShowOriginal;
+    private System.Windows.Forms.ToolStripButton tbtnSkipPrefix;
 
   }
 }

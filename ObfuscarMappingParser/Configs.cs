@@ -53,6 +53,7 @@ namespace ObfuscarMappingParser
     private bool showOriginal;
     private bool showUnicode;
     private bool simplifySystemNames;
+    private bool simplifyNullable;
 
     [Obfuscation(Exclude = true)]
     public enum SortingTypes
@@ -105,6 +106,12 @@ namespace ObfuscarMappingParser
       set { simplifySystemNames = value; }
     }
 
+    public bool SimplifyNullable
+    {
+      get { return simplifyNullable; }
+      set { simplifyNullable = value; }
+    }
+
     public VSOpener.VisualStudioVersion VisualStudioVersion
     {
       get { return visualStudioVersion; }
@@ -120,7 +127,8 @@ namespace ObfuscarMappingParser
     private class RecentItem
     {
       private string filename;
-      private List<string> pdbFiles = new List<string>();
+      private Dictionary<string, List<string>> additionalItems = new Dictionary<string, List<string>>();
+      private Dictionary<string, string> properties = new Dictionary<string, string>();
 
       public RecentItem(string filename)
       {
@@ -130,8 +138,22 @@ namespace ObfuscarMappingParser
       public RecentItem(NanoXmlElement el)
       {
         filename = el.GetAttribute("filename");
-        foreach (NanoXmlElement element in el.GetChildElements("Pdb"))
-          pdbFiles.Add(element.Value);
+
+        foreach (NanoXmlAttribute attribute in el.Attributes)
+          if (attribute.Name != "filename")
+            properties.Add(attribute.Name, attribute.Value);
+
+        foreach (NanoXmlElement element in el.ChildElements)
+        {
+          List<string> list;
+          if (!additionalItems.TryGetValue(element.Name, out list))
+          {
+            list = new List<string>();
+            additionalItems.Add(element.Name, list);
+          }
+
+          list.Add(element.Value);
+        }
       }
 
       public string Filename
@@ -139,16 +161,34 @@ namespace ObfuscarMappingParser
         get { return filename; }
       }
 
-      public IList<string> PdbFiles
+      public IList<string> this[string name]
       {
-        get { return pdbFiles; }
+        get
+        {
+          List<string> result;
+          if (!additionalItems.TryGetValue(name, out result))
+          {
+            result = new List<string>();
+            additionalItems.Add(name, result);
+          }
+          return result;
+        }
+      }
+
+      public Dictionary<string, string> Properties
+      {
+        get { return properties; }
       }
 
       public void Save(NanoXmlElement el)
       {
         el.AddAttribute("filename", filename);
-        foreach (string s in pdbFiles)
-          el.AppendChild("Pdb", s);
+        foreach (KeyValuePair<string, string> property in properties)
+          el.AddAttribute(property.Key, property.Value);
+
+        foreach (KeyValuePair<string, List<string>> item in additionalItems)
+          foreach (string s in item.Value)
+            el.AppendChild(item.Key, s);
       }
     }
 
@@ -182,31 +222,69 @@ namespace ObfuscarMappingParser
 
     public void AddRecentPdb(string filename, string pdb)
     {
-      foreach (RecentItem item in recents)
-        if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
-        {
-          item.PdbFiles.Add(pdb);
-          break;
-        }
+      AddRecentAdditional(filename, "Pdb", pdb);
     }
 
     public IList<string> GetRecentPdb(string filename)
     {
-      foreach (RecentItem item in recents)
-        if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
-          return item.PdbFiles;
-
-      return null;
+      return GetRecentAdditional(filename, "Pdb");
     }
 
     public void RemoveRecentPdb(string filename, string pdb)
     {
+      RemoveRecentAdditional(filename, "Pdb", pdb);
+    }
+
+    public void AddRecentAdditional(string filename, string name, string value)
+    {
       foreach (RecentItem item in recents)
         if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
         {
-          item.PdbFiles.Remove(pdb);
+          item[name].Add(value);
           break;
         }
+    }
+
+    public IList<string> GetRecentAdditional(string filename, string name)
+    {
+      foreach (RecentItem item in recents)
+        if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
+          return item[name];
+
+      return null;
+    }
+
+    public void RemoveRecentAdditional(string filename, string name, string value)
+    {
+      foreach (RecentItem item in recents)
+        if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+          item[name].Remove(value);
+          break;
+        }
+    }
+
+    public void AddRecentProperty(string filename, string name, string value)
+    {
+      foreach (RecentItem item in recents)
+        if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+          item.Properties[name] = value;
+          break;
+        }
+    }
+
+    public string GetRecentProperty(string filename, string name)
+    {
+      foreach (RecentItem item in recents)
+        if (string.Compare(item.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
+        {
+          string result;
+          item.Properties.TryGetValue(name, out result);
+          return result;
+        }
+
+      return null;
     }
 
     public bool HaveRecents
@@ -231,6 +309,7 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("ShowOriginal", ref showOriginal);
       settingsEl.GetValueIfExists("ShowUnicode", ref showUnicode);
       settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
+      settingsEl.GetValueIfExists("SimplifyNullable", ref simplifyNullable);
       settingsEl.GetEnumValueIfExists("SortingType", ref sortingType);
       settingsEl.GetEnumValueIfExists("VisualStudioVersion", ref visualStudioVersion);
     }
@@ -249,6 +328,7 @@ namespace ObfuscarMappingParser
       settingsEl.AppendChild(new NanoXmlElement("ShowOriginal", showOriginal.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("ShowUnicode", showUnicode.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("SimplifySystem", simplifySystemNames.ToString()));
+      settingsEl.AppendChild(new NanoXmlElement("SimplifyNullable", simplifyNullable.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("SortingType", sortingType.ToString()));
       settingsEl.AppendChild(new NanoXmlElement("VisualStudioVersion", visualStudioVersion.ToString()));
     }
@@ -263,6 +343,7 @@ namespace ObfuscarMappingParser
       showOriginal = true;
       showUnicode = false;
       simplifySystemNames = true;
+      simplifyNullable = true;
     }
   }
 }

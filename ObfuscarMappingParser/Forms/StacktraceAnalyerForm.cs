@@ -10,14 +10,16 @@ namespace ObfuscarMappingParser
   partial class StacktraceAnalyerForm : Form
   {
     private readonly MainForm mainForm;
+    private readonly string data;
     private List<SearchResults> results;
 
     public StacktraceAnalyerForm(MainForm mainForm, string data, string source)
     {
       this.mainForm = mainForm;
+      this.data = data;
       InitializeComponent();
       pineappleTreeView.ImageList = mainForm.IconsList;
-      Text = "Stacktrace analyzer: " + source;
+      Text = "Stacktrace Analyzer: " + source;
 
       tbtnShowOriginal.Checked = Configs.Instance.ShowOriginal;
 
@@ -289,6 +291,21 @@ namespace ObfuscarMappingParser
     private void tbtnShowOriginal_Click(object sender, EventArgs e)
     {
       Configs.Instance.ShowOriginal = tbtnShowOriginal.Checked = !Configs.Instance.ShowOriginal;
+      BuildTree();
+    }
+
+    private void tbtnSkipPrefix_Click(object sender, EventArgs e)
+    {
+      try
+      {
+        results = mainForm.Mapping.ProcessCrashlog(data, !tbtnSkipPrefix.Checked);
+      }
+      catch (Exception)
+      {
+        return;
+      }
+
+      tbtnSkipPrefix.Checked = !tbtnSkipPrefix.Checked;
       BuildTree();
     }
   }

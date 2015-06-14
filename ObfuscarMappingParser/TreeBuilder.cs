@@ -303,7 +303,7 @@ namespace ObfuscarMappingParser
 
       bool containsUnicode = false;
       for (int i = 0; i < str.Length; i++)
-        if (str[i] > 255)
+        if (str[i] > 255 && str[i] != '→')
         {
           containsUnicode = true;
           break;
@@ -314,7 +314,7 @@ namespace ObfuscarMappingParser
 
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < str.Length; i++)
-        if (str[i] > 255)
+        if (str[i] > 255 && str[i] != '→')
         {
           sb.Append("\\u");
           sb.Append(((int)str[i]).ToString("X4"));

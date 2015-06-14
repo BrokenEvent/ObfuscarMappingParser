@@ -37,6 +37,7 @@
       this.lvItems.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chItem});
       this.lvItems.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.lvItems.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.lvItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
       this.lvItems.HideSelection = false;
       this.lvItems.Location = new System.Drawing.Point(0, 0);

@@ -33,8 +33,6 @@
       this.btnOk = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
       this.odFile = new System.Windows.Forms.OpenFileDialog();
-      this.lblAppVersion = new System.Windows.Forms.Label();
-      this.lblAppName = new System.Windows.Forms.Label();
       this.btnBrowse = new System.Windows.Forms.Button();
       this.lvFiles = new System.Windows.Forms.ListView();
       this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -69,30 +67,10 @@
       this.odFile.FileName = "Mapping.xml";
       this.odFile.Filter = "Mapping XML files (*.xml)|*.xml";
       // 
-      // lblAppVersion
-      // 
-      this.lblAppVersion.AutoSize = true;
-      this.lblAppVersion.BackColor = System.Drawing.Color.Transparent;
-      this.lblAppVersion.Location = new System.Drawing.Point(57, 29);
-      this.lblAppVersion.Name = "lblAppVersion";
-      this.lblAppVersion.Size = new System.Drawing.Size(35, 13);
-      this.lblAppVersion.TabIndex = 4;
-      this.lblAppVersion.Text = "label1";
-      // 
-      // lblAppName
-      // 
-      this.lblAppName.AutoSize = true;
-      this.lblAppName.BackColor = System.Drawing.Color.Transparent;
-      this.lblAppName.Font = new System.Drawing.Font("Tahoma", 16F);
-      this.lblAppName.Location = new System.Drawing.Point(55, 3);
-      this.lblAppName.Name = "lblAppName";
-      this.lblAppName.Size = new System.Drawing.Size(258, 27);
-      this.lblAppName.TabIndex = 3;
-      this.lblAppName.Text = "Obfuscar mapping parser";
-      // 
       // btnBrowse
       // 
-      this.btnBrowse.Location = new System.Drawing.Point(12, 267);
+      this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.btnBrowse.Location = new System.Drawing.Point(15, 310);
       this.btnBrowse.Name = "btnBrowse";
       this.btnBrowse.Size = new System.Drawing.Size(75, 23);
       this.btnBrowse.TabIndex = 6;
@@ -110,7 +88,7 @@
       this.lvFiles.MultiSelect = false;
       this.lvFiles.Name = "lvFiles";
       this.lvFiles.ShowItemToolTips = true;
-      this.lvFiles.Size = new System.Drawing.Size(431, 186);
+      this.lvFiles.Size = new System.Drawing.Size(431, 215);
       this.lvFiles.SmallImageList = this.ilIcon;
       this.lvFiles.TabIndex = 5;
       this.lvFiles.UseCompatibleStateImageBehavior = false;
@@ -130,7 +108,7 @@
       this.lblFiles.AutoSize = true;
       this.lblFiles.Location = new System.Drawing.Point(12, 59);
       this.lblFiles.Name = "lblFiles";
-      this.lblFiles.Size = new System.Drawing.Size(136, 13);
+      this.lblFiles.Size = new System.Drawing.Size(149, 13);
       this.lblFiles.TabIndex = 7;
       this.lblFiles.Text = "Select mapping file to open";
       // 
@@ -146,15 +124,17 @@
       this.Controls.Add(this.lblFiles);
       this.Controls.Add(this.btnBrowse);
       this.Controls.Add(this.lvFiles);
-      this.Controls.Add(this.lblAppVersion);
-      this.Controls.Add(this.lblAppName);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnOk);
-      this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+      this.FillColor = System.Drawing.Color.RoyalBlue;
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.HeaderColor = System.Drawing.Color.White;
+      this.HeaderPosition = new System.Drawing.Point(55, 7);
+      this.HeaderText = "Open file";
       this.Name = "LauncherForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-      this.Text = "Obfuscar Mapping Parser launcher";
+      this.Text = "Obfuscar Mapping Parser Launcher";
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.LauncherForm_DragDrop);
       this.DragOver += new System.Windows.Forms.DragEventHandler(this.LauncherForm_DragOver);
       this.ResumeLayout(false);
@@ -167,8 +147,6 @@
     private System.Windows.Forms.Button btnOk;
     private System.Windows.Forms.Button btnCancel;
     private System.Windows.Forms.OpenFileDialog odFile;
-    private System.Windows.Forms.Label lblAppVersion;
-    private System.Windows.Forms.Label lblAppName;
     private System.Windows.Forms.Button btnBrowse;
     private System.Windows.Forms.ListView lvFiles;
     private System.Windows.Forms.ColumnHeader chFilename;

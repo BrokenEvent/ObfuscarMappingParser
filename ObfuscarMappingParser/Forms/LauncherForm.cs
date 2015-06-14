@@ -7,13 +7,12 @@ namespace ObfuscarMappingParser
 {
   partial class LauncherForm : BaseForm
   {
-    private const int FILENAME_LENGTH = 75;
+    private const int FILENAME_LENGTH = 70;
 
     public LauncherForm()
     {
       InitializeComponent();
       chFilename.Width = lvFiles.ClientSize.Width;
-      VersionLabel = lblAppVersion;
 
       foreach (string s in Configs.Instance.Recents)
       {

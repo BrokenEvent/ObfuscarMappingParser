@@ -7,16 +7,30 @@ using BrokenEvent.Shared;
 
 namespace ObfuscarMappingParser
 {
-  public partial class StacktraceSource : Form
+  internal partial class StacktraceSource : BaseForm
   {
+    private readonly Mapping mapping;
     private string result;
     private string resultSource;
 
-    public StacktraceSource()
+    private const string RECENT_URLS = "StacktraceURL";
+    private const string RECENT_FILES = "StacktraceFile";
+
+    public StacktraceSource(Mapping mapping)
     {
+      this.mapping = mapping;
       InitializeComponent();
+
       tbFilename.SetCueText("Select file to read stacktrace");
       tbURL.SetCueText("Type URL to get stacktrace");
+
+      controlHighlight.OwnerForm = this;
+
+      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Filename, RECENT_URLS))
+        tbURL.AutoCompleteCustomSource.Add(s);
+
+      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Filename, RECENT_FILES))
+        tbFilename.AutoCompleteCustomSource.Add(s);
     }
 
     private void RadioButton_Click(object sender, EventArgs e)
@@ -46,12 +60,21 @@ namespace ObfuscarMappingParser
     private void LoadURL()
     {
       if (string.IsNullOrEmpty(tbURL.Text))
+      {
+        controlHighlight.Show(tbURL, "This field cannot be empty.");
         return;
+      }
 
       Thread thread = new Thread(UrlThreadStart);
-      btnOk.Enabled = btnCancel.Enabled = gbSource.Enabled = false;
-      Text = "Getting URL...";
+      pbProgress.Visible = lblStatus.Visible = true;
       thread.Start(tbURL.Text);
+      EnableRadioButtons(false);
+      tbURL.Enabled = false;
+    }
+
+    private void EnableRadioButtons(bool enable)
+    {
+      rbFile.Enabled = rbURL.Enabled = rbText.Enabled = enable;
     }
 
     private void UrlThreadStart(object p)
@@ -82,21 +105,26 @@ namespace ObfuscarMappingParser
       result = s;
       resultSource = tbURL.Text;
       DialogResult = DialogResult.OK;
+      Configs.Instance.AddRecentAdditional(mapping.Filename, RECENT_URLS, tbURL.Text);
       Close();
     }
 
     private void UrlThreadFailedInternal(Exception e)
     {
-      MessageBox.Show(this, "Failed to get data from URL: " + e.Message, "Failed to load URL", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      Text = "Stacktrace source";
-      btnOk.Enabled = btnCancel.Enabled = gbSource.Enabled = true;
+      controlHighlight.Show(tbURL, "Failed to get data from URL.");
+      pbProgress.Visible = lblStatus.Visible = false;
+      EnableRadioButtons(true);
+      tbURL.Enabled = true;
     }
 
     private bool LoadText()
     {
       if (string.IsNullOrEmpty(tbText.Text))
+      {
+        controlHighlight.Show(tbText, "This field cannot be empty.");
         return false;
-
+      }
+      
       result = tbText.Text;
       resultSource = "Text";
       return true;
@@ -105,11 +133,14 @@ namespace ObfuscarMappingParser
     private bool LoadFile()
     {
       if (string.IsNullOrEmpty(tbFilename.Text))
+      {
+        controlHighlight.Show(tbFilename, "This field cannot be empty.");
         return false;
+      }
 
       if (!File.Exists(tbFilename.Text))
       {
-        MessageBox.Show(this, "File\n" + tbFilename.Text + "\nNot exists.", "Unable to load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        controlHighlight.Show(tbFilename, "File not exists.");
         return false;
       }
 
@@ -118,12 +149,13 @@ namespace ObfuscarMappingParser
         result = File.ReadAllText(tbFilename.Text);
         resultSource = tbFilename.Text;
       }
-      catch (Exception e)
+      catch (Exception)
       {
-        MessageBox.Show(this, "Unable to load\n" + tbFilename.Text + "\n" + e.Message, "Unable to load file", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        controlHighlight.Show(tbFilename, "Unable to load file.");
         return false;
       }
 
+      Configs.Instance.AddRecentAdditional(mapping.Filename, RECENT_FILES, tbFilename.Text);
       return true;
     }
 
@@ -144,6 +176,42 @@ namespace ObfuscarMappingParser
         return;
 
       tbFilename.Text = openFileDialog.FileName;
+    }
+
+    private void StacktraceSource_DragOver(object sender, DragEventArgs e)
+    {
+      e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text)
+                   ? DragDropEffects.Move
+                   : DragDropEffects.None;
+    }
+
+    private void StacktraceSource_DragDrop(object sender, DragEventArgs e)
+    {
+      if (e.Data.GetDataPresent(DataFormats.FileDrop))
+      {
+        rbFile.Checked = true;
+        tbFilename.Text = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+        RadioButton_Click(sender, EventArgs.Empty);
+        return;
+      }
+
+      if (e.Data.GetDataPresent(DataFormats.StringFormat))
+      {
+        rbText.Checked = true;
+        tbText.Text = (string)e.Data.GetData(DataFormats.Text);
+        RadioButton_Click(sender, EventArgs.Empty);
+        return;
+      }
+    }
+
+    private void Control_Enter(object sender, EventArgs e)
+    {
+      controlHighlight.Hide();
+    }
+
+    private void StacktraceSource_Click(object sender, EventArgs e)
+    {
+      controlHighlight.Hide();
     }
   }
 }

@@ -281,10 +281,10 @@ namespace ObfuscarMappingParser
 
     private void tbSearch_KeyDown(object sender, KeyEventArgs e)
     {
-      if (e.KeyCode != Keys.Enter)
+      if (e.KeyCode != Keys.Enter || mapping == null) // how??
         return;
 
-      SearchResults result = mapping.Search(tbSearch.Text, false);
+      SearchResults result = mapping.Search(tbSearch.Text, false, false);
 
       if (result == null || !result.HasValue)
         return;
@@ -298,7 +298,7 @@ namespace ObfuscarMappingParser
         return;
       }
 
-      new SearchResultsForm(this, result, "Search results: " + tbSearch.Text).Show(this);
+      new SearchResultsForm(this, result, "Search Results: " + tbSearch.Text).Show(this);
       tbSearch.Clear();
     }
 
@@ -593,13 +593,18 @@ namespace ObfuscarMappingParser
         filename = odSourceFile.FileName;
       }
 
+      VSOpener.VisualStudioVersion version = Configs.Instance.VisualStudioVersion;
+      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, "editor");
+      if (vs != null)
+        version = (VSOpener.VisualStudioVersion)Enum.Parse(typeof(VSOpener.VisualStudioVersion), vs);
+
       try
       {
-        VSOpener.OpenInVisualStudio(filename, line, Configs.Instance.VisualStudioVersion);
+        VSOpener.OpenInVisualStudio(filename, line, version);
       }
       catch (Exception ex)
       {
-        if (Configs.Instance.VisualStudioVersion != VSOpener.VisualStudioVersion.Notepad)
+        if (version != VSOpener.VisualStudioVersion.Notepad)
           MessageBox.Show(
               this,
               "Failed to open in Visual Studio:\n" + filename + ":" + line + "\n" + ex.Message + "\nTry to use another version of Visual Studio.",
@@ -662,7 +667,7 @@ namespace ObfuscarMappingParser
 
     private void miSettings_Click(object sender, EventArgs e)
     {
-      new SettingsForm().ShowDialog(this);
+      new SettingsForm(mapping).ShowDialog(this);
       if (mapping != null)
         BuildMapping();
     }
@@ -687,7 +692,7 @@ namespace ObfuscarMappingParser
 
     private void miStacktrace_Click(object sender, EventArgs e)
     {
-      StacktraceSource source = new StacktraceSource();
+      StacktraceSource source = new StacktraceSource(mapping);
       if (source.ShowDialog(this) != DialogResult.OK)
         return;
 

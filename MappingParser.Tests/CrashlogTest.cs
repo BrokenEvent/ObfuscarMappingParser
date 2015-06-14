@@ -332,11 +332,81 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void Test5Ru()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(@"Data\Mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test5_ru.txt"));
+      Assert.AreEqual(3, results.Count);
+
+      ResultTestHelperOk(
+          results,
+          0,
+          "AntiFreeze.Basic",
+          "void DrawGraph(Rectangle, Single, Single, Graphics)",
+          "void AntiFreeze.Basic.PingResultPanel.DrawGraph(Rectangle, Single, Single, Graphics)",
+          "void AntiFreeze.Basic.PingResultPanel.DrawGraph(System.Drawing.Rectangle, System.Single, System.Single, System.Drawing.Graphics)"
+        );
+
+      ResultTestHelperOk(
+          results,
+          1,
+          "AntiFreeze.Core",
+          "void Draw(Graphics)",
+          "void AntiFreeze.Core.GraphResultPanel.Draw(Graphics)",
+          "void AntiFreeze.Core.GraphResultPanel.Draw(System.Drawing.Graphics)"
+        );
+
+      ResultTestHelperSubstitution(
+          results,
+          2,
+          "void OnPaint(PaintEventArgs)",
+          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)",
+          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)"
+        );
+    }
+
+    [Test]
+    public void Test5Nl()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(@"Data\Mapping.xml");
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test5_nl.txt"));
+      Assert.AreEqual(3, results.Count);
+
+      ResultTestHelperOk(
+          results,
+          0,
+          "AntiFreeze.Basic",
+          "void DrawGraph(Rectangle, Single, Single, Graphics)",
+          "void AntiFreeze.Basic.PingResultPanel.DrawGraph(Rectangle, Single, Single, Graphics)",
+          "void AntiFreeze.Basic.PingResultPanel.DrawGraph(System.Drawing.Rectangle, System.Single, System.Single, System.Drawing.Graphics)"
+        );
+
+      ResultTestHelperOk(
+          results,
+          1,
+          "AntiFreeze.Core",
+          "void Draw(Graphics)",
+          "void AntiFreeze.Core.GraphResultPanel.Draw(Graphics)",
+          "void AntiFreeze.Core.GraphResultPanel.Draw(System.Drawing.Graphics)"
+        );
+
+      ResultTestHelperSubstitution(
+          results,
+          2,
+          "void OnPaint(PaintEventArgs)",
+          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)",
+          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)"
+        );
+    }
+
+    [Test]
     public void Test1Broken()
     {
       Configs.Instance.SimplifySystemNames = false;
       Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test1_broken.txt"));
+      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test1_broken.txt"), false);
 
       Assert.AreEqual(5, results.Count);
 

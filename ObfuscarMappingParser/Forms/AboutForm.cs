@@ -30,23 +30,11 @@ namespace ObfuscarMappingParser
       }
     }
 
-    private void llblObfuscar_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void Hyperlink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
       try
       {
-        Process.Start(llblObfuscar.Text);
-      }
-      catch (Win32Exception ex)
-      {
-        MessageBox.Show(this, "Failed to start web-browser: " + ex.Message, "Failed to start web-browser.");
-      }
-    }
-
-    private void llblWebSite_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-      try
-      {
-        Process.Start(llblWebSite.Text);
+        Process.Start(((LinkLabel)sender).Text);
       }
       catch (Win32Exception ex)
       {

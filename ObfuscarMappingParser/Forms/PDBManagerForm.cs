@@ -7,7 +7,7 @@ using BrokenEvent.Shared;
 
 namespace ObfuscarMappingParser
 {
-  partial class PDBManagerForm : Form
+  partial class PDBManagerForm : BaseForm
   {
     private readonly IList<PDBFile> files;
     private readonly MainForm mainForm;

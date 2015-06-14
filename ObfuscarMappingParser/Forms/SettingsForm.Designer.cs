@@ -28,77 +28,42 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.tabControl = new System.Windows.Forms.TabControl();
-      this.tpVisualStudio = new System.Windows.Forms.TabPage();
       this.lbVS = new System.Windows.Forms.ListBox();
       this.lblVS = new System.Windows.Forms.Label();
-      this.tpNaming = new System.Windows.Forms.TabPage();
       this.cbSimplifySystemNames = new System.Windows.Forms.CheckBox();
       this.cbShowUnicode = new System.Windows.Forms.CheckBox();
       this.btnOk = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
-      this.tabControl.SuspendLayout();
-      this.tpVisualStudio.SuspendLayout();
-      this.tpNaming.SuspendLayout();
+      this.cbApplyVsToProject = new System.Windows.Forms.CheckBox();
+      this.cbSimplifyNullable = new System.Windows.Forms.CheckBox();
+      this.cbGroupByModules = new System.Windows.Forms.CheckBox();
+      this.cbGroupByNamespaces = new System.Windows.Forms.CheckBox();
+      this.cbUseColumns = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
-      // 
-      // tabControl
-      // 
-      this.tabControl.Controls.Add(this.tpVisualStudio);
-      this.tabControl.Controls.Add(this.tpNaming);
-      this.tabControl.Location = new System.Drawing.Point(12, 12);
-      this.tabControl.Name = "tabControl";
-      this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(291, 209);
-      this.tabControl.TabIndex = 0;
-      // 
-      // tpVisualStudio
-      // 
-      this.tpVisualStudio.Controls.Add(this.lbVS);
-      this.tpVisualStudio.Controls.Add(this.lblVS);
-      this.tpVisualStudio.Location = new System.Drawing.Point(4, 22);
-      this.tpVisualStudio.Name = "tpVisualStudio";
-      this.tpVisualStudio.Padding = new System.Windows.Forms.Padding(3);
-      this.tpVisualStudio.Size = new System.Drawing.Size(283, 183);
-      this.tpVisualStudio.TabIndex = 0;
-      this.tpVisualStudio.Text = "External editor";
-      this.tpVisualStudio.UseVisualStyleBackColor = true;
       // 
       // lbVS
       // 
       this.lbVS.FormattingEnabled = true;
-      this.lbVS.Location = new System.Drawing.Point(9, 19);
+      this.lbVS.Location = new System.Drawing.Point(15, 76);
       this.lbVS.Name = "lbVS";
-      this.lbVS.Size = new System.Drawing.Size(268, 160);
+      this.lbVS.Size = new System.Drawing.Size(377, 121);
       this.lbVS.TabIndex = 1;
       // 
       // lblVS
       // 
       this.lblVS.AutoSize = true;
-      this.lblVS.Location = new System.Drawing.Point(6, 3);
+      this.lblVS.Location = new System.Drawing.Point(12, 60);
       this.lblVS.Name = "lblVS";
-      this.lblVS.Size = new System.Drawing.Size(176, 13);
+      this.lblVS.Size = new System.Drawing.Size(186, 13);
       this.lblVS.TabIndex = 0;
       this.lblVS.Text = "Select external editor to open files:";
-      // 
-      // tpNaming
-      // 
-      this.tpNaming.Controls.Add(this.cbSimplifySystemNames);
-      this.tpNaming.Controls.Add(this.cbShowUnicode);
-      this.tpNaming.Location = new System.Drawing.Point(4, 22);
-      this.tpNaming.Name = "tpNaming";
-      this.tpNaming.Padding = new System.Windows.Forms.Padding(3);
-      this.tpNaming.Size = new System.Drawing.Size(283, 183);
-      this.tpNaming.TabIndex = 1;
-      this.tpNaming.Text = "Naming";
-      this.tpNaming.UseVisualStyleBackColor = true;
       // 
       // cbSimplifySystemNames
       // 
       this.cbSimplifySystemNames.AutoSize = true;
-      this.cbSimplifySystemNames.Location = new System.Drawing.Point(20, 42);
+      this.cbSimplifySystemNames.Location = new System.Drawing.Point(15, 262);
       this.cbSimplifySystemNames.Name = "cbSimplifySystemNames";
-      this.cbSimplifySystemNames.Size = new System.Drawing.Size(239, 17);
+      this.cbSimplifySystemNames.Size = new System.Drawing.Size(241, 17);
       this.cbSimplifySystemNames.TabIndex = 1;
       this.cbSimplifySystemNames.Text = "Simplify system names (System.Int32 → int)";
       this.cbSimplifySystemNames.UseVisualStyleBackColor = true;
@@ -106,16 +71,17 @@
       // cbShowUnicode
       // 
       this.cbShowUnicode.AutoSize = true;
-      this.cbShowUnicode.Location = new System.Drawing.Point(20, 19);
+      this.cbShowUnicode.Location = new System.Drawing.Point(15, 239);
       this.cbShowUnicode.Name = "cbShowUnicode";
-      this.cbShowUnicode.Size = new System.Drawing.Size(158, 17);
+      this.cbShowUnicode.Size = new System.Drawing.Size(170, 17);
       this.cbShowUnicode.TabIndex = 0;
       this.cbShowUnicode.Text = "Show Unicode symbols as is";
       this.cbShowUnicode.UseVisualStyleBackColor = true;
       // 
       // btnOk
       // 
-      this.btnOk.Location = new System.Drawing.Point(143, 227);
+      this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnOk.Location = new System.Drawing.Point(236, 389);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(75, 23);
       this.btnOk.TabIndex = 1;
@@ -125,13 +91,64 @@
       // 
       // btnCancel
       // 
+      this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(224, 227);
+      this.btnCancel.Location = new System.Drawing.Point(317, 389);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(75, 23);
       this.btnCancel.TabIndex = 2;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
+      // 
+      // cbApplyVsToProject
+      // 
+      this.cbApplyVsToProject.AutoSize = true;
+      this.cbApplyVsToProject.Location = new System.Drawing.Point(15, 203);
+      this.cbApplyVsToProject.Name = "cbApplyVsToProject";
+      this.cbApplyVsToProject.Size = new System.Drawing.Size(370, 17);
+      this.cbApplyVsToProject.TabIndex = 3;
+      this.cbApplyVsToProject.Text = "Apply to current project (changes default setting when unchecked)";
+      this.cbApplyVsToProject.UseVisualStyleBackColor = true;
+      // 
+      // cbSimplifyNullable
+      // 
+      this.cbSimplifyNullable.AutoSize = true;
+      this.cbSimplifyNullable.Location = new System.Drawing.Point(15, 285);
+      this.cbSimplifyNullable.Name = "cbSimplifyNullable";
+      this.cbSimplifyNullable.Size = new System.Drawing.Size(213, 17);
+      this.cbSimplifyNullable.TabIndex = 4;
+      this.cbSimplifyNullable.Text = "Simplify nullable (Nullable<A> → A?)";
+      this.cbSimplifyNullable.UseVisualStyleBackColor = true;
+      // 
+      // cbGroupByModules
+      // 
+      this.cbGroupByModules.AutoSize = true;
+      this.cbGroupByModules.Location = new System.Drawing.Point(15, 331);
+      this.cbGroupByModules.Name = "cbGroupByModules";
+      this.cbGroupByModules.Size = new System.Drawing.Size(121, 17);
+      this.cbGroupByModules.TabIndex = 5;
+      this.cbGroupByModules.Text = "Group by modules";
+      this.cbGroupByModules.UseVisualStyleBackColor = true;
+      // 
+      // cbGroupByNamespaces
+      // 
+      this.cbGroupByNamespaces.AutoSize = true;
+      this.cbGroupByNamespaces.Location = new System.Drawing.Point(15, 308);
+      this.cbGroupByNamespaces.Name = "cbGroupByNamespaces";
+      this.cbGroupByNamespaces.Size = new System.Drawing.Size(182, 17);
+      this.cbGroupByNamespaces.TabIndex = 6;
+      this.cbGroupByNamespaces.Text = "Group by original namespaces";
+      this.cbGroupByNamespaces.UseVisualStyleBackColor = true;
+      // 
+      // cbUseColumns
+      // 
+      this.cbUseColumns.AutoSize = true;
+      this.cbUseColumns.Location = new System.Drawing.Point(15, 354);
+      this.cbUseColumns.Name = "cbUseColumns";
+      this.cbUseColumns.Size = new System.Drawing.Size(127, 17);
+      this.cbUseColumns.TabIndex = 7;
+      this.cbUseColumns.Text = "Use columns in tree";
+      this.cbUseColumns.UseVisualStyleBackColor = true;
       // 
       // SettingsForm
       // 
@@ -139,37 +156,48 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(311, 259);
+      this.ClientSize = new System.Drawing.Size(404, 421);
       this.ControlBox = false;
+      this.Controls.Add(this.cbUseColumns);
+      this.Controls.Add(this.cbGroupByNamespaces);
+      this.Controls.Add(this.cbGroupByModules);
+      this.Controls.Add(this.cbSimplifyNullable);
+      this.Controls.Add(this.cbApplyVsToProject);
+      this.Controls.Add(this.cbSimplifySystemNames);
+      this.Controls.Add(this.lblVS);
+      this.Controls.Add(this.cbShowUnicode);
+      this.Controls.Add(this.lbVS);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnOk);
-      this.Controls.Add(this.tabControl);
-      this.Font = new System.Drawing.Font("Tahoma", 8.25F);
+      this.FillColor = System.Drawing.Color.RoyalBlue;
+      this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+      this.HeaderColor = System.Drawing.Color.White;
+      this.HeaderPosition = new System.Drawing.Point(55, 7);
+      this.HeaderText = "Settings";
       this.Name = "SettingsForm";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-      this.Text = "Obfuscar mapping parser settings";
-      this.tabControl.ResumeLayout(false);
-      this.tpVisualStudio.ResumeLayout(false);
-      this.tpVisualStudio.PerformLayout();
-      this.tpNaming.ResumeLayout(false);
-      this.tpNaming.PerformLayout();
+      this.Text = "Obfuscar Mapping Parser Settings";
+      this.Paint += new System.Windows.Forms.PaintEventHandler(this.SettingsForm_Paint);
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
-    private System.Windows.Forms.TabControl tabControl;
-    private System.Windows.Forms.TabPage tpVisualStudio;
     private System.Windows.Forms.ListBox lbVS;
     private System.Windows.Forms.Label lblVS;
     private System.Windows.Forms.Button btnOk;
     private System.Windows.Forms.Button btnCancel;
-    private System.Windows.Forms.TabPage tpNaming;
     private System.Windows.Forms.CheckBox cbSimplifySystemNames;
     private System.Windows.Forms.CheckBox cbShowUnicode;
+    private System.Windows.Forms.CheckBox cbApplyVsToProject;
+    private System.Windows.Forms.CheckBox cbSimplifyNullable;
+    private System.Windows.Forms.CheckBox cbGroupByModules;
+    private System.Windows.Forms.CheckBox cbGroupByNamespaces;
+    private System.Windows.Forms.CheckBox cbUseColumns;
   }
 }

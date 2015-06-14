@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 
+using BrokenEvent.Shared;
+
 namespace ObfuscarMappingParser
 {
-  partial class StatisticsForm : Form
+  partial class StatisticsForm : BaseForm
   {
     public StatisticsForm(Mapping mapping)
     {

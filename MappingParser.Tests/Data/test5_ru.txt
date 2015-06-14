@@ -1,0 +1,3 @@
+ эт b.bt.A(Rectangle , Single , Single , Graphics )
+ эт a.aW.A(Graphics )
+ эт b.bl.OnPaint(PaintEventArgs )
