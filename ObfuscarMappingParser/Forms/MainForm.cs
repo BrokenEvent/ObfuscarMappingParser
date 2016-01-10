@@ -171,7 +171,7 @@ namespace ObfuscarMappingParser
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
       this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
 
-      if (e is NanoXmlParsingException || e is ObfuscarParserException)
+      if (e is NanoXmlParsingException || e is ObfuscarParserException || e is IOException)
         MessageBox.Show(
           this,
           "Loading of\n" + filename + "\nis failed. Reason:" + ((Exception)e).Message,

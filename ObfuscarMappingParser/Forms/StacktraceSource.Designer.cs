@@ -50,7 +50,7 @@ namespace ObfuscarMappingParser
       // 
       this.btnBrowse.Location = new System.Drawing.Point(383, 132);
       this.btnBrowse.Name = "btnBrowse";
-      this.btnBrowse.Size = new System.Drawing.Size(75, 21);
+      this.btnBrowse.Size = new System.Drawing.Size(75, 23);
       this.btnBrowse.TabIndex = 6;
       this.btnBrowse.Text = "Browse";
       this.btnBrowse.UseVisualStyleBackColor = true;

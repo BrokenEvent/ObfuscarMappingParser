@@ -69,7 +69,7 @@
       this.lblAppVersion.AutoSize = true;
       this.lblAppVersion.BackColor = System.Drawing.Color.Transparent;
       this.lblAppVersion.ForeColor = System.Drawing.Color.White;
-      this.lblAppVersion.Location = new System.Drawing.Point(57, 29);
+      this.lblAppVersion.Location = new System.Drawing.Point(57, 32);
       this.lblAppVersion.Name = "lblAppVersion";
       this.lblAppVersion.Size = new System.Drawing.Size(38, 13);
       this.lblAppVersion.TabIndex = 2;
@@ -83,7 +83,7 @@
       this.lblCopyright.Name = "lblCopyright";
       this.lblCopyright.Size = new System.Drawing.Size(250, 13);
       this.lblCopyright.TabIndex = 3;
-      this.lblCopyright.Text = "©2014 - 2015, Broken Event. All rights reserved.";
+      this.lblCopyright.Text = "©2014 - 2016, Broken Event. All rights reserved.";
       // 
       // lblMessage
       // 

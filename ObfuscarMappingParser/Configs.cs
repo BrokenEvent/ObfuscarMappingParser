@@ -310,8 +310,8 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("ShowUnicode", ref showUnicode);
       settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
       settingsEl.GetValueIfExists("SimplifyNullable", ref simplifyNullable);
-      settingsEl.GetEnumValueIfExists("SortingType", ref sortingType);
-      settingsEl.GetEnumValueIfExists("VisualStudioVersion", ref visualStudioVersion);
+      settingsEl.GetValueIfExists("SortingType", ref sortingType);
+      settingsEl.GetValueIfExists("VisualStudioVersion", ref visualStudioVersion);
     }
 
     protected override void Save(NanoXmlElement doc)
