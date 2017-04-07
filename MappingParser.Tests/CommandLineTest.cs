@@ -56,9 +56,9 @@ namespace MappingParser.Tests
     {
       string filename;
 
-      Write(File.ReadAllText(@"Data\test1.txt") + "\r\n");
+      Write(TestHelper.ReadAllText(@"Data\test1.txt") + "\r\n");
 
-      Assert.AreEqual(false, CommandLine.ProcessCommandline(out filename, new string[] { @"Data\Mapping.xml", "-c" }));
+      Assert.AreEqual(false, CommandLine.ProcessCommandline(out filename, new string[] { TestHelper.TranslatePath(@"Data\Mapping.xml"), "-c" }));
       Expect(@"void AntiFreeze.Core.DataBase.GetReader(IDbCommand, string)
 void AntiFreeze.Core.DataBase.GetReader(string)
 void AntiFreeze.NET.NativeAPI.SetupNativeAPI()

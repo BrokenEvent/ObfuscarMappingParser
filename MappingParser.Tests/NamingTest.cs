@@ -10,7 +10,7 @@ namespace MappingParser.Tests
     public void ClassTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
 
       // [ModuleOld]NsOld.ClassOld -> [ModuleNew]NsNew.ClassNew
@@ -37,7 +37,7 @@ namespace MappingParser.Tests
     public void FieldTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -70,7 +70,7 @@ namespace MappingParser.Tests
     public void GenericFieldTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -103,7 +103,7 @@ namespace MappingParser.Tests
     public void GenericFieldSimplfyTest()
     {
       Configs.Instance.SimplifySystemNames = true;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -136,7 +136,7 @@ namespace MappingParser.Tests
     public void PropertyTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -169,7 +169,7 @@ namespace MappingParser.Tests
     public void PropertySimplifyTest()
     {
       Configs.Instance.SimplifySystemNames = true;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -202,7 +202,7 @@ namespace MappingParser.Tests
     public void StringResultMethodTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -236,7 +236,7 @@ namespace MappingParser.Tests
     public void StringParamMethodTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -270,7 +270,7 @@ namespace MappingParser.Tests
     public void GenericMethodTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -304,7 +304,7 @@ namespace MappingParser.Tests
     public void TwoParamMethodTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -342,7 +342,7 @@ namespace MappingParser.Tests
     public void SomethingWickedTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -374,7 +374,7 @@ namespace MappingParser.Tests
     public void SubclassTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -402,7 +402,7 @@ namespace MappingParser.Tests
     public void SubclassMethodTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
       RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
@@ -437,7 +437,7 @@ namespace MappingParser.Tests
     public void SubclassMethodWithParamTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
       RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
@@ -474,7 +474,7 @@ namespace MappingParser.Tests
     public void SubclassMethodWithResultTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
       RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
@@ -509,7 +509,7 @@ namespace MappingParser.Tests
     public void SkippedByOldNameSubclassTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -538,7 +538,7 @@ namespace MappingParser.Tests
     public void SkippedByNewNameSubclassTest()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
@@ -566,7 +566,7 @@ namespace MappingParser.Tests
     [Test]
     public void StatisticsTest()
     {
-      Mapping mapping = new Mapping(@"Data\NamingTestMapping.xml");
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(8, mapping.TotalMethodsCount);
       Assert.AreEqual(4, mapping.TotalClassesCount);
       Assert.AreEqual(3, mapping.TotalSubclassesCount);

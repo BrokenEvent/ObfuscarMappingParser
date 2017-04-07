@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.IO;
+
 using NUnit.Framework;
 using ObfuscarMappingParser;
 
@@ -74,8 +74,8 @@ namespace MappingParser.Tests
     public void Test1()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test1.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test1.txt"));
 
       Assert.AreEqual(5, results.Count);
 
@@ -129,8 +129,8 @@ namespace MappingParser.Tests
     public void Test2()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test2.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test2.txt"));
 
       Assert.AreEqual(1, results.Count);
 
@@ -148,8 +148,8 @@ namespace MappingParser.Tests
     public void Test3()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test3.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test3.txt"));
 
       Assert.AreEqual(7, results.Count);
 
@@ -215,8 +215,8 @@ namespace MappingParser.Tests
     public void Test4()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test4.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test4.txt"));
       Assert.AreEqual(9, results.Count);
 
       ResultTestHelper(
@@ -300,8 +300,8 @@ namespace MappingParser.Tests
     public void Test5()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test5.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5.txt"));
       Assert.AreEqual(3, results.Count);
 
       ResultTestHelperOk(
@@ -335,8 +335,8 @@ namespace MappingParser.Tests
     public void Test5Ru()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test5_ru.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5_ru.txt"));
       Assert.AreEqual(3, results.Count);
 
       ResultTestHelperOk(
@@ -370,8 +370,8 @@ namespace MappingParser.Tests
     public void Test5Nl()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test5_nl.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5_nl.txt"));
       Assert.AreEqual(3, results.Count);
 
       ResultTestHelperOk(
@@ -405,8 +405,8 @@ namespace MappingParser.Tests
     public void Test1Broken()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test1_broken.txt"), false);
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test1_broken.txt"), false);
 
       Assert.AreEqual(5, results.Count);
 
@@ -456,8 +456,8 @@ namespace MappingParser.Tests
     public void Test6()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\Mapping_Parser.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test6.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping_Parser.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test6.txt"));
 
       Assert.AreEqual(6, results.Count);
 
@@ -515,8 +515,8 @@ namespace MappingParser.Tests
     public void Test6Simpify()
     {
       Configs.Instance.SimplifySystemNames = true;
-      Mapping mapping = new Mapping(@"Data\Mapping_Parser.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\test6.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping_Parser.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test6.txt"));
 
       Assert.AreEqual(6, results.Count);
 
@@ -574,8 +574,8 @@ namespace MappingParser.Tests
     public void UnicodeTest1()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\unicode_mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\unicode_test1.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\unicode_mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\unicode_test1.txt"));
 
       Assert.AreEqual(5, results.Count);
 
@@ -624,8 +624,8 @@ namespace MappingParser.Tests
     public void UnicodeTest1Simplify()
     {
       Configs.Instance.SimplifySystemNames = true;
-      Mapping mapping = new Mapping(@"Data\unicode_mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\unicode_test1.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\unicode_mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\unicode_test1.txt"));
 
       Assert.AreEqual(5, results.Count);
 
@@ -674,8 +674,8 @@ namespace MappingParser.Tests
     public void UnicodeTest2()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\unicode_mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\unicode_test2.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\unicode_mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\unicode_test2.txt"));
 
       Assert.AreEqual(4, results.Count);
 
@@ -715,8 +715,8 @@ namespace MappingParser.Tests
     public void KoreanTest1()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\korean_mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\korean_test1.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\korean_mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\korean_test1.txt"));
 
       Assert.AreEqual(5, results.Count);
 
@@ -765,8 +765,8 @@ namespace MappingParser.Tests
     public void KoreanTest2()
     {
       Configs.Instance.SimplifySystemNames = false;
-      Mapping mapping = new Mapping(@"Data\korean_mapping.xml");
-      List<SearchResults> results = mapping.ProcessCrashlog(File.ReadAllText(@"Data\korean_test2.txt"));
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\korean_mapping.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\korean_test2.txt"));
 
       Assert.AreEqual(4, results.Count);
 
