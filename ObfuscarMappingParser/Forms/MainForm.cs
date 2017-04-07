@@ -12,6 +12,9 @@ using BrokenEvent.PdbReader;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.CrashReporter;
 using BrokenEvent.Shared.TreeView;
+using BrokenEvent.TaskDialogs;
+using BrokenEvent.TaskDialogs.Dialogs;
+
 using ObfuscarMappingParser.Properties;
 
 namespace ObfuscarMappingParser
@@ -129,15 +132,25 @@ namespace ObfuscarMappingParser
       {
         if (!File.Exists(s))
           continue;
-        DialogResult d = MessageBox.Show(this, "Attach related PDB file?\n" + s, "Attach PDB file", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+        TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
+            Handle,
+            "Attach PDB File",
+            "Attach related PDB file?",
+            s,
+            TaskDialogStandardIcon.Information,
+            new string[] { "Attach", "Don't attach" },
+            null,
+            new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, }
+          );
 
         switch (d)
         {
-          case DialogResult.Yes:
+          case TaskDialogResult.Yes:
             if (AttachPDB(s, this) && addToRecent)
               Configs.Instance.AddRecentPdb(mapping.Filename, s);
             break;
-          case DialogResult.No:
+          case TaskDialogResult.No:
             break;
           default:
             return;
@@ -171,14 +184,16 @@ namespace ObfuscarMappingParser
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
       this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
 
-      if (e is NanoXmlParsingException || e is ObfuscarParserException || e is IOException)
-        MessageBox.Show(
-          this,
-          "Loading of\n" + filename + "\nis failed. Reason:" + ((Exception)e).Message,
-          "Mapping loading failed",
-          MessageBoxButtons.OK,
-          MessageBoxIcon.Error
-        );
+      if (e is NanoXmlParsingException ||
+          e is ObfuscarParserException ||
+          e is IOException)
+        TaskDialogHelper.ShowMessageBox(
+            Handle,
+            "Mapping Loading Failed",
+            "Loading of mapping file is failed.",
+            "File:\n" + filename + "\nReason: " + ((Exception)e).Message,
+            TaskDialogStandardIcon.Error
+          );
       else
         CrashHandler.Instance.MakePromblemReport(
             new CrashReportInfo(
@@ -226,13 +241,13 @@ namespace ObfuscarMappingParser
       this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
 
       if (e is NanoXmlParsingException || e is ObfuscarParserException)
-        MessageBox.Show(
-          this,
-          "Reloading of\n" + filename + "\nis failed. Reason:" + ((Exception)e).Message,
-          "Mapping loading failed",
-          MessageBoxButtons.OK,
-          MessageBoxIcon.Error
-        );
+        TaskDialogHelper.ShowMessageBox(
+            Handle,
+            "Mapping Loading Failed",
+            "Loading of mapping file is failed.",
+            "File:\n" + filename + "\nReason: " + ((Exception)e).Message,
+            TaskDialogStandardIcon.Error
+          );
       else
         CrashHandler.Instance.MakePromblemReport(
             new CrashReportInfo(
@@ -605,12 +620,12 @@ namespace ObfuscarMappingParser
       catch (Exception ex)
       {
         if (version != VSOpener.VisualStudioVersion.Notepad)
-          MessageBox.Show(
-              this,
-              "Failed to open in Visual Studio:\n" + filename + ":" + line + "\n" + ex.Message + "\nTry to use another version of Visual Studio.",
-              "Failed to open in Visual Studio",
-              MessageBoxButtons.OK,
-              MessageBoxIcon.Error
+          TaskDialogHelper.ShowMessageBox(
+              Handle,
+              "Failed to Open in Visual Studio",
+              "Failed to open in Visual Studio. Try to use another version of Visual Studio.",
+              filename + ":" + line + "\n" + ex.Message,
+              TaskDialogStandardIcon.Error
             );
         else
           MessageBox.Show( this, "Unable to open\n" + filename + ":" + line, "Failed to open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -756,13 +771,22 @@ namespace ObfuscarMappingParser
       {
         if (string.Compare(Path.GetExtension(file).ToLower(), ".pdb", StringComparison.Ordinal) == 0)
         {
-          DialogResult d = MessageBox.Show(this, "Attach related PDB file?\n" + file, "Attach PDB file", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+          TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
+              Handle,
+              "Attach PDB File",
+              "Attach related PDB file?",
+              file,
+              TaskDialogStandardIcon.Information,
+              new string[] { "Attach", "Don't attach", "Cancel operation" },
+              null,
+              new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, TaskDialogResult.Cancel,  }
+            );
           switch (d)
           {
-            case DialogResult.Yes:
+            case TaskDialogResult.Yes:
               AttachPDB(file, this);
               break;
-            case DialogResult.No:
+            case TaskDialogResult.No:
               break;
             default:
               return;
@@ -815,23 +839,29 @@ namespace ObfuscarMappingParser
 
       foreach (PDBFile pdbFile in pdbfiles)
         if (pdbFile.CheckFileModification() &&
-            MessageBox.Show(
-              this,
-              "PDB File\n" + pdbFile.Filename + "\nhas been modified. Reload?",
-              "Mapping change detected",
-              MessageBoxButtons.YesNo,
-              MessageBoxIcon.Question
-              ) == DialogResult.Yes)
+            TaskDialogHelper.ShowTaskDialog(
+                  Handle,
+                  "PDB File Change Detected",
+                  "External PDB file change detected. Reload?",
+                  pdbFile.Filename,
+                  TaskDialogStandardIcon.Information, 
+                  new string[]{"Reload", "Don't reload"},
+                  null,
+                  new TaskDialogResult[]{TaskDialogResult.Yes, TaskDialogResult.No}
+                ) == TaskDialogResult.Yes)
           pdbFile.ReloadFile();
 
       if (mapping.CheckModifications() &&
-          MessageBox.Show(
-              this,
-              "File\n" + mapping.Filename + "\nhas been modified. Reload?",
-              "Mapping change detected",
-              MessageBoxButtons.YesNo,
-              MessageBoxIcon.Question
-            ) == DialogResult.Yes)
+            TaskDialogHelper.ShowTaskDialog(
+                  Handle,
+                  "Mapping File Change Detected",
+                  "External mapping file change detected. Reload?",
+                  mapping.Filename,
+                  TaskDialogStandardIcon.Information,
+                  new string[] { "Reload", "Don't reload" },
+                  null,
+                  new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No }
+                ) == TaskDialogResult.Yes)
         ReloadFile();
     }
 

@@ -169,9 +169,9 @@
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnOk.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnOk.Location = new System.Drawing.Point(289, 289);
+      this.btnOk.Location = new System.Drawing.Point(264, 289);
       this.btnOk.Name = "btnOk";
-      this.btnOk.Size = new System.Drawing.Size(75, 23);
+      this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 14;
       this.btnOk.Text = "OK";
       this.btnOk.UseVisualStyleBackColor = true;
@@ -213,7 +213,6 @@
       this.Font = new System.Drawing.Font("Tahoma", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.HeaderColor = System.Drawing.Color.White;
-      this.HeaderFont = new System.Drawing.Font("Segoe UI", 16F);
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "Mapping Statistics";
       this.MaximizeBox = false;

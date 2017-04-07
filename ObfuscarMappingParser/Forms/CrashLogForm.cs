@@ -2,6 +2,9 @@
 using System.IO;
 using System.Windows.Forms;
 
+using BrokenEvent.TaskDialogs;
+using BrokenEvent.TaskDialogs.Dialogs;
+
 namespace ObfuscarMappingParser
 {
   partial class CrashLogForm : Form
@@ -22,7 +25,13 @@ namespace ObfuscarMappingParser
       }
       catch (Exception ex)
       {
-        MessageBox.Show(this, "Unable to process crashlog. Reason: " + ex.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        TaskDialogHelper.ShowMessageBox(
+            Handle,
+            "Failed",
+            "Unable to process crashlog.",
+            "Reason: " + ex.Message,
+            TaskDialogStandardIcon.Error
+          );
       }
     }
 

@@ -42,21 +42,23 @@
       // 
       // btnOk
       // 
+      this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
       this.btnOk.Enabled = false;
-      this.btnOk.Location = new System.Drawing.Point(287, 310);
+      this.btnOk.Location = new System.Drawing.Point(237, 310);
       this.btnOk.Name = "btnOk";
-      this.btnOk.Size = new System.Drawing.Size(75, 23);
+      this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
       this.btnOk.Text = "OK";
       this.btnOk.UseVisualStyleBackColor = true;
       // 
       // btnCancel
       // 
+      this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(368, 310);
+      this.btnCancel.Location = new System.Drawing.Point(343, 310);
       this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(75, 23);
+      this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 2;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
@@ -72,7 +74,7 @@
       this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.btnBrowse.Location = new System.Drawing.Point(15, 310);
       this.btnBrowse.Name = "btnBrowse";
-      this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+      this.btnBrowse.Size = new System.Drawing.Size(100, 23);
       this.btnBrowse.TabIndex = 6;
       this.btnBrowse.Text = "Browse";
       this.btnBrowse.UseVisualStyleBackColor = true;
@@ -80,15 +82,18 @@
       // 
       // lvFiles
       // 
+      this.lvFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.lvFiles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chFilename});
       this.lvFiles.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
       this.lvFiles.HideSelection = false;
-      this.lvFiles.Location = new System.Drawing.Point(12, 75);
+      this.lvFiles.Location = new System.Drawing.Point(12, 82);
       this.lvFiles.MultiSelect = false;
       this.lvFiles.Name = "lvFiles";
       this.lvFiles.ShowItemToolTips = true;
-      this.lvFiles.Size = new System.Drawing.Size(431, 215);
+      this.lvFiles.Size = new System.Drawing.Size(431, 208);
       this.lvFiles.SmallImageList = this.ilIcon;
       this.lvFiles.TabIndex = 5;
       this.lvFiles.UseCompatibleStateImageBehavior = false;
@@ -106,9 +111,10 @@
       // lblFiles
       // 
       this.lblFiles.AutoSize = true;
+      this.lblFiles.Font = new System.Drawing.Font("Segoe UI", 11F);
       this.lblFiles.Location = new System.Drawing.Point(12, 59);
       this.lblFiles.Name = "lblFiles";
-      this.lblFiles.Size = new System.Drawing.Size(149, 13);
+      this.lblFiles.Size = new System.Drawing.Size(194, 20);
       this.lblFiles.TabIndex = 7;
       this.lblFiles.Text = "Select mapping file to open";
       // 
@@ -128,10 +134,9 @@
       this.Controls.Add(this.btnOk);
       this.FillColor = System.Drawing.Color.RoyalBlue;
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-      this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.HeaderColor = System.Drawing.Color.White;
       this.HeaderPosition = new System.Drawing.Point(55, 7);
-      this.HeaderText = "Open file";
+      this.HeaderText = "Open File";
       this.Name = "LauncherForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Obfuscar Mapping Parser Launcher";

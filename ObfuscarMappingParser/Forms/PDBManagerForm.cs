@@ -4,6 +4,8 @@ using System.IO;
 using System.Windows.Forms;
 using BrokenEvent.PdbReader;
 using BrokenEvent.Shared;
+using BrokenEvent.TaskDialogs;
+using BrokenEvent.TaskDialogs.Dialogs;
 
 namespace ObfuscarMappingParser
 {
@@ -53,7 +55,16 @@ namespace ObfuscarMappingParser
 
     private void btnDetach_Click(object sender, EventArgs e)
     {
-      if (MessageBox.Show(this, "Detach selected PDB files?", "Detach PDBs", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+      if (TaskDialogHelper.ShowTaskDialog(
+            Handle,
+            "Detach PDBs",
+            "Detach selected PDB files?",
+            null,
+            TaskDialogStandardIcon.Information, 
+            new string[]{"Detach", "Don't detach"},
+            null,
+            new TaskDialogResult[]{TaskDialogResult.Yes, TaskDialogResult.No}
+          ) != TaskDialogResult.Yes)
         return;
 
       foreach (ListViewItem item in lvList.SelectedItems)

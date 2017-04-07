@@ -47,10 +47,10 @@
             this.chGuid});
       this.lvList.FullRowSelect = true;
       this.lvList.HideSelection = false;
-      this.lvList.Location = new System.Drawing.Point(12, 74);
+      this.lvList.Location = new System.Drawing.Point(12, 79);
       this.lvList.Name = "lvList";
       this.lvList.ShowItemToolTips = true;
-      this.lvList.Size = new System.Drawing.Size(477, 196);
+      this.lvList.Size = new System.Drawing.Size(477, 191);
       this.lvList.TabIndex = 0;
       this.lvList.UseCompatibleStateImageBehavior = false;
       this.lvList.View = System.Windows.Forms.View.Details;
@@ -70,9 +70,9 @@
       // 
       this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnClose.Location = new System.Drawing.Point(417, 291);
+      this.btnClose.Location = new System.Drawing.Point(389, 291);
       this.btnClose.Name = "btnClose";
-      this.btnClose.Size = new System.Drawing.Size(75, 23);
+      this.btnClose.Size = new System.Drawing.Size(100, 23);
       this.btnClose.TabIndex = 1;
       this.btnClose.Text = "Close";
       this.btnClose.UseVisualStyleBackColor = true;
@@ -80,9 +80,10 @@
       // lblLoadedPDBs
       // 
       this.lblLoadedPDBs.AutoSize = true;
+      this.lblLoadedPDBs.Font = new System.Drawing.Font("Tahoma", 11F);
       this.lblLoadedPDBs.Location = new System.Drawing.Point(12, 58);
       this.lblLoadedPDBs.Name = "lblLoadedPDBs";
-      this.lblLoadedPDBs.Size = new System.Drawing.Size(82, 13);
+      this.lblLoadedPDBs.Size = new System.Drawing.Size(110, 18);
       this.lblLoadedPDBs.TabIndex = 2;
       this.lblLoadedPDBs.Text = "Attached PDBs:";
       // 
@@ -91,7 +92,7 @@
       this.btnAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.btnAttach.Location = new System.Drawing.Point(15, 291);
       this.btnAttach.Name = "btnAttach";
-      this.btnAttach.Size = new System.Drawing.Size(75, 23);
+      this.btnAttach.Size = new System.Drawing.Size(100, 23);
       this.btnAttach.TabIndex = 3;
       this.btnAttach.Text = "Attach";
       this.btnAttach.UseVisualStyleBackColor = true;
@@ -101,9 +102,9 @@
       // 
       this.btnDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.btnDetach.Enabled = false;
-      this.btnDetach.Location = new System.Drawing.Point(96, 291);
+      this.btnDetach.Location = new System.Drawing.Point(121, 291);
       this.btnDetach.Name = "btnDetach";
-      this.btnDetach.Size = new System.Drawing.Size(75, 23);
+      this.btnDetach.Size = new System.Drawing.Size(100, 23);
       this.btnDetach.TabIndex = 4;
       this.btnDetach.Text = "Detach";
       this.btnDetach.UseVisualStyleBackColor = true;
@@ -124,7 +125,6 @@
       this.FillColor = System.Drawing.Color.RoyalBlue;
       this.Font = new System.Drawing.Font("Tahoma", 8.25F);
       this.HeaderColor = System.Drawing.Color.White;
-      this.HeaderFont = new System.Drawing.Font("Segoe UI", 16F);
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "PDB Manager";
       this.MaximizeBox = false;
