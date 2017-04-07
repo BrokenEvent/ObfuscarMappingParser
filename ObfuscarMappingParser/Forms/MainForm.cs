@@ -692,7 +692,7 @@ namespace ObfuscarMappingParser
 
     private void miStacktrace_Click(object sender, EventArgs e)
     {
-      StacktraceSource source = new StacktraceSource(mapping);
+      StacktraceSourceForm source = new StacktraceSourceForm(mapping);
       if (source.ShowDialog(this) != DialogResult.OK)
         return;
 
@@ -838,6 +838,11 @@ namespace ObfuscarMappingParser
     private void miSearchOriginal_Click(object sender, EventArgs e)
     {
       new SearchDialog(this, true).ShowDialog(this);
+    }
+
+    private void miConvert_Click(object sender, EventArgs e)
+    {
+      new ConvertSettingsForm().ShowDialog(this);
     }
   }
 }

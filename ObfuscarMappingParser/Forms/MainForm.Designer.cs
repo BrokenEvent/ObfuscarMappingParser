@@ -84,6 +84,8 @@
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.TreeView.PineappleTreeView();
+      this.mmTools = new System.Windows.Forms.ToolStripMenuItem();
+      this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -214,6 +216,7 @@
             this.mmFile,
             this.miView,
             this.mmSearch,
+            this.mmTools,
             this.mmHelp});
       this.menuStrip.Location = new System.Drawing.Point(0, 0);
       this.menuStrip.Name = "menuStrip";
@@ -464,7 +467,7 @@
       // miAbout
       // 
       this.miAbout.Name = "miAbout";
-      this.miAbout.Size = new System.Drawing.Size(107, 22);
+      this.miAbout.Size = new System.Drawing.Size(152, 22);
       this.miAbout.Text = "About";
       this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
       // 
@@ -556,6 +559,21 @@
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
       // 
+      // mmTools
+      // 
+      this.mmTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miConvert});
+      this.mmTools.Name = "mmTools";
+      this.mmTools.Size = new System.Drawing.Size(48, 20);
+      this.mmTools.Text = "Tools";
+      // 
+      // miConvert
+      // 
+      this.miConvert.Name = "miConvert";
+      this.miConvert.Size = new System.Drawing.Size(152, 22);
+      this.miConvert.Text = "Convert...";
+      this.miConvert.Click += new System.EventHandler(this.miConvert_Click);
+      // 
       // MainForm
       // 
       this.AllowDrop = true;
@@ -641,6 +659,8 @@
     private System.Windows.Forms.ToolStripMenuItem miManagePDBs;
     private System.Windows.Forms.ToolStripMenuItem miReload;
     private System.Windows.Forms.ToolStripMenuItem miSearchOriginal;
+    private System.Windows.Forms.ToolStripMenuItem mmTools;
+    private System.Windows.Forms.ToolStripMenuItem miConvert;
   }
 }
 

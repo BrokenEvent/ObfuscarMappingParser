@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ObfuscarMappingParser</RootNamespace>
     <AssemblyName>ObfuscarMappingParser</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
@@ -37,6 +37,7 @@
     <DefineConstants>TRACE;DEBUG;LOCAL_SERVER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,16 +46,23 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>mainicon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BrokenEvent.NanoXml">
+      <HintPath>..\Libs\BrokenEvent.NanoXml.dll</HintPath>
+    </Reference>
     <Reference Include="BrokenEvent.PdbReader">
-      <HintPath>Libs\BrokenEvent.PdbReader.dll</HintPath>
+      <HintPath>..\Libs\BrokenEvent.PdbReader.dll</HintPath>
     </Reference>
     <Reference Include="BrokenEvent.Shared">
-      <HintPath>Shared\BrokenEvent.Shared.dll</HintPath>
+      <HintPath>..\Libs\BrokenEvent.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="BrokenEvent.TaskDialogs">
+      <HintPath>..\Libs\BrokenEvent.TaskDialogs.dll</HintPath>
     </Reference>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
@@ -75,11 +83,29 @@
     </Compile>
     <Compile Include="Configs.cs" />
     <Compile Include="CrashHandler.cs" />
+    <Compile Include="Forms\ConvertSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConvertSettingsForm.Designer.cs">
+      <DependentUpon>ConvertSettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CrashLogForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CrashLogForm.Designer.cs">
       <DependentUpon>CrashLogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ObjectViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ObjectViewerForm.Designer.cs">
+      <DependentUpon>ObjectViewerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TextViewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextViewerForm.Designer.cs">
+      <DependentUpon>TextViewerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Items\EntityType.cs" />
     <Compile Include="IEntitySearcher.cs" />
@@ -140,11 +166,11 @@
     <Compile Include="Forms\StacktraceAnalyerForm.Designer.cs">
       <DependentUpon>StacktraceAnalyerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StacktraceSource.cs">
+    <Compile Include="Forms\StacktraceSourceForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\StacktraceSource.Designer.cs">
-      <DependentUpon>StacktraceSource.cs</DependentUpon>
+    <Compile Include="Forms\StacktraceSourceForm.Designer.cs">
+      <DependentUpon>StacktraceSourceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\StatisticsForm.cs">
       <SubType>Form</SubType>
@@ -157,6 +183,9 @@
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConvertSettingsForm.resx">
+      <DependentUpon>ConvertSettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CrashLogForm.resx">
       <DependentUpon>CrashLogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,8 +195,14 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ObjectViewerForm.resx">
+      <DependentUpon>ObjectViewerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PDBManagerForm.resx">
       <DependentUpon>PDBManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TextViewerForm.resx">
+      <DependentUpon>TextViewerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -191,12 +226,13 @@
     <EmbeddedResource Include="Forms\StacktraceAnalyerForm.resx">
       <DependentUpon>StacktraceAnalyerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StacktraceSource.resx">
-      <DependentUpon>StacktraceSource.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\StacktraceSourceForm.resx">
+      <DependentUpon>StacktraceSourceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StatisticsForm.resx">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

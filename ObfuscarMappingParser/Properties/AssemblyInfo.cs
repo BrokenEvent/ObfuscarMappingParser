@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("ObfuscarMappingParser")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Obfuscar crashlogs processor")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("BrokenEvent")]
+[assembly: AssemblyCompany("Broken Event")]
 [assembly: AssemblyProduct("ObfuscarMappingParser")]
-[assembly: AssemblyCopyright("Copyright © 2014 - 2016")]
+[assembly: AssemblyCopyright("Copyright © 2014-2017, Broken Event")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.1327")]
-[assembly: AssemblyFileVersion("1.0.0.1327")]
+[assembly: AssemblyVersion("1.0.0.1841")]
+[assembly: AssemblyFileVersion("1.0.0.1841")]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("MappingParser.Tests", AllInternalsVisible = true)]

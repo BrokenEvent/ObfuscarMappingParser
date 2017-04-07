@@ -83,7 +83,7 @@
       this.lblCopyright.Name = "lblCopyright";
       this.lblCopyright.Size = new System.Drawing.Size(250, 13);
       this.lblCopyright.TabIndex = 3;
-      this.lblCopyright.Text = "©2014 - 2016, Broken Event. All rights reserved.";
+      this.lblCopyright.Text = "©2014 - 2017, Broken Event. All rights reserved.";
       // 
       // lblMessage
       // 

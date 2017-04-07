@@ -1,6 +1,8 @@
 /MappingParser.Tests/bin
 /MappingParser.Tests/obj
 /*.suo
+/.vs
+/**/.svn
 /ObfuscarMappingParser/obj
 /ObfuscarMappingParser/*.user
 /ObfuscarMappingParser/bin/Debug
@@ -11,3 +13,5 @@
 /ObfuscarMappingParser/bin/Release
 /MappingParser.Tests/TestResult.xml
 /ObfuscarMappingParser/bin
+/packages
+/Libs/*.pdb
