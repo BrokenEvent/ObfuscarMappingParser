@@ -72,6 +72,8 @@
       this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
       this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
       this.miSearchOriginal = new System.Windows.Forms.ToolStripMenuItem();
+      this.mmTools = new System.Windows.Forms.ToolStripMenuItem();
+      this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.mmHelp = new System.Windows.Forms.ToolStripMenuItem();
       this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -84,8 +86,6 @@
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.TreeView.PineappleTreeView();
-      this.mmTools = new System.Windows.Forms.ToolStripMenuItem();
-      this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -175,7 +175,6 @@
       this.miOpenBtn.Name = "miOpenBtn";
       this.miOpenBtn.Size = new System.Drawing.Size(131, 22);
       this.miOpenBtn.Text = "Open file...";
-      this.miOpenBtn.Click += new System.EventHandler(this.btnOpen_Click);
       // 
       // btnCrashLogs
       // 
@@ -186,7 +185,6 @@
       this.btnCrashLogs.Size = new System.Drawing.Size(81, 22);
       this.btnCrashLogs.Text = "Stacktrace";
       this.btnCrashLogs.ToolTipText = "Deobfuscate stacktrace";
-      this.btnCrashLogs.Click += new System.EventHandler(this.btnCrashLogs_Click);
       // 
       // toolStripSeparator1
       // 
@@ -247,7 +245,6 @@
       this.miOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
       this.miOpen.Size = new System.Drawing.Size(169, 22);
       this.miOpen.Text = "Open...";
-      this.miOpen.Click += new System.EventHandler(this.btnOpen_Click);
       // 
       // miRecents
       // 
@@ -260,7 +257,6 @@
       this.miReload.Name = "miReload";
       this.miReload.Size = new System.Drawing.Size(169, 22);
       this.miReload.Text = "Reload";
-      this.miReload.Click += new System.EventHandler(this.miReload_Click);
       // 
       // toolStripSeparator6
       // 
@@ -273,7 +269,6 @@
       this.miManagePDBs.Name = "miManagePDBs";
       this.miManagePDBs.Size = new System.Drawing.Size(169, 22);
       this.miManagePDBs.Text = "Manage .PDB files";
-      this.miManagePDBs.Click += new System.EventHandler(this.miManagePDBs_Click);
       // 
       // miAttachPDB
       // 
@@ -281,7 +276,6 @@
       this.miAttachPDB.Name = "miAttachPDB";
       this.miAttachPDB.Size = new System.Drawing.Size(169, 22);
       this.miAttachPDB.Text = "Attach .PDB file...";
-      this.miAttachPDB.Click += new System.EventHandler(this.miAttachPDB_Click);
       // 
       // toolStripSeparator2
       // 
@@ -293,7 +287,6 @@
       this.miExit.Name = "miExit";
       this.miExit.Size = new System.Drawing.Size(169, 22);
       this.miExit.Text = "Exit";
-      this.miExit.Click += new System.EventHandler(this.miExit_Click);
       // 
       // miView
       // 
@@ -394,14 +387,12 @@
       this.miStatistics.Name = "miStatistics";
       this.miStatistics.Size = new System.Drawing.Size(256, 22);
       this.miStatistics.Text = "Statistics";
-      this.miStatistics.Click += new System.EventHandler(this.miStatistics_Click);
       // 
       // miSettings
       // 
       this.miSettings.Name = "miSettings";
       this.miSettings.Size = new System.Drawing.Size(256, 22);
       this.miSettings.Text = "Settings...";
-      this.miSettings.Click += new System.EventHandler(this.miSettings_Click);
       // 
       // mmSearch
       // 
@@ -411,7 +402,6 @@
             this.toolStripSeparator8,
             this.miSearch,
             this.miSearchOriginal});
-      this.mmSearch.Enabled = false;
       this.mmSearch.Name = "mmSearch";
       this.mmSearch.Size = new System.Drawing.Size(54, 20);
       this.mmSearch.Text = "Search";
@@ -423,7 +413,6 @@
       this.miCrashlogs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
       this.miCrashlogs.Size = new System.Drawing.Size(246, 22);
       this.miCrashlogs.Text = "Deobfuscate Stacktrace...";
-      this.miCrashlogs.Click += new System.EventHandler(this.btnCrashLogs_Click);
       // 
       // miStacktrace
       // 
@@ -432,7 +421,6 @@
       this.miStacktrace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
       this.miStacktrace.Size = new System.Drawing.Size(246, 22);
       this.miStacktrace.Text = "Analyze Stacktrace...";
-      this.miStacktrace.Click += new System.EventHandler(this.miStacktrace_Click);
       // 
       // toolStripSeparator8
       // 
@@ -446,7 +434,6 @@
       this.miSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
       this.miSearch.Size = new System.Drawing.Size(246, 22);
       this.miSearch.Text = "Search...";
-      this.miSearch.Click += new System.EventHandler(this.miSearch_Click);
       // 
       // miSearchOriginal
       // 
@@ -454,7 +441,20 @@
       this.miSearchOriginal.Name = "miSearchOriginal";
       this.miSearchOriginal.Size = new System.Drawing.Size(246, 22);
       this.miSearchOriginal.Text = "Search for Original";
-      this.miSearchOriginal.Click += new System.EventHandler(this.miSearchOriginal_Click);
+      // 
+      // mmTools
+      // 
+      this.mmTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miConvert});
+      this.mmTools.Name = "mmTools";
+      this.mmTools.Size = new System.Drawing.Size(48, 20);
+      this.mmTools.Text = "Tools";
+      // 
+      // miConvert
+      // 
+      this.miConvert.Name = "miConvert";
+      this.miConvert.Size = new System.Drawing.Size(125, 22);
+      this.miConvert.Text = "Convert...";
       // 
       // mmHelp
       // 
@@ -467,9 +467,8 @@
       // miAbout
       // 
       this.miAbout.Name = "miAbout";
-      this.miAbout.Size = new System.Drawing.Size(152, 22);
+      this.miAbout.Size = new System.Drawing.Size(107, 22);
       this.miAbout.Text = "About";
-      this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
       // 
       // contextMenuStrip
       // 
@@ -489,28 +488,24 @@
       this.miCopyOldName.Name = "miCopyOldName";
       this.miCopyOldName.Size = new System.Drawing.Size(186, 22);
       this.miCopyOldName.Text = "Copy Old Name";
-      this.miCopyOldName.Click += new System.EventHandler(this.miCopyOldName_Click);
       // 
       // miCopyFullOldName
       // 
       this.miCopyFullOldName.Name = "miCopyFullOldName";
       this.miCopyFullOldName.Size = new System.Drawing.Size(186, 22);
       this.miCopyFullOldName.Text = "Copy Full Old Name";
-      this.miCopyFullOldName.Click += new System.EventHandler(this.miCopyFullOldName_Click);
       // 
       // miCopyNewName
       // 
       this.miCopyNewName.Name = "miCopyNewName";
       this.miCopyNewName.Size = new System.Drawing.Size(186, 22);
       this.miCopyNewName.Text = "Copy New Name";
-      this.miCopyNewName.Click += new System.EventHandler(this.miCopyNewName_Click);
       // 
       // miCopyFullNewName
       // 
       this.miCopyFullNewName.Name = "miCopyFullNewName";
       this.miCopyFullNewName.Size = new System.Drawing.Size(186, 22);
       this.miCopyFullNewName.Text = "Copy Full New Name";
-      this.miCopyFullNewName.Click += new System.EventHandler(this.miCopyFullNewName_Click);
       // 
       // toolStripSeparator7
       // 
@@ -523,7 +518,6 @@
       this.miOpenVS.Name = "miOpenVS";
       this.miOpenVS.Size = new System.Drawing.Size(186, 22);
       this.miOpenVS.Text = "Open in Editor";
-      this.miOpenVS.Click += new System.EventHandler(this.miOpenVS_Click);
       // 
       // odPDB
       // 
@@ -551,6 +545,7 @@
       this.ptvElements.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.ptvElements.Location = new System.Drawing.Point(0, 49);
       this.ptvElements.Name = "ptvElements";
+      this.ptvElements.SelectedNode = null;
       this.ptvElements.ShowToolTip = true;
       this.ptvElements.Size = new System.Drawing.Size(727, 479);
       this.ptvElements.TabIndex = 5;
@@ -558,21 +553,6 @@
       this.ptvElements.UseWindowsThemes = true;
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
-      // 
-      // mmTools
-      // 
-      this.mmTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miConvert});
-      this.mmTools.Name = "mmTools";
-      this.mmTools.Size = new System.Drawing.Size(48, 20);
-      this.mmTools.Text = "Tools";
-      // 
-      // miConvert
-      // 
-      this.miConvert.Name = "miConvert";
-      this.miConvert.Size = new System.Drawing.Size(152, 22);
-      this.miConvert.Text = "Convert...";
-      this.miConvert.Click += new System.EventHandler(this.miConvert_Click);
       // 
       // MainForm
       // 
@@ -589,6 +569,8 @@
       this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
       this.Text = "Obfuscar Mapping Parser";
       this.Activated += new System.EventHandler(this.MainForm_Activated);
+      this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+      this.Load += new System.EventHandler(this.MainForm_Load);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
       this.DragEnter += new System.Windows.Forms.DragEventHandler(this.MainForm_DragEnter);
       this.statusStrip.ResumeLayout(false);

@@ -26,10 +26,10 @@ namespace ObfuscarMappingParser
     private Configs()
     {
 #if DEBUG
-      LoadDefaults();
+      base.LoadDefaults();
 #endif
 
-      Load(GetConfigPath(false));
+      base.Load(GetConfigPath(false));
     }
 
     #endregion
@@ -44,16 +44,72 @@ namespace ObfuscarMappingParser
       get { return "configs.xml"; }
     }
 
+    #region Saveload
+
+    protected override void Load(NanoXmlElement doc)
+    {
+      NanoXmlElement recentsEl = doc.GetElement("Recents");
+      foreach (NanoXmlElement childElement in recentsEl.ChildElements)
+      {
+        if (File.Exists(childElement.GetAttribute("filename")))
+          recents.Add(new RecentItem(childElement));
+      }
+
+      NanoXmlElement settingsEl = doc.GetElement("Settings");
+      settingsEl.GetValueIfExists("ShowModules", ref showModules);
+      settingsEl.GetValueIfExists("GroupNamespaces", ref groupNamespaces);
+      settingsEl.GetValueIfExists("GroupModules", ref groupModules);
+      settingsEl.GetValueIfExists("UseColumns", ref useColumns);
+      settingsEl.GetValueIfExists("ShowOriginal", ref showOriginal);
+      settingsEl.GetValueIfExists("ShowUnicode", ref showUnicode);
+      settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
+      settingsEl.GetValueIfExists("SimplifyNullable", ref simplifyNullable);
+      settingsEl.GetValueIfExists("SortingType", ref sortingType);
+      settingsEl.GetValueIfExists("VisualStudioVersion", ref visualStudioVersion);
+
+      commandsElement = doc.GetElement("Actions");
+    }
+
+    protected override void Save(NanoXmlElement doc)
+    {
+      NanoXmlElement recentsEl = doc.AppendChild(new NanoXmlElement("Recents"));
+      foreach (RecentItem recent in recents)
+        recent.Save(recentsEl.AppendChild(new NanoXmlElement("Item")));
+
+      NanoXmlElement settingsEl = doc.AppendChild(new NanoXmlElement("Settings"));
+      settingsEl.AppendChild("ShowModules", showModules);
+      settingsEl.AppendChild("GroupNamespaces", groupNamespaces);
+      settingsEl.AppendChild("GroupModules", groupModules);
+      settingsEl.AppendChild("UseColumns", useColumns);
+      settingsEl.AppendChild("ShowOriginal", showOriginal);
+      settingsEl.AppendChild("ShowUnicode", showUnicode);
+      settingsEl.AppendChild("SimplifySystem", simplifySystemNames);
+      settingsEl.AppendChild("SimplifyNullable", simplifyNullable);
+      settingsEl.AppendChild("SortingType", sortingType);
+      settingsEl.AppendChild("VisualStudioVersion", visualStudioVersion);
+
+      if (commandsElement != null)
+        doc.AppendChild(commandsElement);
+    }
+
+    protected override void LoadDefaults()
+    {
+      visualStudioVersion = VSOpener.HighestVersion;
+    }
+
+    #endregion
+
     private bool showModules;
-    private bool groupNamespaces;
+    private bool groupNamespaces = true;
     private bool groupModules;
     private SortingTypes sortingType;
     private VSOpener.VisualStudioVersion visualStudioVersion;
-    private bool useColumns;
-    private bool showOriginal;
+    private bool useColumns = true;
+    private bool showOriginal = true;
     private bool showUnicode;
-    private bool simplifySystemNames;
-    private bool simplifyNullable;
+    private bool simplifySystemNames = true;
+    private bool simplifyNullable = true;
+    private NanoXmlElement commandsElement;
 
     [Obfuscation(Exclude = true)]
     public enum SortingTypes
@@ -110,6 +166,12 @@ namespace ObfuscarMappingParser
     {
       get { return simplifyNullable; }
       set { simplifyNullable = value; }
+    }
+
+    public NanoXmlElement CommandsElement
+    {
+      get { return commandsElement; }
+      set { commandsElement = value; }
     }
 
     public VSOpener.VisualStudioVersion VisualStudioVersion
@@ -290,60 +352,6 @@ namespace ObfuscarMappingParser
     public bool HaveRecents
     {
       get { return recents.Count > 0; }
-    }
-
-    protected override void Load(NanoXmlElement doc)
-    {
-      NanoXmlElement recentsEl = (NanoXmlElement)doc["Recents"];
-      foreach (NanoXmlElement childElement in recentsEl.ChildElements)
-      {
-        if (File.Exists(childElement.GetAttribute("filename")))
-          recents.Add(new RecentItem(childElement));
-      }
-
-      NanoXmlElement settingsEl = (NanoXmlElement)doc["Settings"];
-      settingsEl.GetValueIfExists("ShowModules", ref showModules);
-      settingsEl.GetValueIfExists("GroupNamespaces", ref groupNamespaces);
-      settingsEl.GetValueIfExists("GroupModules", ref groupModules);
-      settingsEl.GetValueIfExists("UseColumns", ref useColumns);
-      settingsEl.GetValueIfExists("ShowOriginal", ref showOriginal);
-      settingsEl.GetValueIfExists("ShowUnicode", ref showUnicode);
-      settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
-      settingsEl.GetValueIfExists("SimplifyNullable", ref simplifyNullable);
-      settingsEl.GetValueIfExists("SortingType", ref sortingType);
-      settingsEl.GetValueIfExists("VisualStudioVersion", ref visualStudioVersion);
-    }
-
-    protected override void Save(NanoXmlElement doc)
-    {
-      NanoXmlElement recentsEl = doc.AppendChild(new NanoXmlElement("Recents"));
-      foreach (RecentItem recent in recents)
-        recent.Save(recentsEl.AppendChild(new NanoXmlElement("Item")));
-
-      NanoXmlElement settingsEl = doc.AppendChild(new NanoXmlElement("Settings"));
-      settingsEl.AppendChild(new NanoXmlElement("ShowModules", showModules.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("GroupNamespaces", groupNamespaces.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("GroupModules", groupModules.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("UseColumns", useColumns.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("ShowOriginal", showOriginal.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("ShowUnicode", showUnicode.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("SimplifySystem", simplifySystemNames.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("SimplifyNullable", simplifyNullable.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("SortingType", sortingType.ToString()));
-      settingsEl.AppendChild(new NanoXmlElement("VisualStudioVersion", visualStudioVersion.ToString()));
-    }
-
-    protected override void LoadDefaults()
-    {
-      showModules = false;
-      groupNamespaces = true;
-      useColumns = true;
-      sortingType = SortingTypes.OriginalNameAscending;
-      visualStudioVersion = VSOpener.HighestVersion;
-      showOriginal = true;
-      showUnicode = false;
-      simplifySystemNames = true;
-      simplifyNullable = true;
     }
   }
 }

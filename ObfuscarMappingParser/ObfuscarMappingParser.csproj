@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Configs.cs" />
     <Compile Include="CrashHandler.cs" />
+    <Compile Include="Forms\Actions.cs" />
     <Compile Include="Forms\ConvertSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +95,10 @@
     </Compile>
     <Compile Include="Forms\CrashLogForm.Designer.cs">
       <DependentUpon>CrashLogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.Actions.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ObjectViewerForm.cs">
       <SubType>Form</SubType>
@@ -124,8 +129,6 @@
     </Compile>
     <Compile Include="Mapping.cs" />
     <Compile Include="Items\EntityName.cs" />
-    <Compile Include="MappingLoaderThread.cs" />
-    <Compile Include="MappingReloaderThread.cs" />
     <Compile Include="ObfuscarParserException.cs" />
     <Compile Include="Forms\PDBManagerForm.cs">
       <SubType>Form</SubType>

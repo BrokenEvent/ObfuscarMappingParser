@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
 using BrokenEvent.PdbReader;
@@ -22,9 +23,6 @@ namespace ObfuscarMappingParser
   partial class MainForm : Form
   {
     private Mapping mapping;
-    private List<PDBFile> pdbfiles = new List<PDBFile>();
-    private List<string> pdbToAttach;
-    private List<Form> openedForms = new List<Form>();
 
     public MainForm(string filename)
     {
@@ -54,120 +52,85 @@ namespace ObfuscarMappingParser
       miSortNewDesc.Tag = Configs.SortingTypes.NewNameDescending;
       SortingType = Configs.Instance.SortingType;
 
+      InitCommandManager();
+
       if (!string.IsNullOrEmpty(filename))
         OpenFile(filename);
-
-      VSOpener.VisualStudioOpeningStartEvent = VisualStudioOpeningStart;
-      VSOpener.VisualStudioOpeningCompleteEvent = VisualStudioOpeningComplete;
+      else
+        EnableMappingActions(false);
 
       CrashHandler.InitInstance(this);
     }
 
-    private string lastName;
-
-    private void VisualStudioOpeningComplete()
+    private void BeginLoading(string operation)
     {
-      EnableCommonControls(true);
-      lastName = Text;
-      slblSelected.Text = string.Empty;
-      Application.DoEvents();
+      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Indeterminate);
+      spbLoading.Visible = true;
+      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = false;
+      commandManager.BeginDisable();
+      slblSelected.Text = operation;
     }
 
-    private void VisualStudioOpeningStart()
+    private void EndLoading(string result)
     {
-      EnableCommonControls(false);
-      Text = lastName;
-      slblSelected.Text = Text = "Starting Visual Studio...";
-      Application.DoEvents();
+      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
+      spbLoading.Visible = false;
+      commandManager.EndDisable();
+      slblSelected.Text = result;
+      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
     }
 
-    private void btnOpen_Click(object sender, EventArgs e)
+    private void HandleMappingLoadingException(Exception e, string filename)
     {
-      if (odMapping.ShowDialog(this) != DialogResult.OK)
-        return;
+      this.SetTaskbarProgressValue(100, 100);
+      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Error);
 
-      OpenFile(odMapping.FileName);      
+      if (e is NanoXmlParsingException ||
+        e is ObfuscarParserException ||
+        e is IOException)
+        TaskDialogHelper.ShowMessageBox(
+            Handle,
+            "Mapping Loading Failed",
+            "Loading of mapping file is failed.",
+            "File:\n" + filename + "\nReason: " + e.Message,
+            TaskDialogStandardIcon.Error
+          );
+      else
+        CrashHandler.Instance.MakePromblemReport(
+            new CrashReportInfo(
+                "Mapping loading thread failed handler",
+                "Error on loading document",
+                (Exception)e
+              ),
+            true
+          );
     }
 
-    private void OpenFile(string filename)
+    private async void OpenFile(string filename)
     {
       Text = "Obfuscar Mapping Parser - " + PathUtils.GetFilename(filename);
       Configs.Instance.AddRecent(filename);
 
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Indeterminate);
-      spbLoading.Visible = true;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = false;
-      slblSelected.Text = "Loading: " + filename;
-      new MappingLoaderThread(filename).Start(MappingLoadingCompleted);
+      BeginLoading("Loading: " + filename);
 
       while (openedForms.Count > 0)
         openedForms[0].Close();
-    }
 
-    private void ReloadFile()
-    {
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Indeterminate);
-      spbLoading.Visible = true;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = false;
-      slblSelected.Text = "Loading: " + mapping.Filename;
-      new MappingReloaderThread(mapping).Start(MappingReloadingCompleted);
-
-      while (openedForms.Count > 0)
-        openedForms[0].Close();
-    }
-
-    private void EnableCommonControls(bool enable)
-    {
-      menuStrip.Enabled = enable;
-      ptvElements.Enabled = enable;
-      tsTools.Enabled = enable;
-    }
-
-    private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
-    {
-      if (pdb == null)
-        return;
-
-      foreach (string s in pdb)
+      try
       {
-        if (!File.Exists(s))
-          continue;
-
-        TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
-            Handle,
-            "Attach PDB File",
-            "Attach related PDB file?",
-            s,
-            TaskDialogStandardIcon.Information,
-            new string[] { "Attach", "Don't attach" },
-            null,
-            new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, }
-          );
-
-        switch (d)
-        {
-          case TaskDialogResult.Yes:
-            if (AttachPDB(s, this) && addToRecent)
-              Configs.Instance.AddRecentPdb(mapping.Filename, s);
-            break;
-          case TaskDialogResult.No:
-            break;
-          default:
-            return;
-        }
+        mapping = await Task.Run(() => new Mapping(filename));
       }
-    }
+      catch (Exception e)
+      {
+        HandleMappingLoadingException(e, filename);
+        EndLoading("Loading failed.");
+        return;
+      }
 
-    private void MappingLoadingCompletedInternal(object mappingObj, string filename)
-    {
-      mapping = (Mapping)mappingObj;
       pdbfiles.Clear();
       BuildMapping();
-      btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = miAttachPDB.Enabled = miStatistics.Enabled = true;
-      spbLoading.Visible = false;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
-      slblSelected.Text = "Mapping loaded in " + mapping.TimingTotal + " ms";
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
+      EnableMappingActions(true);
+      EndLoading("Mapping loaded in " + mapping.TimingTotal + " ms");
 
       AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Filename), false);
       AttachRelatedPdbs(pdbToAttach, true);
@@ -176,87 +139,38 @@ namespace ObfuscarMappingParser
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
     }
 
-    private void MappingLoadingFailedInternal(object e, string filename)
-    {      
-      btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = true;
-      pdbToAttach = null;
-      spbLoading.Visible = false;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
-
-      if (e is NanoXmlParsingException ||
-          e is ObfuscarParserException ||
-          e is IOException)
-        TaskDialogHelper.ShowMessageBox(
-            Handle,
-            "Mapping Loading Failed",
-            "Loading of mapping file is failed.",
-            "File:\n" + filename + "\nReason: " + ((Exception)e).Message,
-            TaskDialogStandardIcon.Error
-          );
-      else
-        CrashHandler.Instance.MakePromblemReport(
-            new CrashReportInfo(
-                "Mapping loading thread failed handler",
-                "Error on loading document",
-                (Exception)e
-              ),
-            true
-          );
-    }
-
-    private void MappingLoadingCompleted(object result, string filename)
+    private async void ReloadFile()
     {
-      if (result is Mapping)
-        Invoke(new MappingLoaderThread.LoadingThreadCompleted(MappingLoadingCompletedInternal), result, filename);
-      else
-        Invoke(new MappingLoaderThread.LoadingThreadCompleted(MappingLoadingFailedInternal), result, filename);
-    }
+      BeginLoading("Reloading: " + mapping.Filename);
+      while (openedForms.Count > 0)
+        openedForms[0].Close();
 
-    private void MappingReloadingCompleted(object result, string filename)
-    {
-      if (result is Mapping)
-        Invoke(new MappingLoaderThread.LoadingThreadCompleted(MappingReloadingCompletedInternal), result, filename);
-      else
-        Invoke(new MappingLoaderThread.LoadingThreadCompleted(MappingReloadingFailedInternal), result, filename);
-    }
+      try
+      {
+        await Task.Run(()=> mapping.Reload());
+      }
+      catch (Exception e)
+      {
+        HandleMappingLoadingException(e, mapping.Filename);
+        EndLoading("Reloading failed.");
+        return;
+      }
 
-    private void MappingReloadingCompletedInternal(object mappingObj, string filename)
-    {
-      mapping = (Mapping)mappingObj;
       BuildMapping();
-      btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = miAttachPDB.Enabled = miStatistics.Enabled = true;
-      spbLoading.Visible = false;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
-      slblSelected.Text = "Mapping reloaded in " + mapping.TimingTotal + " ms";
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
+      EnableMappingActions(true);
+      EndLoading("Mapping reloaded in " + mapping.TimingTotal + " ms");
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
     }
 
-    private void MappingReloadingFailedInternal(object e, string filename)
+    private void EnableCommonControls(bool enable)
     {
-      btnCrashLogs.Enabled = tbSearch.Enabled = mmSearch.Enabled = true;
-      spbLoading.Visible = false;
-      menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
-
-      if (e is NanoXmlParsingException || e is ObfuscarParserException)
-        TaskDialogHelper.ShowMessageBox(
-            Handle,
-            "Mapping Loading Failed",
-            "Loading of mapping file is failed.",
-            "File:\n" + filename + "\nReason: " + ((Exception)e).Message,
-            TaskDialogStandardIcon.Error
-          );
+      if (enable)
+        commandManager.EndDisable();
       else
-        CrashHandler.Instance.MakePromblemReport(
-            new CrashReportInfo(
-                "Mapping loading thread failed handler",
-                "Error on loading document",
-                (Exception)e
-              ),
-            true
-          );
+        commandManager.BeginDisable();
+      menuStrip.Enabled = enable;
+      ptvElements.Enabled = enable;
+      tsTools.Enabled = enable;
     }
 
     private void BuildMapping()
@@ -287,6 +201,7 @@ namespace ObfuscarMappingParser
       }
 
       Sort(Configs.Instance.SortingType);
+      focusedItem = null;
 
       ptvElements.CollapseAll();
       ptvElements.EndUpdate();
@@ -315,93 +230,6 @@ namespace ObfuscarMappingParser
 
       new SearchResultsForm(this, result, "Search Results: " + tbSearch.Text).Show(this);
       tbSearch.Clear();
-    }
-
-    private void btnCrashLogs_Click(object sender, EventArgs e)
-    {
-      AddFormToOpened(new CrashLogForm(mapping)).Show(this);
-    }
-
-    private FormType AddFormToOpened<FormType>(FormType form) where FormType: Form
-    {
-      openedForms.Add(form);
-      form.Closed += OpenedForm_Closed;
-      return form;
-    }
-
-    private void OpenedForm_Closed(object sender, EventArgs eventArgs)
-    {
-      openedForms.Remove((Form)sender);
-    }
-
-    private void ptvElements_NodeSelect(object sender, NodeSelectEventArgs e)
-    {
-      if (e.Node == null || !e.Node.Selected || e.Node.Tag == null)
-      {
-        slblSelected.Text = "";
-        return;
-      }
-
-      slblSelected.Text = ((RenamedBase)e.Node.Tag).TransformSimple;
-    }
-
-    private void miExit_Click(object sender, EventArgs e)
-    {
-      Close();
-    }
-
-    private void mmFile_DropDownOpening(object sender, EventArgs e)
-    {
-      miRecents.DropDownItems.Clear();
-
-      foreach (string recent in Configs.Instance.Recents)
-      {
-        ToolStripMenuItem item = new ToolStripMenuItem(PathUtils.ShortenPath(recent, 70));
-        item.Click += RecentItem_Click;
-        item.Tag = recent;
-        miRecents.DropDownItems.Add(item);
-        item.Image = Resources.Document;
-      }
-
-      miRecents.Enabled = miRecents.DropDownItems.Count > 0;
-
-      miManagePDBs.Enabled = miAttachPDB.Enabled = miReload.Enabled = mapping != null;
-    }
-
-    private void RecentItem_Click(object sender, EventArgs eventArgs)
-    {
-      string filename = (string)((ToolStripMenuItem)sender).Tag;
-      if (!File.Exists(filename))
-      {
-        MessageBox.Show(this, "File\n" + filename + "\ndoesn't exist.", "File not exist", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-        return;
-      }
-
-      OpenFile(filename);
-    }
-
-    private void miAbout_Click(object sender, EventArgs e)
-    {
-      AboutForm about = new AboutForm();
-      about.ShowDialog(this);
-    }
-
-    private void btnOpen_DropDownOpening(object sender, EventArgs e)
-    {
-      while (btnOpen.DropDownItems.Count > 2)
-        btnOpen.DropDownItems.RemoveAt(0);
-
-      int index = 0;
-      foreach (string recent in Configs.Instance.Recents)
-      {
-        ToolStripMenuItem item = new ToolStripMenuItem(PathUtils.ShortenPath(recent, 70));
-        item.Click += RecentItem_Click;
-        item.Tag = recent;
-        btnOpen.DropDownItems.Insert(index++, item);
-        item.Image = Resources.Document;
-      }
-
-      toolStripSeparator3.Visible = btnOpen.DropDownItems.Count > 2;
     }
 
     #region Sorting
@@ -460,6 +288,8 @@ namespace ObfuscarMappingParser
 
     #endregion
 
+    #region View Menu
+
     private void miGroupNamespace_Click(object sender, EventArgs e)
     {
       Configs.Instance.GroupNamespaces = miGroupNamespace.Checked = !miGroupNamespace.Checked;
@@ -472,11 +302,6 @@ namespace ObfuscarMappingParser
       Configs.Instance.ShowModules = miShowModule.Checked = !miShowModule.Checked;
       if (mapping != null)
         BuildMapping();
-    }
-
-    private void miStatistics_Click(object sender, EventArgs e)
-    {
-      new StatisticsForm(mapping).ShowDialog(this);
     }
 
     private void miGroupModules_Click(object sender, EventArgs e)
@@ -493,6 +318,10 @@ namespace ObfuscarMappingParser
         BuildMapping();
     }
 
+    #endregion
+
+    #region Properties
+
     public ImageList IconsList
     {
       get { return ilIcons; }
@@ -503,138 +332,156 @@ namespace ObfuscarMappingParser
       get { return mapping; }
     }
 
+    public bool HavePdb
+    {
+      get { return pdbfiles.Count > 0; }
+    }
+
+    #endregion
+
     #region Context menu
 
     private RenamedBase focusedItem;
     private string focusedFilename;
     private int focusedLine;
 
-    private void miCopyOldName_Click(object sender, EventArgs e)
-    {
-      Clipboard.SetText(focusedItem.NameOldSimple);
-    }
-
-    private void miCopyFullOldName_Click(object sender, EventArgs e)
-    {
-      Clipboard.SetText(focusedItem.NameOldFull);
-    }
-
-    private void miCopyNewName_Click(object sender, EventArgs e)
-    {
-      Clipboard.SetText(focusedItem.NameNewSimple);
-    }
-
-    private void miCopyFullNewName_Click(object sender, EventArgs e)
-    {
-      Clipboard.SetText(focusedItem.NameNewFull);
-    }
-
-    private void miOpenVS_Click(object sender, EventArgs e)
-    {
-      OpenInVisualStudio(focusedFilename, focusedLine);
-    }
-
     private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
     {
-      if (ptvElements.SelectedNode == null || ptvElements.SelectedNode.Tag == null)
-      {
-        e.Cancel = true;
-        return;
-      }
-
-      focusedItem = (RenamedBase)ptvElements.SelectedNode.Tag;
-      miOpenVS.Enabled = DetectMarkersForVS(out focusedFilename, out focusedLine, focusedItem);
+      e.Cancel = focusedItem == null;
     }
 
     #endregion
 
-    public bool HavePdb
+    #region Tree Handlers
+
+    private void ptvElements_NodeSelect(object sender, NodeSelectEventArgs e)
     {
-      get { return pdbfiles.Count > 0; }
+      focusedItem = null;
+      if (e.Node != null && e.Node.Selected)
+        focusedItem = e.Node.Tag as RenamedBase;
+
+      EnableSelectionActions(focusedItem != null);
+      slblSelected.Text = focusedItem == null ? "" : focusedItem.TransformSimple;
+      commandManager.SetEnabled(Actions.OpenInEditor, focusedItem != null && DetectMarkersForVS(out focusedFilename, out focusedLine, focusedItem));
     }
 
-    public bool SearchInPdb(out string filename, out int lineNumber, RenamedBase item)
-    {      
-      filename = null;
-      lineNumber = -1;
+    private void ptvElements_DoubleClick(object sender, EventArgs e)
+    {
+      if (focusedItem == null)
+        return;
 
-      string s = item.NameOldPlain;
-      int i = s.LastIndexOf('.');
-      if (i == -1)
-        return false;
+      // TODO default doubleclick action?
+      commandManager.CallCommand(Actions.OpenInEditor);
+    }
 
-      PDBFunction f = null;
-      string className = s.Substring(0, i);
-      string itemName = s.Substring(i + 1);
-      foreach (PDBFile file in pdbfiles)
+    #endregion
+
+    #region Opened Forms
+
+    private List<Form> openedForms = new List<Form>();
+
+    private FormType AddFormToOpened<FormType>(FormType form) where FormType : Form
+    {
+      openedForms.Add(form);
+      form.Closed += OpenedForm_Closed;
+      return form;
+    }
+
+    private void OpenedForm_Closed(object sender, EventArgs eventArgs)
+    {
+      openedForms.Remove((Form)sender);
+    }
+
+    private void mmFile_DropDownOpening(object sender, EventArgs e)
+    {
+      miRecents.DropDownItems.Clear();
+
+      foreach (string recent in Configs.Instance.Recents)
       {
-        f = file.Search(className, itemName);
-        if (f != null)
-          break;
+        ToolStripMenuItem item = new ToolStripMenuItem(PathUtils.ShortenPath(recent, 70));
+        item.Click += RecentItem_Click;
+        item.Tag = recent;
+        miRecents.DropDownItems.Add(item);
+        item.Image = Resources.Document;
       }
 
-      if (f == null)
-        return false;
-
-      filename = f.Filename;
-      lineNumber = (int)f.Line;
-      return true;
+      miRecents.Enabled = miRecents.DropDownItems.Count > 0;
     }
 
-    private bool DetectMarkersForVS(out string filename, out int lineNumber, RenamedBase item)
+    private void RecentItem_Click(object sender, EventArgs eventArgs)
     {
-      filename = null;
-      lineNumber = -1;
-
-      if (pdbfiles.Count == 0 || item.EntityType != EntityType.Method)
-        return false;
-
-      return SearchInPdb(out filename, out lineNumber, item);
-    }
-
-    public void OpenInVisualStudio(string filename, int line)
-    {
+      string filename = (string)((ToolStripMenuItem)sender).Tag;
       if (!File.Exists(filename))
       {
-        if (MessageBox.Show(this, "File\n" + filename + "\ndoesn't exist.\nTry to set file path directly?", "File not exists.", MessageBoxButtons.YesNo, MessageBoxIcon.Hand) != DialogResult.Yes)
-          return;
-
-        string file = PathUtils.GetFilename(filename);
-        odSourceFile.Filter = file + "|" + file;
-        odSourceFile.FileName = file;
-        if (odSourceFile.ShowDialog(this) != DialogResult.OK)
-          return;
-
-        filename = odSourceFile.FileName;
+        MessageBox.Show(this, "File\n" + filename + "\ndoesn't exist.", "File not exist", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+        return;
       }
 
-      VSOpener.VisualStudioVersion version = Configs.Instance.VisualStudioVersion;
-      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, "editor");
-      if (vs != null)
-        version = (VSOpener.VisualStudioVersion)Enum.Parse(typeof(VSOpener.VisualStudioVersion), vs);
-
-      try
-      {
-        VSOpener.OpenInVisualStudio(filename, line, version);
-      }
-      catch (Exception ex)
-      {
-        if (version != VSOpener.VisualStudioVersion.Notepad)
-          TaskDialogHelper.ShowMessageBox(
-              Handle,
-              "Failed to Open in Visual Studio",
-              "Failed to open in Visual Studio. Try to use another version of Visual Studio.",
-              filename + ":" + line + "\n" + ex.Message,
-              TaskDialogStandardIcon.Error
-            );
-        else
-          MessageBox.Show( this, "Unable to open\n" + filename + ":" + line, "Failed to open file", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
+      OpenFile(filename);
     }
 
-    private void miAttachPDB_Click(object sender, EventArgs e)
+    private void btnOpen_DropDownOpening(object sender, EventArgs e)
     {
-      CallAttachPdb(this);
+      while (btnOpen.DropDownItems.Count > 2)
+        btnOpen.DropDownItems.RemoveAt(0);
+
+      int index = 0;
+      foreach (string recent in Configs.Instance.Recents)
+      {
+        ToolStripMenuItem item = new ToolStripMenuItem(PathUtils.ShortenPath(recent, 70));
+        item.Click += RecentItem_Click;
+        item.Tag = recent;
+        btnOpen.DropDownItems.Insert(index++, item);
+        item.Image = Resources.Document;
+      }
+
+      toolStripSeparator3.Visible = btnOpen.DropDownItems.Count > 2;
+    }
+
+    #endregion
+
+    #region Recent Menus
+
+    #endregion
+
+    #region PDB
+
+    private List<PDBFile> pdbfiles = new List<PDBFile>();
+    private List<string> pdbToAttach;
+
+    private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
+    {
+      if (pdb == null)
+        return;
+
+      foreach (string s in pdb)
+      {
+        if (!File.Exists(s))
+          continue;
+
+        TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
+            Handle,
+            "Attach PDB File",
+            "Attach related PDB file?",
+            s,
+            TaskDialogStandardIcon.Information,
+            new string[] { "Attach", "Don't attach" },
+            null,
+            new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, }
+          );
+
+        switch (d)
+        {
+          case TaskDialogResult.Yes:
+            if (AttachPDB(s, this) && addToRecent)
+              Configs.Instance.AddRecentPdb(mapping.Filename, s);
+            break;
+          case TaskDialogResult.No:
+            break;
+          default:
+            return;
+        }
+      }
     }
 
     public bool CallAttachPdb(IWin32Window owner)
@@ -680,46 +527,139 @@ namespace ObfuscarMappingParser
       return true;
     }
 
-    private void miSettings_Click(object sender, EventArgs e)
+    public bool SearchInPdb(out string filename, out int lineNumber, RenamedBase item)
     {
-      new SettingsForm(mapping).ShowDialog(this);
-      if (mapping != null)
-        BuildMapping();
+      filename = null;
+      lineNumber = -1;
+
+      string s = item.NameOldPlain;
+      int i = s.LastIndexOf('.');
+      if (i == -1)
+        return false;
+
+      PDBFunction f = null;
+      string className = s.Substring(0, i);
+      string itemName = s.Substring(i + 1);
+      foreach (PDBFile file in pdbfiles)
+      {
+        f = file.Search(className, itemName);
+        if (f != null)
+          break;
+      }
+
+      if (f == null)
+        return false;
+
+      filename = f.Filename;
+      lineNumber = (int)f.Line;
+      return true;
     }
 
-    private void ptvElements_DoubleClick(object sender, EventArgs e)
+    private bool DetectMarkersForVS(out string filename, out int lineNumber, RenamedBase item)
     {
-      if (ptvElements.SelectedNode == null || ptvElements.SelectedNode.Tag == null)
-        return;
+      filename = null;
+      lineNumber = -1;
 
-      string filename;
-      int lineNumber;
-      if (!DetectMarkersForVS(out filename, out lineNumber, (RenamedBase)ptvElements.SelectedNode.Tag))
-        return;
+      if (pdbfiles.Count == 0 || item.EntityType != EntityType.Method)
+        return false;
 
-      OpenInVisualStudio(filename, lineNumber);
+      return SearchInPdb(out filename, out lineNumber, item);
     }
 
-    private void miSearch_Click(object sender, EventArgs e)
-    {
-      new SearchDialog(this, false).ShowDialog(this);
-    }
+    #endregion
 
-    private void miStacktrace_Click(object sender, EventArgs e)
+    public async void OpenInVisualStudio(string filename, int line)
     {
-      StacktraceSourceForm source = new StacktraceSourceForm(mapping);
-      if (source.ShowDialog(this) != DialogResult.OK)
-        return;
+      if (!File.Exists(filename))
+      {
+        if (TaskDialogHelper.ShowTaskDialog(
+                Handle,
+                "File Not Exists",
+                "File not found. Would you like to locate file by sourself?",
+                "Filename: " + filename,
+                TaskDialogStandardIcon.Error,
+                new string[] { "Browse", "Cancel" },
+                null,
+                new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, }
+              ) != TaskDialogResult.Yes)
+          return;
 
+        string file = PathUtils.GetFilename(filename);
+        odSourceFile.Filter = file + "|" + file;
+        odSourceFile.FileName = file;
+        if (odSourceFile.ShowDialog(this) != DialogResult.OK)
+          return;
+
+        filename = odSourceFile.FileName;
+      }
+
+      VSOpener.VisualStudioVersion version = Configs.Instance.VisualStudioVersion;
+      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, "editor");
+      if (vs != null)
+        version = (VSOpener.VisualStudioVersion)Enum.Parse(typeof(VSOpener.VisualStudioVersion), vs);
+
+      BeginLoading("Starting the Visual Studio...");
       try
       {
-        StacktraceAnalyerForm analyer = new StacktraceAnalyerForm(this, source.Result, source.ResultSource);
-        analyer.ShowDialog(this);
+        await Task.Run(()=>VSOpener.OpenInVisualStudio(filename, line, version));
       }
-      catch (ObfuscarParserException ex)
+      catch (Exception ex)
       {
-        MessageBox.Show(this, ex.Message, "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        this.SetTaskbarProgressValue(100, 100);
+        this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Error);
+        if (version != VSOpener.VisualStudioVersion.Notepad)
+          TaskDialogHelper.ShowMessageBox(
+              Handle,
+              "Failed to Open in Visual Studio",
+              "Failed to open in Visual Studio. Try to use another version of Visual Studio.",
+              filename + ":" + line + "\n" + ex.Message,
+              TaskDialogStandardIcon.Error
+            );
+        else
+          TaskDialogHelper.ShowMessageBox(
+              Handle,
+              "Failed to Open File",
+              "Unable to open file.",
+              filename + ":" + line + "\n" + ex.Message,
+              TaskDialogStandardIcon.Error
+            );
       }
+      EndLoading("");
+    }
+
+    protected override void WndProc(ref Message m)
+    {
+      if (commandManager.ProcessMessage(ref m))
+        return;
+
+      base.WndProc(ref m);
+    }
+
+    private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs args)
+    {
+      CrashHandler.Instance.MakePromblemReport(
+          new CrashReportInfo(
+              "Top-level interceptor",
+              "Exception on top-level",
+              args.Exception
+            ),
+          false
+        );
+    }
+
+    #region Drag'n'drop
+
+    private bool lockDragNDrop;
+
+    private void MainForm_DragEnter(object sender, DragEventArgs e)
+    {
+      if (!lockDragNDrop && !e.Data.GetDataPresent(DataFormats.FileDrop))
+      {
+        e.Effect = DragDropEffects.None;
+        return;
+      }
+
+      e.Effect = DragDropEffects.Move;
     }
 
     private void MainForm_DragDrop(object sender, DragEventArgs e)
@@ -740,7 +680,7 @@ namespace ObfuscarMappingParser
           files.RemoveAt(i);
           continue;
         }
-        
+
         // search for pdb files to attach after open
         if (string.Compare(Path.GetExtension(files[i]).ToLower(), ".pdb", StringComparison.Ordinal) == 0)
         {
@@ -779,7 +719,7 @@ namespace ObfuscarMappingParser
               TaskDialogStandardIcon.Information,
               new string[] { "Attach", "Don't attach", "Cancel operation" },
               null,
-              new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, TaskDialogResult.Cancel,  }
+              new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, TaskDialogResult.Cancel, }
             );
           switch (d)
           {
@@ -795,42 +735,7 @@ namespace ObfuscarMappingParser
       }
     }
 
-    private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs args)
-    {
-      CrashHandler.Instance.MakePromblemReport(
-          new CrashReportInfo(
-              "Top-level interceptor",
-              "Exception on top-level",
-              args.Exception
-            ),
-          false
-        );
-    }
-
-    private void miManagePDBs_Click(object sender, EventArgs e)
-    {
-      lockDragNDrop = true;
-      new PDBManagerForm(pdbfiles, this).ShowDialog(this);
-      lockDragNDrop = false;
-    }
-
-    private bool lockDragNDrop;
-
-    private void MainForm_DragEnter(object sender, DragEventArgs e)
-    {
-      if (!lockDragNDrop && !e.Data.GetDataPresent(DataFormats.FileDrop))
-      {
-        e.Effect = DragDropEffects.None;
-        return;
-      }
-
-      e.Effect = DragDropEffects.Move;
-    }
-
-    private void miReload_Click(object sender, EventArgs e)
-    {
-      ReloadFile();
-    }
+    #endregion
 
     private void MainForm_Activated(object sender, EventArgs e)
     {
@@ -865,14 +770,16 @@ namespace ObfuscarMappingParser
         ReloadFile();
     }
 
-    private void miSearchOriginal_Click(object sender, EventArgs e)
+    private void MainForm_Load(object sender, EventArgs e)
     {
-      new SearchDialog(this, true).ShowDialog(this);
+      commandManager.WindowHandle = Handle;
     }
 
-    private void miConvert_Click(object sender, EventArgs e)
+    private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
     {
-      new ConvertSettingsForm().ShowDialog(this);
+      NanoXmlElement el = new NanoXmlElement("Actions");
+      commandManager.SaveToXml(el);
+      Configs.Instance.CommandsElement = el;
     }
   }
 }
