@@ -73,6 +73,9 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("Editor", ref editor);
       settingsEl.GetValueIfExists("DoubleClickAction", ref doubleClickAction);
 
+      if (editor == null)
+        editor = VisualStudioDetector.GetHighestVisualStudio().Description;
+
       commandsElement = doc.GetElement("Actions");
 
       NanoXmlElement updateEl = doc.GetElement("Update");
@@ -217,12 +220,7 @@ namespace ObfuscarMappingParser
 
     public string Editor
     {
-      get
-      {
-        if (editor == null)
-          editor = VisualStudioDetector.GetHighestVisualStudio().Description;
-        return editor;
-      }
+      get { return editor; }
       set { editor = value; }
     }
 
