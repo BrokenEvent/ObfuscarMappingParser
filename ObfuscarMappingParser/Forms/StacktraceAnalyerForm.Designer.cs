@@ -144,8 +144,8 @@
       this.tbtnSkipPrefix.ImageTransparentColor = System.Drawing.Color.Magenta;
       this.tbtnSkipPrefix.Name = "tbtnSkipPrefix";
       this.tbtnSkipPrefix.Size = new System.Drawing.Size(92, 22);
-      this.tbtnSkipPrefix.Text = "Skip prefixex";
-      this.tbtnSkipPrefix.ToolTipText = "Skip prefixex in lines (at ...)";
+      this.tbtnSkipPrefix.Text = "Skip prefixes";
+      this.tbtnSkipPrefix.ToolTipText = "Skip prefixes in lines (at ...)";
       this.tbtnSkipPrefix.Click += new System.EventHandler(this.tbtnSkipPrefix_Click);
       // 
       // pineappleTreeView
@@ -159,11 +159,11 @@
       this.pineappleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
       this.pineappleTreeView.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.pineappleTreeView.FullRowSelect = true;
-      this.pineappleTreeView.ImageList = null;
       this.pineappleTreeView.ItemHeight = 13;
       this.pineappleTreeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.pineappleTreeView.Location = new System.Drawing.Point(0, 25);
       this.pineappleTreeView.Name = "pineappleTreeView";
+      this.pineappleTreeView.SelectedNode = null;
       this.pineappleTreeView.ShowToolTip = true;
       this.pineappleTreeView.Size = new System.Drawing.Size(612, 347);
       this.pineappleTreeView.TabIndex = 1;
