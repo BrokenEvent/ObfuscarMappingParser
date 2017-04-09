@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
@@ -790,6 +791,44 @@ namespace ObfuscarMappingParser
     private void miReport_Click(object sender, EventArgs e)
     {
       RestApi.Instance.SendProblemReport(this);
+    }
+
+    private async void miVersionHistory_Click(object sender, EventArgs e)
+    {
+      BeginLoading("Receiving version history");
+      RestResponse<HistoryResponse> response = await RestApi.Instance.GetVersionHistoryAsync();
+
+      if (response.Result == null)
+      {
+        EndLoading("Failed to receive history.");
+        return;
+      }
+
+      EndLoading("");
+      StringBuilder sb = new StringBuilder();
+
+      for (int i = response.Result.History.Count - 1; i >= 0; i--)
+      {
+        HistoryResponse.VersionInfo info = response.Result.History[i];
+        sb.Append("Version: ").Append(info.Version).Append("; ");
+        sb.Append("Branch: ").Append(info.Branch).Append("; ");
+        sb.Append("Date: ").Append(info.ReleaseDate.ToLongDateString());
+        sb.AppendLine(". Changes:");
+
+        string[] lines = info.Description.Split('\n');
+        foreach (string s in lines)
+          sb.AppendLine(s);
+        sb.AppendLine();
+      }
+
+      string filename = Path.GetTempFileName() + ".txt";
+      File.WriteAllText(filename, sb.ToString(), Encoding.UTF8);
+      ProcessStartInfo startInfo = new ProcessStartInfo(filename);
+      startInfo.Verb = "open";
+      startInfo.UseShellExecute = true;
+      Process process = Process.Start(startInfo);
+      process.WaitForInputIdle();
+      File.Delete(filename);
     }
   }
 }

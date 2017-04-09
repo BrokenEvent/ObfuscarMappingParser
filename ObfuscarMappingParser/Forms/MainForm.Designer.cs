@@ -78,6 +78,8 @@
       this.mmHelp = new System.Windows.Forms.ToolStripMenuItem();
       this.miUpdateVersion = new System.Windows.Forms.ToolStripMenuItem();
       this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
+      this.miReport = new System.Windows.Forms.ToolStripMenuItem();
+      this.miVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.miOpenVS = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -88,7 +90,7 @@
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.TreeView.PineappleTreeView();
-      this.miReport = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -470,8 +472,10 @@
       // 
       this.mmHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miUpdateVersion,
-            this.miAbout,
-            this.miReport});
+            this.miReport,
+            this.miVersionHistory,
+            this.toolStripSeparator10,
+            this.miAbout});
       this.mmHelp.Name = "mmHelp";
       this.mmHelp.Size = new System.Drawing.Size(44, 20);
       this.mmHelp.Text = "Help";
@@ -489,6 +493,20 @@
       this.miAbout.Name = "miAbout";
       this.miAbout.Size = new System.Drawing.Size(166, 22);
       this.miAbout.Text = "About";
+      // 
+      // miReport
+      // 
+      this.miReport.Name = "miReport";
+      this.miReport.Size = new System.Drawing.Size(166, 22);
+      this.miReport.Text = "Report a Problem";
+      this.miReport.Click += new System.EventHandler(this.miReport_Click);
+      // 
+      // miVersionHistory
+      // 
+      this.miVersionHistory.Name = "miVersionHistory";
+      this.miVersionHistory.Size = new System.Drawing.Size(166, 22);
+      this.miVersionHistory.Text = "Version History";
+      this.miVersionHistory.Click += new System.EventHandler(this.miVersionHistory_Click);
       // 
       // contextMenuStrip
       // 
@@ -574,12 +592,10 @@
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
       // 
-      // miReport
+      // toolStripSeparator10
       // 
-      this.miReport.Name = "miReport";
-      this.miReport.Size = new System.Drawing.Size(166, 22);
-      this.miReport.Text = "Report a Problem";
-      this.miReport.Click += new System.EventHandler(this.miReport_Click);
+      this.toolStripSeparator10.Name = "toolStripSeparator10";
+      this.toolStripSeparator10.Size = new System.Drawing.Size(163, 6);
       // 
       // MainForm
       // 
@@ -673,6 +689,8 @@
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     private System.Windows.Forms.ToolStripMenuItem miUpdateVersion;
     private System.Windows.Forms.ToolStripMenuItem miReport;
+    private System.Windows.Forms.ToolStripMenuItem miVersionHistory;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
   }
 }
 
