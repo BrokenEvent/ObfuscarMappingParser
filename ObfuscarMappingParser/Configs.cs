@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Reflection;
 using BrokenEvent.NanoXml;
 using BrokenEvent.Shared;
+using BrokenEvent.VisualStudioOpener;
 
 namespace ObfuscarMappingParser
 {
@@ -44,6 +46,8 @@ namespace ObfuscarMappingParser
       get { return "configs.xml"; }
     }
 
+    public const string PROPERTY_EDITOR = "editor";
+
     #region Saveload
 
     protected override void Load(NanoXmlElement doc)
@@ -65,7 +69,8 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
       settingsEl.GetValueIfExists("SimplifyNullable", ref simplifyNullable);
       settingsEl.GetValueIfExists("SortingType", ref sortingType);
-      settingsEl.GetValueIfExists("VisualStudioVersion", ref visualStudioVersion);
+      settingsEl.GetValueIfExists("Editor", ref editor);
+      settingsEl.GetValueIfExists("DoubleClickAction", ref doubleClickAction);
 
       commandsElement = doc.GetElement("Actions");
     }
@@ -86,7 +91,8 @@ namespace ObfuscarMappingParser
       settingsEl.AppendChild("SimplifySystem", simplifySystemNames);
       settingsEl.AppendChild("SimplifyNullable", simplifyNullable);
       settingsEl.AppendChild("SortingType", sortingType);
-      settingsEl.AppendChild("VisualStudioVersion", visualStudioVersion);
+      settingsEl.AppendChild("Editor", editor);
+      settingsEl.AppendChild("DoubleClickAction", doubleClickAction);
 
       if (commandsElement != null)
         doc.AppendChild(commandsElement);
@@ -94,7 +100,7 @@ namespace ObfuscarMappingParser
 
     protected override void LoadDefaults()
     {
-      visualStudioVersion = VSOpener.HighestVersion;
+      editor = VisualStudioDetector.GetHighestVisualStudio().Description;
     }
 
     #endregion
@@ -103,12 +109,13 @@ namespace ObfuscarMappingParser
     private bool groupNamespaces = true;
     private bool groupModules;
     private SortingTypes sortingType;
-    private VSOpener.VisualStudioVersion visualStudioVersion;
+    private string editor;
     private bool useColumns = true;
     private bool showOriginal = true;
     private bool showUnicode;
     private bool simplifySystemNames = true;
     private bool simplifyNullable = true;
+    private DoubleClickActions doubleClickAction = DoubleClickActions.OpenInEditor;
     private NanoXmlElement commandsElement;
 
     [Obfuscation(Exclude = true)]
@@ -118,6 +125,21 @@ namespace ObfuscarMappingParser
       OriginalNameDescending,
       NewNameAscending,
       NewNameDescending,
+    }
+
+    [Obfuscation(Exclude = true)]
+    public enum DoubleClickActions
+    {
+      [Description("Copy Old Name")]
+      CopyOldName = Actions.CopyOldName,
+      [Description("Copy Full Old Name")]
+      CopyFullOldName = Actions.CopyFullOldName,
+      [Description("Copy New Name")]
+      CopyNewName = Actions.CopyNewName,
+      [Description("Copy Full New Name")]
+      CopyFullNewName = Actions.CopyFullNewName,
+      [Description("Open in Editor")]
+      OpenInEditor = Actions.OpenInEditor
     }
 
     public bool ShowModules
@@ -168,16 +190,27 @@ namespace ObfuscarMappingParser
       set { simplifyNullable = value; }
     }
 
+    public DoubleClickActions DoubleClickAction
+    {
+      get { return doubleClickAction; }
+      set { doubleClickAction = value; }
+    }
+
     public NanoXmlElement CommandsElement
     {
       get { return commandsElement; }
       set { commandsElement = value; }
     }
 
-    public VSOpener.VisualStudioVersion VisualStudioVersion
+    public string Editor
     {
-      get { return visualStudioVersion; }
-      set { visualStudioVersion = value; }
+      get
+      {
+        if (editor == null)
+          editor = VisualStudioDetector.GetHighestVisualStudio().Description;
+        return editor;
+      }
+      set { editor = value; }
     }
 
     public SortingTypes SortingType

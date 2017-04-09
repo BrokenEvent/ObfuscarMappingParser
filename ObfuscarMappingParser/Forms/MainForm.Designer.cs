@@ -36,56 +36,56 @@
       this.slblSelected = new System.Windows.Forms.ToolStripStatusLabel();
       this.ilIcons = new System.Windows.Forms.ImageList(this.components);
       this.tsTools = new System.Windows.Forms.ToolStrip();
-      this.btnOpen = new System.Windows.Forms.ToolStripDropDownButton();
-      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-      this.miOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
-      this.btnCrashLogs = new System.Windows.Forms.ToolStripButton();
       this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
       this.lblSearch = new System.Windows.Forms.ToolStripLabel();
       this.tbSearch = new System.Windows.Forms.ToolStripTextBox();
       this.menuStrip = new System.Windows.Forms.MenuStrip();
       this.mmFile = new System.Windows.Forms.ToolStripMenuItem();
-      this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
       this.miRecents = new System.Windows.Forms.ToolStripMenuItem();
-      this.miReload = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
       this.miManagePDBs = new System.Windows.Forms.ToolStripMenuItem();
       this.miAttachPDB = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.miExit = new System.Windows.Forms.ToolStripMenuItem();
       this.miView = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSortAscending = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSortDescending = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSortNewAscending = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSortNewDesc = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-      this.miGroupNamespace = new System.Windows.Forms.ToolStripMenuItem();
-      this.miShowModule = new System.Windows.Forms.ToolStripMenuItem();
-      this.miGroupModules = new System.Windows.Forms.ToolStripMenuItem();
-      this.miUseColumns = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
       this.miStatistics = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
       this.mmSearch = new System.Windows.Forms.ToolStripMenuItem();
-      this.miCrashlogs = new System.Windows.Forms.ToolStripMenuItem();
-      this.miStacktrace = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-      this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSearchOriginal = new System.Windows.Forms.ToolStripMenuItem();
       this.mmTools = new System.Windows.Forms.ToolStripMenuItem();
       this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.mmHelp = new System.Windows.Forms.ToolStripMenuItem();
       this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
       this.miCopyOldName = new System.Windows.Forms.ToolStripMenuItem();
       this.miCopyFullOldName = new System.Windows.Forms.ToolStripMenuItem();
       this.miCopyNewName = new System.Windows.Forms.ToolStripMenuItem();
       this.miCopyFullNewName = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-      this.miOpenVS = new System.Windows.Forms.ToolStripMenuItem();
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.TreeView.PineappleTreeView();
+      this.btnOpen = new System.Windows.Forms.ToolStripDropDownButton();
+      this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+      this.miOpenBtn = new System.Windows.Forms.ToolStripMenuItem();
+      this.btnCrashLogs = new System.Windows.Forms.ToolStripButton();
+      this.miOpen = new System.Windows.Forms.ToolStripMenuItem();
+      this.miReload = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSortAscending = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSortDescending = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSortNewAscending = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSortNewDesc = new System.Windows.Forms.ToolStripMenuItem();
+      this.miGroupNamespace = new System.Windows.Forms.ToolStripMenuItem();
+      this.miShowModule = new System.Windows.Forms.ToolStripMenuItem();
+      this.miGroupModules = new System.Windows.Forms.ToolStripMenuItem();
+      this.miUseColumns = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSettings = new System.Windows.Forms.ToolStripMenuItem();
+      this.miCrashlogs = new System.Windows.Forms.ToolStripMenuItem();
+      this.miStacktrace = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
+      this.miSearchOriginal = new System.Windows.Forms.ToolStripMenuItem();
+      this.miOpenVS = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -152,40 +152,6 @@
       this.tsTools.TabIndex = 4;
       this.tsTools.Text = "toolStrip1";
       // 
-      // btnOpen
-      // 
-      this.btnOpen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripSeparator3,
-            this.miOpenBtn});
-      this.btnOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
-      this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.btnOpen.Name = "btnOpen";
-      this.btnOpen.Size = new System.Drawing.Size(65, 22);
-      this.btnOpen.Text = "Open";
-      this.btnOpen.DropDownOpening += new System.EventHandler(this.btnOpen_DropDownOpening);
-      // 
-      // toolStripSeparator3
-      // 
-      this.toolStripSeparator3.Name = "toolStripSeparator3";
-      this.toolStripSeparator3.Size = new System.Drawing.Size(128, 6);
-      // 
-      // miOpenBtn
-      // 
-      this.miOpenBtn.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
-      this.miOpenBtn.Name = "miOpenBtn";
-      this.miOpenBtn.Size = new System.Drawing.Size(131, 22);
-      this.miOpenBtn.Text = "Open file...";
-      // 
-      // btnCrashLogs
-      // 
-      this.btnCrashLogs.Enabled = false;
-      this.btnCrashLogs.Image = global::ObfuscarMappingParser.Properties.Resources.Stacktrace;
-      this.btnCrashLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
-      this.btnCrashLogs.Name = "btnCrashLogs";
-      this.btnCrashLogs.Size = new System.Drawing.Size(81, 22);
-      this.btnCrashLogs.Text = "Stacktrace";
-      this.btnCrashLogs.ToolTipText = "Deobfuscate stacktrace";
-      // 
       // toolStripSeparator1
       // 
       this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -202,7 +168,6 @@
       // 
       this.tbSearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
       this.tbSearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-      this.tbSearch.Enabled = false;
       this.tbSearch.Name = "tbSearch";
       this.tbSearch.Size = new System.Drawing.Size(200, 25);
       this.tbSearch.ToolTipText = "Type full name of entity end press <Enter> to search";
@@ -238,25 +203,11 @@
       this.mmFile.Text = "File";
       this.mmFile.DropDownOpening += new System.EventHandler(this.mmFile_DropDownOpening);
       // 
-      // miOpen
-      // 
-      this.miOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
-      this.miOpen.Name = "miOpen";
-      this.miOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-      this.miOpen.Size = new System.Drawing.Size(169, 22);
-      this.miOpen.Text = "Open...";
-      // 
       // miRecents
       // 
       this.miRecents.Name = "miRecents";
       this.miRecents.Size = new System.Drawing.Size(169, 22);
       this.miRecents.Text = "Recent";
-      // 
-      // miReload
-      // 
-      this.miReload.Name = "miReload";
-      this.miReload.Size = new System.Drawing.Size(169, 22);
-      this.miReload.Text = "Reload";
       // 
       // toolStripSeparator6
       // 
@@ -307,74 +258,10 @@
       this.miView.Size = new System.Drawing.Size(44, 20);
       this.miView.Text = "View";
       // 
-      // miSortAscending
-      // 
-      this.miSortAscending.Image = global::ObfuscarMappingParser.Properties.Resources.SortAscending;
-      this.miSortAscending.Name = "miSortAscending";
-      this.miSortAscending.Size = new System.Drawing.Size(256, 22);
-      this.miSortAscending.Text = "Sort by Original Name Ascending";
-      this.miSortAscending.Click += new System.EventHandler(this.miSorting_Click);
-      // 
-      // miSortDescending
-      // 
-      this.miSortDescending.Image = global::ObfuscarMappingParser.Properties.Resources.SortDescending;
-      this.miSortDescending.Name = "miSortDescending";
-      this.miSortDescending.Size = new System.Drawing.Size(256, 22);
-      this.miSortDescending.Text = "Sort by Original Name Descending";
-      this.miSortDescending.Click += new System.EventHandler(this.miSorting_Click);
-      // 
-      // miSortNewAscending
-      // 
-      this.miSortNewAscending.Image = global::ObfuscarMappingParser.Properties.Resources.SortAscending;
-      this.miSortNewAscending.Name = "miSortNewAscending";
-      this.miSortNewAscending.Size = new System.Drawing.Size(256, 22);
-      this.miSortNewAscending.Text = "Sort by New Name Ascending";
-      this.miSortNewAscending.Click += new System.EventHandler(this.miSorting_Click);
-      // 
-      // miSortNewDesc
-      // 
-      this.miSortNewDesc.Image = global::ObfuscarMappingParser.Properties.Resources.SortDescending;
-      this.miSortNewDesc.Name = "miSortNewDesc";
-      this.miSortNewDesc.Size = new System.Drawing.Size(256, 22);
-      this.miSortNewDesc.Text = "Sort by New Name Descending";
-      this.miSortNewDesc.Click += new System.EventHandler(this.miSorting_Click);
-      // 
       // toolStripSeparator4
       // 
       this.toolStripSeparator4.Name = "toolStripSeparator4";
       this.toolStripSeparator4.Size = new System.Drawing.Size(253, 6);
-      // 
-      // miGroupNamespace
-      // 
-      this.miGroupNamespace.Image = global::ObfuscarMappingParser.Properties.Resources.SortUsingNamespace;
-      this.miGroupNamespace.Name = "miGroupNamespace";
-      this.miGroupNamespace.Size = new System.Drawing.Size(256, 22);
-      this.miGroupNamespace.Text = "Group by Original Namespace";
-      this.miGroupNamespace.Click += new System.EventHandler(this.miGroupNamespace_Click);
-      // 
-      // miShowModule
-      // 
-      this.miShowModule.Image = global::ObfuscarMappingParser.Properties.Resources.AssemblyIcon;
-      this.miShowModule.Name = "miShowModule";
-      this.miShowModule.Size = new System.Drawing.Size(256, 22);
-      this.miShowModule.Text = "Show Module";
-      this.miShowModule.Click += new System.EventHandler(this.miShowModule_Click);
-      // 
-      // miGroupModules
-      // 
-      this.miGroupModules.Image = global::ObfuscarMappingParser.Properties.Resources.AssemblyIcon;
-      this.miGroupModules.Name = "miGroupModules";
-      this.miGroupModules.Size = new System.Drawing.Size(256, 22);
-      this.miGroupModules.Text = "Group by Modules";
-      this.miGroupModules.Click += new System.EventHandler(this.miGroupModules_Click);
-      // 
-      // miUseColumns
-      // 
-      this.miUseColumns.Image = global::ObfuscarMappingParser.Properties.Resources.Tree;
-      this.miUseColumns.Name = "miUseColumns";
-      this.miUseColumns.Size = new System.Drawing.Size(256, 22);
-      this.miUseColumns.Text = "Use Columns in Tree";
-      this.miUseColumns.Click += new System.EventHandler(this.miUseColumns_Click);
       // 
       // toolStripSeparator5
       // 
@@ -388,12 +275,6 @@
       this.miStatistics.Size = new System.Drawing.Size(256, 22);
       this.miStatistics.Text = "Statistics";
       // 
-      // miSettings
-      // 
-      this.miSettings.Name = "miSettings";
-      this.miSettings.Size = new System.Drawing.Size(256, 22);
-      this.miSettings.Text = "Settings...";
-      // 
       // mmSearch
       // 
       this.mmSearch.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -406,41 +287,10 @@
       this.mmSearch.Size = new System.Drawing.Size(54, 20);
       this.mmSearch.Text = "Search";
       // 
-      // miCrashlogs
-      // 
-      this.miCrashlogs.Image = global::ObfuscarMappingParser.Properties.Resources.Stacktrace;
-      this.miCrashlogs.Name = "miCrashlogs";
-      this.miCrashlogs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-      this.miCrashlogs.Size = new System.Drawing.Size(246, 22);
-      this.miCrashlogs.Text = "Deobfuscate Stacktrace...";
-      // 
-      // miStacktrace
-      // 
-      this.miStacktrace.Image = global::ObfuscarMappingParser.Properties.Resources.Stacktrace2;
-      this.miStacktrace.Name = "miStacktrace";
-      this.miStacktrace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-      this.miStacktrace.Size = new System.Drawing.Size(246, 22);
-      this.miStacktrace.Text = "Analyze Stacktrace...";
-      // 
       // toolStripSeparator8
       // 
       this.toolStripSeparator8.Name = "toolStripSeparator8";
       this.toolStripSeparator8.Size = new System.Drawing.Size(243, 6);
-      // 
-      // miSearch
-      // 
-      this.miSearch.Image = global::ObfuscarMappingParser.Properties.Resources.Search;
-      this.miSearch.Name = "miSearch";
-      this.miSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-      this.miSearch.Size = new System.Drawing.Size(246, 22);
-      this.miSearch.Text = "Search...";
-      // 
-      // miSearchOriginal
-      // 
-      this.miSearchOriginal.Image = global::ObfuscarMappingParser.Properties.Resources.Search;
-      this.miSearchOriginal.Name = "miSearchOriginal";
-      this.miSearchOriginal.Size = new System.Drawing.Size(246, 22);
-      this.miSearchOriginal.Text = "Search for Original";
       // 
       // mmTools
       // 
@@ -453,8 +303,8 @@
       // miConvert
       // 
       this.miConvert.Name = "miConvert";
-      this.miConvert.Size = new System.Drawing.Size(125, 22);
-      this.miConvert.Text = "Convert...";
+      this.miConvert.Size = new System.Drawing.Size(177, 22);
+      this.miConvert.Text = "Convert Raw Data...";
       // 
       // mmHelp
       // 
@@ -473,15 +323,20 @@
       // contextMenuStrip
       // 
       this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miOpenVS,
+            this.toolStripSeparator7,
             this.miCopyOldName,
             this.miCopyFullOldName,
             this.miCopyNewName,
-            this.miCopyFullNewName,
-            this.toolStripSeparator7,
-            this.miOpenVS});
+            this.miCopyFullNewName});
       this.contextMenuStrip.Name = "contextMenuStrip";
       this.contextMenuStrip.Size = new System.Drawing.Size(187, 120);
       this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
+      // 
+      // toolStripSeparator7
+      // 
+      this.toolStripSeparator7.Name = "toolStripSeparator7";
+      this.toolStripSeparator7.Size = new System.Drawing.Size(183, 6);
       // 
       // miCopyOldName
       // 
@@ -506,18 +361,6 @@
       this.miCopyFullNewName.Name = "miCopyFullNewName";
       this.miCopyFullNewName.Size = new System.Drawing.Size(186, 22);
       this.miCopyFullNewName.Text = "Copy Full New Name";
-      // 
-      // toolStripSeparator7
-      // 
-      this.toolStripSeparator7.Name = "toolStripSeparator7";
-      this.toolStripSeparator7.Size = new System.Drawing.Size(183, 6);
-      // 
-      // miOpenVS
-      // 
-      this.miOpenVS.Image = global::ObfuscarMappingParser.Properties.Resources.Editor;
-      this.miOpenVS.Name = "miOpenVS";
-      this.miOpenVS.Size = new System.Drawing.Size(186, 22);
-      this.miOpenVS.Text = "Open in Editor";
       // 
       // odPDB
       // 
@@ -553,6 +396,164 @@
       this.ptvElements.UseWindowsThemes = true;
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
+      // 
+      // btnOpen
+      // 
+      this.btnOpen.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripSeparator3,
+            this.miOpenBtn});
+      this.btnOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
+      this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnOpen.Name = "btnOpen";
+      this.btnOpen.Size = new System.Drawing.Size(65, 22);
+      this.btnOpen.Text = "Open";
+      this.btnOpen.DropDownOpening += new System.EventHandler(this.btnOpen_DropDownOpening);
+      // 
+      // toolStripSeparator3
+      // 
+      this.toolStripSeparator3.Name = "toolStripSeparator3";
+      this.toolStripSeparator3.Size = new System.Drawing.Size(128, 6);
+      // 
+      // miOpenBtn
+      // 
+      this.miOpenBtn.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
+      this.miOpenBtn.Name = "miOpenBtn";
+      this.miOpenBtn.Size = new System.Drawing.Size(131, 22);
+      this.miOpenBtn.Text = "Open file...";
+      // 
+      // btnCrashLogs
+      // 
+      this.btnCrashLogs.Enabled = false;
+      this.btnCrashLogs.Image = global::ObfuscarMappingParser.Properties.Resources.Stacktrace;
+      this.btnCrashLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnCrashLogs.Name = "btnCrashLogs";
+      this.btnCrashLogs.Size = new System.Drawing.Size(81, 22);
+      this.btnCrashLogs.Text = "Stacktrace";
+      this.btnCrashLogs.ToolTipText = "Deobfuscate stacktrace";
+      // 
+      // miOpen
+      // 
+      this.miOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
+      this.miOpen.Name = "miOpen";
+      this.miOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+      this.miOpen.Size = new System.Drawing.Size(169, 22);
+      this.miOpen.Text = "Open...";
+      // 
+      // miReload
+      // 
+      this.miReload.Image = global::ObfuscarMappingParser.Properties.Resources.Reload;
+      this.miReload.Name = "miReload";
+      this.miReload.Size = new System.Drawing.Size(169, 22);
+      this.miReload.Text = "Reload";
+      // 
+      // miSortAscending
+      // 
+      this.miSortAscending.Image = global::ObfuscarMappingParser.Properties.Resources.SortAscending;
+      this.miSortAscending.Name = "miSortAscending";
+      this.miSortAscending.Size = new System.Drawing.Size(256, 22);
+      this.miSortAscending.Text = "Sort by Original Name Ascending";
+      this.miSortAscending.Click += new System.EventHandler(this.miSorting_Click);
+      // 
+      // miSortDescending
+      // 
+      this.miSortDescending.Image = global::ObfuscarMappingParser.Properties.Resources.SortDescending;
+      this.miSortDescending.Name = "miSortDescending";
+      this.miSortDescending.Size = new System.Drawing.Size(256, 22);
+      this.miSortDescending.Text = "Sort by Original Name Descending";
+      this.miSortDescending.Click += new System.EventHandler(this.miSorting_Click);
+      // 
+      // miSortNewAscending
+      // 
+      this.miSortNewAscending.Image = global::ObfuscarMappingParser.Properties.Resources.SortAscending;
+      this.miSortNewAscending.Name = "miSortNewAscending";
+      this.miSortNewAscending.Size = new System.Drawing.Size(256, 22);
+      this.miSortNewAscending.Text = "Sort by New Name Ascending";
+      this.miSortNewAscending.Click += new System.EventHandler(this.miSorting_Click);
+      // 
+      // miSortNewDesc
+      // 
+      this.miSortNewDesc.Image = global::ObfuscarMappingParser.Properties.Resources.SortDescending;
+      this.miSortNewDesc.Name = "miSortNewDesc";
+      this.miSortNewDesc.Size = new System.Drawing.Size(256, 22);
+      this.miSortNewDesc.Text = "Sort by New Name Descending";
+      this.miSortNewDesc.Click += new System.EventHandler(this.miSorting_Click);
+      // 
+      // miGroupNamespace
+      // 
+      this.miGroupNamespace.Image = global::ObfuscarMappingParser.Properties.Resources.SortUsingNamespace;
+      this.miGroupNamespace.Name = "miGroupNamespace";
+      this.miGroupNamespace.Size = new System.Drawing.Size(256, 22);
+      this.miGroupNamespace.Text = "Group by Original Namespace";
+      this.miGroupNamespace.Click += new System.EventHandler(this.miGroupNamespace_Click);
+      // 
+      // miShowModule
+      // 
+      this.miShowModule.Image = global::ObfuscarMappingParser.Properties.Resources.AssemblyIcon;
+      this.miShowModule.Name = "miShowModule";
+      this.miShowModule.Size = new System.Drawing.Size(256, 22);
+      this.miShowModule.Text = "Show Module";
+      this.miShowModule.Click += new System.EventHandler(this.miShowModule_Click);
+      // 
+      // miGroupModules
+      // 
+      this.miGroupModules.Image = global::ObfuscarMappingParser.Properties.Resources.AssemblyIcon;
+      this.miGroupModules.Name = "miGroupModules";
+      this.miGroupModules.Size = new System.Drawing.Size(256, 22);
+      this.miGroupModules.Text = "Group by Modules";
+      this.miGroupModules.Click += new System.EventHandler(this.miGroupModules_Click);
+      // 
+      // miUseColumns
+      // 
+      this.miUseColumns.Image = global::ObfuscarMappingParser.Properties.Resources.Tree;
+      this.miUseColumns.Name = "miUseColumns";
+      this.miUseColumns.Size = new System.Drawing.Size(256, 22);
+      this.miUseColumns.Text = "Use Columns in Tree";
+      this.miUseColumns.Click += new System.EventHandler(this.miUseColumns_Click);
+      // 
+      // miSettings
+      // 
+      this.miSettings.Image = global::ObfuscarMappingParser.Properties.Resources.Settings;
+      this.miSettings.Name = "miSettings";
+      this.miSettings.Size = new System.Drawing.Size(256, 22);
+      this.miSettings.Text = "Settings...";
+      // 
+      // miCrashlogs
+      // 
+      this.miCrashlogs.Image = global::ObfuscarMappingParser.Properties.Resources.Stacktrace;
+      this.miCrashlogs.Name = "miCrashlogs";
+      this.miCrashlogs.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+      this.miCrashlogs.Size = new System.Drawing.Size(246, 22);
+      this.miCrashlogs.Text = "Deobfuscate Stacktrace...";
+      // 
+      // miStacktrace
+      // 
+      this.miStacktrace.Image = global::ObfuscarMappingParser.Properties.Resources.Stacktrace2;
+      this.miStacktrace.Name = "miStacktrace";
+      this.miStacktrace.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
+      this.miStacktrace.Size = new System.Drawing.Size(246, 22);
+      this.miStacktrace.Text = "Analyze Stacktrace...";
+      // 
+      // miSearch
+      // 
+      this.miSearch.Image = global::ObfuscarMappingParser.Properties.Resources.Search;
+      this.miSearch.Name = "miSearch";
+      this.miSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
+      this.miSearch.Size = new System.Drawing.Size(246, 22);
+      this.miSearch.Text = "Search...";
+      // 
+      // miSearchOriginal
+      // 
+      this.miSearchOriginal.Image = global::ObfuscarMappingParser.Properties.Resources.Search;
+      this.miSearchOriginal.Name = "miSearchOriginal";
+      this.miSearchOriginal.Size = new System.Drawing.Size(246, 22);
+      this.miSearchOriginal.Text = "Search for Original";
+      // 
+      // miOpenVS
+      // 
+      this.miOpenVS.Image = global::ObfuscarMappingParser.Properties.Resources.Editor;
+      this.miOpenVS.Name = "miOpenVS";
+      this.miOpenVS.Size = new System.Drawing.Size(186, 22);
+      this.miOpenVS.Text = "Open in Editor";
       // 
       // MainForm
       // 

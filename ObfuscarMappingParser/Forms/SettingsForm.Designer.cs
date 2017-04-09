@@ -28,7 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.lbVS = new System.Windows.Forms.ListBox();
+      this.components = new System.ComponentModel.Container();
       this.lblVS = new System.Windows.Forms.Label();
       this.cbSimplifySystemNames = new System.Windows.Forms.CheckBox();
       this.cbShowUnicode = new System.Windows.Forms.CheckBox();
@@ -39,15 +39,12 @@
       this.cbGroupByModules = new System.Windows.Forms.CheckBox();
       this.cbGroupByNamespaces = new System.Windows.Forms.CheckBox();
       this.cbUseColumns = new System.Windows.Forms.CheckBox();
+      this.lvEditors = new System.Windows.Forms.ListView();
+      this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+      this.imageList = new System.Windows.Forms.ImageList(this.components);
+      this.lblDoubleClick = new System.Windows.Forms.Label();
+      this.cbDoubleClick = new System.Windows.Forms.ComboBox();
       this.SuspendLayout();
-      // 
-      // lbVS
-      // 
-      this.lbVS.FormattingEnabled = true;
-      this.lbVS.Location = new System.Drawing.Point(15, 76);
-      this.lbVS.Name = "lbVS";
-      this.lbVS.Size = new System.Drawing.Size(377, 121);
-      this.lbVS.TabIndex = 1;
       // 
       // lblVS
       // 
@@ -81,7 +78,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(186, 389);
+      this.btnOk.Location = new System.Drawing.Point(186, 421);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -93,7 +90,7 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(292, 389);
+      this.btnCancel.Location = new System.Drawing.Point(292, 421);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 2;
@@ -150,14 +147,58 @@
       this.cbUseColumns.Text = "Use columns in tree";
       this.cbUseColumns.UseVisualStyleBackColor = true;
       // 
+      // lvEditors
+      // 
+      this.lvEditors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chDescription});
+      this.lvEditors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+      this.lvEditors.HideSelection = false;
+      this.lvEditors.Location = new System.Drawing.Point(15, 76);
+      this.lvEditors.MultiSelect = false;
+      this.lvEditors.Name = "lvEditors";
+      this.lvEditors.Size = new System.Drawing.Size(377, 121);
+      this.lvEditors.SmallImageList = this.imageList;
+      this.lvEditors.TabIndex = 8;
+      this.lvEditors.UseCompatibleStateImageBehavior = false;
+      this.lvEditors.View = System.Windows.Forms.View.Details;
+      this.lvEditors.SelectedIndexChanged += new System.EventHandler(this.lvEditors_SelectedIndexChanged);
+      this.lvEditors.Resize += new System.EventHandler(this.lvEditors_Resize);
+      // 
+      // imageList
+      // 
+      this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+      this.imageList.ImageSize = new System.Drawing.Size(32, 32);
+      this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+      // 
+      // lblDoubleClick
+      // 
+      this.lblDoubleClick.AutoSize = true;
+      this.lblDoubleClick.Location = new System.Drawing.Point(12, 380);
+      this.lblDoubleClick.Name = "lblDoubleClick";
+      this.lblDoubleClick.Size = new System.Drawing.Size(109, 13);
+      this.lblDoubleClick.TabIndex = 9;
+      this.lblDoubleClick.Text = "Double-click action:";
+      // 
+      // cbDoubleClick
+      // 
+      this.cbDoubleClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbDoubleClick.FormattingEnabled = true;
+      this.cbDoubleClick.Location = new System.Drawing.Point(127, 377);
+      this.cbDoubleClick.Name = "cbDoubleClick";
+      this.cbDoubleClick.Size = new System.Drawing.Size(265, 21);
+      this.cbDoubleClick.TabIndex = 10;
+      // 
       // SettingsForm
       // 
       this.AcceptButton = this.btnOk;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(404, 421);
+      this.ClientSize = new System.Drawing.Size(404, 453);
       this.ControlBox = false;
+      this.Controls.Add(this.cbDoubleClick);
+      this.Controls.Add(this.lblDoubleClick);
+      this.Controls.Add(this.lvEditors);
       this.Controls.Add(this.cbUseColumns);
       this.Controls.Add(this.cbGroupByNamespaces);
       this.Controls.Add(this.cbGroupByModules);
@@ -166,7 +207,6 @@
       this.Controls.Add(this.cbSimplifySystemNames);
       this.Controls.Add(this.lblVS);
       this.Controls.Add(this.cbShowUnicode);
-      this.Controls.Add(this.lbVS);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnOk);
       this.FillColor = System.Drawing.Color.RoyalBlue;
@@ -187,8 +227,6 @@
     }
 
     #endregion
-
-    private System.Windows.Forms.ListBox lbVS;
     private System.Windows.Forms.Label lblVS;
     private System.Windows.Forms.Button btnOk;
     private System.Windows.Forms.Button btnCancel;
@@ -199,5 +237,10 @@
     private System.Windows.Forms.CheckBox cbGroupByModules;
     private System.Windows.Forms.CheckBox cbGroupByNamespaces;
     private System.Windows.Forms.CheckBox cbUseColumns;
+    private System.Windows.Forms.ListView lvEditors;
+    private System.Windows.Forms.ColumnHeader chDescription;
+    private System.Windows.Forms.ImageList imageList;
+    private System.Windows.Forms.Label lblDoubleClick;
+    private System.Windows.Forms.ComboBox cbDoubleClick;
   }
 }

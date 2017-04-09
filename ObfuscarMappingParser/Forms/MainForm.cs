@@ -15,6 +15,7 @@ using BrokenEvent.Shared.CrashReporter;
 using BrokenEvent.Shared.TreeView;
 using BrokenEvent.TaskDialogs;
 using BrokenEvent.TaskDialogs.Dialogs;
+using BrokenEvent.VisualStudioOpener;
 
 using ObfuscarMappingParser.Properties;
 
@@ -160,17 +161,6 @@ namespace ObfuscarMappingParser
       EnableMappingActions(true);
       EndLoading("Mapping reloaded in " + mapping.TimingTotal + " ms");
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
-    }
-
-    private void EnableCommonControls(bool enable)
-    {
-      if (enable)
-        commandManager.EndDisable();
-      else
-        commandManager.BeginDisable();
-      menuStrip.Enabled = enable;
-      ptvElements.Enabled = enable;
-      tsTools.Enabled = enable;
     }
 
     private void BuildMapping()
@@ -370,8 +360,7 @@ namespace ObfuscarMappingParser
       if (focusedItem == null)
         return;
 
-      // TODO default doubleclick action?
-      commandManager.CallCommand(Actions.OpenInEditor);
+      commandManager.CallCommand((Actions)(int)Configs.Instance.DoubleClickAction);
     }
 
     #endregion
@@ -454,33 +443,52 @@ namespace ObfuscarMappingParser
       if (pdb == null)
         return;
 
+      bool attachAll = false;
+
       foreach (string s in pdb)
       {
         if (!File.Exists(s))
           continue;
 
-        TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
+        bool doAttach = attachAll;
+
+        if (!attachAll)
+        {
+          TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
             Handle,
             "Attach PDB File",
             "Attach related PDB file?",
             s,
             TaskDialogStandardIcon.Information,
-            new string[] { "Attach", "Don't attach" },
+            new string[] { "Attach", "Attach all", "Don't attach" },
             null,
-            new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, }
+            new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.Ok, TaskDialogResult.No, }
           );
 
-        switch (d)
-        {
-          case TaskDialogResult.Yes:
-            if (AttachPDB(s, this) && addToRecent)
-              Configs.Instance.AddRecentPdb(mapping.Filename, s);
-            break;
-          case TaskDialogResult.No:
-            break;
-          default:
-            return;
+          switch (d)
+          {
+            case TaskDialogResult.Ok:
+              attachAll = true;
+              doAttach = true;
+              break;
+
+            case TaskDialogResult.No:
+              break;
+            
+            case TaskDialogResult.Yes:
+              doAttach = true;
+              break;
+
+            default:
+              return;
+          }
         }
+
+        if (!doAttach)
+          continue;
+
+        if (AttachPDB(s, this) && addToRecent)
+          Configs.Instance.AddRecentPdb(mapping.Filename, s);
       }
     }
 
@@ -592,37 +600,27 @@ namespace ObfuscarMappingParser
 
         filename = odSourceFile.FileName;
       }
-
-      VSOpener.VisualStudioVersion version = Configs.Instance.VisualStudioVersion;
-      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, "editor");
-      if (vs != null)
-        version = (VSOpener.VisualStudioVersion)Enum.Parse(typeof(VSOpener.VisualStudioVersion), vs);
+      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR);
+      if (vs == null)
+        vs = Configs.Instance.Editor;
+      IVisualStudioInfo visualStudio = VisualStudioDetector.GetVisualStudioInfo(vs);
 
       BeginLoading("Starting the Visual Studio...");
       try
       {
-        await Task.Run(()=>VSOpener.OpenInVisualStudio(filename, line, version));
+        await Task.Run(()=>visualStudio.OpenFile(filename, line));
       }
       catch (Exception ex)
       {
         this.SetTaskbarProgressValue(100, 100);
         this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Error);
-        if (version != VSOpener.VisualStudioVersion.Notepad)
-          TaskDialogHelper.ShowMessageBox(
-              Handle,
-              "Failed to Open in Visual Studio",
-              "Failed to open in Visual Studio. Try to use another version of Visual Studio.",
-              filename + ":" + line + "\n" + ex.Message,
-              TaskDialogStandardIcon.Error
-            );
-        else
-          TaskDialogHelper.ShowMessageBox(
-              Handle,
-              "Failed to Open File",
-              "Unable to open file.",
-              filename + ":" + line + "\n" + ex.Message,
-              TaskDialogStandardIcon.Error
-            );
+        TaskDialogHelper.ShowMessageBox(
+            Handle,
+            "Failed to Open in Visual Studio",
+            "Failed to open in Visual Studio. Try to use another version of Visual Studio.",
+            filename + ":" + line + "\n" + ex.Message,
+            TaskDialogStandardIcon.Error
+          );
       }
       EndLoading("");
     }

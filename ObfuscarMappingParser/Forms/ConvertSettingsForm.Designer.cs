@@ -53,9 +53,9 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(380, 300);
+      this.btnOk.Location = new System.Drawing.Point(330, 300);
       this.btnOk.Name = "btnOk";
-      this.btnOk.Size = new System.Drawing.Size(75, 23);
+      this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 9;
       this.btnOk.Text = "OK";
       this.btnOk.UseVisualStyleBackColor = true;
@@ -65,9 +65,9 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(461, 300);
+      this.btnCancel.Location = new System.Drawing.Point(436, 300);
       this.btnCancel.Name = "btnCancel";
-      this.btnCancel.Size = new System.Drawing.Size(75, 23);
+      this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 10;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;

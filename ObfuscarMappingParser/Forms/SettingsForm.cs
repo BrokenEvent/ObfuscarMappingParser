@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
+using BrokenEvent.VisualStudioOpener;
 
 namespace ObfuscarMappingParser
 {
@@ -14,10 +15,30 @@ namespace ObfuscarMappingParser
       this.mapping = mapping;
       InitializeComponent();
 
-      lbVS.Items.Add(VSOpener.VisualStudioVersion.Notepad);
-      if (VSOpener.VisualStudioVersions != null)
-        foreach (VSOpener.VisualStudioVersion version in VSOpener.VisualStudioVersions)
-          lbVS.Items.Add(version);
+      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR);
+      if (vs == null)
+        vs = Configs.Instance.Editor;
+      IVisualStudioInfo selected = VisualStudioDetector.GetVisualStudioInfo(vs);
+      if (selected == null)
+        selected = VisualStudioDetector.GetHighestVisualStudio();
+
+      foreach (IVisualStudioInfo info in VisualStudioDetector.GetVisualStudios())
+      {
+        ListViewItem item = new ListViewItem(info.Description);
+        try
+        {
+          Icon icon = Icon.ExtractAssociatedIcon(info.Path);
+          imageList.Images.Add(icon);
+          item.ImageIndex = imageList.Images.Count - 1;
+        }
+        catch { }
+        item.Tag = info;
+
+        lvEditors.Items.Add(item);
+
+        if (info == selected)
+          item.Selected = true;
+      }
 
       cbShowUnicode.Checked = Configs.Instance.ShowUnicode;
       cbSimplifySystemNames.Checked = Configs.Instance.SimplifySystemNames;
@@ -26,22 +47,19 @@ namespace ObfuscarMappingParser
       cbGroupByModules.Checked = Configs.Instance.GroupModules;
       cbUseColumns.Checked = Configs.Instance.UseColumns;
 
-      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, "editor");
-      if (vs == null)
-        lbVS.SelectedItem = Configs.Instance.VisualStudioVersion;
-      else
-      {
-        lbVS.SelectedItem = Enum.Parse(typeof(VSOpener.VisualStudioVersion), vs);
-        cbApplyVsToProject.Checked = true;
-      }
+      EnumHelper.FillCombobox(cbDoubleClick, Configs.Instance.DoubleClickAction);
+
+      lvEditors_Resize(null, EventArgs.Empty);
     }
 
     private void btnOk_Click(object sender, EventArgs e)
     {
+      string editor = lvEditors.SelectedItems[0].Tag.ToString();
+
       if (cbApplyVsToProject.Checked)
-        Configs.Instance.AddRecentProperty(mapping.Filename, "editor", lbVS.SelectedItem.ToString());
+        Configs.Instance.AddRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR, editor);
       else
-        Configs.Instance.VisualStudioVersion = (VSOpener.VisualStudioVersion)lbVS.SelectedItem;
+        Configs.Instance.Editor = editor;
 
       Configs.Instance.ShowUnicode = cbShowUnicode.Checked;
       Configs.Instance.SimplifySystemNames = cbSimplifySystemNames.Checked;
@@ -49,6 +67,7 @@ namespace ObfuscarMappingParser
       Configs.Instance.GroupNamespaces = cbGroupByNamespaces.Checked;
       Configs.Instance.GroupModules = cbGroupByModules.Checked;
       Configs.Instance.UseColumns = cbUseColumns.Checked;
+      Configs.Instance.DoubleClickAction = ((EnumHelper.EnumWrapper<Configs.DoubleClickActions>)cbDoubleClick.SelectedItem).Value;
 
       DialogResult = DialogResult.OK;
     }
@@ -59,6 +78,16 @@ namespace ObfuscarMappingParser
 
       using (Pen pen = new Pen(LineColor))
         e.Graphics.DrawLine(pen, 0, DIVIDER_Y, ClientSize.Width, DIVIDER_Y);
+    }
+
+    private void lvEditors_Resize(object sender, EventArgs e)
+    {
+      chDescription.Width = lvEditors.ClientSize.Width;
+    }
+
+    private void lvEditors_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      btnOk.Enabled = lvEditors.SelectedItems.Count > 0;
     }
   }
 }

@@ -1,0 +1,3 @@
+[submodule "BrokenEvent.VisualStudioOpener"]
+	path = BrokenEvent.VisualStudioOpener
+	url = https://github.com/BrokenEvent/VisualStudioOpener

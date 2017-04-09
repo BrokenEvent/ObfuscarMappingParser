@@ -64,11 +64,6 @@
     <Reference Include="BrokenEvent.TaskDialogs">
       <HintPath>..\Libs\BrokenEvent.TaskDialogs.dll</HintPath>
     </Reference>
-    <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>Shared\envdte.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -264,6 +259,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Settings.png" />
+    <None Include="res\Reload.png" />
     <None Include="res\SkipPrefix.png" />
     <None Include="res\github.png" />
     <None Include="res\brokenevent.png" />
@@ -287,7 +284,6 @@
     <None Include="res\SimpleView.png" />
     <None Include="res\Method.png" />
     <None Include="res\Class.png" />
-    <Content Include="envdte.dll" />
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -295,6 +291,12 @@
     <Content Include="Microsoft.Cci.Pdb.License.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BrokenEvent.VisualStudioOpener\VisualStudioOpener\VisualStudioOpener.csproj">
+      <Project>{890FD391-EE51-4E34-8A6F-3DB98AE3C210}</Project>
+      <Name>VisualStudioOpener</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
