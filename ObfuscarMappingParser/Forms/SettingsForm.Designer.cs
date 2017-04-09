@@ -39,17 +39,26 @@
       this.cbGroupByModules = new System.Windows.Forms.CheckBox();
       this.cbGroupByNamespaces = new System.Windows.Forms.CheckBox();
       this.cbUseColumns = new System.Windows.Forms.CheckBox();
-      this.lvEditors = new System.Windows.Forms.ListView();
+      this.lvEditors = new ObfuscarMappingParser.MyListView();
       this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.imageList = new System.Windows.Forms.ImageList(this.components);
       this.lblDoubleClick = new System.Windows.Forms.Label();
       this.cbDoubleClick = new System.Windows.Forms.ComboBox();
+      this.tabControl = new System.Windows.Forms.TabControl();
+      this.tbEditor = new System.Windows.Forms.TabPage();
+      this.tpSettings = new System.Windows.Forms.TabPage();
+      this.tpHotkeys = new System.Windows.Forms.TabPage();
+      this.commandSelector = new BrokenEvent.Shared.CommandManager.CommandSelector();
+      this.tabControl.SuspendLayout();
+      this.tbEditor.SuspendLayout();
+      this.tpSettings.SuspendLayout();
+      this.tpHotkeys.SuspendLayout();
       this.SuspendLayout();
       // 
       // lblVS
       // 
       this.lblVS.AutoSize = true;
-      this.lblVS.Location = new System.Drawing.Point(12, 60);
+      this.lblVS.Location = new System.Drawing.Point(6, 3);
       this.lblVS.Name = "lblVS";
       this.lblVS.Size = new System.Drawing.Size(186, 13);
       this.lblVS.TabIndex = 0;
@@ -58,7 +67,8 @@
       // cbSimplifySystemNames
       // 
       this.cbSimplifySystemNames.AutoSize = true;
-      this.cbSimplifySystemNames.Location = new System.Drawing.Point(15, 262);
+      this.cbSimplifySystemNames.Location = new System.Drawing.Point(9, 48);
+      this.cbSimplifySystemNames.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifySystemNames.Name = "cbSimplifySystemNames";
       this.cbSimplifySystemNames.Size = new System.Drawing.Size(241, 17);
       this.cbSimplifySystemNames.TabIndex = 1;
@@ -68,7 +78,8 @@
       // cbShowUnicode
       // 
       this.cbShowUnicode.AutoSize = true;
-      this.cbShowUnicode.Location = new System.Drawing.Point(15, 239);
+      this.cbShowUnicode.Location = new System.Drawing.Point(9, 19);
+      this.cbShowUnicode.Margin = new System.Windows.Forms.Padding(6, 16, 3, 6);
       this.cbShowUnicode.Name = "cbShowUnicode";
       this.cbShowUnicode.Size = new System.Drawing.Size(170, 17);
       this.cbShowUnicode.TabIndex = 0;
@@ -78,7 +89,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(186, 421);
+      this.btnOk.Location = new System.Drawing.Point(230, 368);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -90,7 +101,7 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(292, 421);
+      this.btnCancel.Location = new System.Drawing.Point(336, 368);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 2;
@@ -99,8 +110,9 @@
       // 
       // cbApplyVsToProject
       // 
+      this.cbApplyVsToProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.cbApplyVsToProject.AutoSize = true;
-      this.cbApplyVsToProject.Location = new System.Drawing.Point(15, 203);
+      this.cbApplyVsToProject.Location = new System.Drawing.Point(9, 234);
       this.cbApplyVsToProject.Name = "cbApplyVsToProject";
       this.cbApplyVsToProject.Size = new System.Drawing.Size(370, 17);
       this.cbApplyVsToProject.TabIndex = 3;
@@ -110,7 +122,8 @@
       // cbSimplifyNullable
       // 
       this.cbSimplifyNullable.AutoSize = true;
-      this.cbSimplifyNullable.Location = new System.Drawing.Point(15, 285);
+      this.cbSimplifyNullable.Location = new System.Drawing.Point(9, 77);
+      this.cbSimplifyNullable.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifyNullable.Name = "cbSimplifyNullable";
       this.cbSimplifyNullable.Size = new System.Drawing.Size(213, 17);
       this.cbSimplifyNullable.TabIndex = 4;
@@ -120,7 +133,8 @@
       // cbGroupByModules
       // 
       this.cbGroupByModules.AutoSize = true;
-      this.cbGroupByModules.Location = new System.Drawing.Point(15, 331);
+      this.cbGroupByModules.Location = new System.Drawing.Point(9, 135);
+      this.cbGroupByModules.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByModules.Name = "cbGroupByModules";
       this.cbGroupByModules.Size = new System.Drawing.Size(121, 17);
       this.cbGroupByModules.TabIndex = 5;
@@ -130,7 +144,8 @@
       // cbGroupByNamespaces
       // 
       this.cbGroupByNamespaces.AutoSize = true;
-      this.cbGroupByNamespaces.Location = new System.Drawing.Point(15, 308);
+      this.cbGroupByNamespaces.Location = new System.Drawing.Point(9, 106);
+      this.cbGroupByNamespaces.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByNamespaces.Name = "cbGroupByNamespaces";
       this.cbGroupByNamespaces.Size = new System.Drawing.Size(182, 17);
       this.cbGroupByNamespaces.TabIndex = 6;
@@ -140,7 +155,8 @@
       // cbUseColumns
       // 
       this.cbUseColumns.AutoSize = true;
-      this.cbUseColumns.Location = new System.Drawing.Point(15, 354);
+      this.cbUseColumns.Location = new System.Drawing.Point(9, 164);
+      this.cbUseColumns.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbUseColumns.Name = "cbUseColumns";
       this.cbUseColumns.Size = new System.Drawing.Size(127, 17);
       this.cbUseColumns.TabIndex = 7;
@@ -149,19 +165,22 @@
       // 
       // lvEditors
       // 
+      this.lvEditors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.lvEditors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.chDescription});
+      this.lvEditors.FullRowSelect = true;
       this.lvEditors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
       this.lvEditors.HideSelection = false;
-      this.lvEditors.Location = new System.Drawing.Point(15, 76);
+      this.lvEditors.Location = new System.Drawing.Point(8, 19);
       this.lvEditors.MultiSelect = false;
       this.lvEditors.Name = "lvEditors";
-      this.lvEditors.Size = new System.Drawing.Size(377, 121);
+      this.lvEditors.Size = new System.Drawing.Size(401, 209);
       this.lvEditors.SmallImageList = this.imageList;
       this.lvEditors.TabIndex = 8;
       this.lvEditors.UseCompatibleStateImageBehavior = false;
       this.lvEditors.View = System.Windows.Forms.View.Details;
-      this.lvEditors.SelectedIndexChanged += new System.EventHandler(this.lvEditors_SelectedIndexChanged);
       this.lvEditors.Resize += new System.EventHandler(this.lvEditors_Resize);
       // 
       // imageList
@@ -173,7 +192,8 @@
       // lblDoubleClick
       // 
       this.lblDoubleClick.AutoSize = true;
-      this.lblDoubleClick.Location = new System.Drawing.Point(12, 380);
+      this.lblDoubleClick.Location = new System.Drawing.Point(9, 233);
+      this.lblDoubleClick.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
       this.lblDoubleClick.Name = "lblDoubleClick";
       this.lblDoubleClick.Size = new System.Drawing.Size(109, 13);
       this.lblDoubleClick.TabIndex = 9;
@@ -183,10 +203,86 @@
       // 
       this.cbDoubleClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbDoubleClick.FormattingEnabled = true;
-      this.cbDoubleClick.Location = new System.Drawing.Point(127, 377);
+      this.cbDoubleClick.Location = new System.Drawing.Point(145, 230);
       this.cbDoubleClick.Name = "cbDoubleClick";
       this.cbDoubleClick.Size = new System.Drawing.Size(265, 21);
       this.cbDoubleClick.TabIndex = 10;
+      // 
+      // tabControl
+      // 
+      this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.tabControl.Controls.Add(this.tbEditor);
+      this.tabControl.Controls.Add(this.tpSettings);
+      this.tabControl.Controls.Add(this.tpHotkeys);
+      this.tabControl.Location = new System.Drawing.Point(12, 66);
+      this.tabControl.Name = "tabControl";
+      this.tabControl.SelectedIndex = 0;
+      this.tabControl.Size = new System.Drawing.Size(424, 283);
+      this.tabControl.TabIndex = 11;
+      // 
+      // tbEditor
+      // 
+      this.tbEditor.Controls.Add(this.lblVS);
+      this.tbEditor.Controls.Add(this.lvEditors);
+      this.tbEditor.Controls.Add(this.cbApplyVsToProject);
+      this.tbEditor.Location = new System.Drawing.Point(4, 22);
+      this.tbEditor.Name = "tbEditor";
+      this.tbEditor.Padding = new System.Windows.Forms.Padding(3);
+      this.tbEditor.Size = new System.Drawing.Size(416, 257);
+      this.tbEditor.TabIndex = 0;
+      this.tbEditor.Text = "External Editor";
+      this.tbEditor.UseVisualStyleBackColor = true;
+      // 
+      // tpSettings
+      // 
+      this.tpSettings.Controls.Add(this.cbSimplifyNullable);
+      this.tpSettings.Controls.Add(this.cbDoubleClick);
+      this.tpSettings.Controls.Add(this.cbShowUnicode);
+      this.tpSettings.Controls.Add(this.lblDoubleClick);
+      this.tpSettings.Controls.Add(this.cbSimplifySystemNames);
+      this.tpSettings.Controls.Add(this.cbUseColumns);
+      this.tpSettings.Controls.Add(this.cbGroupByModules);
+      this.tpSettings.Controls.Add(this.cbGroupByNamespaces);
+      this.tpSettings.Location = new System.Drawing.Point(4, 22);
+      this.tpSettings.Name = "tpSettings";
+      this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
+      this.tpSettings.Size = new System.Drawing.Size(416, 257);
+      this.tpSettings.TabIndex = 1;
+      this.tpSettings.Text = "UI Settings";
+      this.tpSettings.UseVisualStyleBackColor = true;
+      // 
+      // tpHotkeys
+      // 
+      this.tpHotkeys.Controls.Add(this.commandSelector);
+      this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
+      this.tpHotkeys.Name = "tpHotkeys";
+      this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
+      this.tpHotkeys.Size = new System.Drawing.Size(416, 257);
+      this.tpHotkeys.TabIndex = 2;
+      this.tpHotkeys.Text = "Hotkeys";
+      this.tpHotkeys.UseVisualStyleBackColor = true;
+      // 
+      // commandSelector
+      // 
+      this.commandSelector.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.commandSelector.AutoScroll = true;
+      this.commandSelector.AutoScrollMinSize = new System.Drawing.Size(404, 0);
+      this.commandSelector.BackColor = System.Drawing.SystemColors.Window;
+      this.commandSelector.CategoryFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.commandSelector.CategoryPadding = new System.Windows.Forms.Padding(4);
+      this.commandSelector.CommandManager = null;
+      this.commandSelector.CommandType = null;
+      this.commandSelector.LineHeight = 21;
+      this.commandSelector.Location = new System.Drawing.Point(6, 6);
+      this.commandSelector.Name = "commandSelector";
+      this.commandSelector.NamePercent = 0.5F;
+      this.commandSelector.Size = new System.Drawing.Size(404, 245);
+      this.commandSelector.TabIndex = 0;
+      this.commandSelector.Text = "commandSelector1";
       // 
       // SettingsForm
       // 
@@ -194,19 +290,9 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(404, 453);
+      this.ClientSize = new System.Drawing.Size(448, 400);
       this.ControlBox = false;
-      this.Controls.Add(this.cbDoubleClick);
-      this.Controls.Add(this.lblDoubleClick);
-      this.Controls.Add(this.lvEditors);
-      this.Controls.Add(this.cbUseColumns);
-      this.Controls.Add(this.cbGroupByNamespaces);
-      this.Controls.Add(this.cbGroupByModules);
-      this.Controls.Add(this.cbSimplifyNullable);
-      this.Controls.Add(this.cbApplyVsToProject);
-      this.Controls.Add(this.cbSimplifySystemNames);
-      this.Controls.Add(this.lblVS);
-      this.Controls.Add(this.cbShowUnicode);
+      this.Controls.Add(this.tabControl);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnOk);
       this.FillColor = System.Drawing.Color.RoyalBlue;
@@ -220,9 +306,13 @@
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Obfuscar Mapping Parser Settings";
-      this.Paint += new System.Windows.Forms.PaintEventHandler(this.SettingsForm_Paint);
+      this.tabControl.ResumeLayout(false);
+      this.tbEditor.ResumeLayout(false);
+      this.tbEditor.PerformLayout();
+      this.tpSettings.ResumeLayout(false);
+      this.tpSettings.PerformLayout();
+      this.tpHotkeys.ResumeLayout(false);
       this.ResumeLayout(false);
-      this.PerformLayout();
 
     }
 
@@ -237,10 +327,15 @@
     private System.Windows.Forms.CheckBox cbGroupByModules;
     private System.Windows.Forms.CheckBox cbGroupByNamespaces;
     private System.Windows.Forms.CheckBox cbUseColumns;
-    private System.Windows.Forms.ListView lvEditors;
+    private ObfuscarMappingParser.MyListView lvEditors;
     private System.Windows.Forms.ColumnHeader chDescription;
     private System.Windows.Forms.ImageList imageList;
     private System.Windows.Forms.Label lblDoubleClick;
     private System.Windows.Forms.ComboBox cbDoubleClick;
+    private System.Windows.Forms.TabControl tabControl;
+    private System.Windows.Forms.TabPage tbEditor;
+    private System.Windows.Forms.TabPage tpSettings;
+    private System.Windows.Forms.TabPage tpHotkeys;
+    private BrokenEvent.Shared.CommandManager.CommandSelector commandSelector;
   }
 }

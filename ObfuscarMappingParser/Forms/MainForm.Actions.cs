@@ -157,7 +157,7 @@ namespace ObfuscarMappingParser
 
     private void Action_Settings(Actions command)
     {
-      using (SettingsForm form = new SettingsForm(mapping))
+      using (SettingsForm form = new SettingsForm(mapping, commandManager))
         form.ShowDialog(this);
 
       if (mapping != null)

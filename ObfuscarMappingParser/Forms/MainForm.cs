@@ -443,52 +443,47 @@ namespace ObfuscarMappingParser
       if (pdb == null)
         return;
 
-      bool attachAll = false;
+      TaskDialogResult allResult = TaskDialogResult.None;
 
       foreach (string s in pdb)
       {
         if (!File.Exists(s))
           continue;
 
-        bool doAttach = attachAll;
+        TaskDialogResult result = allResult;
 
-        if (!attachAll)
-        {
-          TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
-            Handle,
-            "Attach PDB File",
-            "Attach related PDB file?",
-            s,
-            TaskDialogStandardIcon.Information,
-            new string[] { "Attach", "Attach all", "Don't attach" },
-            null,
-            new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.Ok, TaskDialogResult.No, }
-          );
-
-          switch (d)
+        if (result == TaskDialogResult.None)
+          using (TaskDialog dialog = TaskDialogHelper.ConstructTaskDialog(
+              Handle,
+              "Attach PDB File",
+              "Attach related PDB file?",
+              s,
+              TaskDialogStandardIcon.Information
+            ))
           {
-            case TaskDialogResult.Ok:
-              attachAll = true;
-              doAttach = true;
-              break;
+            dialog.AddCommandLink(TaskDialogResult.Yes, "Attach");
+            dialog.AddCommandLink(TaskDialogResult.Yes, "Don't attach");
+            dialog.FooterCheckBoxText = "Do this for other PDBs of this mapping.";
+            dialog.FooterCheckBoxChecked = false;
 
-            case TaskDialogResult.No:
-              break;
-            
-            case TaskDialogResult.Yes:
-              doAttach = true;
-              break;
-
-            default:
-              return;
+            result = dialog.Show();
+            if (dialog.FooterCheckBoxChecked.Value)
+              allResult = result;
           }
+
+        switch (result)
+        {
+          case TaskDialogResult.Yes:
+            if (AttachPDB(s, this) && addToRecent)
+              Configs.Instance.AddRecentPdb(mapping.Filename, s);
+            break;
+
+          case TaskDialogResult.No:
+            break;
+
+          default:
+            return;
         }
-
-        if (!doAttach)
-          continue;
-
-        if (AttachPDB(s, this) && addToRecent)
-          Configs.Instance.AddRecentPdb(mapping.Filename, s);
       }
     }
 

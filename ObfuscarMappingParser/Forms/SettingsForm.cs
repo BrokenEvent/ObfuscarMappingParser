@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.CommandManager;
 using BrokenEvent.VisualStudioOpener;
 
 namespace ObfuscarMappingParser
@@ -10,7 +11,7 @@ namespace ObfuscarMappingParser
   {
     private readonly Mapping mapping;
 
-    public SettingsForm(Mapping mapping)
+    public SettingsForm(Mapping mapping, ICommandManager commandManager)
     {
       this.mapping = mapping;
       InitializeComponent();
@@ -49,6 +50,9 @@ namespace ObfuscarMappingParser
 
       EnumHelper.FillCombobox(cbDoubleClick, Configs.Instance.DoubleClickAction);
 
+      commandSelector.CommandManager = commandManager;
+      commandSelector.CommandType = typeof(Actions);
+
       lvEditors_Resize(null, EventArgs.Empty);
     }
 
@@ -72,22 +76,9 @@ namespace ObfuscarMappingParser
       DialogResult = DialogResult.OK;
     }
 
-    private void SettingsForm_Paint(object sender, PaintEventArgs e)
-    {
-      const int DIVIDER_Y = 230;
-
-      using (Pen pen = new Pen(LineColor))
-        e.Graphics.DrawLine(pen, 0, DIVIDER_Y, ClientSize.Width, DIVIDER_Y);
-    }
-
     private void lvEditors_Resize(object sender, EventArgs e)
     {
       chDescription.Width = lvEditors.ClientSize.Width;
-    }
-
-    private void lvEditors_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      btnOk.Enabled = lvEditors.SelectedItems.Count > 0;
     }
   }
 }
