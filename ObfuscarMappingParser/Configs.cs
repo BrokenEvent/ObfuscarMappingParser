@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using BrokenEvent.NanoXml;
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.Rest;
 using BrokenEvent.VisualStudioOpener;
 
 namespace ObfuscarMappingParser
@@ -73,6 +74,10 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("DoubleClickAction", ref doubleClickAction);
 
       commandsElement = doc.GetElement("Actions");
+
+      NanoXmlElement updateEl = doc.GetElement("Update");
+      if (updateEl != null)
+        updateHelper.Load(updateEl);
     }
 
     protected override void Save(NanoXmlElement doc)
@@ -96,6 +101,8 @@ namespace ObfuscarMappingParser
 
       if (commandsElement != null)
         doc.AppendChild(commandsElement);
+
+      updateHelper.Save(doc.AppendChild(new NanoXmlElement("update")));
     }
 
     protected override void LoadDefaults()
@@ -117,6 +124,7 @@ namespace ObfuscarMappingParser
     private bool simplifyNullable = true;
     private DoubleClickActions doubleClickAction = DoubleClickActions.OpenInEditor;
     private NanoXmlElement commandsElement;
+    private UpdateHelper updateHelper = new UpdateHelper(UpdateHelper.CheckInterval.TenDays);
 
     [Obfuscation(Exclude = true)]
     public enum SortingTypes
@@ -200,6 +208,11 @@ namespace ObfuscarMappingParser
     {
       get { return commandsElement; }
       set { commandsElement = value; }
+    }
+
+    public UpdateHelper UpdateHelper
+    {
+      get { return updateHelper; }
     }
 
     public string Editor

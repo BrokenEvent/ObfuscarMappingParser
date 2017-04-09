@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.CommandManager;
+using BrokenEvent.Shared.Rest;
 using BrokenEvent.VisualStudioOpener;
 
 namespace ObfuscarMappingParser
@@ -49,6 +50,7 @@ namespace ObfuscarMappingParser
       cbUseColumns.Checked = Configs.Instance.UseColumns;
 
       EnumHelper.FillCombobox(cbDoubleClick, Configs.Instance.DoubleClickAction);
+      EnumHelper.FillCombobox(cbUpdateInterval, Configs.Instance.UpdateHelper.Interval);
 
       commandSelector.CommandManager = commandManager;
       commandSelector.CommandType = typeof(Actions);
@@ -72,6 +74,7 @@ namespace ObfuscarMappingParser
       Configs.Instance.GroupModules = cbGroupByModules.Checked;
       Configs.Instance.UseColumns = cbUseColumns.Checked;
       Configs.Instance.DoubleClickAction = ((EnumHelper.EnumWrapper<Configs.DoubleClickActions>)cbDoubleClick.SelectedItem).Value;
+      Configs.Instance.UpdateHelper.Interval = ((EnumHelper.EnumWrapper<UpdateHelper.CheckInterval>)cbUpdateInterval.SelectedItem).Value;
 
       DialogResult = DialogResult.OK;
     }

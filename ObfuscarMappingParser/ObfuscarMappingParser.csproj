@@ -69,6 +69,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppIdentity.cs" />
     <Compile Include="CommandLine.cs" />
     <Compile Include="Forms\AboutForm.cs">
       <SubType>Form</SubType>
@@ -77,7 +78,6 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Configs.cs" />
-    <Compile Include="CrashHandler.cs" />
     <Compile Include="Forms\Actions.cs" />
     <Compile Include="Forms\ConvertSettingsForm.cs">
       <SubType>Form</SubType>
@@ -262,6 +262,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="res\logo_160.png" />
     <None Include="res\Settings.png" />
     <None Include="res\Reload.png" />
     <None Include="res\SkipPrefix.png" />

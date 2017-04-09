@@ -1,9 +1,9 @@
 ﻿using System;
-using BrokenEvent.Shared.CrashReporter;
+using BrokenEvent.Shared.Rest;
 
 namespace ObfuscarMappingParser
 {
-  class ObfuscarParserException: CrashReporterException
+  class ObfuscarParserException: ReportedException
   {
     public ObfuscarParserException(string message) : base(message) {}
     public ObfuscarParserException(string message, string textData) : base(message, textData) {}

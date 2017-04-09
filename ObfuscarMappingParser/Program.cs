@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using BrokenEvent.Shared.Rest;
+
 namespace ObfuscarMappingParser
 {
   static class Program
@@ -11,6 +13,9 @@ namespace ObfuscarMappingParser
     [STAThread]
     static void Main(string[] args)
     {
+      RestApi.RegisterTopLevelExceptionHandling();
+      RestApi.Init(new AppIdentity());
+
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
 
@@ -26,7 +31,9 @@ namespace ObfuscarMappingParser
         filename = launcher.SelectedFilename;
       }
 
-      Application.Run(new MainForm(filename));
+      MainForm form = new MainForm(filename);
+      AppIdentity.MainForm = form;
+      Application.Run(form);
 
       Configs.Instance.SaveConfigs();
     }

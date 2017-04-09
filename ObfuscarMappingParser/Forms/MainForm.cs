@@ -5,13 +5,12 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
 using BrokenEvent.PdbReader;
 using BrokenEvent.Shared;
-using BrokenEvent.Shared.CrashReporter;
+using BrokenEvent.Shared.Rest;
 using BrokenEvent.Shared.TreeView;
 using BrokenEvent.TaskDialogs;
 using BrokenEvent.TaskDialogs.Dialogs;
@@ -28,8 +27,6 @@ namespace ObfuscarMappingParser
     public MainForm(string filename)
     {
       InitializeComponent();
-
-      Application.ThreadException += ApplicationOnThreadException;
 
       try
       {
@@ -59,8 +56,6 @@ namespace ObfuscarMappingParser
         OpenFile(filename);
       else
         EnableMappingActions(false);
-
-      CrashHandler.InitInstance(this);
     }
 
     private void BeginLoading(string operation)
@@ -87,8 +82,8 @@ namespace ObfuscarMappingParser
       this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Error);
 
       if (e is NanoXmlParsingException ||
-        e is ObfuscarParserException ||
-        e is IOException)
+          e is ObfuscarParserException ||
+          e is IOException)
         TaskDialogHelper.ShowMessageBox(
             Handle,
             "Mapping Loading Failed",
@@ -97,13 +92,10 @@ namespace ObfuscarMappingParser
             TaskDialogStandardIcon.Error
           );
       else
-        CrashHandler.Instance.MakePromblemReport(
-            new CrashReportInfo(
-                "Mapping loading thread failed handler",
-                "Error on loading document",
-                (Exception)e
-              ),
-            true
+        RestApi.Instance.SendCrashReport(
+            new CrashReport("Mapping loading thread failed handler", "Error on loading document") { Exception = e },
+            RestApi.CrashType.JustReport,
+            this
           );
     }
 
@@ -180,14 +172,11 @@ namespace ObfuscarMappingParser
       }
       catch (Exception e)
       {
-        CrashHandler.Instance.MakePromblemReport(
-             new CrashReportInfo(
-                 "Mapping tree builder",
-                 "Error on building classes tree",
-                 e
-               ),
-             true
-           );
+        RestApi.Instance.SendCrashReport(
+            new CrashReport("Mapping tree builder", "Error on building classes tree"){ Exception = e},
+            RestApi.CrashType.JustReport,
+            this
+          );
       }
 
       Sort(Configs.Instance.SortingType);
@@ -628,18 +617,6 @@ namespace ObfuscarMappingParser
       base.WndProc(ref m);
     }
 
-    private static void ApplicationOnThreadException(object sender, ThreadExceptionEventArgs args)
-    {
-      CrashHandler.Instance.MakePromblemReport(
-          new CrashReportInfo(
-              "Top-level interceptor",
-              "Exception on top-level",
-              args.Exception
-            ),
-          false
-        );
-    }
-
     #region Drag'n'drop
 
     private bool lockDragNDrop;
@@ -766,6 +743,7 @@ namespace ObfuscarMappingParser
     private void MainForm_Load(object sender, EventArgs e)
     {
       commandManager.WindowHandle = Handle;
+      CheckForUpdates();
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -773,6 +751,45 @@ namespace ObfuscarMappingParser
       NanoXmlElement el = new NanoXmlElement("Actions");
       commandManager.SaveToXml(el);
       Configs.Instance.CommandsElement = el;
+    }
+
+    private async void CheckForUpdates()
+    {
+      VersionResponse oldVersion = Configs.Instance.UpdateHelper.UpdateAvailable;
+      await Task.Run(() => Configs.Instance.UpdateHelper.CheckForUpdates());
+
+      VersionResponse version = Configs.Instance.UpdateHelper.UpdateAvailable;
+      miUpdateVersion.Enabled = version != null;
+
+      if (version == null || version == oldVersion)
+        return;
+
+      if (TaskDialogHelper.ShowTaskDialog(
+              Handle,
+              "Update is Available",
+              "The Obfuscar Mapping Parser update is available. Update now?",
+              version.Description,
+              TaskDialogStandardIcon.Information, 
+              new string[]{"Update now", "Don't update"},
+              null,
+              new TaskDialogResult[]{TaskDialogResult.Yes, TaskDialogResult.No }
+            ) == TaskDialogResult.Yes)
+        DoUpdateVersion();
+    }
+
+    private void DoUpdateVersion()
+    {
+      BaseForm.OpenUrl(this, Configs.Instance.UpdateHelper.UpdateAvailable.InstallUrl.ToString());
+    }
+
+    private void miUpdateVersion_Click(object sender, EventArgs e)
+    {
+      DoUpdateVersion();
+    }
+
+    private void miReport_Click(object sender, EventArgs e)
+    {
+      RestApi.Instance.SendProblemReport(this);
     }
   }
 }

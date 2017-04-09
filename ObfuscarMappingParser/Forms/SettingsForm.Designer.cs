@@ -49,6 +49,8 @@
       this.tpSettings = new System.Windows.Forms.TabPage();
       this.tpHotkeys = new System.Windows.Forms.TabPage();
       this.commandSelector = new BrokenEvent.Shared.CommandManager.CommandSelector();
+      this.lblUpdate = new System.Windows.Forms.Label();
+      this.cbUpdateInterval = new System.Windows.Forms.ComboBox();
       this.tabControl.SuspendLayout();
       this.tbEditor.SuspendLayout();
       this.tpSettings.SuspendLayout();
@@ -237,6 +239,8 @@
       // 
       // tpSettings
       // 
+      this.tpSettings.Controls.Add(this.cbUpdateInterval);
+      this.tpSettings.Controls.Add(this.lblUpdate);
       this.tpSettings.Controls.Add(this.cbSimplifyNullable);
       this.tpSettings.Controls.Add(this.cbDoubleClick);
       this.tpSettings.Controls.Add(this.cbShowUnicode);
@@ -283,6 +287,24 @@
       this.commandSelector.Size = new System.Drawing.Size(404, 245);
       this.commandSelector.TabIndex = 0;
       this.commandSelector.Text = "commandSelector1";
+      // 
+      // lblUpdate
+      // 
+      this.lblUpdate.AutoSize = true;
+      this.lblUpdate.Location = new System.Drawing.Point(9, 206);
+      this.lblUpdate.Name = "lblUpdate";
+      this.lblUpdate.Size = new System.Drawing.Size(104, 13);
+      this.lblUpdate.TabIndex = 11;
+      this.lblUpdate.Text = "Check for updates:";
+      // 
+      // cbUpdateInterval
+      // 
+      this.cbUpdateInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbUpdateInterval.FormattingEnabled = true;
+      this.cbUpdateInterval.Location = new System.Drawing.Point(145, 203);
+      this.cbUpdateInterval.Name = "cbUpdateInterval";
+      this.cbUpdateInterval.Size = new System.Drawing.Size(265, 21);
+      this.cbUpdateInterval.TabIndex = 12;
       // 
       // SettingsForm
       // 
@@ -337,5 +359,7 @@
     private System.Windows.Forms.TabPage tpSettings;
     private System.Windows.Forms.TabPage tpHotkeys;
     private BrokenEvent.Shared.CommandManager.CommandSelector commandSelector;
+    private System.Windows.Forms.ComboBox cbUpdateInterval;
+    private System.Windows.Forms.Label lblUpdate;
   }
 }
