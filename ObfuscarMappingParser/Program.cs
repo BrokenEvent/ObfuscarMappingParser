@@ -14,10 +14,11 @@ namespace ObfuscarMappingParser
     static void Main(string[] args)
     {
       RestApi.RegisterTopLevelExceptionHandling();
-      RestApi.Init(new AppIdentity());
 
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
+
+      RestApi.Init(new AppIdentity());
 
       string filename;
       if (!CommandLine.ProcessCommandline(out filename, args))
