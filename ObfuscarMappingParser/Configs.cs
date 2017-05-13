@@ -72,6 +72,7 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("SortingType", ref sortingType);
       settingsEl.GetValueIfExists("Editor", ref editor);
       settingsEl.GetValueIfExists("DoubleClickAction", ref doubleClickAction);
+      settingsEl.GetValueIfExists("WatchClipboard", ref watchClipboard);
 
       if (editor == null)
         editor = VisualStudioDetector.GetHighestVisualStudio().Description;
@@ -101,6 +102,7 @@ namespace ObfuscarMappingParser
       settingsEl.AppendChild("SortingType", sortingType);
       settingsEl.AppendChild("Editor", editor);
       settingsEl.AppendChild("DoubleClickAction", doubleClickAction);
+      settingsEl.AppendChild("WatchClipboard", watchClipboard);
 
       if (commandsElement != null)
         doc.AppendChild(commandsElement);
@@ -125,6 +127,7 @@ namespace ObfuscarMappingParser
     private bool showUnicode;
     private bool simplifySystemNames = true;
     private bool simplifyNullable = true;
+    private bool watchClipboard = true;
     private DoubleClickActions doubleClickAction = DoubleClickActions.OpenInEditor;
     private NanoXmlElement commandsElement;
     private UpdateHelper updateHelper = new UpdateHelper(UpdateHelper.CheckInterval.TenDays);
@@ -199,6 +202,12 @@ namespace ObfuscarMappingParser
     {
       get { return simplifyNullable; }
       set { simplifyNullable = value; }
+    }
+
+    public bool WatchClipboard
+    {
+      get { return watchClipboard; }
+      set { watchClipboard = value; }
     }
 
     public DoubleClickActions DoubleClickAction

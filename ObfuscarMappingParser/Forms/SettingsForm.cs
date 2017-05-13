@@ -48,6 +48,7 @@ namespace ObfuscarMappingParser
       cbGroupByNamespaces.Checked = Configs.Instance.GroupNamespaces;
       cbGroupByModules.Checked = Configs.Instance.GroupModules;
       cbUseColumns.Checked = Configs.Instance.UseColumns;
+      cbWatchClipboard.Checked = Configs.Instance.WatchClipboard;
 
       EnumHelper.FillCombobox(cbDoubleClick, Configs.Instance.DoubleClickAction);
       EnumHelper.FillCombobox(cbUpdateInterval, Configs.Instance.UpdateHelper.Interval);
@@ -73,6 +74,7 @@ namespace ObfuscarMappingParser
       Configs.Instance.GroupNamespaces = cbGroupByNamespaces.Checked;
       Configs.Instance.GroupModules = cbGroupByModules.Checked;
       Configs.Instance.UseColumns = cbUseColumns.Checked;
+      Configs.Instance.WatchClipboard = cbWatchClipboard.Checked;
       Configs.Instance.DoubleClickAction = ((EnumHelper.EnumWrapper<Configs.DoubleClickActions>)cbDoubleClick.SelectedItem).Value;
       Configs.Instance.UpdateHelper.Interval = ((EnumHelper.EnumWrapper<UpdateHelper.CheckInterval>)cbUpdateInterval.SelectedItem).Value;
 

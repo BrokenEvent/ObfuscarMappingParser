@@ -47,10 +47,11 @@
       this.tabControl = new System.Windows.Forms.TabControl();
       this.tbEditor = new System.Windows.Forms.TabPage();
       this.tpSettings = new System.Windows.Forms.TabPage();
+      this.cbUpdateInterval = new System.Windows.Forms.ComboBox();
+      this.lblUpdate = new System.Windows.Forms.Label();
       this.tpHotkeys = new System.Windows.Forms.TabPage();
       this.commandSelector = new BrokenEvent.Shared.CommandManager.CommandSelector();
-      this.lblUpdate = new System.Windows.Forms.Label();
-      this.cbUpdateInterval = new System.Windows.Forms.ComboBox();
+      this.cbWatchClipboard = new System.Windows.Forms.CheckBox();
       this.tabControl.SuspendLayout();
       this.tbEditor.SuspendLayout();
       this.tpSettings.SuspendLayout();
@@ -91,7 +92,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(230, 368);
+      this.btnOk.Location = new System.Drawing.Point(230, 391);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -103,7 +104,7 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(336, 368);
+      this.btnCancel.Location = new System.Drawing.Point(336, 391);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 2;
@@ -194,7 +195,7 @@
       // lblDoubleClick
       // 
       this.lblDoubleClick.AutoSize = true;
-      this.lblDoubleClick.Location = new System.Drawing.Point(9, 233);
+      this.lblDoubleClick.Location = new System.Drawing.Point(9, 256);
       this.lblDoubleClick.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
       this.lblDoubleClick.Name = "lblDoubleClick";
       this.lblDoubleClick.Size = new System.Drawing.Size(109, 13);
@@ -205,7 +206,7 @@
       // 
       this.cbDoubleClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbDoubleClick.FormattingEnabled = true;
-      this.cbDoubleClick.Location = new System.Drawing.Point(145, 230);
+      this.cbDoubleClick.Location = new System.Drawing.Point(145, 253);
       this.cbDoubleClick.Name = "cbDoubleClick";
       this.cbDoubleClick.Size = new System.Drawing.Size(265, 21);
       this.cbDoubleClick.TabIndex = 10;
@@ -221,7 +222,7 @@
       this.tabControl.Location = new System.Drawing.Point(12, 66);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(424, 283);
+      this.tabControl.Size = new System.Drawing.Size(424, 306);
       this.tabControl.TabIndex = 11;
       // 
       // tbEditor
@@ -239,6 +240,7 @@
       // 
       // tpSettings
       // 
+      this.tpSettings.Controls.Add(this.cbWatchClipboard);
       this.tpSettings.Controls.Add(this.cbUpdateInterval);
       this.tpSettings.Controls.Add(this.lblUpdate);
       this.tpSettings.Controls.Add(this.cbSimplifyNullable);
@@ -252,10 +254,28 @@
       this.tpSettings.Location = new System.Drawing.Point(4, 22);
       this.tpSettings.Name = "tpSettings";
       this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-      this.tpSettings.Size = new System.Drawing.Size(416, 257);
+      this.tpSettings.Size = new System.Drawing.Size(416, 280);
       this.tpSettings.TabIndex = 1;
       this.tpSettings.Text = "UI Settings";
       this.tpSettings.UseVisualStyleBackColor = true;
+      // 
+      // cbUpdateInterval
+      // 
+      this.cbUpdateInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbUpdateInterval.FormattingEnabled = true;
+      this.cbUpdateInterval.Location = new System.Drawing.Point(145, 226);
+      this.cbUpdateInterval.Name = "cbUpdateInterval";
+      this.cbUpdateInterval.Size = new System.Drawing.Size(265, 21);
+      this.cbUpdateInterval.TabIndex = 12;
+      // 
+      // lblUpdate
+      // 
+      this.lblUpdate.AutoSize = true;
+      this.lblUpdate.Location = new System.Drawing.Point(9, 229);
+      this.lblUpdate.Name = "lblUpdate";
+      this.lblUpdate.Size = new System.Drawing.Size(104, 13);
+      this.lblUpdate.TabIndex = 11;
+      this.lblUpdate.Text = "Check for updates:";
       // 
       // tpHotkeys
       // 
@@ -288,23 +308,16 @@
       this.commandSelector.TabIndex = 0;
       this.commandSelector.Text = "commandSelector1";
       // 
-      // lblUpdate
+      // cbWatchClipboard
       // 
-      this.lblUpdate.AutoSize = true;
-      this.lblUpdate.Location = new System.Drawing.Point(9, 206);
-      this.lblUpdate.Name = "lblUpdate";
-      this.lblUpdate.Size = new System.Drawing.Size(104, 13);
-      this.lblUpdate.TabIndex = 11;
-      this.lblUpdate.Text = "Check for updates:";
-      // 
-      // cbUpdateInterval
-      // 
-      this.cbUpdateInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cbUpdateInterval.FormattingEnabled = true;
-      this.cbUpdateInterval.Location = new System.Drawing.Point(145, 203);
-      this.cbUpdateInterval.Name = "cbUpdateInterval";
-      this.cbUpdateInterval.Size = new System.Drawing.Size(265, 21);
-      this.cbUpdateInterval.TabIndex = 12;
+      this.cbWatchClipboard.AutoSize = true;
+      this.cbWatchClipboard.Location = new System.Drawing.Point(9, 193);
+      this.cbWatchClipboard.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
+      this.cbWatchClipboard.Name = "cbWatchClipboard";
+      this.cbWatchClipboard.Size = new System.Drawing.Size(271, 17);
+      this.cbWatchClipboard.TabIndex = 13;
+      this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor";
+      this.cbWatchClipboard.UseVisualStyleBackColor = true;
       // 
       // SettingsForm
       // 
@@ -312,7 +325,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(448, 400);
+      this.ClientSize = new System.Drawing.Size(448, 423);
       this.ControlBox = false;
       this.Controls.Add(this.tabControl);
       this.Controls.Add(this.btnCancel);
@@ -361,5 +374,6 @@
     private BrokenEvent.Shared.CommandManager.CommandSelector commandSelector;
     private System.Windows.Forms.ComboBox cbUpdateInterval;
     private System.Windows.Forms.Label lblUpdate;
+    private System.Windows.Forms.CheckBox cbWatchClipboard;
   }
 }

@@ -262,6 +262,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Copy.png" />
     <Content Include="res\logo_160.png" />
     <None Include="res\Settings.png" />
     <None Include="res\Reload.png" />

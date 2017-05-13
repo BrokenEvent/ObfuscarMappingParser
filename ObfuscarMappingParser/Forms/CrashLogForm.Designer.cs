@@ -32,6 +32,7 @@
       this.btnProcess = new System.Windows.Forms.ToolStripButton();
       this.btnOpen = new System.Windows.Forms.ToolStripButton();
       this.btnSkipPrefix = new System.Windows.Forms.ToolStripButton();
+      this.btnCopy = new System.Windows.Forms.ToolStripButton();
       this.tbValue = new System.Windows.Forms.TextBox();
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.toolStrip1.SuspendLayout();
@@ -42,7 +43,8 @@
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnProcess,
             this.btnOpen,
-            this.btnSkipPrefix});
+            this.btnSkipPrefix,
+            this.btnCopy});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
       this.toolStrip1.Size = new System.Drawing.Size(587, 25);
@@ -80,6 +82,16 @@
       this.btnSkipPrefix.Text = "Skip prefix";
       this.btnSkipPrefix.ToolTipText = "Enables skipping line prefix (at ...)";
       // 
+      // btnCopy
+      // 
+      this.btnCopy.Enabled = false;
+      this.btnCopy.Image = global::ObfuscarMappingParser.Properties.Resources.Copy;
+      this.btnCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+      this.btnCopy.Name = "btnCopy";
+      this.btnCopy.Size = new System.Drawing.Size(124, 22);
+      this.btnCopy.Text = "Copy to Clipboard";
+      this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+      // 
       // tbValue
       // 
       this.tbValue.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -89,6 +101,7 @@
       this.tbValue.Name = "tbValue";
       this.tbValue.Size = new System.Drawing.Size(587, 272);
       this.tbValue.TabIndex = 1;
+      this.tbValue.TextChanged += new System.EventHandler(this.tbValue_TextChanged);
       // 
       // openFileDialog
       // 
@@ -123,5 +136,6 @@
     private System.Windows.Forms.ToolStripButton btnOpen;
     private System.Windows.Forms.OpenFileDialog openFileDialog;
     private System.Windows.Forms.ToolStripButton btnSkipPrefix;
+    private System.Windows.Forms.ToolStripButton btnCopy;
   }
 }

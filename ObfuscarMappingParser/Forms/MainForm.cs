@@ -24,6 +24,7 @@ namespace ObfuscarMappingParser
   partial class MainForm : Form
   {
     private Mapping mapping;
+    private ClipboardWatcher clipboardWatcher;
 
     public MainForm(string filename)
     {
@@ -57,6 +58,45 @@ namespace ObfuscarMappingParser
         OpenFile(filename);
       else
         EnableMappingActions(false);
+    }
+
+    protected override void OnHandleCreated(EventArgs e)
+    {
+      base.OnHandleCreated(e);
+      clipboardWatcher = new ClipboardWatcher(Handle);
+      clipboardWatcher.RegisterClipboardViewer();
+      clipboardWatcher.ClipboardChanged += ClipboardWatcher_ClipboardChanged;
+    }
+
+    private void ClipboardWatcher_ClipboardChanged(object sender, EventArgs e)
+    {
+      if (!Clipboard.ContainsText() || !Configs.Instance.WatchClipboard)
+        return;
+
+      string stacktrace = Clipboard.GetText();
+      CrashLogForm form = GetOpenedForm<CrashLogForm>();
+      bool skipPrefixes = false;
+      if (form != null)
+      {
+        skipPrefixes = form.SkipPrefixes;
+        if (stacktrace == form.Value)
+          return;
+      }
+
+      try
+      {
+        stacktrace = mapping.ProcessCrashlogText(stacktrace, skipPrefixes);
+        if (form != null && stacktrace == form.Value)
+          return;
+      }
+      catch
+      {
+        return;
+      }
+
+      if (form == null)
+        AddFormToOpened(form = new CrashLogForm(mapping)).Show(this);
+      form.Value = stacktrace;
     }
 
     private void BeginLoading(string operation)
@@ -417,6 +457,18 @@ namespace ObfuscarMappingParser
       toolStripSeparator3.Visible = btnOpen.DropDownItems.Count > 2;
     }
 
+    private FormType GetOpenedForm<FormType>() where FormType: class
+    {
+      foreach (Form form in openedForms)
+      {
+        FormType result = form as FormType;
+        if (result != null)
+          return result;
+      }
+
+      return null;
+    }
+
     #endregion
 
     #region Recent Menus
@@ -613,6 +665,9 @@ namespace ObfuscarMappingParser
     protected override void WndProc(ref Message m)
     {
       if (commandManager.ProcessMessage(ref m))
+        return;
+
+      if (clipboardWatcher != null && clipboardWatcher.ProcessMessage(ref m))
         return;
 
       base.WndProc(ref m);

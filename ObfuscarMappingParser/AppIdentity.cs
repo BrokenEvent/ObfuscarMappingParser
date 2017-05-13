@@ -19,6 +19,11 @@ namespace ObfuscarMappingParser
       get { return "Obfuscar Mapping Parser"; }
     }
 
+    public bool CanRestart
+    {
+      get { return false; }
+    }
+
     public void RestartApp() { }
 
     public void Save()

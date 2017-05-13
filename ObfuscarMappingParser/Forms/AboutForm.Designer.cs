@@ -134,10 +134,10 @@
       this.llblObfuscar.AutoSize = true;
       this.llblObfuscar.Location = new System.Drawing.Point(12, 139);
       this.llblObfuscar.Name = "llblObfuscar";
-      this.llblObfuscar.Size = new System.Drawing.Size(167, 13);
+      this.llblObfuscar.Size = new System.Drawing.Size(163, 13);
       this.llblObfuscar.TabIndex = 8;
       this.llblObfuscar.TabStop = true;
-      this.llblObfuscar.Text = "https://obfuscar.codeplex.com/";
+      this.llblObfuscar.Text = "https://obfuscar.lextudio.com/";
       this.llblObfuscar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Hyperlink_LinkClicked);
       // 
       // llblWebSite

@@ -64,5 +64,27 @@ namespace ObfuscarMappingParser
       if (e.Data.GetDataPresent(DataFormats.StringFormat))
         tbValue.Text = (string)e.Data.GetData(DataFormats.Text);
     }
+
+    private void btnCopy_Click(object sender, EventArgs e)
+    {
+      if (!string.IsNullOrWhiteSpace(tbValue.Text))
+        Clipboard.SetText(tbValue.Text);
+    }
+
+    private void tbValue_TextChanged(object sender, EventArgs e)
+    {
+      btnCopy.Enabled = !string.IsNullOrWhiteSpace(tbValue.Text);
+    }
+
+    public string Value
+    {
+      get { return tbValue.Text; }
+      set { tbValue.Text = value; }
+    }
+
+    public bool SkipPrefixes
+    {
+      get { return btnSkipPrefix.Checked; }
+    }
   }
 }
