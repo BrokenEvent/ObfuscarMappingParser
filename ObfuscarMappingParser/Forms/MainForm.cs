@@ -11,8 +11,10 @@ using System.Windows.Forms;
 using BrokenEvent.NanoXml;
 using BrokenEvent.PdbReader;
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.Algorithms;
+using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.Rest;
-using BrokenEvent.Shared.TreeView;
+using BrokenEvent.Shared.WinApi;
 using BrokenEvent.TaskDialogs;
 using BrokenEvent.TaskDialogs.Dialogs;
 using BrokenEvent.VisualStudioOpener;
@@ -30,16 +32,23 @@ namespace ObfuscarMappingParser
     {
       InitializeComponent();
 
+      // load manually from resources, as VS RESX always broke icon colors
+      ilIcons.Images.Add(Resources.IconNamespace);
+      ilIcons.Images.Add(Resources.IconNoNamespace);
+      ilIcons.Images.Add(Resources.IconClass);
+      ilIcons.Images.Add(Resources.IconEvent);
+      ilIcons.Images.Add(Resources.IconField);
+      ilIcons.Images.Add(Resources.IconMethod);
+      ilIcons.Images.Add(Resources.IconProperty);
+      ilIcons.Images.Add(Resources.IconAssembly);
+      ilIcons.Images.Add(Resources.IconMultiple);
+      ilIcons.Images.Add(Resources.IconPdb);
+
       try
       {
         Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
       }
       catch { }
-
-      ptvElements.Columns.Add(new PineappleTreeColumn(100));
-
-      ptvElements.Highlights.Add(new PineappleTreeHighlight(Color.DarkRed));
-      ptvElements.Highlights.Add(new PineappleTreeHighlight(Color.DarkBlue));
 
       miShowModule.Checked = Configs.Instance.ShowModules;
       miGroupNamespace.Checked = Configs.Instance.GroupNamespaces;
@@ -101,7 +110,7 @@ namespace ObfuscarMappingParser
 
     private void BeginLoading(string operation)
     {
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Indeterminate);
+      this.SetTaskbarProgressState(Taskbar.ThumbnailProgressState.Indeterminate);
       spbLoading.Visible = true;
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = false;
       commandManager.BeginDisable();
@@ -114,13 +123,13 @@ namespace ObfuscarMappingParser
       spbLoading.Visible = false;
       commandManager.EndDisable();
       slblSelected.Text = result;
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.NoProgress);
+      this.SetTaskbarProgressState(Taskbar.ThumbnailProgressState.NoProgress);
     }
 
     private void HandleMappingLoadingException(Exception e, string filename)
     {
       this.SetTaskbarProgressValue(100, 100);
-      this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Error);
+      this.SetTaskbarProgressState(Taskbar.ThumbnailProgressState.Error);
 
       if (e is NanoXmlParsingException ||
           e is ObfuscarParserException ||
@@ -296,14 +305,14 @@ namespace ObfuscarMappingParser
     {
       if (node1.Subitems.Count == 0 || node2.Subitems.Count == 0)
         return 0;
-      return string.Compare(node1.Subitems[0], node2.Subitems[0], StringComparison.InvariantCulture);
+      return string.Compare(node1.Subitems[0].Text, node2.Subitems[0].Text, StringComparison.InvariantCulture);
     }
 
     private static int ElementsComparisonDesc(PineappleTreeNode node1, PineappleTreeNode node2)
     {
       if (node1.Subitems.Count == 0 || node2.Subitems.Count == 0)
         return 0;
-      return string.Compare(node2.Subitems[0], node1.Subitems[0], StringComparison.InvariantCulture);
+      return string.Compare(node2.Subitems[0].Text, node1.Subitems[0].Text, StringComparison.InvariantCulture);
     }
 
     #endregion
@@ -650,7 +659,7 @@ namespace ObfuscarMappingParser
       catch (Exception ex)
       {
         this.SetTaskbarProgressValue(100, 100);
-        this.SetTaskbarProgressState(Win7FormExtension.ThumbnailProgressState.Error);
+        this.SetTaskbarProgressState(Taskbar.ThumbnailProgressState.Error);
         TaskDialogHelper.ShowMessageBox(
             Handle,
             "Failed to Open in Visual Studio",

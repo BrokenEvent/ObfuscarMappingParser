@@ -193,4 +193,34 @@
   <data name="Copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\res\Copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="IconAssembly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Assembly.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Class.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconEvent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Event.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconField" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Field.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconMethod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Method.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconMultiple" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\multiple.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconNamespace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Namespace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconNoNamespace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\NoNamespace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconPdb" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\pdb.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="IconProperty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\res\TreeIcons\Property.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

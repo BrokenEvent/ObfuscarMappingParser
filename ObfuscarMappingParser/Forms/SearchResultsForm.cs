@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using BrokenEvent.Shared.TreeView;
+
+using BrokenEvent.Shared.Controls;
 
 namespace ObfuscarMappingParser
 {

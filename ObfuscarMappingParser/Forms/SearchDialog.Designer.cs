@@ -36,7 +36,7 @@
       this.tbSearch = new System.Windows.Forms.TextBox();
       this.lblSearch = new System.Windows.Forms.Label();
       this.btnClose = new System.Windows.Forms.Button();
-      this.controlHighlight = new BrokenEvent.Shared.ControlHighlight(this.components);
+      this.controlHighlight = new BrokenEvent.Shared.Controls.ControlHighlight(this.components);
       this.SuspendLayout();
       // 
       // lvResults
@@ -166,7 +166,7 @@
     private System.Windows.Forms.TextBox tbSearch;
     private System.Windows.Forms.Label lblSearch;
     private System.Windows.Forms.Button btnClose;
-    private BrokenEvent.Shared.ControlHighlight controlHighlight;
+    private BrokenEvent.Shared.Controls.ControlHighlight controlHighlight;
 
   }
 }

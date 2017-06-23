@@ -28,7 +28,10 @@
     /// </summary>
     private void InitializeComponent()
     {
-      BrokenEvent.Shared.TreeView.PineappleTreeColumn pineappleTreeColumn1 = new BrokenEvent.Shared.TreeView.PineappleTreeColumn();
+      BrokenEvent.Shared.Controls.ListHighlight listHighlight1 = new BrokenEvent.Shared.Controls.ListHighlight();
+      BrokenEvent.Shared.Controls.ListHighlight listHighlight2 = new BrokenEvent.Shared.Controls.ListHighlight();
+      BrokenEvent.Shared.Controls.ListHighlight listHighlight3 = new BrokenEvent.Shared.Controls.ListHighlight();
+      BrokenEvent.Shared.Controls.PineappleTreeColumn pineappleTreeColumn1 = new BrokenEvent.Shared.Controls.PineappleTreeColumn();
       this.toolStrip = new System.Windows.Forms.ToolStrip();
       this.tbtnOpenInTree = new System.Windows.Forms.ToolStripButton();
       this.tbtnOpenInVS = new System.Windows.Forms.ToolStripButton();
@@ -39,7 +42,7 @@
       this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
       this.tbtnShowOriginal = new System.Windows.Forms.ToolStripButton();
       this.tbtnSkipPrefix = new System.Windows.Forms.ToolStripButton();
-      this.pineappleTreeView = new BrokenEvent.Shared.TreeView.PineappleTreeView();
+      this.pineappleTreeView = new BrokenEvent.Shared.Controls.PineappleTreeView();
       this.toolStrip.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -151,25 +154,37 @@
       // pineappleTreeView
       // 
       this.pineappleTreeView.AutoScroll = true;
-      this.pineappleTreeView.AutoScrollMinSize = new System.Drawing.Size(595, 0);
-      this.pineappleTreeView.AutoSizeColumns = true;
+      this.pineappleTreeView.AutoScrollMinSize = new System.Drawing.Size(612, 0);
+      this.pineappleTreeView.BackColor = System.Drawing.SystemColors.ControlLightLight;
+      listHighlight1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+      listHighlight2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(255)))), ((int)(((byte)(224)))));
+      listHighlight3.Color = System.Drawing.Color.LightYellow;
+      this.pineappleTreeView.Backlights.Add(listHighlight1);
+      this.pineappleTreeView.Backlights.Add(listHighlight2);
+      this.pineappleTreeView.Backlights.Add(listHighlight3);
       this.pineappleTreeView.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
-      pineappleTreeColumn1.Width = 150;
+      pineappleTreeColumn1.Autosize = true;
+      pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(2);
+      pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn1.HeaderText = null;
+      pineappleTreeColumn1.Multiline = true;
+      pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn1.Width = 612;
       this.pineappleTreeView.Columns.Add(pineappleTreeColumn1);
+      this.pineappleTreeView.DisabledColor = System.Drawing.SystemColors.Control;
       this.pineappleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
       this.pineappleTreeView.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.pineappleTreeView.FullRowSelect = true;
-      this.pineappleTreeView.ItemHeight = 13;
+      this.pineappleTreeView.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.pineappleTreeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.pineappleTreeView.Location = new System.Drawing.Point(0, 25);
       this.pineappleTreeView.Name = "pineappleTreeView";
-      this.pineappleTreeView.SelectedNode = null;
       this.pineappleTreeView.ShowToolTip = true;
       this.pineappleTreeView.Size = new System.Drawing.Size(612, 347);
       this.pineappleTreeView.TabIndex = 1;
       this.pineappleTreeView.Text = "pineappleTreeView1";
-      this.pineappleTreeView.UseWindowsThemes = false;
-      this.pineappleTreeView.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.pineappleTreeView_NodeSelect);
+      this.pineappleTreeView.UseThemes = false;
+      this.pineappleTreeView.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.pineappleTreeView_NodeSelect);
       // 
       // StacktraceAnalyerForm
       // 
@@ -195,7 +210,7 @@
     #endregion
 
     private System.Windows.Forms.ToolStrip toolStrip;
-    private BrokenEvent.Shared.TreeView.PineappleTreeView pineappleTreeView;
+    private BrokenEvent.Shared.Controls.PineappleTreeView pineappleTreeView;
     private System.Windows.Forms.ToolStripButton tbtnShort;
     private System.Windows.Forms.ToolStripButton tbtnSimple;
     private System.Windows.Forms.ToolStripButton tbtnFull;

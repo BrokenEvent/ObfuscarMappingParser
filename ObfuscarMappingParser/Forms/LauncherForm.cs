@@ -2,6 +2,7 @@
 using System.Text;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.Algorithms;
 
 namespace ObfuscarMappingParser
 {

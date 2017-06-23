@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.Controls;
 
 namespace ObfuscarMappingParser
 {

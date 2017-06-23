@@ -43,7 +43,7 @@ namespace ObfuscarMappingParser
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
       this.pbProgress = new System.Windows.Forms.ProgressBar();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.controlHighlight = new BrokenEvent.Shared.ControlHighlight(this.components);
+      this.controlHighlight = new BrokenEvent.Shared.Controls.ControlHighlight(this.components);
       this.SuspendLayout();
       // 
       // btnBrowse
@@ -238,6 +238,6 @@ namespace ObfuscarMappingParser
     private System.Windows.Forms.OpenFileDialog openFileDialog;
     private System.Windows.Forms.ProgressBar pbProgress;
     private System.Windows.Forms.Label lblStatus;
-    private ControlHighlight controlHighlight;
+    private BrokenEvent.Shared.Controls.ControlHighlight controlHighlight;
   }
 }

@@ -49,7 +49,7 @@
       this.imgProject = new System.Windows.Forms.PictureBox();
       this.imgGitHub = new System.Windows.Forms.PictureBox();
       this.pbLogo = new System.Windows.Forms.PictureBox();
-      this.indUpdate = new BrokenEvent.Shared.Indicator();
+      this.indUpdate = new BrokenEvent.Shared.Controls.Indicator();
       this.lblUpdateState = new System.Windows.Forms.Label();
       this.llblUpdate = new System.Windows.Forms.LinkLabel();
       ((System.ComponentModel.ISupportInitialize)(this.imgTrello)).BeginInit();
@@ -379,7 +379,7 @@
     private System.Windows.Forms.PictureBox imgProject;
     private System.Windows.Forms.PictureBox imgTrello;
     private System.Windows.Forms.PictureBox pbLogo;
-    private BrokenEvent.Shared.Indicator indUpdate;
+    private BrokenEvent.Shared.Controls.Indicator indUpdate;
     private System.Windows.Forms.Label lblUpdateState;
     private System.Windows.Forms.LinkLabel llblUpdate;
   }

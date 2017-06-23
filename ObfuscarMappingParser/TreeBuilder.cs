@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using BrokenEvent.Shared.TreeView;
+
+using BrokenEvent.Shared.Controls;
 
 namespace ObfuscarMappingParser
 {
@@ -99,7 +100,7 @@ namespace ObfuscarMappingParser
 
     private static PineappleTreeNode CreateNode(string name)
     {
-      return Configs.Instance.UseColumns ? new PineappleTreeNode(name) : new PineappleTreeNodeMultiline(name);
+      return new PineappleTreeNode(name);
     }
 
     private void BuildClass(RenamedClass c)
@@ -124,17 +125,26 @@ namespace ObfuscarMappingParser
 
       classNode.ToolTipText = BuildHintForClass(c);
       c.TreeNode = classNode;
+      string subItemText = null;
       if (c.NameNew != null)
       {
         if (c.Name.NameNew.Equals(c.Name.NameOld))
           classNode.HighlightColorIndex = (int)Highlights.NotRenamed;
         else
-          classNode.Subitems.Add(CheckIfUnicode(showModules ? c.NameNewFull : c.NameNew));
+          subItemText = CheckIfUnicode(showModules ? c.NameNewFull : c.NameNew);
       }
       else
       {
-        classNode.Subitems.Add("n/a");
+        subItemText = "n/a";
         classNode.HighlightColorIndex = (int)Highlights.NoNewName;
+      }
+
+      if (subItemText != null)
+      {
+        if (Configs.Instance.UseColumns)
+          classNode.Subitems.Add(new PineappleTreeSubitem(subItemText));
+        else
+          classNode.Text += "\n" + subItemText;
       }
 
       foreach (RenamedBase renamedItem in c.Items)
@@ -154,18 +164,27 @@ namespace ObfuscarMappingParser
         item.TreeNode = node;
 
         node.ToolTipText = BuildHintForItem(item);
+        subItemText = null;
 
         if (item.NameNew == null)
         {
           node.HighlightColorIndex = (int)Highlights.NoNewName;
-          node.Subitems.Add("n/a");
+          subItemText = "n/a";
         }
         else
         {
           if (item.NameNew.Equals(item.NameOld))
             node.HighlightColorIndex = (int)Highlights.NotRenamed;
           else
-            node.Subitems.Add(CheckIfUnicode(item.NameNew));
+            subItemText = CheckIfUnicode(item.NameNew);
+        }
+
+        if (subItemText != null)
+        {
+          if (Configs.Instance.UseColumns)
+            node.Subitems.Add(new PineappleTreeSubitem(subItemText));
+          else
+            node.Text += "\n" + subItemText;
         }
       }
     }
@@ -258,14 +277,23 @@ namespace ObfuscarMappingParser
 
       PineappleTreeNode node = CreateNode(c.Name.NameOld.Namespace);
       node.ImageIndex = (int)Icons.Ns;
+      string subItemText = null;
       if (c.Name.NameNew == null)
       {
         node.HighlightColorIndex = (int)Highlights.NoNewName;
-        node.Subitems.Add("n/a");
+        subItemText = "n/a";
       } else if (c.Name.NameNew.CompareNamespace(c.Name.NameOld))
         node.HighlightColorIndex = (int)Highlights.NotRenamed;
       else
-        node.Subitems.Add(c.Name.NameNew.Namespace);
+        subItemText = c.Name.NameNew.Namespace;
+
+      if (subItemText != null)
+      {
+        if (Configs.Instance.UseColumns)
+          node.Subitems.Add(new PineappleTreeSubitem(subItemText));
+        else
+          node.Text += "\n" + subItemText;
+      }
 
       if (groupModules)
         GetModuleData(c.Name.NameNew.Module).moduleNode.Nodes.Add(node);

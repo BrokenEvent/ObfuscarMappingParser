@@ -29,7 +29,10 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+      BrokenEvent.Shared.Controls.PineappleTreeColumn pineappleTreeColumn1 = new BrokenEvent.Shared.Controls.PineappleTreeColumn();
+      BrokenEvent.Shared.Controls.PineappleTreeColumn pineappleTreeColumn2 = new BrokenEvent.Shared.Controls.PineappleTreeColumn();
+      BrokenEvent.Shared.Controls.ListHighlight listHighlight1 = new BrokenEvent.Shared.Controls.ListHighlight();
+      BrokenEvent.Shared.Controls.ListHighlight listHighlight2 = new BrokenEvent.Shared.Controls.ListHighlight();
       this.odMapping = new System.Windows.Forms.OpenFileDialog();
       this.statusStrip = new System.Windows.Forms.StatusStrip();
       this.spbLoading = new System.Windows.Forms.ToolStripProgressBar();
@@ -77,9 +80,10 @@
       this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.mmHelp = new System.Windows.Forms.ToolStripMenuItem();
       this.miUpdateVersion = new System.Windows.Forms.ToolStripMenuItem();
-      this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
       this.miReport = new System.Windows.Forms.ToolStripMenuItem();
       this.miVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+      this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.miOpenVS = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -89,8 +93,7 @@
       this.miCopyFullNewName = new System.Windows.Forms.ToolStripMenuItem();
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
-      this.ptvElements = new BrokenEvent.Shared.TreeView.PineappleTreeView();
-      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+      this.ptvElements = new BrokenEvent.Shared.Controls.PineappleTreeView();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -130,18 +133,9 @@
       // 
       // ilIcons
       // 
-      this.ilIcons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("ilIcons.ImageStream")));
+      this.ilIcons.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+      this.ilIcons.ImageSize = new System.Drawing.Size(16, 16);
       this.ilIcons.TransparentColor = System.Drawing.Color.Transparent;
-      this.ilIcons.Images.SetKeyName(0, "Namespace.png");
-      this.ilIcons.Images.SetKeyName(1, "NoNamespace.png");
-      this.ilIcons.Images.SetKeyName(2, "Class.png");
-      this.ilIcons.Images.SetKeyName(3, "Event.png");
-      this.ilIcons.Images.SetKeyName(4, "Field.png");
-      this.ilIcons.Images.SetKeyName(5, "Method.png");
-      this.ilIcons.Images.SetKeyName(6, "Property.png");
-      this.ilIcons.Images.SetKeyName(7, "Assembly.png");
-      this.ilIcons.Images.SetKeyName(8, "multiple.png");
-      this.ilIcons.Images.SetKeyName(9, "pdb.png");
       // 
       // tsTools
       // 
@@ -488,12 +482,6 @@
       this.miUpdateVersion.Text = "Update";
       this.miUpdateVersion.Click += new System.EventHandler(this.miUpdateVersion_Click);
       // 
-      // miAbout
-      // 
-      this.miAbout.Name = "miAbout";
-      this.miAbout.Size = new System.Drawing.Size(166, 22);
-      this.miAbout.Text = "About";
-      // 
       // miReport
       // 
       this.miReport.Name = "miReport";
@@ -507,6 +495,17 @@
       this.miVersionHistory.Size = new System.Drawing.Size(166, 22);
       this.miVersionHistory.Text = "Version History";
       this.miVersionHistory.Click += new System.EventHandler(this.miVersionHistory_Click);
+      // 
+      // toolStripSeparator10
+      // 
+      this.toolStripSeparator10.Name = "toolStripSeparator10";
+      this.toolStripSeparator10.Size = new System.Drawing.Size(163, 6);
+      // 
+      // miAbout
+      // 
+      this.miAbout.Name = "miAbout";
+      this.miAbout.Size = new System.Drawing.Size(166, 22);
+      this.miAbout.Text = "About";
       // 
       // contextMenuStrip
       // 
@@ -569,33 +568,47 @@
       // 
       // ptvElements
       // 
+      this.ptvElements.AllowIgnoreColumns = true;
       this.ptvElements.AutoScroll = true;
-      this.ptvElements.AutoScrollMinSize = new System.Drawing.Size(710, 0);
-      this.ptvElements.AutoSizeColumns = true;
+      this.ptvElements.AutoScrollMinSize = new System.Drawing.Size(727, 0);
+      this.ptvElements.BackColor = System.Drawing.SystemColors.ControlLightLight;
       this.ptvElements.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
+      pineappleTreeColumn1.Autosize = true;
+      pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(2);
+      pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn1.HeaderText = "Classname";
+      pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn1.Width = 477;
+      pineappleTreeColumn2.ContentPadding = new System.Windows.Forms.Padding(2);
+      pineappleTreeColumn2.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn2.HeaderText = "Renamed";
+      pineappleTreeColumn2.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn2.Width = 250;
+      this.ptvElements.Columns.Add(pineappleTreeColumn1);
+      this.ptvElements.Columns.Add(pineappleTreeColumn2);
       this.ptvElements.ContextMenuStrip = this.contextMenuStrip;
+      this.ptvElements.DisabledColor = System.Drawing.SystemColors.Control;
       this.ptvElements.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ptvElements.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.ptvElements.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.ptvElements.FullRowSelect = true;
+      this.ptvElements.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      listHighlight1.Color = System.Drawing.Color.DarkRed;
+      listHighlight2.Color = System.Drawing.Color.DarkBlue;
+      this.ptvElements.Highlights.Add(listHighlight1);
+      this.ptvElements.Highlights.Add(listHighlight2);
+      this.ptvElements.IconPadding = new System.Windows.Forms.Padding(1);
       this.ptvElements.ImageList = this.ilIcons;
-      this.ptvElements.ItemHeight = 18;
       this.ptvElements.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.ptvElements.Location = new System.Drawing.Point(0, 49);
       this.ptvElements.Name = "ptvElements";
-      this.ptvElements.SelectedNode = null;
       this.ptvElements.ShowToolTip = true;
       this.ptvElements.Size = new System.Drawing.Size(727, 479);
       this.ptvElements.TabIndex = 5;
       this.ptvElements.Text = "pineappleTreeView1";
-      this.ptvElements.UseWindowsThemes = true;
-      this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.TreeView.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
+      this.ptvElements.UseThemes = true;
+      this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
-      // 
-      // toolStripSeparator10
-      // 
-      this.toolStripSeparator10.Name = "toolStripSeparator10";
-      this.toolStripSeparator10.Size = new System.Drawing.Size(163, 6);
       // 
       // MainForm
       // 
@@ -646,7 +659,7 @@
     private System.Windows.Forms.ToolStripMenuItem miExit;
     private System.Windows.Forms.ToolStripMenuItem mmHelp;
     private System.Windows.Forms.ToolStripMenuItem miAbout;
-    private BrokenEvent.Shared.TreeView.PineappleTreeView ptvElements;
+    private BrokenEvent.Shared.Controls.PineappleTreeView ptvElements;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     private System.Windows.Forms.ToolStripDropDownButton btnOpen;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;

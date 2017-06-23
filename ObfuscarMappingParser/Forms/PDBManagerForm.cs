@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using BrokenEvent.PdbReader;
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.TaskDialogs;
 using BrokenEvent.TaskDialogs.Dialogs;
 

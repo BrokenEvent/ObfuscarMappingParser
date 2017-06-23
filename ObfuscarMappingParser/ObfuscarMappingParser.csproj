@@ -262,6 +262,16 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\TreeIcons\Event.png" />
+    <None Include="res\TreeIcons\Class.png" />
+    <None Include="res\TreeIcons\Assembly.png" />
+    <None Include="res\TreeIcons\Property.png" />
+    <None Include="res\TreeIcons\pdb.png" />
+    <None Include="res\TreeIcons\NoNamespace.png" />
+    <None Include="res\TreeIcons\Namespace.png" />
+    <None Include="res\TreeIcons\multiple.png" />
+    <None Include="res\TreeIcons\Method.png" />
+    <None Include="res\TreeIcons\Field.png" />
     <None Include="res\Copy.png" />
     <Content Include="res\logo_160.png" />
     <None Include="res\Settings.png" />

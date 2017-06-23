@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
-using BrokenEvent.Shared;
-using BrokenEvent.Shared.TreeView;
+
+using BrokenEvent.Shared.Algorithms;
+using BrokenEvent.Shared.Controls;
 
 namespace ObfuscarMappingParser
 {
@@ -33,10 +33,6 @@ namespace ObfuscarMappingParser
       }
 
       BuildTree();
-
-      pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.FromArgb(255, 224, 224))); // unknown
-      pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.FromArgb(224, 255, 224))); // substitution
-      pineappleTreeView.Backlights.Add(new PineappleTreeHighlight(Color.LightYellow)); // ambiguous
     }
 
     private enum Highlights
@@ -61,9 +57,9 @@ namespace ObfuscarMappingParser
     private void BuildSubstitutionNode(PineappleTreeNode node, INamedEntity entity, string originalLine)
     {
       node.BacklightColorIndex = (int)Highlights.Substitution;
-      node.Subitems.Add("Class substitution");
+      node.Text += "\nClass substitution";
       if (originalLine != null && Configs.Instance.ShowOriginal)
-        node.Subitems.Add("Original line: " + originalLine);
+        node.Text += "\nOriginal line: " + originalLine;
       node.ToolTipText = "Target method not found in mapping.";
       node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType);
     }
@@ -71,17 +67,17 @@ namespace ObfuscarMappingParser
     private void BuildAmbigousNode(PineappleTreeNode node, SearchResults result)
     {
       node.BacklightColorIndex = (int)Highlights.Ambigous;
-      node.Subitems.Add("Ambigous. See tree subitems for details.");
+      node.Text += "Ambigous. See tree subitems for details.";
 
       if (Configs.Instance.ShowOriginal)
-        node.Subitems.Add("Original line: " + result.Original);
+        node.Text += "\nOriginal line: " + result.Original;
 
       node.ToolTipText = "Unable to precisely determine method. Set of variants provided.";
       node.ImageIndex = 8;
 
       foreach (INamedEntity entity in result.Results)
       {
-        PineappleTreeNode entityNode = new PineappleTreeNodeMultiline(GetEntityName(entity));
+        PineappleTreeNode entityNode = new PineappleTreeNode(GetEntityName(entity));
         node.Nodes.Add(entityNode);
         BuildNormalNode(entityNode, entity, null);
       }
@@ -96,18 +92,18 @@ namespace ObfuscarMappingParser
 
       RenamedItem item = entity as RenamedItem;
       if (item != null)
-        node.Subitems.Add("Owner class: " + item.Owner.NameOldFull);
+        node.Text += "\nOwner class: " + item.Owner.NameOldFull;
 
       RenamedBase renamedBase = (RenamedBase)entity;
       if (tbtnShort.Checked)
-        node.Subitems.Add("New name: " + renamedBase.NameNew);
+        node.Text += "\nNew name: " + renamedBase.NameNew;
       if (tbtnSimple.Checked)
-        node.Subitems.Add("New name: " + renamedBase.NameNewSimple);
+        node.Text += "\nNew name: " + renamedBase.NameNewSimple;
       if (tbtnFull.Checked)
-        node.Subitems.Add("New name: " + renamedBase.NameNewFull);
+        node.Text += "\nNew name: " + renamedBase.NameNewFull;
 
       if (originalLine != null && Configs.Instance.ShowOriginal)
-        node.Subitems.Add("Original line: " + originalLine);
+        node.Text += "\nOriginal line: " + originalLine;
 
       if (!mainForm.HavePdb)
         tooltip += "Unable to map to source code, no PDB files attached.";
@@ -120,7 +116,7 @@ namespace ObfuscarMappingParser
           ProcessPdb(descriptor);
           if (descriptor.Filename != null)
           {
-            node.Subitems.Add(PathUtils.ShortenPath(descriptor.Filename, 100) + ":" + descriptor.Line);
+            node.Text += "\n" + PathUtils.ShortenPath(descriptor.Filename, 100) + ":" + descriptor.Line;
             tooltip += descriptor.Filename + ":" + descriptor.Line;
           }
           else
@@ -135,9 +131,9 @@ namespace ObfuscarMappingParser
     {
       node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType);
       node.BacklightColorIndex = (int)Highlights.Unknown;
-      node.Subitems.Add("Unable to deobfuscate.");
+      node.Text += "\nUnable to deobfuscate.";
       if (originalLine != null && Configs.Instance.ShowOriginal)
-        node.Subitems.Add("Original line: " + originalLine);
+        node.Text += "\nOriginal line: " + originalLine;
       node.ToolTipText = "Unable to deobfuscate method. It is of an unknown or system assembly.";
     }
 
@@ -148,7 +144,7 @@ namespace ObfuscarMappingParser
 
       foreach (SearchResults result in results)
       {
-        PineappleTreeNode node = new PineappleTreeNodeMultiline(GetEntityName(result.Result));
+        PineappleTreeNode node = new PineappleTreeNode(GetEntityName(result.Result));
         pineappleTreeView.Nodes.Add(node);
 
         switch (result.Message)
