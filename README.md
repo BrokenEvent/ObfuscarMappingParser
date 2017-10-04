@@ -48,7 +48,7 @@ This project is not connected with the original Obfuscar.
 
 To get the original .NET obfuscation tool please follow here:
 
-[https://obfuscar.codeplex.com/](https://obfuscar.codeplex.com/)
+[http://www.obfuscar.com/](http://www.obfuscar.com/)
 
 All copyrights to the "Obfuscar" name are reserved to its author.
 
