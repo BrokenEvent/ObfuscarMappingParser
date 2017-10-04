@@ -47,11 +47,11 @@
       this.tabControl = new System.Windows.Forms.TabControl();
       this.tbEditor = new System.Windows.Forms.TabPage();
       this.tpSettings = new System.Windows.Forms.TabPage();
+      this.cbWatchClipboard = new System.Windows.Forms.CheckBox();
       this.cbUpdateInterval = new System.Windows.Forms.ComboBox();
       this.lblUpdate = new System.Windows.Forms.Label();
       this.tpHotkeys = new System.Windows.Forms.TabPage();
       this.commandSelector = new BrokenEvent.Shared.CommandManager.CommandSelector();
-      this.cbWatchClipboard = new System.Windows.Forms.CheckBox();
       this.tabControl.SuspendLayout();
       this.tbEditor.SuspendLayout();
       this.tpSettings.SuspendLayout();
@@ -233,7 +233,7 @@
       this.tbEditor.Location = new System.Drawing.Point(4, 22);
       this.tbEditor.Name = "tbEditor";
       this.tbEditor.Padding = new System.Windows.Forms.Padding(3);
-      this.tbEditor.Size = new System.Drawing.Size(416, 257);
+      this.tbEditor.Size = new System.Drawing.Size(416, 280);
       this.tbEditor.TabIndex = 0;
       this.tbEditor.Text = "External Editor";
       this.tbEditor.UseVisualStyleBackColor = true;
@@ -259,6 +259,17 @@
       this.tpSettings.Text = "UI Settings";
       this.tpSettings.UseVisualStyleBackColor = true;
       // 
+      // cbWatchClipboard
+      // 
+      this.cbWatchClipboard.AutoSize = true;
+      this.cbWatchClipboard.Location = new System.Drawing.Point(9, 193);
+      this.cbWatchClipboard.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
+      this.cbWatchClipboard.Name = "cbWatchClipboard";
+      this.cbWatchClipboard.Size = new System.Drawing.Size(271, 17);
+      this.cbWatchClipboard.TabIndex = 13;
+      this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor";
+      this.cbWatchClipboard.UseVisualStyleBackColor = true;
+      // 
       // cbUpdateInterval
       // 
       this.cbUpdateInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -283,7 +294,7 @@
       this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
       this.tpHotkeys.Name = "tpHotkeys";
       this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-      this.tpHotkeys.Size = new System.Drawing.Size(416, 257);
+      this.tpHotkeys.Size = new System.Drawing.Size(416, 280);
       this.tpHotkeys.TabIndex = 2;
       this.tpHotkeys.Text = "Hotkeys";
       this.tpHotkeys.UseVisualStyleBackColor = true;
@@ -307,17 +318,7 @@
       this.commandSelector.Size = new System.Drawing.Size(404, 245);
       this.commandSelector.TabIndex = 0;
       this.commandSelector.Text = "commandSelector1";
-      // 
-      // cbWatchClipboard
-      // 
-      this.cbWatchClipboard.AutoSize = true;
-      this.cbWatchClipboard.Location = new System.Drawing.Point(9, 193);
-      this.cbWatchClipboard.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
-      this.cbWatchClipboard.Name = "cbWatchClipboard";
-      this.cbWatchClipboard.Size = new System.Drawing.Size(271, 17);
-      this.cbWatchClipboard.TabIndex = 13;
-      this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor";
-      this.cbWatchClipboard.UseVisualStyleBackColor = true;
+      this.commandSelector.UseThemes = true;
       // 
       // SettingsForm
       // 

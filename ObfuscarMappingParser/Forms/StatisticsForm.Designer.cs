@@ -43,7 +43,7 @@
       this.lblModulesValue = new System.Windows.Forms.Label();
       this.lblSkippedValue = new System.Windows.Forms.Label();
       this.btnOk = new System.Windows.Forms.Button();
-      this.llblFilename = new System.Windows.Forms.LinkLabel();
+      this.llblFilename = new BrokenEvent.Shared.Controls.ThemedLink();
       this.SuspendLayout();
       // 
       // lblClasses
@@ -178,19 +178,25 @@
       // 
       // llblFilename
       // 
+      this.llblFilename.AutoOpen = false;
+      this.llblFilename.AutoSizeLabel = false;
+      this.llblFilename.BackColor = System.Drawing.Color.Transparent;
+      this.llblFilename.CharacterWrap = true;
+      this.llblFilename.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblFilename.Location = new System.Drawing.Point(12, 60);
       this.llblFilename.Name = "llblFilename";
-      this.llblFilename.Size = new System.Drawing.Size(352, 40);
+      this.llblFilename.Size = new System.Drawing.Size(352, 51);
       this.llblFilename.TabIndex = 15;
-      this.llblFilename.TabStop = true;
       this.llblFilename.Text = "linkLabel1";
-      this.llblFilename.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblFilename_LinkClicked);
+      this.llblFilename.Url = "linkLabel1";
+      this.llblFilename.Click += new System.EventHandler(this.llblFilename_Click);
       // 
       // StatisticsForm
       // 
       this.AcceptButton = this.btnOk;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.BackColor = System.Drawing.Color.White;
       this.CancelButton = this.btnOk;
       this.ClientSize = new System.Drawing.Size(376, 321);
       this.Controls.Add(this.llblFilename);
@@ -243,6 +249,6 @@
     private System.Windows.Forms.Label lblModulesValue;
     private System.Windows.Forms.Label lblSkippedValue;
     private System.Windows.Forms.Button btnOk;
-    private System.Windows.Forms.LinkLabel llblFilename;
+    private BrokenEvent.Shared.Controls.ThemedLink llblFilename;
   }
 }

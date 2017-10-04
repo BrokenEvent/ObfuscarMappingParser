@@ -21,8 +21,8 @@ namespace ObfuscarMappingParser
       llblFilename.Text = mapping.Filename;
     }
 
-    private void llblFilename_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {      
+    private void llblFilename_Click(object sender, EventArgs e)
+    {
       try
       {
         Process.Start("explorer", "/select," + llblFilename.Text);

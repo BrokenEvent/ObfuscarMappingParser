@@ -3,6 +3,9 @@ using System.Text;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.Algorithms;
+using BrokenEvent.Shared.Controls;
+
+using ObfuscarMappingParser.Properties;
 
 namespace ObfuscarMappingParser
 {
@@ -10,33 +13,37 @@ namespace ObfuscarMappingParser
   {
     private const int FILENAME_LENGTH = 70;
 
+    private void AddItem(string name, bool searchPdb = false)
+    {
+      BrokenListItem item = new BrokenListItem(PathUtils.ShortenPath(name, FILENAME_LENGTH));
+      item.Tag = name;
+      item.ImageIndex = 0;
+
+      StringBuilder sb = new StringBuilder();
+      foreach (string pdb in Configs.Instance.GetRecentPdb(name))
+        sb.AppendLine(pdb);
+
+      if (sb.Length > 0)
+        item.ToolTipText = name + "\nAttached PDB:\n" + sb;
+      else
+        item.ToolTipText = name;
+
+      blvFiles.Items.Insert(0, item);
+    }
+
     public LauncherForm()
     {
       InitializeComponent();
-      chFilename.Width = lvFiles.ClientSize.Width;
+      ilIcon.Images.Add(Resources.Document);
 
+      blvFiles.BeginUpdate();
       foreach (string s in Configs.Instance.Recents)
-      {
-        ListViewItem lv = lvFiles.Items.Add(PathUtils.ShortenPath(s, FILENAME_LENGTH), 0);
-        lv.Tag = s;
+        AddItem(s, true);
 
-        StringBuilder sb = new StringBuilder();
-        foreach (string pdb in Configs.Instance.GetRecentPdb(s))
-          sb.AppendLine(pdb);
+      blvFiles.EndUpdate();
 
-        if (sb.Length > 0)
-          lv.ToolTipText = s + "\nAttached PDB:\n" + sb;
-        else
-          lv.ToolTipText = s;
-      }
-
-      if (lvFiles.Items.Count > 0)
-        lvFiles.Items[0].Selected = true;
-    }
-
-    private void lvFiles_Resize(object sender, EventArgs e)
-    {
-      chFilename.Width = lvFiles.ClientSize.Width;
+      if (blvFiles.Items.Count > 0)
+        blvFiles.SelectedIndex = 0;
     }
 
     private void btnBrowse_Click(object sender, EventArgs e)
@@ -44,31 +51,30 @@ namespace ObfuscarMappingParser
       if (odFile.ShowDialog(this) != DialogResult.OK)
         return;
 
-      foreach (ListViewItem item in lvFiles.Items)
+      foreach (BrokenListItem item in blvFiles.Items)
         if (string.Compare((string)item.Tag, odFile.FileName, StringComparison.OrdinalIgnoreCase) == 0)
         {
           item.Selected = true;
           return;
         }
 
-      ListViewItem lv = lvFiles.Items.Add(PathUtils.ShortenPath(odFile.FileName, FILENAME_LENGTH), 0);
-      lv.Tag = lv.ToolTipText = odFile.FileName;
-      lv.Selected = true;
+      AddItem(odFile.FileName);
+      blvFiles.SelectedIndex = 0;
     }
 
-    private void lvFiles_SelectedIndexChanged(object sender, EventArgs e)
+    private void blvFiles_ItemSelected(object sender, ItemSelectEventArgs e)
     {
-      btnOk.Enabled = lvFiles.SelectedItems.Count > 0;
+      btnOk.Enabled = blvFiles.SelectedIndex != -1;
     }
 
     public string SelectedFilename
     {
-      get { return lvFiles.SelectedItems.Count == 0 ? null : (string)lvFiles.SelectedItems[0].Tag; }
+      get { return blvFiles.SelectedIndex == -1 ? null : (string)blvFiles.SelectedItem.Tag; }
     }
 
-    private void lvFiles_DoubleClick(object sender, EventArgs e)
+    private void blvFiles_DoubleClick(object sender, EventArgs e)
     {
-      if (lvFiles.SelectedItems.Count > 0)
+      if (blvFiles.SelectedIndex != -1)
       {
         DialogResult = DialogResult.OK;
         Close();
@@ -86,9 +92,7 @@ namespace ObfuscarMappingParser
         return;
 
       string s = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
-      ListViewItem lv = lvFiles.Items.Add(PathUtils.ShortenPath(s, FILENAME_LENGTH), 0);
-      lv.Tag = lv.ToolTipText = s;
-      lv.Selected = true;
+      AddItem(s);
     }
   }
 }
