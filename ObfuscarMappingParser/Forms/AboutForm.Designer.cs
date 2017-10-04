@@ -112,6 +112,7 @@
       // 
       this.llblSupportEmail.AutoSizeLabel = true;
       this.llblSupportEmail.BackColor = System.Drawing.Color.Transparent;
+      this.llblSupportEmail.CharacterWrap = false;
       this.llblSupportEmail.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblSupportEmail.Location = new System.Drawing.Point(94, 70);
       this.llblSupportEmail.Name = "llblSupportEmail";
@@ -134,20 +135,22 @@
       // 
       this.llblObfuscar.AutoSizeLabel = true;
       this.llblObfuscar.BackColor = System.Drawing.Color.Transparent;
+      this.llblObfuscar.CharacterWrap = false;
       this.llblObfuscar.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblObfuscar.Location = new System.Drawing.Point(15, 145);
       this.llblObfuscar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 12);
       this.llblObfuscar.Name = "llblObfuscar";
-      this.llblObfuscar.Size = new System.Drawing.Size(163, 15);
+      this.llblObfuscar.Size = new System.Drawing.Size(143, 15);
       this.llblObfuscar.TabIndex = 8;
-      this.llblObfuscar.Text = "https://obfuscar.lextudio.com/";
-      this.llblObfuscar.Url = "https://obfuscar.lextudio.com/";
+      this.llblObfuscar.Text = "http://www.obfuscar.com/";
+      this.llblObfuscar.Url = "http://www.obfuscar.com/";
       // 
       // llblWebSite
       // 
       this.llblWebSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.llblWebSite.AutoSizeLabel = true;
       this.llblWebSite.BackColor = System.Drawing.Color.Transparent;
+      this.llblWebSite.CharacterWrap = false;
       this.llblWebSite.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblWebSite.Location = new System.Drawing.Point(15, 358);
       this.llblWebSite.Name = "llblWebSite";
@@ -181,6 +184,7 @@
       // 
       this.llblGitHub.AutoSizeLabel = true;
       this.llblGitHub.BackColor = System.Drawing.Color.Transparent;
+      this.llblGitHub.CharacterWrap = false;
       this.llblGitHub.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblGitHub.Location = new System.Drawing.Point(40, 189);
       this.llblGitHub.Name = "llblGitHub";
@@ -193,6 +197,7 @@
       // 
       this.llblProjectPage.AutoSizeLabel = true;
       this.llblProjectPage.BackColor = System.Drawing.Color.Transparent;
+      this.llblProjectPage.CharacterWrap = false;
       this.llblProjectPage.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblProjectPage.Location = new System.Drawing.Point(40, 232);
       this.llblProjectPage.Name = "llblProjectPage";
@@ -225,6 +230,7 @@
       // 
       this.llblTrello.AutoSizeLabel = true;
       this.llblTrello.BackColor = System.Drawing.Color.Transparent;
+      this.llblTrello.CharacterWrap = false;
       this.llblTrello.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblTrello.Location = new System.Drawing.Point(40, 274);
       this.llblTrello.Name = "llblTrello";
@@ -308,6 +314,7 @@
       this.llblUpdate.AutoOpen = false;
       this.llblUpdate.AutoSizeLabel = true;
       this.llblUpdate.BackColor = System.Drawing.Color.Transparent;
+      this.llblUpdate.CharacterWrap = false;
       this.llblUpdate.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblUpdate.Location = new System.Drawing.Point(385, 184);
       this.llblUpdate.Name = "llblUpdate";
