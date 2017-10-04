@@ -33,17 +33,17 @@
       this.lblCopyright = new System.Windows.Forms.Label();
       this.lblMessage = new System.Windows.Forms.Label();
       this.lblSupportEmail = new System.Windows.Forms.Label();
-      this.llblSupportEmail = new System.Windows.Forms.LinkLabel();
+      this.llblSupportEmail = new BrokenEvent.Shared.Controls.ThemedLink();
       this.lblWarning = new System.Windows.Forms.Label();
-      this.llblObfuscar = new System.Windows.Forms.LinkLabel();
-      this.llblWebSite = new System.Windows.Forms.LinkLabel();
+      this.llblObfuscar = new BrokenEvent.Shared.Controls.ThemedLink();
+      this.llblWebSite = new BrokenEvent.Shared.Controls.ThemedLink();
       this.lblMSImageLibrary = new System.Windows.Forms.Label();
       this.lblPdbCopyright = new System.Windows.Forms.Label();
-      this.llblGitHub = new System.Windows.Forms.LinkLabel();
-      this.llblProjectPage = new System.Windows.Forms.LinkLabel();
+      this.llblGitHub = new BrokenEvent.Shared.Controls.ThemedLink();
+      this.llblProjectPage = new BrokenEvent.Shared.Controls.ThemedLink();
       this.llblProjectPageDesc = new System.Windows.Forms.Label();
       this.llblGitHubDesc = new System.Windows.Forms.Label();
-      this.llblTrello = new System.Windows.Forms.LinkLabel();
+      this.llblTrello = new BrokenEvent.Shared.Controls.ThemedLink();
       this.lblTrelloBoardDesc = new System.Windows.Forms.Label();
       this.imgTrello = new System.Windows.Forms.PictureBox();
       this.imgProject = new System.Windows.Forms.PictureBox();
@@ -51,7 +51,7 @@
       this.pbLogo = new System.Windows.Forms.PictureBox();
       this.indUpdate = new BrokenEvent.Shared.Controls.Indicator();
       this.lblUpdateState = new System.Windows.Forms.Label();
-      this.llblUpdate = new System.Windows.Forms.LinkLabel();
+      this.llblUpdate = new BrokenEvent.Shared.Controls.ThemedLink();
       ((System.ComponentModel.ISupportInitialize)(this.imgTrello)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.imgProject)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.imgGitHub)).BeginInit();
@@ -61,7 +61,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(405, 318);
+      this.btnOk.Location = new System.Drawing.Point(405, 350);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -84,7 +84,7 @@
       // 
       this.lblCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.lblCopyright.AutoSize = true;
-      this.lblCopyright.Location = new System.Drawing.Point(12, 315);
+      this.lblCopyright.Location = new System.Drawing.Point(12, 347);
       this.lblCopyright.Name = "lblCopyright";
       this.lblCopyright.Size = new System.Drawing.Size(250, 13);
       this.lblCopyright.TabIndex = 3;
@@ -110,19 +110,20 @@
       // 
       // llblSupportEmail
       // 
-      this.llblSupportEmail.AutoSize = true;
+      this.llblSupportEmail.AutoSizeLabel = true;
+      this.llblSupportEmail.BackColor = System.Drawing.Color.Transparent;
       this.llblSupportEmail.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblSupportEmail.Location = new System.Drawing.Point(94, 71);
+      this.llblSupportEmail.Location = new System.Drawing.Point(94, 70);
       this.llblSupportEmail.Name = "llblSupportEmail";
-      this.llblSupportEmail.Size = new System.Drawing.Size(145, 13);
+      this.llblSupportEmail.Size = new System.Drawing.Size(144, 15);
       this.llblSupportEmail.TabIndex = 6;
-      this.llblSupportEmail.TabStop = true;
       this.llblSupportEmail.Text = "contact@brokenevent.com";
-      this.llblSupportEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblSupportEmail_LinkClicked);
+      this.llblSupportEmail.Url = "mailto:contact@brokenevent.com";
       // 
       // lblWarning
       // 
-      this.lblWarning.Location = new System.Drawing.Point(12, 97);
+      this.lblWarning.Location = new System.Drawing.Point(12, 100);
+      this.lblWarning.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
       this.lblWarning.Name = "lblWarning";
       this.lblWarning.Size = new System.Drawing.Size(370, 42);
       this.lblWarning.TabIndex = 7;
@@ -131,32 +132,35 @@
       // 
       // llblObfuscar
       // 
-      this.llblObfuscar.AutoSize = true;
-      this.llblObfuscar.Location = new System.Drawing.Point(12, 139);
+      this.llblObfuscar.AutoSizeLabel = true;
+      this.llblObfuscar.BackColor = System.Drawing.Color.Transparent;
+      this.llblObfuscar.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.llblObfuscar.Location = new System.Drawing.Point(15, 145);
+      this.llblObfuscar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 12);
       this.llblObfuscar.Name = "llblObfuscar";
-      this.llblObfuscar.Size = new System.Drawing.Size(163, 13);
+      this.llblObfuscar.Size = new System.Drawing.Size(163, 15);
       this.llblObfuscar.TabIndex = 8;
-      this.llblObfuscar.TabStop = true;
       this.llblObfuscar.Text = "https://obfuscar.lextudio.com/";
-      this.llblObfuscar.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Hyperlink_LinkClicked);
+      this.llblObfuscar.Url = "https://obfuscar.lextudio.com/";
       // 
       // llblWebSite
       // 
       this.llblWebSite.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.llblWebSite.AutoSize = true;
-      this.llblWebSite.Location = new System.Drawing.Point(12, 328);
+      this.llblWebSite.AutoSizeLabel = true;
+      this.llblWebSite.BackColor = System.Drawing.Color.Transparent;
+      this.llblWebSite.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.llblWebSite.Location = new System.Drawing.Point(15, 358);
       this.llblWebSite.Name = "llblWebSite";
-      this.llblWebSite.Size = new System.Drawing.Size(129, 13);
+      this.llblWebSite.Size = new System.Drawing.Size(128, 15);
       this.llblWebSite.TabIndex = 9;
-      this.llblWebSite.TabStop = true;
       this.llblWebSite.Text = "http://brokenevent.com";
-      this.llblWebSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Hyperlink_LinkClicked);
+      this.llblWebSite.Url = "http://brokenevent.com";
       // 
       // lblMSImageLibrary
       // 
       this.lblMSImageLibrary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.lblMSImageLibrary.AutoSize = true;
-      this.lblMSImageLibrary.Location = new System.Drawing.Point(12, 289);
+      this.lblMSImageLibrary.Location = new System.Drawing.Point(12, 321);
       this.lblMSImageLibrary.Name = "lblMSImageLibrary";
       this.lblMSImageLibrary.Size = new System.Drawing.Size(373, 13);
       this.lblMSImageLibrary.TabIndex = 10;
@@ -166,7 +170,7 @@
       // 
       this.lblPdbCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.lblPdbCopyright.AutoSize = true;
-      this.lblPdbCopyright.Location = new System.Drawing.Point(12, 276);
+      this.lblPdbCopyright.Location = new System.Drawing.Point(12, 308);
       this.lblPdbCopyright.Name = "lblPdbCopyright";
       this.lblPdbCopyright.Size = new System.Drawing.Size(449, 13);
       this.lblPdbCopyright.TabIndex = 11;
@@ -175,30 +179,32 @@
       // 
       // llblGitHub
       // 
-      this.llblGitHub.AutoSize = true;
-      this.llblGitHub.Location = new System.Drawing.Point(37, 175);
+      this.llblGitHub.AutoSizeLabel = true;
+      this.llblGitHub.BackColor = System.Drawing.Color.Transparent;
+      this.llblGitHub.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.llblGitHub.Location = new System.Drawing.Point(40, 189);
       this.llblGitHub.Name = "llblGitHub";
-      this.llblGitHub.Size = new System.Drawing.Size(302, 13);
+      this.llblGitHub.Size = new System.Drawing.Size(306, 15);
       this.llblGitHub.TabIndex = 12;
-      this.llblGitHub.TabStop = true;
       this.llblGitHub.Text = "https://github.com/BrokenEvent/ObfuscarMappingParser";
-      this.llblGitHub.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Hyperlink_LinkClicked);
+      this.llblGitHub.Url = "https://github.com/BrokenEvent/ObfuscarMappingParser";
       // 
       // llblProjectPage
       // 
-      this.llblProjectPage.AutoSize = true;
-      this.llblProjectPage.Location = new System.Drawing.Point(37, 211);
+      this.llblProjectPage.AutoSizeLabel = true;
+      this.llblProjectPage.BackColor = System.Drawing.Color.Transparent;
+      this.llblProjectPage.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.llblProjectPage.Location = new System.Drawing.Point(40, 232);
       this.llblProjectPage.Name = "llblProjectPage";
-      this.llblProjectPage.Size = new System.Drawing.Size(255, 13);
+      this.llblProjectPage.Size = new System.Drawing.Size(258, 15);
       this.llblProjectPage.TabIndex = 13;
-      this.llblProjectPage.TabStop = true;
       this.llblProjectPage.Text = "http://brokenevent.com/projects/obfuscarparser";
-      this.llblProjectPage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Hyperlink_LinkClicked);
+      this.llblProjectPage.Url = "http://brokenevent.com/projects/obfuscarparser";
       // 
       // llblProjectPageDesc
       // 
       this.llblProjectPageDesc.AutoSize = true;
-      this.llblProjectPageDesc.Location = new System.Drawing.Point(37, 198);
+      this.llblProjectPageDesc.Location = new System.Drawing.Point(37, 217);
       this.llblProjectPageDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.llblProjectPageDesc.Name = "llblProjectPageDesc";
       this.llblProjectPageDesc.Size = new System.Drawing.Size(115, 13);
@@ -208,7 +214,7 @@
       // llblGitHubDesc
       // 
       this.llblGitHubDesc.AutoSize = true;
-      this.llblGitHubDesc.Location = new System.Drawing.Point(37, 162);
+      this.llblGitHubDesc.Location = new System.Drawing.Point(37, 175);
       this.llblGitHubDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.llblGitHubDesc.Name = "llblGitHubDesc";
       this.llblGitHubDesc.Size = new System.Drawing.Size(102, 13);
@@ -217,19 +223,20 @@
       // 
       // llblTrello
       // 
-      this.llblTrello.AutoSize = true;
-      this.llblTrello.Location = new System.Drawing.Point(37, 247);
+      this.llblTrello.AutoSizeLabel = true;
+      this.llblTrello.BackColor = System.Drawing.Color.Transparent;
+      this.llblTrello.Cursor = System.Windows.Forms.Cursors.Hand;
+      this.llblTrello.Location = new System.Drawing.Point(40, 274);
       this.llblTrello.Name = "llblTrello";
-      this.llblTrello.Size = new System.Drawing.Size(280, 13);
+      this.llblTrello.Size = new System.Drawing.Size(286, 15);
       this.llblTrello.TabIndex = 16;
-      this.llblTrello.TabStop = true;
       this.llblTrello.Text = "https://trello.com/b/qglGMdCS/brokenevent-projects";
-      this.llblTrello.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.Hyperlink_LinkClicked);
+      this.llblTrello.Url = "https://trello.com/b/qglGMdCS/brokenevent-projects";
       // 
       // lblTrelloBoardDesc
       // 
       this.lblTrelloBoardDesc.AutoSize = true;
-      this.lblTrelloBoardDesc.Location = new System.Drawing.Point(37, 234);
+      this.lblTrelloBoardDesc.Location = new System.Drawing.Point(37, 260);
       this.lblTrelloBoardDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.lblTrelloBoardDesc.Name = "lblTrelloBoardDesc";
       this.lblTrelloBoardDesc.Size = new System.Drawing.Size(140, 13);
@@ -238,8 +245,8 @@
       // 
       // imgTrello
       // 
-      this.imgTrello.Image = global::ObfuscarMappingParser.Properties.Resources.trello;
-      this.imgTrello.Location = new System.Drawing.Point(15, 234);
+      this.imgTrello.Image = global::ObfuscarMappingParser.Properties.Resources.LogoTrello;
+      this.imgTrello.Location = new System.Drawing.Point(15, 260);
       this.imgTrello.Name = "imgTrello";
       this.imgTrello.Size = new System.Drawing.Size(16, 16);
       this.imgTrello.TabIndex = 20;
@@ -247,8 +254,8 @@
       // 
       // imgProject
       // 
-      this.imgProject.Image = global::ObfuscarMappingParser.Properties.Resources.brokenevent;
-      this.imgProject.Location = new System.Drawing.Point(15, 198);
+      this.imgProject.Image = global::ObfuscarMappingParser.Properties.Resources.LogoBrokenEvent;
+      this.imgProject.Location = new System.Drawing.Point(15, 217);
       this.imgProject.Name = "imgProject";
       this.imgProject.Size = new System.Drawing.Size(16, 16);
       this.imgProject.TabIndex = 19;
@@ -256,8 +263,8 @@
       // 
       // imgGitHub
       // 
-      this.imgGitHub.Image = global::ObfuscarMappingParser.Properties.Resources.github;
-      this.imgGitHub.Location = new System.Drawing.Point(15, 162);
+      this.imgGitHub.Image = global::ObfuscarMappingParser.Properties.Resources.LogoGithub;
+      this.imgGitHub.Location = new System.Drawing.Point(15, 175);
       this.imgGitHub.Name = "imgGitHub";
       this.imgGitHub.Size = new System.Drawing.Size(16, 16);
       this.imgGitHub.TabIndex = 18;
@@ -266,7 +273,7 @@
       // pbLogo
       // 
       this.pbLogo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.pbLogo.Image = global::ObfuscarMappingParser.Properties.Resources.logo_160;
+      this.pbLogo.Image = global::ObfuscarMappingParser.Properties.Resources.LogoBig;
       this.pbLogo.Location = new System.Drawing.Point(388, 58);
       this.pbLogo.Name = "pbLogo";
       this.pbLogo.Size = new System.Drawing.Size(120, 120);
@@ -278,6 +285,7 @@
       // 
       this.indUpdate.BackColor = System.Drawing.Color.Transparent;
       this.indUpdate.ForeColor = System.Drawing.Color.RoyalBlue;
+      this.indUpdate.IndicatorType = BrokenEvent.Shared.Controls.Indicator.Indicators.ClassicRotater;
       this.indUpdate.LinkedControl = null;
       this.indUpdate.Location = new System.Drawing.Point(388, 184);
       this.indUpdate.Name = "indUpdate";
@@ -297,21 +305,25 @@
       // 
       // llblUpdate
       // 
-      this.llblUpdate.AutoSize = true;
+      this.llblUpdate.AutoOpen = false;
+      this.llblUpdate.AutoSizeLabel = true;
+      this.llblUpdate.BackColor = System.Drawing.Color.Transparent;
+      this.llblUpdate.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblUpdate.Location = new System.Drawing.Point(385, 184);
       this.llblUpdate.Name = "llblUpdate";
-      this.llblUpdate.Size = new System.Drawing.Size(45, 13);
+      this.llblUpdate.Size = new System.Drawing.Size(38, 15);
       this.llblUpdate.TabIndex = 24;
-      this.llblUpdate.TabStop = true;
       this.llblUpdate.Text = "Update";
+      this.llblUpdate.Url = "Update";
       this.llblUpdate.Visible = false;
-      this.llblUpdate.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llblUpdate_LinkClicked);
+      this.llblUpdate.Click += new System.EventHandler(this.llblUpdate_Click);
       // 
       // AboutForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(517, 349);
+      this.BackColor = System.Drawing.Color.White;
+      this.ClientSize = new System.Drawing.Size(517, 381);
       this.ControlBox = false;
       this.Controls.Add(this.llblUpdate);
       this.Controls.Add(this.lblUpdateState);
@@ -363,17 +375,17 @@
     private System.Windows.Forms.Label lblCopyright;
     private System.Windows.Forms.Label lblMessage;
     private System.Windows.Forms.Label lblSupportEmail;
-    private System.Windows.Forms.LinkLabel llblSupportEmail;
+    private BrokenEvent.Shared.Controls.ThemedLink llblSupportEmail;
     private System.Windows.Forms.Label lblWarning;
-    private System.Windows.Forms.LinkLabel llblObfuscar;
-    private System.Windows.Forms.LinkLabel llblWebSite;
+    private BrokenEvent.Shared.Controls.ThemedLink llblObfuscar;
+    private BrokenEvent.Shared.Controls.ThemedLink llblWebSite;
     private System.Windows.Forms.Label lblMSImageLibrary;
     private System.Windows.Forms.Label lblPdbCopyright;
-    private System.Windows.Forms.LinkLabel llblGitHub;
-    private System.Windows.Forms.LinkLabel llblProjectPage;
+    private BrokenEvent.Shared.Controls.ThemedLink llblGitHub;
+    private BrokenEvent.Shared.Controls.ThemedLink llblProjectPage;
     private System.Windows.Forms.Label llblProjectPageDesc;
     private System.Windows.Forms.Label llblGitHubDesc;
-    private System.Windows.Forms.LinkLabel llblTrello;
+    private BrokenEvent.Shared.Controls.ThemedLink llblTrello;
     private System.Windows.Forms.Label lblTrelloBoardDesc;
     private System.Windows.Forms.PictureBox imgGitHub;
     private System.Windows.Forms.PictureBox imgProject;
@@ -381,6 +393,6 @@
     private System.Windows.Forms.PictureBox pbLogo;
     private BrokenEvent.Shared.Controls.Indicator indUpdate;
     private System.Windows.Forms.Label lblUpdateState;
-    private System.Windows.Forms.LinkLabel llblUpdate;
+    private BrokenEvent.Shared.Controls.ThemedLink llblUpdate;
   }
 }

@@ -359,7 +359,7 @@
       // 
       // miShowModule
       // 
-      this.miShowModule.Image = global::ObfuscarMappingParser.Properties.Resources.AssemblyIcon;
+      this.miShowModule.Image = global::ObfuscarMappingParser.Properties.Resources.IconAssembly;
       this.miShowModule.Name = "miShowModule";
       this.miShowModule.Size = new System.Drawing.Size(256, 22);
       this.miShowModule.Text = "Show Module";
@@ -367,7 +367,7 @@
       // 
       // miGroupModules
       // 
-      this.miGroupModules.Image = global::ObfuscarMappingParser.Properties.Resources.AssemblyIcon;
+      this.miGroupModules.Image = global::ObfuscarMappingParser.Properties.Resources.IconAssembly;
       this.miGroupModules.Name = "miGroupModules";
       this.miGroupModules.Size = new System.Drawing.Size(256, 22);
       this.miGroupModules.Text = "Group by Modules";
@@ -574,7 +574,7 @@
       this.ptvElements.BackColor = System.Drawing.SystemColors.ControlLightLight;
       this.ptvElements.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
       pineappleTreeColumn1.Autosize = true;
-      pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(2);
+      pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(1);
       pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.HeaderText = "Classname";
       pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
@@ -589,6 +589,7 @@
       this.ptvElements.ContextMenuStrip = this.contextMenuStrip;
       this.ptvElements.DisabledColor = System.Drawing.SystemColors.Control;
       this.ptvElements.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ptvElements.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.ptvElements.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.ptvElements.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.ptvElements.FullRowSelect = true;
@@ -597,7 +598,6 @@
       listHighlight2.Color = System.Drawing.Color.DarkBlue;
       this.ptvElements.Highlights.Add(listHighlight1);
       this.ptvElements.Highlights.Add(listHighlight2);
-      this.ptvElements.IconPadding = new System.Windows.Forms.Padding(1);
       this.ptvElements.ImageList = this.ilIcons;
       this.ptvElements.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.ptvElements.Location = new System.Drawing.Point(0, 49);

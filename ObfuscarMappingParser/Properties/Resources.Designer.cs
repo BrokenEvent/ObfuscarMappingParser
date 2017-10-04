@@ -19,7 +19,7 @@ namespace ObfuscarMappingParser.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -57,26 +57,6 @@ namespace ObfuscarMappingParser.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap AssemblyIcon {
-            get {
-                object obj = ResourceManager.GetObject("AssemblyIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap brokenevent {
-            get {
-                object obj = ResourceManager.GetObject("brokenevent", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -136,16 +116,6 @@ namespace ObfuscarMappingParser.Properties {
         internal static System.Drawing.Bitmap FullView {
             get {
                 object obj = ResourceManager.GetObject("FullView", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap github {
-            get {
-                object obj = ResourceManager.GetObject("github", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +223,39 @@ namespace ObfuscarMappingParser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo_160 {
+        internal static System.Drawing.Bitmap LogoBig {
             get {
-                object obj = ResourceManager.GetObject("logo_160", resourceCulture);
+                object obj = ResourceManager.GetObject("LogoBig", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogoBrokenEvent {
+            get {
+                object obj = ResourceManager.GetObject("LogoBrokenEvent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogoGithub {
+            get {
+                object obj = ResourceManager.GetObject("LogoGithub", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogoTrello {
+            get {
+                object obj = ResourceManager.GetObject("LogoTrello", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -396,16 +396,6 @@ namespace ObfuscarMappingParser.Properties {
         internal static System.Drawing.Bitmap Tree {
             get {
                 object obj = ResourceManager.GetObject("Tree", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap trello {
-            get {
-                object obj = ResourceManager.GetObject("trello", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

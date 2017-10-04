@@ -287,7 +287,6 @@
     <None Include="res\SortAscending.png" />
     <None Include="res\SortDescending.png" />
     <None Include="res\SortUsingNamespace.png" />
-    <None Include="res\Assembly.png" />
     <None Include="res\Start.png" />
     <None Include="res\Search.png" />
     <None Include="res\Stacktrace.png" />
@@ -297,8 +296,6 @@
     <None Include="res\FullView.png" />
     <None Include="res\ShortView.png" />
     <None Include="res\SimpleView.png" />
-    <None Include="res\Method.png" />
-    <None Include="res\Class.png" />
     <Content Include="LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
