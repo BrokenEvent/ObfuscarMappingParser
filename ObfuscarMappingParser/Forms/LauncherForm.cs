@@ -13,20 +13,12 @@ namespace ObfuscarMappingParser
   {
     private const int FILENAME_LENGTH = 70;
 
-    private void AddItem(string name, bool searchPdb = false)
+    private void AddItem(string name)
     {
       BrokenListItem item = new BrokenListItem(PathUtils.ShortenPath(name, FILENAME_LENGTH));
       item.Tag = name;
       item.ImageIndex = 0;
-
-      StringBuilder sb = new StringBuilder();
-      foreach (string pdb in Configs.Instance.GetRecentPdb(name))
-        sb.AppendLine(pdb);
-
-      if (sb.Length > 0)
-        item.ToolTipText = name + "\nAttached PDB:\n" + sb;
-      else
-        item.ToolTipText = name;
+      item.ToolTipText = name;
 
       blvFiles.Items.Insert(0, item);
     }
@@ -38,7 +30,22 @@ namespace ObfuscarMappingParser
 
       blvFiles.BeginUpdate();
       foreach (string s in Configs.Instance.Recents)
-        AddItem(s, true);
+      {
+        BrokenListItem item = new BrokenListItem(PathUtils.ShortenPath(s, FILENAME_LENGTH));
+        item.Tag = s;
+        item.ImageIndex = 0;
+
+        StringBuilder sb = new StringBuilder();
+        foreach (string pdb in Configs.Instance.GetRecentPdb(s))
+          sb.AppendLine(pdb);
+
+        if (sb.Length > 0)
+          item.ToolTipText = s + "\nAttached PDB:\n" + sb;
+        else
+          item.ToolTipText = s;
+
+        blvFiles.Items.Add(item);
+      }
 
       blvFiles.EndUpdate();
 

@@ -173,6 +173,7 @@
       this.pineappleTreeView.Columns.Add(pineappleTreeColumn1);
       this.pineappleTreeView.DisabledColor = System.Drawing.SystemColors.Control;
       this.pineappleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pineappleTreeView.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.pineappleTreeView.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.pineappleTreeView.FullRowSelect = true;
       this.pineappleTreeView.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -183,7 +184,7 @@
       this.pineappleTreeView.Size = new System.Drawing.Size(612, 347);
       this.pineappleTreeView.TabIndex = 1;
       this.pineappleTreeView.Text = "pineappleTreeView1";
-      this.pineappleTreeView.UseThemes = false;
+      this.pineappleTreeView.UseThemes = true;
       this.pineappleTreeView.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.pineappleTreeView_NodeSelect);
       // 
       // StacktraceAnalyerForm

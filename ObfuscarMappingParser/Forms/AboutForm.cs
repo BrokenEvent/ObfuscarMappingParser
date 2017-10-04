@@ -18,6 +18,11 @@ namespace ObfuscarMappingParser
       Close();
     }
 
+    protected override string AssemblyVersionToString(Version version)
+    {
+      return version.ToString();
+    }
+
     private void llblUpdate_Click(object sender, EventArgs e)
     {
       OpenUrl(Configs.Instance.UpdateHelper.UpdateAvailable.InstallUrl.ToString());

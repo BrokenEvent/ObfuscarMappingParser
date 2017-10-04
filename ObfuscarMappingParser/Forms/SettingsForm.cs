@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.CommandManager;
+using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.Rest;
 using BrokenEvent.VisualStudioOpener;
 
@@ -17,7 +18,12 @@ namespace ObfuscarMappingParser
       this.mapping = mapping;
       InitializeComponent();
 
-      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR);
+      string vs = null;
+      if (mapping != null)
+        vs = Configs.Instance.GetRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR);
+      else
+        cbApplyVsToProject.Checked = cbApplyVsToProject.Enabled = false;
+
       if (vs == null)
         vs = Configs.Instance.Editor;
       IVisualStudioInfo selected = VisualStudioDetector.GetVisualStudioInfo(vs);
@@ -26,7 +32,7 @@ namespace ObfuscarMappingParser
 
       foreach (IVisualStudioInfo info in VisualStudioDetector.GetVisualStudios())
       {
-        ListViewItem item = new ListViewItem(info.Description);
+        BrokenListItem item = new BrokenListItem(info.Description);
         try
         {
           Icon icon = Icon.ExtractAssociatedIcon(info.Path);
@@ -36,7 +42,7 @@ namespace ObfuscarMappingParser
         catch { }
         item.Tag = info;
 
-        lvEditors.Items.Add(item);
+        blvEditors.Items.Add(item);
 
         if (info == selected)
           item.Selected = true;
@@ -55,13 +61,11 @@ namespace ObfuscarMappingParser
 
       commandSelector.CommandManager = commandManager;
       commandSelector.CommandType = typeof(Actions);
-
-      lvEditors_Resize(null, EventArgs.Empty);
     }
 
     private void btnOk_Click(object sender, EventArgs e)
     {
-      string editor = lvEditors.SelectedItems[0].Tag.ToString();
+      string editor = blvEditors.SelectedItem.Tag.ToString();
 
       if (cbApplyVsToProject.Checked)
         Configs.Instance.AddRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR, editor);
@@ -79,11 +83,6 @@ namespace ObfuscarMappingParser
       Configs.Instance.UpdateHelper.Interval = ((EnumHelper.EnumWrapper<UpdateHelper.CheckInterval>)cbUpdateInterval.SelectedItem).Value;
 
       DialogResult = DialogResult.OK;
-    }
-
-    private void lvEditors_Resize(object sender, EventArgs e)
-    {
-      chDescription.Width = lvEditors.ClientSize.Width;
     }
   }
 }

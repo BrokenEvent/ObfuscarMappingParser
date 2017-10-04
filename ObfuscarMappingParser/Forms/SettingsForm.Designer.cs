@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
+      BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn1 = new BrokenEvent.Shared.Controls.BrokenListColumn();
       this.lblVS = new System.Windows.Forms.Label();
       this.cbSimplifySystemNames = new System.Windows.Forms.CheckBox();
       this.cbShowUnicode = new System.Windows.Forms.CheckBox();
@@ -39,13 +40,12 @@
       this.cbGroupByModules = new System.Windows.Forms.CheckBox();
       this.cbGroupByNamespaces = new System.Windows.Forms.CheckBox();
       this.cbUseColumns = new System.Windows.Forms.CheckBox();
-      this.lvEditors = new ObfuscarMappingParser.MyListView();
-      this.chDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.imageList = new System.Windows.Forms.ImageList(this.components);
       this.lblDoubleClick = new System.Windows.Forms.Label();
       this.cbDoubleClick = new System.Windows.Forms.ComboBox();
       this.tabControl = new System.Windows.Forms.TabControl();
       this.tbEditor = new System.Windows.Forms.TabPage();
+      this.blvEditors = new BrokenEvent.Shared.Controls.BrokenListView();
       this.tpSettings = new System.Windows.Forms.TabPage();
       this.cbWatchClipboard = new System.Windows.Forms.CheckBox();
       this.cbUpdateInterval = new System.Windows.Forms.ComboBox();
@@ -115,7 +115,7 @@
       // 
       this.cbApplyVsToProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.cbApplyVsToProject.AutoSize = true;
-      this.cbApplyVsToProject.Location = new System.Drawing.Point(9, 234);
+      this.cbApplyVsToProject.Location = new System.Drawing.Point(8, 257);
       this.cbApplyVsToProject.Name = "cbApplyVsToProject";
       this.cbApplyVsToProject.Size = new System.Drawing.Size(370, 17);
       this.cbApplyVsToProject.TabIndex = 3;
@@ -166,26 +166,6 @@
       this.cbUseColumns.Text = "Use columns in tree";
       this.cbUseColumns.UseVisualStyleBackColor = true;
       // 
-      // lvEditors
-      // 
-      this.lvEditors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.lvEditors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.chDescription});
-      this.lvEditors.FullRowSelect = true;
-      this.lvEditors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-      this.lvEditors.HideSelection = false;
-      this.lvEditors.Location = new System.Drawing.Point(8, 19);
-      this.lvEditors.MultiSelect = false;
-      this.lvEditors.Name = "lvEditors";
-      this.lvEditors.Size = new System.Drawing.Size(401, 209);
-      this.lvEditors.SmallImageList = this.imageList;
-      this.lvEditors.TabIndex = 8;
-      this.lvEditors.UseCompatibleStateImageBehavior = false;
-      this.lvEditors.View = System.Windows.Forms.View.Details;
-      this.lvEditors.Resize += new System.EventHandler(this.lvEditors_Resize);
-      // 
       // imageList
       // 
       this.imageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
@@ -227,8 +207,8 @@
       // 
       // tbEditor
       // 
+      this.tbEditor.Controls.Add(this.blvEditors);
       this.tbEditor.Controls.Add(this.lblVS);
-      this.tbEditor.Controls.Add(this.lvEditors);
       this.tbEditor.Controls.Add(this.cbApplyVsToProject);
       this.tbEditor.Location = new System.Drawing.Point(4, 22);
       this.tbEditor.Name = "tbEditor";
@@ -237,6 +217,33 @@
       this.tbEditor.TabIndex = 0;
       this.tbEditor.Text = "External Editor";
       this.tbEditor.UseVisualStyleBackColor = true;
+      // 
+      // blvEditors
+      // 
+      this.blvEditors.AutoScroll = true;
+      this.blvEditors.AutoScrollMinSize = new System.Drawing.Size(400, 0);
+      this.blvEditors.BackColor = System.Drawing.SystemColors.Window;
+      this.blvEditors.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
+      brokenListColumn1.Autosize = true;
+      brokenListColumn1.ContentPadding = new System.Windows.Forms.Padding(4);
+      brokenListColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn1.HeaderText = null;
+      brokenListColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn1.Width = 400;
+      this.blvEditors.Columns.Add(brokenListColumn1);
+      this.blvEditors.DisabledColor = System.Drawing.Color.Empty;
+      this.blvEditors.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
+      this.blvEditors.EmptyListText = "No editors found.";
+      this.blvEditors.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.blvEditors.IconPadding = new System.Windows.Forms.Padding(0, -2, 0, -2);
+      this.blvEditors.ImageList = this.imageList;
+      this.blvEditors.Location = new System.Drawing.Point(7, 19);
+      this.blvEditors.Name = "blvEditors";
+      this.blvEditors.SelectMode = BrokenEvent.Shared.Controls.BrokenListView.SelectionMode.AlwaysSelected;
+      this.blvEditors.Size = new System.Drawing.Size(402, 232);
+      this.blvEditors.TabIndex = 4;
+      this.blvEditors.Text = "brokenListView1";
+      this.blvEditors.UseThemes = true;
       // 
       // tpSettings
       // 
@@ -363,8 +370,6 @@
     private System.Windows.Forms.CheckBox cbGroupByModules;
     private System.Windows.Forms.CheckBox cbGroupByNamespaces;
     private System.Windows.Forms.CheckBox cbUseColumns;
-    private ObfuscarMappingParser.MyListView lvEditors;
-    private System.Windows.Forms.ColumnHeader chDescription;
     private System.Windows.Forms.ImageList imageList;
     private System.Windows.Forms.Label lblDoubleClick;
     private System.Windows.Forms.ComboBox cbDoubleClick;
@@ -376,5 +381,6 @@
     private System.Windows.Forms.ComboBox cbUpdateInterval;
     private System.Windows.Forms.Label lblUpdate;
     private System.Windows.Forms.CheckBox cbWatchClipboard;
+    private BrokenEvent.Shared.Controls.BrokenListView blvEditors;
   }
 }
