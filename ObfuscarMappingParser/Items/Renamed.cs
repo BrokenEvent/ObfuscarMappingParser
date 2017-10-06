@@ -28,6 +28,8 @@
       nameNew = (EntityName)nameOld.Clone();
     }
 
+    protected Renamed() { }
+
     public Renamed(Renamed nameOld, EntityName nameNew)
     {
       this.nameNew = nameNew;

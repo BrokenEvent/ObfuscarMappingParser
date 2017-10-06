@@ -10,7 +10,7 @@ namespace ObfuscarMappingParser
     private EntityType entityType;
     private Renamed resultType;
     private RenamedClass owner;
-    private List<Renamed> methodParams;
+    private List<RenamedParam> methodParams;
 
     public RenamedItem(NanoXmlElement el, RenamedClass owner)
     {
@@ -37,14 +37,14 @@ namespace ObfuscarMappingParser
 
         if ((i = str.IndexOf('(')) != -1)
         {
-          methodParams = new List<Renamed>();
+          methodParams = new List<RenamedParam>();
           foreach (string s in EntityName.ParseList(str, i + 1, ')'))
           {
             int k = s.IndexOf('/');
             if (k != -1)
-              methodParams.Add(new Renamed(s.Substring(0, k) + "." + s.Substring(k + 1)));
+              methodParams.Add(new RenamedParam(s.Substring(0, k) + "." + s.Substring(k + 1)));
             else
-              methodParams.Add(new Renamed(s));
+              methodParams.Add(new RenamedParam(s));
           }
 
           str = str.Substring(0, i);
@@ -76,7 +76,7 @@ namespace ObfuscarMappingParser
       get { return resultType; }
     }
 
-    public List<Renamed> MethodParams
+    public List<RenamedParam> MethodParams
     {
       get { return methodParams; }
     }
@@ -94,6 +94,9 @@ namespace ObfuscarMappingParser
           sb.Append(SystemTypeProcessor.SimplifyType(methodParams[i].NameNew, !isShort));
         else
           sb.Append(SystemTypeProcessor.SimplifyType(methodParams[i].NameOld, !isShort));
+
+        if (methodParams[i].Modifier != null)
+          sb.Append(methodParams[i].Modifier);
         if (i < methodParams.Count - 1)
           sb.Append(", ");
       }

@@ -122,6 +122,7 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Items\RenamedParam.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Items\EntityName.cs" />
     <Compile Include="ObfuscarParserException.cs" />

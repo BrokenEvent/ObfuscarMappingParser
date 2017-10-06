@@ -15,7 +15,7 @@ namespace MappingParser.Tests
 
       // [ModuleOld]NsOld.ClassOld -> [ModuleNew]NsNew.ClassNew
       RenamedClass renamedClass = mapping.Classes[0];
-      Assert.AreEqual(11, renamedClass.Items.Count);
+      Assert.AreEqual(14, renamedClass.Items.Count);
       Assert.AreEqual("ModuleOld", renamedClass.ModuleOld);
       Assert.AreEqual("ModuleNew", renamedClass.ModuleNew);
       Assert.AreEqual("NsOld.ClassOld", renamedClass.NameOld);
@@ -274,7 +274,7 @@ namespace MappingParser.Tests
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
-      // [ModuleOld]NsOld.ClassOld::GenericMethodOld(System.Collections.Generic.Dictionary`2&lt;System.String,NsOld.ClassOld&gt;) -> GenericMethodNew
+      // [ModuleOld]NsOld.ClassOld::GenericMethodOld(System.Collections.Generic.Dictionary`2<System.String,NsOld.ClassOld>) -> GenericMethodNew
       RenamedItem renamedItem = (RenamedItem)renamedClass.Items[5];
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
@@ -298,6 +298,115 @@ namespace MappingParser.Tests
       Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld(System.Collections.Generic.Dictionary<System.String, NsOld.ClassOld>) → void NsNew.ClassNew.GenericMethodNew(System.Collections.Generic.Dictionary<System.String, NsNew.ClassNew>)", renamedItem.TransformNameFull);
       Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld(Dictionary<String, ClassOld>) → void NsNew.ClassNew.GenericMethodNew(Dictionary<String, ClassNew>)", renamedItem.TransformSimple);
       Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld(Dictionary<String, ClassOld>) → void NsNew.ClassNew.GenericMethodNew(Dictionary<String, ClassNew>)", renamedItem.ToString());
+    }
+
+    [Test]
+    public void RefArgTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::RefMethodOld([mscorlib]System.Int32&)
+      // -> RefMethodNew
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[8];
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Int32&", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Int32&", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void RefMethodOld(Int32&)", renamedItem.NameOld);
+      Assert.AreEqual("void RefMethodNew(Int32&)", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.RefMethodOld", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.RefMethodNew", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.RefMethodOld(System.Int32&)", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.RefMethodNew(System.Int32&)", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.RefMethodOld(Int32&)", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.RefMethodNew(Int32&)", renamedItem.NameNewSimple);
+      Assert.AreEqual("void RefMethodOld(Int32&) → void RefMethodNew(Int32&)", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.RefMethodOld(System.Int32&) → void NsNew.ClassNew.RefMethodNew(System.Int32&)", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.RefMethodOld(Int32&) → void NsNew.ClassNew.RefMethodNew(Int32&)", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.RefMethodOld(Int32&) → void NsNew.ClassNew.RefMethodNew(Int32&)", renamedItem.ToString());
+    }
+
+    [Test]
+    public void EmbeddedGenericMethodTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::GenericSetOld[1]([mscorlib]System.Collections.Generic.Dictionary`2<[mscorlib]System.String,[mscorlib]System.Collections.Generic.List`1<[mscorlib]System.String>>)
+      // -> GenericSetNew
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[10];
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<System.String>>", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<System.String>>", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void GenericSetOld(Dictionary<String, List<String>>)", renamedItem.NameOld);
+      Assert.AreEqual("void GenericSetNew(Dictionary<String, List<String>>)", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.GenericSetOld", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericSetNew", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.GenericSetOld(System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<System.String>>)", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.GenericSetNew(System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<System.String>>)", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.GenericSetOld(Dictionary<String, List<String>>)", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.GenericSetNew(Dictionary<String, List<String>>)", renamedItem.NameNewSimple);
+      Assert.AreEqual("void GenericSetOld(Dictionary<String, List<String>>) → void GenericSetNew(Dictionary<String, List<String>>)", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.GenericSetOld(System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<System.String>>) → void NsNew.ClassNew.GenericSetNew(System.Collections.Generic.Dictionary<System.String, System.Collections.Generic.List<System.String>>)", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.GenericSetOld(Dictionary<String, List<String>>) → void NsNew.ClassNew.GenericSetNew(Dictionary<String, List<String>>)", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.GenericSetOld(Dictionary<String, List<String>>) → void NsNew.ClassNew.GenericSetNew(Dictionary<String, List<String>>)", renamedItem.ToString());
+    }
+
+    [Test]
+    public void NullableArgMethodTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+      Configs.Instance.SimplifyNullable = false;
+
+      // [ModuleOld]NsOld.ClassOld::NullableRefMethodOld([mscorlib]System.Nullable`1<[mscorlib]System.Int32>&) -> NullableRefMethodNew
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[9];
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Nullable<System.Int32>", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Nullable<System.Int32>", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Nullable<System.Int32>&", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Nullable<System.Int32>&", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void NullableRefMethodOld(Nullable<Int32>&)", renamedItem.NameOld);
+      Assert.AreEqual("void NullableRefMethodNew(Nullable<Int32>&)", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.NullableRefMethodOld", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.NullableRefMethodNew", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.NullableRefMethodOld(System.Nullable<System.Int32>&)", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.NullableRefMethodNew(System.Nullable<System.Int32>&)", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.NullableRefMethodOld(Nullable<Int32>&)", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.NullableRefMethodNew(Nullable<Int32>&)", renamedItem.NameNewSimple);
+      Assert.AreEqual("void NullableRefMethodOld(Nullable<Int32>&) → void NullableRefMethodNew(Nullable<Int32>&)", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.NullableRefMethodOld(System.Nullable<System.Int32>&) → void NsNew.ClassNew.NullableRefMethodNew(System.Nullable<System.Int32>&)", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.NullableRefMethodOld(Nullable<Int32>&) → void NsNew.ClassNew.NullableRefMethodNew(Nullable<Int32>&)", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.NullableRefMethodOld(Nullable<Int32>&) → void NsNew.ClassNew.NullableRefMethodNew(Nullable<Int32>&)", renamedItem.ToString());
     }
 
     [Test]
@@ -379,7 +488,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld -> [ModuleNew]NsNew.ClassNew/SubclassNew
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[11];
       Assert.AreEqual(3, subclass.Items.Count);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
       Assert.AreEqual("ModuleNew", subclass.ModuleNew);
@@ -405,7 +514,7 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[11];
 
       // [ModuleOld]System.String NsOld.ClassOld/SubclassOld::StringMethodOld() -> StringMethodNew
       RenamedItem renamedItem = (RenamedItem)subclass.Items[0];
@@ -440,7 +549,7 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[11];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld::SubclassMethodOld(NsOld.ClassOld/SubclassOld) -> SubclassMethodNew
       RenamedItem renamedItem = (RenamedItem)subclass.Items[1];
@@ -477,7 +586,7 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[8];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[11];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld NsOld.ClassOld/SubclassOld::SubclassResultMethodOld() -> SubclassResultMethodNew
       RenamedItem renamedItem = (RenamedItem)subclass.Items[2];
@@ -514,7 +623,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // skipped [ModuleOld]NsOld.ClassOld/SkippedSubclass1
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[9];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[12];
       Assert.AreEqual(0, subclass.Items.Count);
       Assert.IsNotNull(subclass.SkipReason);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
@@ -543,7 +652,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // skipped [ModuleOld]NsOld.ClassOld/SkippedSubclass2
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[10];
+      RenamedClass subclass = (RenamedClass)renamedClass.Items[13];
       Assert.AreEqual(0, subclass.Items.Count);
       Assert.IsNotNull(subclass.SkipReason);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
@@ -567,7 +676,7 @@ namespace MappingParser.Tests
     public void StatisticsTest()
     {
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
-      Assert.AreEqual(8, mapping.TotalMethodsCount);
+      Assert.AreEqual(11, mapping.TotalMethodsCount);
       Assert.AreEqual(4, mapping.TotalClassesCount);
       Assert.AreEqual(3, mapping.TotalSubclassesCount);
       Assert.AreEqual(1, mapping.NamespacesCount);
