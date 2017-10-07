@@ -11,6 +11,7 @@
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::&lt;Initialize&gt;m__D[0]()" newName="I" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::RefMethodOld([mscorlib]System.Int32&amp;)" newName="RefMethodNew" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::PtrMethodOld([mscorlib]System.Int32*)" newName="PtrMethodNew" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::RefPtrMethodOld([mscorlib]System.Int32*&amp;)" newName="RefPtrMethodNew" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::NullableRefMethodOld([mscorlib]System.Nullable`1&lt;[mscorlib]System.Int32&gt;&amp;)" newName="NullableRefMethodNew" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::GenericSetOld[1]([mscorlib]System.Collections.Generic.Dictionary`2&lt;[mscorlib]System.String,[mscorlib]System.Collections.Generic.List`1&lt;[mscorlib]System.String&gt;&gt;)" newName="GenericSetNew" />
     </renamedClass>
