@@ -8,10 +8,12 @@
     {
       // if can be only &/ref ?
       if (nameOld.EndsWith("&"))
-      {
         modifier = "&";
+      else if (nameOld.EndsWith("*"))
+        modifier = "*";
+
+      if (modifier != null)
         nameOld = nameOld.Substring(0, nameOld.Length - 1);
-      }
 
       this.nameOld = new EntityName(nameOld);
       nameNew = (EntityName)this.nameOld.Clone();
