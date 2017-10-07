@@ -1,0 +1,8 @@
+﻿<mapping>
+  <renamedTypes>
+    <renamedClass oldName="[ModuleOld]NsOld.ClassOld" newName="[ModuleNew]NsNew.ClassNew">
+      <renamedField oldName="[ModuleOld]NsOld.ClassSecondOld&lt;System.String,System.Runtime.CompilerServices.CallSite`1&lt;System.Func`3&lt;System.Runtime.CompilerServices.CallSite,System.Object,System.Object&gt;&gt;&gt; NsOld.ClassOld::_callSiteGetters" newName="GenericFieldNew1" />
+      <renamedField oldName="[ModuleOld]NsOld.ClassSecondOld&lt;System.String,System.Runtime.CompilerServices.CallSite`1&lt;System.Func`4&lt;System.Runtime.CompilerServices.CallSite,System.Object,System.Object,System.Object&gt;&gt;&gt; NsOld.ClassOld::_callSiteSetters" newName="GenericFieldNew2" />
+    </renamedClass>
+  </renamedTypes>
+</mapping>
