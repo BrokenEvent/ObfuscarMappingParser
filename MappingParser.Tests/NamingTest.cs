@@ -6,6 +6,19 @@ namespace MappingParser.Tests
   [TestFixture]
   class NamingTest
   {
+    private static TType GetItemByNewName<TType>(RenamedClass c, string newName)
+      where TType: RenamedBase
+    {
+      foreach (RenamedBase item in c.Items)
+      {
+        if (item.Name.NameNew.Name == newName)
+          return (TType)item;
+      }
+
+      Assert.Fail($"{newName} not found");
+      return null;
+    }
+
     [Test]
     public void ClassTest()
     {
@@ -42,7 +55,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld NsOld.ClassOld::ClassFieldOld -> ClassFieldNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[0];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "ClassFieldNew");
       Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual(renamedClass.Name.NameOld, renamedItem.ResultType.NameOld);
@@ -75,7 +88,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]System.Collections.Generic.Dictionary`2<System.String,System.String> NsOld.ClassOld::GenericFieldOld -> GenericFieldNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[1];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "GenericFieldNew");
       Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.Collections.Generic.Dictionary<System.String, System.String>", renamedItem.ResultType.NameOld.ToString());
@@ -108,7 +121,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]System.Collections.Generic.Dictionary`2<System.String,System.String> NsOld.ClassOld::GenericFieldOld -> GenericFieldNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[1];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "GenericFieldNew");
       Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.Collections.Generic.Dictionary<string, string>", renamedItem.ResultType.NameOld.ToString());
@@ -141,7 +154,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]System.String NsOld.ClassOld::StringFieldOld -> StringFieldNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[2];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "StringFieldNew");
       Assert.AreEqual(EntityType.Property, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.String", renamedItem.ResultType.NameOld.ToString());
@@ -174,7 +187,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]System.String NsOld.ClassOld::StringFieldOld -> StringFieldNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[2];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "StringFieldNew");
       Assert.AreEqual(EntityType.Property, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.String", renamedItem.ResultType.NameOld.ToString());
@@ -207,7 +220,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld NsOld.ClassOld::StringMethodOld() -> StringMethodNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[3];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "StringMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.String", renamedItem.ResultType.NameOld.ToString());
@@ -241,7 +254,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld::MethodWithParamOld(System.String) -> MethodWithParamNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[4];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "MethodWithParamNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -275,7 +288,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld::GenericMethodOld(System.Collections.Generic.Dictionary`2<System.String,NsOld.ClassOld>) -> GenericMethodNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[5];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "GenericMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -308,9 +321,8 @@ namespace MappingParser.Tests
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
 
-      // [ModuleOld]NsOld.ClassOld::RefMethodOld([mscorlib]System.Int32&)
-      // -> RefMethodNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[8];
+      // [ModuleOld]NsOld.ClassOld::RefMethodOld([mscorlib]System.Int32&) -> RefMethodNew
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "RefMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -346,7 +358,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld::PtrMethodOld([mscorlib]System.Int32*) -> PtrMethodNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[9];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "PtrMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -383,7 +395,7 @@ namespace MappingParser.Tests
 
       // [ModuleOld]NsOld.ClassOld::GenericSetOld[1]([mscorlib]System.Collections.Generic.Dictionary`2<[mscorlib]System.String,[mscorlib]System.Collections.Generic.List`1<[mscorlib]System.String>>)
       // -> GenericSetNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[11];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "GenericSetNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -418,7 +430,7 @@ namespace MappingParser.Tests
       Configs.Instance.SimplifyNullable = false;
 
       // [ModuleOld]NsOld.ClassOld::NullableRefMethodOld([mscorlib]System.Nullable`1<[mscorlib]System.Int32>&) -> NullableRefMethodNew
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[10];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "NullableRefMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -454,7 +466,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]System.String NsOld.ClassOld::MethodWithParam2Old([ModuleOld]NsOld.ClassOld,System.String) -> MethodWithParam2New
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[6];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "MethodWithParam2New");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.String", renamedItem.ResultType.NameOld.ToString());
@@ -492,7 +504,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld::<Initialize>m__D[0]() -> I
-      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[7];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "I");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -524,7 +536,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld -> [ModuleNew]NsNew.ClassNew/SubclassNew
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[12];
+      RenamedClass subclass = GetItemByNewName<RenamedClass>(renamedClass, "SubclassNew");
       Assert.AreEqual(3, subclass.Items.Count);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
       Assert.AreEqual("ModuleNew", subclass.ModuleNew);
@@ -550,10 +562,10 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[12];
+      RenamedClass subclass = GetItemByNewName<RenamedClass>(renamedClass, "SubclassNew");
 
       // [ModuleOld]System.String NsOld.ClassOld/SubclassOld::StringMethodOld() -> StringMethodNew
-      RenamedItem renamedItem = (RenamedItem)subclass.Items[0];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(subclass, "StringMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("System.String", renamedItem.ResultType.NameOld.ToString());
@@ -585,10 +597,10 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[12];
+      RenamedClass subclass = GetItemByNewName<RenamedClass>(renamedClass, "SubclassNew");
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld::SubclassMethodOld(NsOld.ClassOld/SubclassOld) -> SubclassMethodNew
-      RenamedItem renamedItem = (RenamedItem)subclass.Items[1];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(subclass, "SubclassMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
@@ -622,10 +634,10 @@ namespace MappingParser.Tests
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
       Assert.AreEqual(1, mapping.Classes.Count);
       RenamedClass renamedClass = mapping.Classes[0];
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[12];
+      RenamedClass subclass = GetItemByNewName<RenamedClass>(renamedClass, "SubclassNew");
 
       // [ModuleOld]NsOld.ClassOld/SubclassOld NsOld.ClassOld/SubclassOld::SubclassResultMethodOld() -> SubclassResultMethodNew
-      RenamedItem renamedItem = (RenamedItem)subclass.Items[2];
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(subclass, "SubclassResultMethodNew");
       Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
       Assert.IsNotNull(renamedItem.ResultType);
       Assert.AreEqual("NsOld.ClassOld.SubclassOld", renamedItem.ResultType.NameOld.ToString());
