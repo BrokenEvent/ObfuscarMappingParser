@@ -6,14 +6,17 @@
 
     public RenamedParam(string nameOld)
     {
-      // if can be only &/ref ?
-      if (nameOld.EndsWith("&"))
-        modifier = "&";
-      else if (nameOld.EndsWith("*"))
-        modifier = "*";
+      int modifierIndex = nameOld.Length - 1;
+      while (nameOld[modifierIndex] == '&' || nameOld[modifierIndex] == '*')
+        modifierIndex--;
 
-      if (modifier != null)
-        nameOld = nameOld.Substring(0, nameOld.Length - 1);
+      modifierIndex++; // return to first mod's index
+
+      if (modifierIndex < nameOld.Length)
+      {
+        modifier = nameOld.Substring(modifierIndex);
+        nameOld = nameOld.Substring(0, modifierIndex);
+      }
 
       this.nameOld = new EntityName(nameOld);
       nameNew = (EntityName)this.nameOld.Clone();

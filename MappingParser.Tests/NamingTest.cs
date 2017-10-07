@@ -28,7 +28,7 @@ namespace MappingParser.Tests
 
       // [ModuleOld]NsOld.ClassOld -> [ModuleNew]NsNew.ClassNew
       RenamedClass renamedClass = mapping.Classes[0];
-      Assert.AreEqual(15, renamedClass.Items.Count);
+      Assert.AreEqual(16, renamedClass.Items.Count);
       Assert.AreEqual("ModuleOld", renamedClass.ModuleOld);
       Assert.AreEqual("ModuleNew", renamedClass.ModuleNew);
       Assert.AreEqual("NsOld.ClassOld", renamedClass.NameOld);
@@ -386,6 +386,42 @@ namespace MappingParser.Tests
     }
 
     [Test]
+    public void RefPtrArgTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::RefPtrMethodOld([mscorlib]System.Int32*&) -> RefPtrMethodNew
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "RefPtrMethodNew");
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Int32*&", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Int32*&", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void RefPtrMethodOld(Int32*&)", renamedItem.NameOld);
+      Assert.AreEqual("void RefPtrMethodNew(Int32*&)", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.RefPtrMethodOld", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.RefPtrMethodNew", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(System.Int32*&)", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.RefPtrMethodNew(System.Int32*&)", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(Int32*&)", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.RefPtrMethodNew(Int32*&)", renamedItem.NameNewSimple);
+      Assert.AreEqual("void RefPtrMethodOld(Int32*&) → void RefPtrMethodNew(Int32*&)", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(System.Int32*&) → void NsNew.ClassNew.RefPtrMethodNew(System.Int32*&)", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(Int32*&) → void NsNew.ClassNew.RefPtrMethodNew(Int32*&)", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(Int32*&) → void NsNew.ClassNew.RefPtrMethodNew(Int32*&)", renamedItem.ToString());
+    }
+
+    [Test]
     public void EmbeddedGenericMethodTest()
     {
       Configs.Instance.SimplifySystemNames = false;
@@ -671,7 +707,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // skipped [ModuleOld]NsOld.ClassOld/SkippedSubclass1
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[13];
+      RenamedClass subclass = GetItemByNewName<RenamedClass>(renamedClass, "SkippedSubclass1");
       Assert.AreEqual(0, subclass.Items.Count);
       Assert.IsNotNull(subclass.SkipReason);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
@@ -700,7 +736,7 @@ namespace MappingParser.Tests
       RenamedClass renamedClass = mapping.Classes[0];
 
       // skipped [ModuleOld]NsOld.ClassOld/SkippedSubclass2
-      RenamedClass subclass = (RenamedClass)renamedClass.Items[14];
+      RenamedClass subclass = GetItemByNewName<RenamedClass>(renamedClass, "SkippedSubclass2");
       Assert.AreEqual(0, subclass.Items.Count);
       Assert.IsNotNull(subclass.SkipReason);
       Assert.AreEqual("ModuleOld", subclass.ModuleOld);
@@ -724,7 +760,7 @@ namespace MappingParser.Tests
     public void StatisticsTest()
     {
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
-      Assert.AreEqual(12, mapping.TotalMethodsCount);
+      Assert.AreEqual(13, mapping.TotalMethodsCount);
       Assert.AreEqual(4, mapping.TotalClassesCount);
       Assert.AreEqual(3, mapping.TotalSubclassesCount);
       Assert.AreEqual(1, mapping.NamespacesCount);
