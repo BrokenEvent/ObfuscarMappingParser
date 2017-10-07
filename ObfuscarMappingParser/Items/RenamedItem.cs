@@ -90,13 +90,14 @@ namespace ObfuscarMappingParser
 
       for (int i = 0; i < methodParams.Count; i++)
       {
+        string paramValue;
         if (useNew)
-          sb.Append(SystemTypeProcessor.SimplifyType(methodParams[i].NameNew, !isShort));
+          paramValue = SystemTypeProcessor.SimplifyType(methodParams[i].NameNew, !isShort);
         else
-          sb.Append(SystemTypeProcessor.SimplifyType(methodParams[i].NameOld, !isShort));
+          paramValue = SystemTypeProcessor.SimplifyType(methodParams[i].NameOld, !isShort);
 
-        if (methodParams[i].Modifier != null)
-          sb.Append(methodParams[i].Modifier);
+        sb.Append(methodParams[i].AddModifier(paramValue));
+
         if (i < methodParams.Count - 1)
           sb.Append(", ");
       }
