@@ -69,6 +69,7 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("ShowUnicode", ref showUnicode);
       settingsEl.GetValueIfExists("SimplifySystem", ref simplifySystemNames);
       settingsEl.GetValueIfExists("SimplifyNullable", ref simplifyNullable);
+      settingsEl.GetValueIfExists("SimplifyRef", ref simplifyRef);
       settingsEl.GetValueIfExists("SortingType", ref sortingType);
       settingsEl.GetValueIfExists("Editor", ref editor);
       settingsEl.GetValueIfExists("DoubleClickAction", ref doubleClickAction);
@@ -99,6 +100,7 @@ namespace ObfuscarMappingParser
       settingsEl.AppendChild("ShowUnicode", showUnicode);
       settingsEl.AppendChild("SimplifySystem", simplifySystemNames);
       settingsEl.AppendChild("SimplifyNullable", simplifyNullable);
+      settingsEl.AppendChild("SimplyfyRef", simplifyRef);
       settingsEl.AppendChild("SortingType", sortingType);
       settingsEl.AppendChild("Editor", editor);
       settingsEl.AppendChild("DoubleClickAction", doubleClickAction);
@@ -127,7 +129,8 @@ namespace ObfuscarMappingParser
     private bool showUnicode;
     private bool simplifySystemNames = true;
     private bool simplifyNullable = true;
-    private bool watchClipboard = true;
+    private bool simplifyRef = true;
+    private bool watchClipboard = false;
     private DoubleClickActions doubleClickAction = DoubleClickActions.OpenInEditor;
     private NanoXmlElement commandsElement;
     private UpdateHelper updateHelper = new UpdateHelper(UpdateHelper.CheckInterval.TenDays);
@@ -202,6 +205,12 @@ namespace ObfuscarMappingParser
     {
       get { return simplifyNullable; }
       set { simplifyNullable = value; }
+    }
+
+    public bool SimplifyRef
+    {
+      get { return simplifyRef; }
+      set { simplifyRef = value; }
     }
 
     public bool WatchClipboard

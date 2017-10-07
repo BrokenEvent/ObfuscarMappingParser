@@ -29,7 +29,7 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn1 = new BrokenEvent.Shared.Controls.BrokenListColumn();
+      BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn2 = new BrokenEvent.Shared.Controls.BrokenListColumn();
       this.lblVS = new System.Windows.Forms.Label();
       this.cbSimplifySystemNames = new System.Windows.Forms.CheckBox();
       this.cbShowUnicode = new System.Windows.Forms.CheckBox();
@@ -47,6 +47,10 @@
       this.tbEditor = new System.Windows.Forms.TabPage();
       this.blvEditors = new BrokenEvent.Shared.Controls.BrokenListView();
       this.tpSettings = new System.Windows.Forms.TabPage();
+      this.lblHeaderOther = new BrokenEvent.Shared.Controls.ThemedLabel();
+      this.lblHeaderGrouping = new BrokenEvent.Shared.Controls.ThemedLabel();
+      this.lblHeaderVisual = new BrokenEvent.Shared.Controls.ThemedLabel();
+      this.cbSimplifyRef = new System.Windows.Forms.CheckBox();
       this.cbWatchClipboard = new System.Windows.Forms.CheckBox();
       this.cbUpdateInterval = new System.Windows.Forms.ComboBox();
       this.lblUpdate = new System.Windows.Forms.Label();
@@ -70,7 +74,7 @@
       // cbSimplifySystemNames
       // 
       this.cbSimplifySystemNames.AutoSize = true;
-      this.cbSimplifySystemNames.Location = new System.Drawing.Point(9, 48);
+      this.cbSimplifySystemNames.Location = new System.Drawing.Point(9, 68);
       this.cbSimplifySystemNames.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifySystemNames.Name = "cbSimplifySystemNames";
       this.cbSimplifySystemNames.Size = new System.Drawing.Size(241, 17);
@@ -81,8 +85,8 @@
       // cbShowUnicode
       // 
       this.cbShowUnicode.AutoSize = true;
-      this.cbShowUnicode.Location = new System.Drawing.Point(9, 19);
-      this.cbShowUnicode.Margin = new System.Windows.Forms.Padding(6, 16, 3, 6);
+      this.cbShowUnicode.Location = new System.Drawing.Point(9, 39);
+      this.cbShowUnicode.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbShowUnicode.Name = "cbShowUnicode";
       this.cbShowUnicode.Size = new System.Drawing.Size(170, 17);
       this.cbShowUnicode.TabIndex = 0;
@@ -92,7 +96,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(230, 391);
+      this.btnOk.Location = new System.Drawing.Point(351, 501);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -104,7 +108,7 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(336, 391);
+      this.btnCancel.Location = new System.Drawing.Point(457, 501);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 2;
@@ -115,7 +119,7 @@
       // 
       this.cbApplyVsToProject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.cbApplyVsToProject.AutoSize = true;
-      this.cbApplyVsToProject.Location = new System.Drawing.Point(8, 257);
+      this.cbApplyVsToProject.Location = new System.Drawing.Point(8, 367);
       this.cbApplyVsToProject.Name = "cbApplyVsToProject";
       this.cbApplyVsToProject.Size = new System.Drawing.Size(370, 17);
       this.cbApplyVsToProject.TabIndex = 3;
@@ -125,7 +129,7 @@
       // cbSimplifyNullable
       // 
       this.cbSimplifyNullable.AutoSize = true;
-      this.cbSimplifyNullable.Location = new System.Drawing.Point(9, 77);
+      this.cbSimplifyNullable.Location = new System.Drawing.Point(9, 97);
       this.cbSimplifyNullable.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifyNullable.Name = "cbSimplifyNullable";
       this.cbSimplifyNullable.Size = new System.Drawing.Size(213, 17);
@@ -136,7 +140,7 @@
       // cbGroupByModules
       // 
       this.cbGroupByModules.AutoSize = true;
-      this.cbGroupByModules.Location = new System.Drawing.Point(9, 135);
+      this.cbGroupByModules.Location = new System.Drawing.Point(9, 214);
       this.cbGroupByModules.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByModules.Name = "cbGroupByModules";
       this.cbGroupByModules.Size = new System.Drawing.Size(121, 17);
@@ -147,7 +151,7 @@
       // cbGroupByNamespaces
       // 
       this.cbGroupByNamespaces.AutoSize = true;
-      this.cbGroupByNamespaces.Location = new System.Drawing.Point(9, 106);
+      this.cbGroupByNamespaces.Location = new System.Drawing.Point(9, 185);
       this.cbGroupByNamespaces.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByNamespaces.Name = "cbGroupByNamespaces";
       this.cbGroupByNamespaces.Size = new System.Drawing.Size(182, 17);
@@ -158,7 +162,7 @@
       // cbUseColumns
       // 
       this.cbUseColumns.AutoSize = true;
-      this.cbUseColumns.Location = new System.Drawing.Point(9, 164);
+      this.cbUseColumns.Location = new System.Drawing.Point(9, 243);
       this.cbUseColumns.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbUseColumns.Name = "cbUseColumns";
       this.cbUseColumns.Size = new System.Drawing.Size(127, 17);
@@ -175,7 +179,7 @@
       // lblDoubleClick
       // 
       this.lblDoubleClick.AutoSize = true;
-      this.lblDoubleClick.Location = new System.Drawing.Point(9, 256);
+      this.lblDoubleClick.Location = new System.Drawing.Point(6, 358);
       this.lblDoubleClick.Margin = new System.Windows.Forms.Padding(6, 0, 3, 0);
       this.lblDoubleClick.Name = "lblDoubleClick";
       this.lblDoubleClick.Size = new System.Drawing.Size(109, 13);
@@ -184,11 +188,13 @@
       // 
       // cbDoubleClick
       // 
+      this.cbDoubleClick.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbDoubleClick.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbDoubleClick.FormattingEnabled = true;
-      this.cbDoubleClick.Location = new System.Drawing.Point(145, 253);
+      this.cbDoubleClick.Location = new System.Drawing.Point(220, 355);
       this.cbDoubleClick.Name = "cbDoubleClick";
-      this.cbDoubleClick.Size = new System.Drawing.Size(265, 21);
+      this.cbDoubleClick.Size = new System.Drawing.Size(311, 21);
       this.cbDoubleClick.TabIndex = 10;
       // 
       // tabControl
@@ -202,7 +208,7 @@
       this.tabControl.Location = new System.Drawing.Point(12, 66);
       this.tabControl.Name = "tabControl";
       this.tabControl.SelectedIndex = 0;
-      this.tabControl.Size = new System.Drawing.Size(424, 306);
+      this.tabControl.Size = new System.Drawing.Size(545, 416);
       this.tabControl.TabIndex = 11;
       // 
       // tbEditor
@@ -213,24 +219,27 @@
       this.tbEditor.Location = new System.Drawing.Point(4, 22);
       this.tbEditor.Name = "tbEditor";
       this.tbEditor.Padding = new System.Windows.Forms.Padding(3);
-      this.tbEditor.Size = new System.Drawing.Size(416, 280);
+      this.tbEditor.Size = new System.Drawing.Size(537, 390);
       this.tbEditor.TabIndex = 0;
       this.tbEditor.Text = "External Editor";
       this.tbEditor.UseVisualStyleBackColor = true;
       // 
       // blvEditors
       // 
+      this.blvEditors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.blvEditors.AutoScroll = true;
-      this.blvEditors.AutoScrollMinSize = new System.Drawing.Size(400, 0);
+      this.blvEditors.AutoScrollMinSize = new System.Drawing.Size(521, 0);
       this.blvEditors.BackColor = System.Drawing.SystemColors.Window;
       this.blvEditors.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
-      brokenListColumn1.Autosize = true;
-      brokenListColumn1.ContentPadding = new System.Windows.Forms.Padding(4);
-      brokenListColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
-      brokenListColumn1.HeaderText = null;
-      brokenListColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
-      brokenListColumn1.Width = 400;
-      this.blvEditors.Columns.Add(brokenListColumn1);
+      brokenListColumn2.Autosize = true;
+      brokenListColumn2.ContentPadding = new System.Windows.Forms.Padding(4);
+      brokenListColumn2.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn2.HeaderText = null;
+      brokenListColumn2.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn2.Width = 521;
+      this.blvEditors.Columns.Add(brokenListColumn2);
       this.blvEditors.DisabledColor = System.Drawing.Color.Empty;
       this.blvEditors.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.blvEditors.EmptyListText = "No editors found.";
@@ -240,13 +249,17 @@
       this.blvEditors.Location = new System.Drawing.Point(7, 19);
       this.blvEditors.Name = "blvEditors";
       this.blvEditors.SelectMode = BrokenEvent.Shared.Controls.BrokenListView.SelectionMode.AlwaysSelected;
-      this.blvEditors.Size = new System.Drawing.Size(402, 232);
+      this.blvEditors.Size = new System.Drawing.Size(523, 342);
       this.blvEditors.TabIndex = 4;
       this.blvEditors.Text = "brokenListView1";
       this.blvEditors.UseThemes = true;
       // 
       // tpSettings
       // 
+      this.tpSettings.Controls.Add(this.lblHeaderOther);
+      this.tpSettings.Controls.Add(this.lblHeaderGrouping);
+      this.tpSettings.Controls.Add(this.lblHeaderVisual);
+      this.tpSettings.Controls.Add(this.cbSimplifyRef);
       this.tpSettings.Controls.Add(this.cbWatchClipboard);
       this.tpSettings.Controls.Add(this.cbUpdateInterval);
       this.tpSettings.Controls.Add(this.lblUpdate);
@@ -261,35 +274,88 @@
       this.tpSettings.Location = new System.Drawing.Point(4, 22);
       this.tpSettings.Name = "tpSettings";
       this.tpSettings.Padding = new System.Windows.Forms.Padding(3);
-      this.tpSettings.Size = new System.Drawing.Size(416, 280);
+      this.tpSettings.Size = new System.Drawing.Size(537, 390);
       this.tpSettings.TabIndex = 1;
       this.tpSettings.Text = "UI Settings";
       this.tpSettings.UseVisualStyleBackColor = true;
       // 
+      // lblHeaderOther
+      // 
+      this.lblHeaderOther.AutoSizeLabel = true;
+      this.lblHeaderOther.BackColor = System.Drawing.Color.Transparent;
+      this.lblHeaderOther.CharacterWrap = false;
+      this.lblHeaderOther.Location = new System.Drawing.Point(9, 272);
+      this.lblHeaderOther.Margin = new System.Windows.Forms.Padding(6, 6, 3, 3);
+      this.lblHeaderOther.Name = "lblHeaderOther";
+      this.lblHeaderOther.Size = new System.Drawing.Size(100, 21);
+      this.lblHeaderOther.Style = BrokenEvent.Shared.Controls.ThemedLabel.ThemeStyle.ControlPanelSubtitle;
+      this.lblHeaderOther.TabIndex = 17;
+      this.lblHeaderOther.Text = "Other Settings";
+      // 
+      // lblHeaderGrouping
+      // 
+      this.lblHeaderGrouping.AutoSizeLabel = true;
+      this.lblHeaderGrouping.BackColor = System.Drawing.Color.Transparent;
+      this.lblHeaderGrouping.CharacterWrap = false;
+      this.lblHeaderGrouping.Location = new System.Drawing.Point(9, 155);
+      this.lblHeaderGrouping.Margin = new System.Windows.Forms.Padding(6, 6, 3, 3);
+      this.lblHeaderGrouping.Name = "lblHeaderGrouping";
+      this.lblHeaderGrouping.Size = new System.Drawing.Size(100, 21);
+      this.lblHeaderGrouping.Style = BrokenEvent.Shared.Controls.ThemedLabel.ThemeStyle.ControlPanelSubtitle;
+      this.lblHeaderGrouping.TabIndex = 16;
+      this.lblHeaderGrouping.Text = "Tree Grouping";
+      // 
+      // lblHeaderVisual
+      // 
+      this.lblHeaderVisual.AutoSizeLabel = true;
+      this.lblHeaderVisual.BackColor = System.Drawing.Color.Transparent;
+      this.lblHeaderVisual.CharacterWrap = false;
+      this.lblHeaderVisual.Location = new System.Drawing.Point(9, 9);
+      this.lblHeaderVisual.Margin = new System.Windows.Forms.Padding(6, 6, 3, 3);
+      this.lblHeaderVisual.Name = "lblHeaderVisual";
+      this.lblHeaderVisual.Size = new System.Drawing.Size(76, 21);
+      this.lblHeaderVisual.Style = BrokenEvent.Shared.Controls.ThemedLabel.ThemeStyle.ControlPanelSubtitle;
+      this.lblHeaderVisual.TabIndex = 15;
+      this.lblHeaderVisual.Text = "Tree Visual";
+      // 
+      // cbSimplifyRef
+      // 
+      this.cbSimplifyRef.AutoSize = true;
+      this.cbSimplifyRef.Location = new System.Drawing.Point(9, 126);
+      this.cbSimplifyRef.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
+      this.cbSimplifyRef.Name = "cbSimplifyRef";
+      this.cbSimplifyRef.Size = new System.Drawing.Size(204, 17);
+      this.cbSimplifyRef.TabIndex = 14;
+      this.cbSimplifyRef.Text = "Simplify ref args (int& a → ref int a)";
+      this.cbSimplifyRef.UseMnemonic = false;
+      this.cbSimplifyRef.UseVisualStyleBackColor = true;
+      // 
       // cbWatchClipboard
       // 
       this.cbWatchClipboard.AutoSize = true;
-      this.cbWatchClipboard.Location = new System.Drawing.Point(9, 193);
+      this.cbWatchClipboard.Location = new System.Drawing.Point(9, 302);
       this.cbWatchClipboard.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbWatchClipboard.Name = "cbWatchClipboard";
-      this.cbWatchClipboard.Size = new System.Drawing.Size(271, 17);
+      this.cbWatchClipboard.Size = new System.Drawing.Size(346, 17);
       this.cbWatchClipboard.TabIndex = 13;
-      this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor";
+      this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor (experimental)";
       this.cbWatchClipboard.UseVisualStyleBackColor = true;
       // 
       // cbUpdateInterval
       // 
+      this.cbUpdateInterval.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.cbUpdateInterval.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbUpdateInterval.FormattingEnabled = true;
-      this.cbUpdateInterval.Location = new System.Drawing.Point(145, 226);
+      this.cbUpdateInterval.Location = new System.Drawing.Point(220, 328);
       this.cbUpdateInterval.Name = "cbUpdateInterval";
-      this.cbUpdateInterval.Size = new System.Drawing.Size(265, 21);
+      this.cbUpdateInterval.Size = new System.Drawing.Size(311, 21);
       this.cbUpdateInterval.TabIndex = 12;
       // 
       // lblUpdate
       // 
       this.lblUpdate.AutoSize = true;
-      this.lblUpdate.Location = new System.Drawing.Point(9, 229);
+      this.lblUpdate.Location = new System.Drawing.Point(6, 331);
       this.lblUpdate.Name = "lblUpdate";
       this.lblUpdate.Size = new System.Drawing.Size(104, 13);
       this.lblUpdate.TabIndex = 11;
@@ -301,7 +367,7 @@
       this.tpHotkeys.Location = new System.Drawing.Point(4, 22);
       this.tpHotkeys.Name = "tpHotkeys";
       this.tpHotkeys.Padding = new System.Windows.Forms.Padding(3);
-      this.tpHotkeys.Size = new System.Drawing.Size(416, 280);
+      this.tpHotkeys.Size = new System.Drawing.Size(537, 390);
       this.tpHotkeys.TabIndex = 2;
       this.tpHotkeys.Text = "Hotkeys";
       this.tpHotkeys.UseVisualStyleBackColor = true;
@@ -312,7 +378,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.commandSelector.AutoScroll = true;
-      this.commandSelector.AutoScrollMinSize = new System.Drawing.Size(404, 0);
+      this.commandSelector.AutoScrollMinSize = new System.Drawing.Size(525, 0);
       this.commandSelector.BackColor = System.Drawing.SystemColors.Window;
       this.commandSelector.CategoryFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.commandSelector.CategoryPadding = new System.Windows.Forms.Padding(4);
@@ -322,7 +388,7 @@
       this.commandSelector.Location = new System.Drawing.Point(6, 6);
       this.commandSelector.Name = "commandSelector";
       this.commandSelector.NamePercent = 0.5F;
-      this.commandSelector.Size = new System.Drawing.Size(404, 245);
+      this.commandSelector.Size = new System.Drawing.Size(525, 355);
       this.commandSelector.TabIndex = 0;
       this.commandSelector.Text = "commandSelector1";
       this.commandSelector.UseThemes = true;
@@ -333,7 +399,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(448, 423);
+      this.ClientSize = new System.Drawing.Size(569, 533);
       this.ControlBox = false;
       this.Controls.Add(this.tabControl);
       this.Controls.Add(this.btnCancel);
@@ -382,5 +448,9 @@
     private System.Windows.Forms.Label lblUpdate;
     private System.Windows.Forms.CheckBox cbWatchClipboard;
     private BrokenEvent.Shared.Controls.BrokenListView blvEditors;
+    private BrokenEvent.Shared.Controls.ThemedLabel lblHeaderOther;
+    private BrokenEvent.Shared.Controls.ThemedLabel lblHeaderGrouping;
+    private BrokenEvent.Shared.Controls.ThemedLabel lblHeaderVisual;
+    private System.Windows.Forms.CheckBox cbSimplifyRef;
   }
 }

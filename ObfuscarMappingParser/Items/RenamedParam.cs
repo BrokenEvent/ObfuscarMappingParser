@@ -27,19 +27,39 @@
       get { return modifier; }
     }
 
-    protected string TryAddModifier(string target)
+    public string AddModifier(string target)
     {
-      if (modifier == null)
+      if (this.modifier == null)
         return target;
+
+      string modifier = this.modifier;
+      if (Configs.Instance.SimplifyRef)
+      {
+        int i = modifier.IndexOf('&');
+        if (i != -1)
+        {
+          target = "ref " + target;
+          if (i == modifier.Length - 1)
+            modifier = modifier.Substring(0, i);
+          else
+            modifier = modifier.Substring(0, i) + modifier.Substring(i + 1);
+        }
+      }
+
       return target + modifier;
+    }
+
+    public bool IsRef
+    {
+      get { return modifier != null && modifier.IndexOf('&') != -1; }
     }
 
     public override string ToString()
     {
       if (nameNew == null || nameNew.Compare(nameOld, false))
-        return TryAddModifier(nameOld.PathName);
+        return AddModifier(nameOld.PathName);
 
-      return string.Format("{0} → {1}", TryAddModifier(nameOld.PathName), TryAddModifier(nameNew.PathName));
+      return string.Format("{0} → {1}", AddModifier(nameOld.PathName), AddModifier(nameNew.PathName));
     }
   }
 }
