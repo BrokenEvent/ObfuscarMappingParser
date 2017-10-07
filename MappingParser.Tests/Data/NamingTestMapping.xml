@@ -3,6 +3,8 @@
     <renamedClass oldName="[ModuleOld]NsOld.ClassOld" newName="[ModuleNew]NsNew.ClassNew">
       <renamedField oldName="[ModuleOld]NsOld.ClassOld NsOld.ClassOld::ClassFieldOld" newName="ClassFieldNew" />
       <renamedField oldName="[ModuleOld]System.Collections.Generic.Dictionary`2&lt;System.String,System.String&gt; NsOld.ClassOld::GenericFieldOld" newName="GenericFieldNew"/>
+      <renamedField oldName="[ModuleOld]NsOld.ClassSecondOld&lt;System.String,System.Runtime.CompilerServices.CallSite`1&lt;System.Func`3&lt;System.Runtime.CompilerServices.CallSite,System.Object,System.Object&gt;&gt;&gt; NsOld.ClassOld::_callSiteGetters" newName="GenericFieldNew2" />
+      <renamedField oldName="[ModuleOld]NsOld.ClassSecondOld&lt;System.String,System.Runtime.CompilerServices.CallSite`1&lt;System.Func`4&lt;System.Runtime.CompilerServices.CallSite,System.Object,System.Object,System.Object&gt;&gt;&gt; NsOld.ClassOld::_callSiteSetters" newName="GenericFieldNew3" />
       <renamedProperty oldName="[ModuleOld]System.String NsOld.ClassOld::StringFieldOld" newName="StringFieldNew" />
       <renamedMethod oldName="[ModuleOld]System.String NsOld.ClassOld::StringMethodOld()" newName="StringMethodNew" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::MethodWithParamOld(System.String)" newName="MethodWithParamNew" />
