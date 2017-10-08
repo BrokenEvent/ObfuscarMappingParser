@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using BrokenEvent.PdbReader;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.TaskDialogs;
@@ -12,10 +11,10 @@ namespace ObfuscarMappingParser
 {
   partial class PDBManagerForm : BaseForm
   {
-    private readonly IList<PDBFile> files;
+    private readonly IList<PdbFile> files;
     private readonly MainForm mainForm;
 
-    public PDBManagerForm(IList<PDBFile> files, MainForm mainForm)
+    public PDBManagerForm(IList<PdbFile> files, MainForm mainForm)
     {
       this.files = files;
       this.mainForm = mainForm;
@@ -31,13 +30,14 @@ namespace ObfuscarMappingParser
       lvList.Items.Clear();
       lvList.BeginUpdate();
 
-      foreach (PDBFile pdbFile in files)
+      foreach (PdbFile pdbFile in files)
       {
         ListViewItem item = new ListViewItem(PathUtils.GetFilename(pdbFile.Filename));
-        item.SubItems.Add(pdbFile.Guid.ToString());
+        item.SubItems.Add(pdbFile.Resolver.PdbGuid.ToString());
         item.Tag = pdbFile;
         item.ImageIndex = 9;
-        item.ToolTipText = "Filename: " + pdbFile.Filename + "\nFunctions: " + pdbFile.Functions.Count + "\nServer data: " + (string.IsNullOrEmpty(pdbFile.SourceServerData) ? "none" : pdbFile.SourceServerData);
+        item.ToolTipText =
+          $"Filename: {pdbFile.Filename}\nServer data: {(string.IsNullOrEmpty(pdbFile.Resolver.SourceServerData) ? "none" : pdbFile.Resolver.SourceServerData)}";
         lvList.Items.Add(item);
       }
 
@@ -70,7 +70,7 @@ namespace ObfuscarMappingParser
 
       foreach (ListViewItem item in lvList.SelectedItems)
       {
-        PDBFile file = (PDBFile)item.Tag;
+        PdbFile file = (PdbFile)item.Tag;
         files.Remove(file);
         Configs.Instance.RemoveRecentPdb(mainForm.Mapping.Filename, file.Filename);
         item.Remove();

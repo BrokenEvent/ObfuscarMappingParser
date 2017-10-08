@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
-using BrokenEvent.PdbReader;
+using BrokenEvent.PDBReader;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.Shared.Controls;
@@ -486,7 +486,7 @@ namespace ObfuscarMappingParser
 
     #region PDB
 
-    private List<PDBFile> pdbfiles = new List<PDBFile>();
+    private List<PdbFile> pdbfiles = new List<PdbFile>();
     private List<string> pdbToAttach;
 
     private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
@@ -552,7 +552,7 @@ namespace ObfuscarMappingParser
 
     private bool SearchForLoadedPdb(string filename)
     {
-      foreach (PDBFile file in pdbfiles)
+      foreach (PdbFile file in pdbfiles)
         if (string.Compare(file.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
           return true;
 
@@ -569,7 +569,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        pdbfiles.Add(new PDBFile(filename));
+        pdbfiles.Add(new PdbFile(filename));
       }
       catch (Exception ex)
       {
@@ -591,21 +591,22 @@ namespace ObfuscarMappingParser
       if (i == -1)
         return false;
 
-      PDBFunction f = null;
       string className = s.Substring(0, i);
       string itemName = s.Substring(i + 1);
-      foreach (PDBFile file in pdbfiles)
+      CodeLocation location = null;
+
+      foreach (PdbFile file in pdbfiles)
       {
-        f = file.Search(className, itemName);
-        if (f != null)
+        location = file.Resolver.FindLocation(className, itemName);
+        if (location != null)
           break;
       }
 
-      if (f == null)
+      if (location == null)
         return false;
 
-      filename = f.Filename;
-      lineNumber = (int)f.Line;
+      filename = location.FileName;
+      lineNumber = (int)location.Line;
       return true;
     }
 
@@ -777,7 +778,7 @@ namespace ObfuscarMappingParser
       if (mapping == null)
         return;
 
-      foreach (PDBFile pdbFile in pdbfiles)
+      foreach (PdbFile pdbFile in pdbfiles)
         if (pdbFile.CheckFileModification() &&
             TaskDialogHelper.ShowTaskDialog(
                   Handle,

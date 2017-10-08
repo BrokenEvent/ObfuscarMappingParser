@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1.2139")]
-[assembly: AssemblyFileVersion("1.0.1.2139")]
+[assembly: AssemblyVersion("1.0.1.2155")]
+[assembly: AssemblyFileVersion("1.0.1.2155")]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("MappingParser.Tests", AllInternalsVisible = true)]

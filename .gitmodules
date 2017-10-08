@@ -1,3 +1,6 @@
 [submodule "BrokenEvent.VisualStudioOpener"]
 	path = BrokenEvent.VisualStudioOpener
 	url = https://github.com/BrokenEvent/VisualStudioOpener
+[submodule "BrokenEvent.PDBReader"]
+	path = BrokenEvent.PDBReader
+	url = https://github.com/BrokenEvent/BrokenEvent.PDBReader.git
