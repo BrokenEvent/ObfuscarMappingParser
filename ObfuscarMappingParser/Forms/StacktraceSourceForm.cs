@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
-using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.WinApi;
@@ -38,97 +38,55 @@ namespace ObfuscarMappingParser
     {
       tbURL.Enabled = rbURL.Checked;
       tbFilename.Enabled = btnBrowse.Enabled = rbFile.Checked;
-      tbText.Enabled = rbText.Checked;
     }
 
-    private void btnOk_Click(object sender, EventArgs e)
+    private async void btnOk_Click(object sender, EventArgs e)
     {
-      if (rbText.Checked && !LoadText())
-        return;
+      if (rbClipboard.Checked)
+      {
+        if (!Clipboard.ContainsText())
+          return;
+
+        result = Clipboard.GetText();
+        resultSource = "Clipboard";
+      }
+
       if (rbFile.Checked && !LoadFile())
         return;
 
-      if (rbURL.Checked)
-      {
-        LoadURL();
+      if (rbURL.Checked && !await LoadURL())
         return;
-      }
 
       DialogResult = DialogResult.OK;
       Close();
     }
 
-    private void LoadURL()
+    private async Task<bool> LoadURL()
     {
       if (string.IsNullOrEmpty(tbURL.Text))
       {
         controlHighlight.Show(tbURL, "This field cannot be empty.");
-        return;
+        return false;
       }
 
-      Thread thread = new Thread(UrlThreadStart);
-      pbProgress.Visible = lblStatus.Visible = true;
-      thread.Start(tbURL.Text);
-      EnableRadioButtons(false);
-      tbURL.Enabled = false;
-    }
-
-    private void EnableRadioButtons(bool enable)
-    {
-      rbFile.Enabled = rbURL.Enabled = rbText.Enabled = enable;
-    }
-
-    private void UrlThreadStart(object p)
-    {
-      string url = (string)p;
+      Enabled = false;
+      lblStatus.Visible = true;
       try
       {
-        UrlThreadComplete(new WebClient().DownloadString(url));
+        result = await new WebClient().DownloadStringTaskAsync(tbURL.Text);
+        resultSource = "URL";
+        Configs.Instance.AddRecentAdditional(mapping.Filename, RECENT_URLS, tbURL.Text);
+        return true;
       }
       catch (Exception e)
       {
-        UrlThreadFailed(e);
-      }
-    }
-
-    private void UrlThreadComplete(string s)
-    {
-      Invoke(new Action<string>(UrlThreadCompleteInternal), s);
-    }
-
-    private void UrlThreadFailed(Exception e)
-    {
-      Invoke(new Action<Exception>(UrlThreadFailedInternal), e);
-    }
-
-    private void UrlThreadCompleteInternal(string s)
-    {
-      result = s;
-      resultSource = tbURL.Text;
-      DialogResult = DialogResult.OK;
-      Configs.Instance.AddRecentAdditional(mapping.Filename, RECENT_URLS, tbURL.Text);
-      Close();
-    }
-
-    private void UrlThreadFailedInternal(Exception e)
-    {
-      controlHighlight.Show(tbURL, "Failed to get data from URL.");
-      pbProgress.Visible = lblStatus.Visible = false;
-      EnableRadioButtons(true);
-      tbURL.Enabled = true;
-    }
-
-    private bool LoadText()
-    {
-      if (string.IsNullOrEmpty(tbText.Text))
-      {
-        controlHighlight.Show(tbText, "This field cannot be empty.");
+        controlHighlight.Show(tbURL, e.Message);
         return false;
       }
-      
-      result = tbText.Text;
-      resultSource = "Text";
-      return true;
+      finally
+      {
+        Enabled = true;
+      }
     }
 
     private bool LoadFile()
@@ -198,8 +156,12 @@ namespace ObfuscarMappingParser
 
       if (e.Data.GetDataPresent(DataFormats.StringFormat))
       {
-        rbText.Checked = true;
-        tbText.Text = (string)e.Data.GetData(DataFormats.Text);
+        Uri uri;
+        if (!Uri.TryCreate((string)e.Data.GetData(DataFormats.Text), UriKind.Absolute, out uri))
+          return;
+
+        rbURL.Checked = true;
+        tbURL.Text = uri.ToString();
         RadioButton_Click(sender, EventArgs.Empty);
         return;
       }
@@ -213,6 +175,11 @@ namespace ObfuscarMappingParser
     private void StacktraceSource_Click(object sender, EventArgs e)
     {
       controlHighlight.Hide();
+    }
+
+    private void StacktraceSourceForm_Activated(object sender, EventArgs e)
+    {
+      rbClipboard.Enabled = Clipboard.ContainsText();
     }
   }
 }

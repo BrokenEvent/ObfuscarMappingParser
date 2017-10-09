@@ -18,7 +18,7 @@ namespace ObfuscarMappingParser
         string itemName = item.NameFull;
 
         ListViewItem lv = new ListViewItem(itemName);
-        lv.ImageIndex = TreeBuilder.GetIconForEntity(item.EntityType);
+        lv.ImageIndex = TreeBuilder.GetIconForEntity(item.EntityType, mainForm);
         lv.Tag = item;
         lvItems.Items.Add(lv);
         lv.ToolTipText = ((RenamedBase)item).TreeNode.ToolTipText + "Double-click to select in classes tree."; ;

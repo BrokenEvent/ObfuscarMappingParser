@@ -143,6 +143,16 @@ namespace ObfuscarMappingParser.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap IconConstructor {
+            get {
+                object obj = ResourceManager.GetObject("IconConstructor", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap IconEvent {
             get {
                 object obj = ResourceManager.GetObject("IconEvent", resourceCulture);

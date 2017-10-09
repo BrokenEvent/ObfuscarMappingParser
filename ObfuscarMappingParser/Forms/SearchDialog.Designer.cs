@@ -63,9 +63,9 @@
       // btnSearch
       // 
       this.btnSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnSearch.Location = new System.Drawing.Point(400, 75);
+      this.btnSearch.Location = new System.Drawing.Point(400, 76);
       this.btnSearch.Name = "btnSearch";
-      this.btnSearch.Size = new System.Drawing.Size(75, 23);
+      this.btnSearch.Size = new System.Drawing.Size(75, 24);
       this.btnSearch.TabIndex = 4;
       this.btnSearch.Text = "Search";
       this.btnSearch.UseVisualStyleBackColor = true;

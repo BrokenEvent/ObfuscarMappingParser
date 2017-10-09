@@ -35,7 +35,7 @@ namespace ObfuscarMappingParser
         ListViewItem item = new ListViewItem(PathUtils.GetFilename(pdbFile.Filename));
         item.SubItems.Add(pdbFile.Resolver.PdbGuid.ToString());
         item.Tag = pdbFile;
-        item.ImageIndex = 9;
+        item.ImageIndex = mainForm.ICON_PDB;
         item.ToolTipText =
           $"Filename: {pdbFile.Filename}\nServer data: {(string.IsNullOrEmpty(pdbFile.Resolver.SourceServerData) ? "none" : pdbFile.Resolver.SourceServerData)}";
         lvList.Items.Add(item);

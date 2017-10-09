@@ -29,21 +29,40 @@ namespace ObfuscarMappingParser
     private ClipboardWatcher clipboardWatcher;
     private const string APP_TITLE = "Obfuscar Mapping Parser";
 
+    public readonly int ICON_NAMESPACE;
+    public readonly int ICON_NO_NAMESPACE;
+    public readonly int ICON_CLASS;
+    public readonly int ICON_EVENT;
+    public readonly int ICON_FIELD;
+    public readonly int ICON_METHOD;
+    public readonly int ICON_CTOR;
+    public readonly int ICON_PROPERTY;
+    public readonly int ICON_ASSEMBLY;
+    public readonly int ICON_MULTIPLE;
+    public readonly int ICON_PDB;
+
+    private void AddIcon(Bitmap bmp, out int index)
+    {
+      ilIcons.Images.Add(bmp);
+      index = ilIcons.Images.Count - 1;
+    }
+
     public MainForm(string filename)
     {
       InitializeComponent();
 
       // load manually from resources, as VS RESX always broke icon colors
-      ilIcons.Images.Add(Resources.IconNamespace);
-      ilIcons.Images.Add(Resources.IconNoNamespace);
-      ilIcons.Images.Add(Resources.IconClass);
-      ilIcons.Images.Add(Resources.IconEvent);
-      ilIcons.Images.Add(Resources.IconField);
-      ilIcons.Images.Add(Resources.IconMethod);
-      ilIcons.Images.Add(Resources.IconProperty);
-      ilIcons.Images.Add(Resources.IconAssembly);
-      ilIcons.Images.Add(Resources.IconMultiple);
-      ilIcons.Images.Add(Resources.IconPdb);
+      AddIcon(Resources.IconNamespace, out ICON_NAMESPACE);
+      AddIcon(Resources.IconNoNamespace, out ICON_NO_NAMESPACE);
+      AddIcon(Resources.IconClass, out ICON_CLASS);
+      AddIcon(Resources.IconEvent, out ICON_EVENT);
+      AddIcon(Resources.IconField, out ICON_FIELD);
+      AddIcon(Resources.IconMethod, out ICON_METHOD);
+      AddIcon(Resources.IconConstructor, out ICON_CTOR);
+      AddIcon(Resources.IconProperty, out ICON_PROPERTY);
+      AddIcon(Resources.IconAssembly, out ICON_ASSEMBLY);
+      AddIcon(Resources.IconMultiple, out ICON_MULTIPLE);
+      AddIcon(Resources.IconPdb, out ICON_PDB);
 
       try
       {
@@ -80,7 +99,7 @@ namespace ObfuscarMappingParser
 
     private void ClipboardWatcher_ClipboardChanged(object sender, EventArgs e)
     {
-      if (!Clipboard.ContainsText() || !Configs.Instance.WatchClipboard)
+      if (!Clipboard.ContainsText() || !Configs.Instance.WatchClipboard || !CanFocus)
         return;
 
       string stacktrace = Clipboard.GetText();
@@ -213,7 +232,7 @@ namespace ObfuscarMappingParser
       ptvElements.BeginUpdate();
       mapping.PurgeTreeNodes();
 
-      TreeBuilder builder = new TreeBuilder(ptvElements, mapping);
+      TreeBuilder builder = new TreeBuilder(ptvElements, mapping, this);
       builder.GroupNamespaces = Configs.Instance.GroupNamespaces;
       builder.GroupModules = Configs.Instance.GroupModules;
       builder.ShowModules = Configs.Instance.ShowModules;

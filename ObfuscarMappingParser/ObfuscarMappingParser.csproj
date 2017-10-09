@@ -258,6 +258,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\TreeIcons\Constructor.png" />
     <None Include="res\TreeIcons\Event.png" />
     <None Include="res\TreeIcons\Class.png" />
     <None Include="res\TreeIcons\Assembly.png" />

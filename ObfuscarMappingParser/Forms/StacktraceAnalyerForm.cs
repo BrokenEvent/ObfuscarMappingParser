@@ -61,7 +61,7 @@ namespace ObfuscarMappingParser
       if (originalLine != null && Configs.Instance.ShowOriginal)
         node.Text += "\nOriginal line: " + originalLine;
       node.ToolTipText = "Target method not found in mapping.";
-      node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType);
+      node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType, mainForm);
     }
 
     private void BuildAmbigousNode(PineappleTreeNode node, SearchResults result)
@@ -85,7 +85,7 @@ namespace ObfuscarMappingParser
 
     private void BuildNormalNode(PineappleTreeNode node, INamedEntity entity, string originalLine)
     {
-      node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType);
+      node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType, mainForm);
       ItemDescriptor descriptor = new ItemDescriptor(entity);
       string tooltip = descriptor.GetToolTip(); 
       node.Tag = descriptor;
@@ -129,7 +129,7 @@ namespace ObfuscarMappingParser
 
     private void BuildFailedNode(PineappleTreeNode node, INamedEntity entity, string originalLine)
     {
-      node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType);
+      node.ImageIndex = TreeBuilder.GetIconForEntity(entity.EntityType, mainForm);
       node.BacklightColorIndex = (int)Highlights.Unknown;
       node.Text += "\nUnable to deobfuscate.";
       if (originalLine != null && Configs.Instance.ShowOriginal)

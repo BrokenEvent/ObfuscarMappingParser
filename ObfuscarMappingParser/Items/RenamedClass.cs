@@ -124,7 +124,7 @@ namespace ObfuscarMappingParser
       if (!name.NameNew.CompareNamespace(values, ref index)) // namespace check
         yield break;
 
-      if (values.Length == 0) // no namespace, unable to search
+      if (values.Length == 0 || index >= values.Length) // no namespace, unable to search
         yield break;
 
       if (string.Compare(values[index], name.NameNew.Name, StringComparison.Ordinal) != 0) // correct namespace, wrong class name
