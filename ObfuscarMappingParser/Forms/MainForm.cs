@@ -27,6 +27,7 @@ namespace ObfuscarMappingParser
   {
     private Mapping mapping;
     private ClipboardWatcher clipboardWatcher;
+    private const string APP_TITLE = "Obfuscar Mapping Parser";
 
     public MainForm(string filename)
     {
@@ -151,7 +152,7 @@ namespace ObfuscarMappingParser
 
     private async void OpenFile(string filename)
     {
-      Text = "Obfuscar Mapping Parser - " + PathUtils.GetFilename(filename);
+      Text = $"{APP_TITLE} - {PathUtils.GetFilename(filename)}";
       Configs.Instance.AddRecent(filename);
 
       BeginLoading("Loading: " + filename);
@@ -809,7 +810,7 @@ namespace ObfuscarMappingParser
     private void MainForm_Load(object sender, EventArgs e)
     {
       commandManager.WindowHandle = Handle;
-      CheckForUpdates();
+      CheckForUpdates(true);
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -819,17 +820,24 @@ namespace ObfuscarMappingParser
       Configs.Instance.CommandsElement = el;
     }
 
-    private async void CheckForUpdates()
+    private async void CheckForUpdates(bool silent)
     {
+      miUpdateVersion.Enabled = false;
       VersionResponse oldVersion = Configs.Instance.UpdateHelper.UpdateAvailable;
       await Task.Run(() => Configs.Instance.UpdateHelper.CheckForUpdates());
 
       VersionResponse version = Configs.Instance.UpdateHelper.UpdateAvailable;
-      miUpdateVersion.Enabled = version != null;
+      miUpdateVersion.Enabled = true;
 
       if (version == null || version == oldVersion)
+      {
+        miUpdateVersion.Text = "Check for Updates";
+        if (!silent)
+          MessageBox.Show(this, $"You are using an actual version of the {APP_TITLE}.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
         return;
+      }
 
+      miUpdateVersion.Text = $"Update to {version.Version}...";
       if (TaskDialogHelper.ShowTaskDialog(
               Handle,
               "Update is Available",
@@ -850,7 +858,10 @@ namespace ObfuscarMappingParser
 
     private void miUpdateVersion_Click(object sender, EventArgs e)
     {
-      DoUpdateVersion();
+      if (Configs.Instance.UpdateHelper.UpdateAvailable != null)
+        DoUpdateVersion();
+      else
+        CheckForUpdates(false);
     }
 
     private void miReport_Click(object sender, EventArgs e)
