@@ -807,5 +807,61 @@ namespace MappingParser.Tests
       Assert.AreEqual(1, mapping.ModulesCount);
       Assert.AreEqual(2, mapping.SkippedEntities);
     }
+
+    [Test]
+    public void RealNamingTest1()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RealNamingTest.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassSecondOld<System.String,System.Runtime.CompilerServices.CallSite`1<System.Func`3<System.Runtime.CompilerServices.CallSite,System.Object,System.Object>>> NsOld.ClassOld::_callSiteGetters
+      // -> GenericFieldNew1
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[0];
+      Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
+      Assert.IsNotNull(renamedItem.ResultType);
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object>>>", renamedItem.ResultType.NameOld.ToString());
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object>>>", renamedItem.ResultType.NameNew.ToString());
+      Assert.IsNull(renamedItem.MethodParams);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("ClassSecondOld<String, CallSite<Func<CallSite, Object, Object>>> _callSiteGetters", renamedItem.NameOld);
+      Assert.AreEqual("ClassSecondOld<String, CallSite<Func<CallSite, Object, Object>>> GenericFieldNew1", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld._callSiteGetters", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericFieldNew1", renamedItem.NameNewPlain);
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object>>> NsOld.ClassOld._callSiteGetters", renamedItem.NameOldFull);
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object>>> NsNew.ClassNew.GenericFieldNew1", renamedItem.NameNewFull);
+    }
+
+    [Test]
+    public void RealNamingTest2()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RealNamingTest.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassSecondOld<System.String,System.Runtime.CompilerServices.CallSite`1<System.Func`4<System.Runtime.CompilerServices.CallSite,System.Object,System.Object,System.Object>>> NsOld.ClassOld::_callSiteSetters
+      // -> GenericFieldNew2
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[1];
+      Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
+      Assert.IsNotNull(renamedItem.ResultType);
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>>", renamedItem.ResultType.NameOld.ToString());
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>>", renamedItem.ResultType.NameNew.ToString());
+      Assert.IsNull(renamedItem.MethodParams);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("ClassSecondOld<String, CallSite<Func<CallSite, Object, Object, Object>>> _callSiteSetters", renamedItem.NameOld);
+      Assert.AreEqual("ClassSecondOld<String, CallSite<Func<CallSite, Object, Object, Object>>> GenericFieldNew2", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld._callSiteSetters", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericFieldNew2", renamedItem.NameNewPlain);
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>> NsOld.ClassOld._callSiteSetters", renamedItem.NameOldFull);
+      Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>> NsNew.ClassNew.GenericFieldNew2", renamedItem.NameNewFull);
+    }
   }
 }

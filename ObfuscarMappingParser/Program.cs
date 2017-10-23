@@ -13,7 +13,9 @@ namespace ObfuscarMappingParser
     [STAThread]
     static void Main(string[] args)
     {
+#if !DEBUG
       RestApi.RegisterTopLevelExceptionHandling();
+#endif
 
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);

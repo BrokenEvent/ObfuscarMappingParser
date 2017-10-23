@@ -24,9 +24,16 @@ namespace ObfuscarMappingParser
       {
         if (str[i] == '<')
         {
-          while (str[i] != '>')
+          i++; // skip <
+          int braces = 1;
+          while (braces > 0 && i < str.Length)
+          {
+            if (str[i] == '>')
+              braces--;
+            else if (str[i] == '<')
+              braces++;
             i++;
-          i++; // skip >
+          }
         }
 
         if (str[i] == endChar)

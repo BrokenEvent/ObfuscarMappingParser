@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
-using BrokenEvent.PdbReader;
+using BrokenEvent.PDBReader;
 using BrokenEvent.Shared;
 using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.Shared.Controls;
@@ -27,22 +27,42 @@ namespace ObfuscarMappingParser
   {
     private Mapping mapping;
     private ClipboardWatcher clipboardWatcher;
+    private const string APP_TITLE = "Obfuscar Mapping Parser";
+
+    public readonly int ICON_NAMESPACE;
+    public readonly int ICON_NO_NAMESPACE;
+    public readonly int ICON_CLASS;
+    public readonly int ICON_EVENT;
+    public readonly int ICON_FIELD;
+    public readonly int ICON_METHOD;
+    public readonly int ICON_CTOR;
+    public readonly int ICON_PROPERTY;
+    public readonly int ICON_ASSEMBLY;
+    public readonly int ICON_MULTIPLE;
+    public readonly int ICON_PDB;
+
+    private void AddIcon(Bitmap bmp, out int index)
+    {
+      ilIcons.Images.Add(bmp);
+      index = ilIcons.Images.Count - 1;
+    }
 
     public MainForm(string filename)
     {
       InitializeComponent();
 
       // load manually from resources, as VS RESX always broke icon colors
-      ilIcons.Images.Add(Resources.IconNamespace);
-      ilIcons.Images.Add(Resources.IconNoNamespace);
-      ilIcons.Images.Add(Resources.IconClass);
-      ilIcons.Images.Add(Resources.IconEvent);
-      ilIcons.Images.Add(Resources.IconField);
-      ilIcons.Images.Add(Resources.IconMethod);
-      ilIcons.Images.Add(Resources.IconProperty);
-      ilIcons.Images.Add(Resources.IconAssembly);
-      ilIcons.Images.Add(Resources.IconMultiple);
-      ilIcons.Images.Add(Resources.IconPdb);
+      AddIcon(Resources.IconNamespace, out ICON_NAMESPACE);
+      AddIcon(Resources.IconNoNamespace, out ICON_NO_NAMESPACE);
+      AddIcon(Resources.IconClass, out ICON_CLASS);
+      AddIcon(Resources.IconEvent, out ICON_EVENT);
+      AddIcon(Resources.IconField, out ICON_FIELD);
+      AddIcon(Resources.IconMethod, out ICON_METHOD);
+      AddIcon(Resources.IconConstructor, out ICON_CTOR);
+      AddIcon(Resources.IconProperty, out ICON_PROPERTY);
+      AddIcon(Resources.IconAssembly, out ICON_ASSEMBLY);
+      AddIcon(Resources.IconMultiple, out ICON_MULTIPLE);
+      AddIcon(Resources.IconPdb, out ICON_PDB);
 
       try
       {
@@ -79,7 +99,7 @@ namespace ObfuscarMappingParser
 
     private void ClipboardWatcher_ClipboardChanged(object sender, EventArgs e)
     {
-      if (!Clipboard.ContainsText() || !Configs.Instance.WatchClipboard)
+      if (!Clipboard.ContainsText() || !Configs.Instance.WatchClipboard || !CanFocus)
         return;
 
       string stacktrace = Clipboard.GetText();
@@ -151,7 +171,7 @@ namespace ObfuscarMappingParser
 
     private async void OpenFile(string filename)
     {
-      Text = "Obfuscar Mapping Parser - " + PathUtils.GetFilename(filename);
+      Text = $"{APP_TITLE} - {PathUtils.GetFilename(filename)}";
       Configs.Instance.AddRecent(filename);
 
       BeginLoading("Loading: " + filename);
@@ -212,7 +232,7 @@ namespace ObfuscarMappingParser
       ptvElements.BeginUpdate();
       mapping.PurgeTreeNodes();
 
-      TreeBuilder builder = new TreeBuilder(ptvElements, mapping);
+      TreeBuilder builder = new TreeBuilder(ptvElements, mapping, this);
       builder.GroupNamespaces = Configs.Instance.GroupNamespaces;
       builder.GroupModules = Configs.Instance.GroupModules;
       builder.ShowModules = Configs.Instance.ShowModules;
@@ -486,7 +506,7 @@ namespace ObfuscarMappingParser
 
     #region PDB
 
-    private List<PDBFile> pdbfiles = new List<PDBFile>();
+    private List<PdbFile> pdbfiles = new List<PdbFile>();
     private List<string> pdbToAttach;
 
     private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
@@ -552,7 +572,7 @@ namespace ObfuscarMappingParser
 
     private bool SearchForLoadedPdb(string filename)
     {
-      foreach (PDBFile file in pdbfiles)
+      foreach (PdbFile file in pdbfiles)
         if (string.Compare(file.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
           return true;
 
@@ -569,7 +589,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        pdbfiles.Add(new PDBFile(filename));
+        pdbfiles.Add(new PdbFile(filename));
       }
       catch (Exception ex)
       {
@@ -591,21 +611,22 @@ namespace ObfuscarMappingParser
       if (i == -1)
         return false;
 
-      PDBFunction f = null;
       string className = s.Substring(0, i);
       string itemName = s.Substring(i + 1);
-      foreach (PDBFile file in pdbfiles)
+      CodeLocation location = null;
+
+      foreach (PdbFile file in pdbfiles)
       {
-        f = file.Search(className, itemName);
-        if (f != null)
+        location = file.Resolver.FindLocation(className, itemName);
+        if (location != null)
           break;
       }
 
-      if (f == null)
+      if (location == null)
         return false;
 
-      filename = f.Filename;
-      lineNumber = (int)f.Line;
+      filename = location.FileName;
+      lineNumber = (int)location.Line;
       return true;
     }
 
@@ -777,7 +798,7 @@ namespace ObfuscarMappingParser
       if (mapping == null)
         return;
 
-      foreach (PDBFile pdbFile in pdbfiles)
+      foreach (PdbFile pdbFile in pdbfiles)
         if (pdbFile.CheckFileModification() &&
             TaskDialogHelper.ShowTaskDialog(
                   Handle,
@@ -808,7 +829,7 @@ namespace ObfuscarMappingParser
     private void MainForm_Load(object sender, EventArgs e)
     {
       commandManager.WindowHandle = Handle;
-      CheckForUpdates();
+      CheckForUpdates(true);
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -818,17 +839,24 @@ namespace ObfuscarMappingParser
       Configs.Instance.CommandsElement = el;
     }
 
-    private async void CheckForUpdates()
+    private async void CheckForUpdates(bool silent)
     {
+      miUpdateVersion.Enabled = false;
       VersionResponse oldVersion = Configs.Instance.UpdateHelper.UpdateAvailable;
       await Task.Run(() => Configs.Instance.UpdateHelper.CheckForUpdates());
 
       VersionResponse version = Configs.Instance.UpdateHelper.UpdateAvailable;
-      miUpdateVersion.Enabled = version != null;
+      miUpdateVersion.Enabled = true;
 
       if (version == null || version == oldVersion)
+      {
+        miUpdateVersion.Text = "Check for Updates";
+        if (!silent)
+          MessageBox.Show(this, $"You are using an actual version of the {APP_TITLE}.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
         return;
+      }
 
+      miUpdateVersion.Text = $"Update to {version.Version}...";
       if (TaskDialogHelper.ShowTaskDialog(
               Handle,
               "Update is Available",
@@ -849,7 +877,10 @@ namespace ObfuscarMappingParser
 
     private void miUpdateVersion_Click(object sender, EventArgs e)
     {
-      DoUpdateVersion();
+      if (Configs.Instance.UpdateHelper.UpdateAvailable != null)
+        DoUpdateVersion();
+      else
+        CheckForUpdates(false);
     }
 
     private void miReport_Click(object sender, EventArgs e)

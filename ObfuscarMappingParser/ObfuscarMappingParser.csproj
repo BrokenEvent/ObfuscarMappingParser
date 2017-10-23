@@ -55,9 +55,6 @@
     <Reference Include="BrokenEvent.NanoXml">
       <HintPath>..\Libs\BrokenEvent.NanoXml.dll</HintPath>
     </Reference>
-    <Reference Include="BrokenEvent.PdbReader">
-      <HintPath>..\Libs\BrokenEvent.PdbReader.dll</HintPath>
-    </Reference>
     <Reference Include="BrokenEvent.Shared">
       <HintPath>..\Libs\BrokenEvent.Shared.dll</HintPath>
     </Reference>
@@ -132,6 +129,7 @@
     <Compile Include="Forms\PDBManagerForm.Designer.cs">
       <DependentUpon>PDBManagerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdbFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Items\Renamed.cs" />
@@ -260,6 +258,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\TreeIcons\Constructor.png" />
     <None Include="res\TreeIcons\Event.png" />
     <None Include="res\TreeIcons\Class.png" />
     <None Include="res\TreeIcons\Assembly.png" />
@@ -298,11 +297,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="mainicon.ico" />
-    <Content Include="Microsoft.Cci.Pdb.License.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrokenEvent.PDBReader\BrokenEvent.PDBReader\BrokenEvent.PDBReader.csproj">
+      <Project>{65a50051-bfb8-4f13-a609-4056343e4d45}</Project>
+      <Name>BrokenEvent.PDBReader</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BrokenEvent.VisualStudioOpener\VisualStudioOpener\VisualStudioOpener.csproj">
       <Project>{890FD391-EE51-4E34-8A6F-3DB98AE3C210}</Project>
       <Name>VisualStudioOpener</Name>

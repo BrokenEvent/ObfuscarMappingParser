@@ -32,16 +32,14 @@ namespace ObfuscarMappingParser
     {
       this.components = new System.ComponentModel.Container();
       this.btnBrowse = new System.Windows.Forms.Button();
-      this.tbText = new System.Windows.Forms.TextBox();
       this.tbFilename = new System.Windows.Forms.TextBox();
       this.tbURL = new System.Windows.Forms.TextBox();
-      this.rbText = new System.Windows.Forms.RadioButton();
+      this.rbClipboard = new System.Windows.Forms.RadioButton();
       this.rbFile = new System.Windows.Forms.RadioButton();
       this.rbURL = new System.Windows.Forms.RadioButton();
       this.btnOk = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
       this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-      this.pbProgress = new System.Windows.Forms.ProgressBar();
       this.lblStatus = new System.Windows.Forms.Label();
       this.controlHighlight = new BrokenEvent.Shared.Controls.ControlHighlight(this.components);
       this.SuspendLayout();
@@ -56,17 +54,6 @@ namespace ObfuscarMappingParser
       this.btnBrowse.UseVisualStyleBackColor = true;
       this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
       this.btnBrowse.Enter += new System.EventHandler(this.Control_Enter);
-      // 
-      // tbText
-      // 
-      this.tbText.Enabled = false;
-      this.tbText.Font = new System.Drawing.Font("Consolas", 8.25F);
-      this.tbText.Location = new System.Drawing.Point(12, 183);
-      this.tbText.Multiline = true;
-      this.tbText.Name = "tbText";
-      this.tbText.Size = new System.Drawing.Size(446, 172);
-      this.tbText.TabIndex = 5;
-      this.tbText.Enter += new System.EventHandler(this.Control_Enter);
       // 
       // tbFilename
       // 
@@ -89,16 +76,16 @@ namespace ObfuscarMappingParser
       this.tbURL.TabIndex = 3;
       this.tbURL.Enter += new System.EventHandler(this.Control_Enter);
       // 
-      // rbText
+      // rbClipboard
       // 
-      this.rbText.Location = new System.Drawing.Point(12, 161);
-      this.rbText.Name = "rbText";
-      this.rbText.Size = new System.Drawing.Size(439, 17);
-      this.rbText.TabIndex = 2;
-      this.rbText.Text = "Text:";
-      this.rbText.UseVisualStyleBackColor = true;
-      this.rbText.Click += new System.EventHandler(this.RadioButton_Click);
-      this.rbText.Enter += new System.EventHandler(this.Control_Enter);
+      this.rbClipboard.Location = new System.Drawing.Point(12, 161);
+      this.rbClipboard.Name = "rbClipboard";
+      this.rbClipboard.Size = new System.Drawing.Size(439, 17);
+      this.rbClipboard.TabIndex = 2;
+      this.rbClipboard.Text = "Get from clipboard";
+      this.rbClipboard.UseVisualStyleBackColor = true;
+      this.rbClipboard.Click += new System.EventHandler(this.RadioButton_Click);
+      this.rbClipboard.Enter += new System.EventHandler(this.Control_Enter);
       // 
       // rbFile
       // 
@@ -108,7 +95,7 @@ namespace ObfuscarMappingParser
       this.rbFile.Size = new System.Drawing.Size(439, 17);
       this.rbFile.TabIndex = 1;
       this.rbFile.TabStop = true;
-      this.rbFile.Text = "File:";
+      this.rbFile.Text = "Load from file:";
       this.rbFile.UseVisualStyleBackColor = true;
       this.rbFile.Click += new System.EventHandler(this.RadioButton_Click);
       this.rbFile.Enter += new System.EventHandler(this.Control_Enter);
@@ -119,7 +106,7 @@ namespace ObfuscarMappingParser
       this.rbURL.Name = "rbURL";
       this.rbURL.Size = new System.Drawing.Size(446, 17);
       this.rbURL.TabIndex = 0;
-      this.rbURL.Text = "URL:";
+      this.rbURL.Text = "Download from URL:";
       this.rbURL.UseVisualStyleBackColor = true;
       this.rbURL.Click += new System.EventHandler(this.RadioButton_Click);
       this.rbURL.Enter += new System.EventHandler(this.Control_Enter);
@@ -127,7 +114,7 @@ namespace ObfuscarMappingParser
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(302, 375);
+      this.btnOk.Location = new System.Drawing.Point(302, 195);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(75, 23);
       this.btnOk.TabIndex = 1;
@@ -140,7 +127,7 @@ namespace ObfuscarMappingParser
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(383, 375);
+      this.btnCancel.Location = new System.Drawing.Point(383, 195);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(75, 23);
       this.btnCancel.TabIndex = 2;
@@ -152,22 +139,11 @@ namespace ObfuscarMappingParser
       // 
       this.openFileDialog.Filter = "All files (*.*)|*.*";
       // 
-      // pbProgress
-      // 
-      this.pbProgress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.pbProgress.Location = new System.Drawing.Point(12, 375);
-      this.pbProgress.Name = "pbProgress";
-      this.pbProgress.Size = new System.Drawing.Size(284, 10);
-      this.pbProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
-      this.pbProgress.TabIndex = 7;
-      this.pbProgress.Visible = false;
-      // 
       // lblStatus
       // 
       this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.lblStatus.AutoSize = true;
-      this.lblStatus.Location = new System.Drawing.Point(9, 388);
+      this.lblStatus.Location = new System.Drawing.Point(147, 60);
       this.lblStatus.Name = "lblStatus";
       this.lblStatus.Size = new System.Drawing.Size(78, 13);
       this.lblStatus.TabIndex = 8;
@@ -178,7 +154,7 @@ namespace ObfuscarMappingParser
       // 
       this.controlHighlight.BackgroundAlpha = ((byte)(200));
       this.controlHighlight.BackgroundColor = System.Drawing.Color.Red;
-      this.controlHighlight.Font = new System.Drawing.Font("Segoe UI", 16F);
+      this.controlHighlight.Font = new System.Drawing.Font("Segoe UI", 12F);
       this.controlHighlight.HighlightColor = System.Drawing.Color.DarkRed;
       this.controlHighlight.LineWidth = 2.5F;
       this.controlHighlight.Padding = new System.Windows.Forms.Padding(2);
@@ -192,13 +168,11 @@ namespace ObfuscarMappingParser
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(470, 406);
+      this.ClientSize = new System.Drawing.Size(470, 226);
       this.ControlBox = false;
       this.Controls.Add(this.lblStatus);
-      this.Controls.Add(this.pbProgress);
-      this.Controls.Add(this.tbText);
       this.Controls.Add(this.btnBrowse);
-      this.Controls.Add(this.rbText);
+      this.Controls.Add(this.rbClipboard);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.tbFilename);
       this.Controls.Add(this.btnOk);
@@ -216,6 +190,7 @@ namespace ObfuscarMappingParser
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Stacktrace Source";
+      this.Activated += new System.EventHandler(this.StacktraceSourceForm_Activated);
       this.Click += new System.EventHandler(this.StacktraceSource_Click);
       this.DragDrop += new System.Windows.Forms.DragEventHandler(this.StacktraceSource_DragDrop);
       this.DragOver += new System.Windows.Forms.DragEventHandler(this.StacktraceSource_DragOver);
@@ -227,16 +202,14 @@ namespace ObfuscarMappingParser
     #endregion
 
     private System.Windows.Forms.Button btnBrowse;
-    private System.Windows.Forms.TextBox tbText;
     private System.Windows.Forms.TextBox tbFilename;
     private System.Windows.Forms.TextBox tbURL;
-    private System.Windows.Forms.RadioButton rbText;
+    private System.Windows.Forms.RadioButton rbClipboard;
     private System.Windows.Forms.RadioButton rbFile;
     private System.Windows.Forms.RadioButton rbURL;
     private System.Windows.Forms.Button btnOk;
     private System.Windows.Forms.Button btnCancel;
     private System.Windows.Forms.OpenFileDialog openFileDialog;
-    private System.Windows.Forms.ProgressBar pbProgress;
     private System.Windows.Forms.Label lblStatus;
     private BrokenEvent.Shared.Controls.ControlHighlight controlHighlight;
   }

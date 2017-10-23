@@ -13,6 +13,7 @@ namespace ObfuscarMappingParser
     private bool groupNamespaces;
     private bool showModules;
     private bool groupModules;
+    private readonly MainForm mainForm;
 
     private struct NamingValue
     {
@@ -46,10 +47,11 @@ namespace ObfuscarMappingParser
     private Dictionary<string, ModuleData> moduleNamespaces;
     private PineappleTreeNode noNsNode;
 
-    public TreeBuilder(PineappleTreeView tree, Mapping mapping)
+    public TreeBuilder(PineappleTreeView tree, Mapping mapping, MainForm mainForm)
     {
       this.tree = tree;
       this.mapping = mapping;
+      this.mainForm = mainForm;
     }
 
     public bool GroupNamespaces
@@ -79,7 +81,7 @@ namespace ObfuscarMappingParser
       else
       {
         noNsNode = new PineappleTreeNode("<no namespace>");
-        noNsNode.ImageIndex = (int)Icons.NoNs;
+        noNsNode.ImageIndex = mainForm.ICON_NO_NAMESPACE;
       }
 
       foreach (RenamedClass c in mapping.Classes)
@@ -120,7 +122,7 @@ namespace ObfuscarMappingParser
   
     private void BuildClassContent(RenamedClass c, PineappleTreeNode classNode)
     {
-      classNode.ImageIndex = (int)Icons.Class;
+      classNode.ImageIndex = mainForm.ICON_CLASS;
       classNode.Tag = c;
 
       classNode.ToolTipText = BuildHintForClass(c);
@@ -159,7 +161,7 @@ namespace ObfuscarMappingParser
 
         PineappleTreeNode node = new PineappleTreeNode(item.NameOld);
         classNode.Nodes.Add(node);
-        node.ImageIndex = GetIconForEntity(item.EntityType);
+        node.ImageIndex = GetIconForEntity(item.EntityType, mainForm);
         node.Tag = item;
         item.TreeNode = node;
 
@@ -237,11 +239,11 @@ namespace ObfuscarMappingParser
         return data;
 
       PineappleTreeNode moduleNode = new PineappleTreeNode(moduleName);
-      moduleNode.ImageIndex = (int)Icons.Module;
+      moduleNode.ImageIndex = mainForm.ICON_ASSEMBLY;
       tree.Nodes.Add(moduleNode);
 
       PineappleTreeNode moduleNoNsNode = new PineappleTreeNode("<no namespace>");
-      moduleNoNsNode.ImageIndex = (int)Icons.NoNs;
+      moduleNoNsNode.ImageIndex = mainForm.ICON_NO_NAMESPACE;
 
       data = new ModuleData(moduleNode, moduleNoNsNode);
       moduleNamespaces.Add(moduleName, data);
@@ -276,7 +278,7 @@ namespace ObfuscarMappingParser
       }
 
       PineappleTreeNode node = CreateNode(c.Name.NameOld.Namespace);
-      node.ImageIndex = (int)Icons.Ns;
+      node.ImageIndex = mainForm.ICON_NAMESPACE;
       string subItemText = null;
       if (c.Name.NameNew == null)
       {
@@ -305,20 +307,22 @@ namespace ObfuscarMappingParser
       return node;
     }
 
-    public static int GetIconForEntity(EntityType type)
+    public static int GetIconForEntity(EntityType type, MainForm mainForm)
     {
       switch (type)
       {
         case EntityType.Class:
-          return (int)Icons.Class;
+          return mainForm.ICON_CLASS;
         case EntityType.Event:
-          return (int)Icons.Event;
+          return mainForm.ICON_EVENT;
         case EntityType.Method:
-          return (int)Icons.Method;
+          return mainForm.ICON_METHOD;
         case EntityType.Field:
-          return (int)Icons.Field;
+          return mainForm.ICON_FIELD;
         case EntityType.Property:
-          return (int)Icons.Property;
+          return mainForm.ICON_PROPERTY;
+        case EntityType.Constructor:
+          return mainForm.ICON_CTOR;
         default:
           return -1;
       }
@@ -351,18 +355,6 @@ namespace ObfuscarMappingParser
           sb.Append(str[i]);
 
       return sb.ToString();
-    }
-
-    public enum Icons
-    {
-      Ns,
-      NoNs,
-      Class,
-      Event,
-      Method,
-      Field,
-      Property,
-      Module
     }
 
     private enum Highlights

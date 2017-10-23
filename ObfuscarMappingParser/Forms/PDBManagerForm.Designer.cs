@@ -32,7 +32,7 @@
       this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.chGuid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.btnClose = new System.Windows.Forms.Button();
-      this.lblLoadedPDBs = new System.Windows.Forms.Label();
+      this.lblLoadedPDBs = new BrokenEvent.Shared.Controls.ThemedLabel();
       this.btnAttach = new System.Windows.Forms.Button();
       this.btnDetach = new System.Windows.Forms.Button();
       this.SuspendLayout();
@@ -47,10 +47,10 @@
             this.chGuid});
       this.lvList.FullRowSelect = true;
       this.lvList.HideSelection = false;
-      this.lvList.Location = new System.Drawing.Point(12, 79);
+      this.lvList.Location = new System.Drawing.Point(12, 85);
       this.lvList.Name = "lvList";
       this.lvList.ShowItemToolTips = true;
-      this.lvList.Size = new System.Drawing.Size(477, 191);
+      this.lvList.Size = new System.Drawing.Size(477, 185);
       this.lvList.TabIndex = 0;
       this.lvList.UseCompatibleStateImageBehavior = false;
       this.lvList.View = System.Windows.Forms.View.Details;
@@ -79,11 +79,12 @@
       // 
       // lblLoadedPDBs
       // 
-      this.lblLoadedPDBs.AutoSize = true;
-      this.lblLoadedPDBs.Font = new System.Drawing.Font("Tahoma", 11F);
+      this.lblLoadedPDBs.AutoSizeLabel = true;
+      this.lblLoadedPDBs.BackColor = System.Drawing.Color.Transparent;
+      this.lblLoadedPDBs.CharacterWrap = false;
       this.lblLoadedPDBs.Location = new System.Drawing.Point(12, 58);
       this.lblLoadedPDBs.Name = "lblLoadedPDBs";
-      this.lblLoadedPDBs.Size = new System.Drawing.Size(110, 18);
+      this.lblLoadedPDBs.Size = new System.Drawing.Size(104, 21);
       this.lblLoadedPDBs.TabIndex = 2;
       this.lblLoadedPDBs.Text = "Attached PDBs:";
       // 
@@ -146,7 +147,7 @@
     private System.Windows.Forms.ListView lvList;
     private System.Windows.Forms.Button btnClose;
     private System.Windows.Forms.ColumnHeader chFilename;
-    private System.Windows.Forms.Label lblLoadedPDBs;
+    private BrokenEvent.Shared.Controls.ThemedLabel lblLoadedPDBs;
     private System.Windows.Forms.Button btnAttach;
     private System.Windows.Forms.Button btnDetach;
     private System.Windows.Forms.ColumnHeader chGuid;

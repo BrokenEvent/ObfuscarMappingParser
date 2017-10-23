@@ -101,7 +101,7 @@ namespace ObfuscarMappingParser
     private void BuildResult(RenamedBase item)
     {
       ListViewItem l = new ListViewItem(item.NameOldSimple);
-      l.ImageIndex = TreeBuilder.GetIconForEntity(item.EntityType);
+      l.ImageIndex = TreeBuilder.GetIconForEntity(item.EntityType, mainForm);
       lvResults.Items.Add(l);
       ItemDescriptor d = new ItemDescriptor(item);
       l.Tag = d;
