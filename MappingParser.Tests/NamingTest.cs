@@ -863,5 +863,74 @@ namespace MappingParser.Tests
       Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>> NsOld.ClassOld._callSiteSetters", renamedItem.NameOldFull);
       Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>> NsNew.ClassNew.GenericFieldNew2", renamedItem.NameNewFull);
     }
-  }
+
+    [Test]
+    public void RealNamingTest3()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RealNamingTest.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+      Configs.Instance.SimplifyNullable = false;
+
+      // [ModuleOld]System.Nullable<NsOld.ClassSecondOld>[] NsOld.ClassOld::GenericFieldOld3
+      // -> GenericFieldNew3
+
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[2];
+      Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
+      Assert.IsNotNull(renamedItem.ResultType);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[]", renamedItem.ResultType.NameOld.ToString());
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[]", renamedItem.ResultType.NameNew.ToString());
+      Assert.IsNull(renamedItem.MethodParams);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[] GenericFieldOld3", renamedItem.NameOld);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[] GenericFieldNew3", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.GenericFieldOld3", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericFieldNew3", renamedItem.NameNewPlain);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[] NsOld.ClassOld.GenericFieldOld3", renamedItem.NameOldFull);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[] NsNew.ClassNew.GenericFieldNew3", renamedItem.NameNewFull);
+    }
+
+    [Test]
+    public void RealNamingTest4()
+    {
+        Configs.Instance.SimplifySystemNames = false;
+        Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RealNamingTest.xml"));
+        Assert.AreEqual(1, mapping.Classes.Count);
+        RenamedClass renamedClass = mapping.Classes[0];
+        Configs.Instance.SimplifyNullable = false;
+
+        // [ModuleOld]NsOld.ClassOld::GenericMethodOld1(System.Nullable<System.Int64>[])
+        // -> GenericMethodNew1
+
+        RenamedItem renamedItem = (RenamedItem)renamedClass.Items[3];
+        Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+        Assert.IsNull(renamedItem.ResultType);
+        Assert.IsNotNull(renamedItem.MethodParams);
+        Assert.AreEqual(1, renamedItem.MethodParams.Count);
+        Assert.AreEqual("System.Nullable<System.Int64>", renamedItem.MethodParams[0].NameOld.ToString());
+        Assert.AreEqual("System.Nullable<System.Int64>", renamedItem.MethodParams[0].NameNew.ToString());
+        Assert.AreEqual("System.Nullable<System.Int64>[]", renamedItem.MethodParams[0].ToString());
+        Assert.AreEqual("System.Nullable<System.Int64>[]", renamedItem.MethodParams[0].ToString());
+        Assert.IsNotNull(renamedItem.Owner);
+        Assert.AreEqual(renamedClass, renamedItem.Owner);
+        Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+        Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+        Assert.AreEqual("void GenericMethodOld1(Nullable<System.Int64>[])", renamedItem.NameOld);
+        Assert.AreEqual("void GenericMethodNew1(Nullable<System.Int64>[])", renamedItem.NameNew);
+        Assert.AreEqual("NsOld.ClassOld.GenericMethodOld1", renamedItem.NameOldPlain);
+        Assert.AreEqual("NsNew.ClassNew.GenericMethodNew1", renamedItem.NameNewPlain);
+        Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(System.Nullable<System.Int64>[])", renamedItem.NameOldFull);
+        Assert.AreEqual("void NsNew.ClassNew.GenericMethodNew1(System.Nullable<System.Int64>[])", renamedItem.NameNewFull);
+        Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(Nullable<Int64>[])", renamedItem.NameOldSimple);
+        Assert.AreEqual("void NsNew.ClassNew.GenericMethodNew1(Nullable<Int64>[])", renamedItem.NameNewSimple);
+        Assert.AreEqual("void GenericMethodOld1(Nullable<Int64>[]) → void GenericMethodNew1(Nullable<Int64>[])", renamedItem.TransformName);
+        Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(System.Nullable<System.Int64>[]) → void NsNew.ClassNew.GenericMethodNew1(System.Nullable<System.Int64>[])", renamedItem.TransformNameFull);
+        Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(Nullable<Int64>[]) → void NsNew.ClassNew.GenericMethodNew1(Nullable<Int64>[])", renamedItem.TransformSimple);
+        Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(Nullable<Int64>[]) → void NsNew.ClassNew.GenericMethodNew1(Nullable<Int64>[])", renamedItem.ToString());
+    }
+    }
 }
