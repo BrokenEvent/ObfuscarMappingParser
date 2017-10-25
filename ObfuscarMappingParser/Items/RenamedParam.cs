@@ -2,15 +2,22 @@
 {
   class RenamedParam: Renamed
   {
-    protected string modifier;
-
     public RenamedParam(string nameOld)
     {
       int modifierIndex = nameOld.Length - 1;
-      while (nameOld[modifierIndex] == '&' || nameOld[modifierIndex] == '*')
-        modifierIndex--;
+      do
+      {
+        if (nameOld[modifierIndex] == '&' || nameOld[modifierIndex] == '*')
+          modifierIndex--;
+        else if (nameOld[modifierIndex] == ']' || nameOld[modifierIndex - 1] == '[')
+          modifierIndex -= 2;
+        else
+          break;
+      }
+      while (true);
 
       modifierIndex++; // return to first mod's index
+      string modifier = null;
 
       if (modifierIndex < nameOld.Length)
       {
@@ -19,47 +26,22 @@
       }
 
       this.nameOld = new EntityName(nameOld);
+      this.nameOld.Modifier = modifier;
       nameNew = (EntityName)this.nameOld.Clone();
+      nameNew.Modifier = modifier;
     }
 
     public string Modifier
     {
-      get { return modifier; }
-    }
-
-    public string AddModifier(string target)
-    {
-      if (this.modifier == null)
-        return target;
-
-      string modifier = this.modifier;
-      if (Configs.Instance.SimplifyRef)
-      {
-        int i = modifier.IndexOf('&');
-        if (i != -1)
-        {
-          target = "ref " + target;
-          if (i == modifier.Length - 1)
-            modifier = modifier.Substring(0, i);
-          else
-            modifier = modifier.Substring(0, i) + modifier.Substring(i + 1);
-        }
-      }
-
-      return target + modifier;
-    }
-
-    public bool IsRef
-    {
-      get { return modifier != null && modifier.IndexOf('&') != -1; }
+      get { return nameOld.Modifier; }
     }
 
     public override string ToString()
     {
       if (nameNew == null || nameNew.Compare(nameOld, false))
-        return AddModifier(nameOld.PathName);
+        return nameOld.PathName;
 
-      return string.Format("{0} → {1}", AddModifier(nameOld.PathName), AddModifier(nameNew.PathName));
+      return string.Format("{0} → {1}", nameOld.PathName, nameNew.PathName);
     }
   }
 }

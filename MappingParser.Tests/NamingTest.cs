@@ -28,7 +28,7 @@ namespace MappingParser.Tests
 
       // [ModuleOld]NsOld.ClassOld -> [ModuleNew]NsNew.ClassNew
       RenamedClass renamedClass = mapping.Classes[0];
-      Assert.AreEqual(16, renamedClass.Items.Count);
+      Assert.AreEqual(19, renamedClass.Items.Count);
       Assert.AreEqual("ModuleOld", renamedClass.ModuleOld);
       Assert.AreEqual("ModuleNew", renamedClass.ModuleNew);
       Assert.AreEqual("NsOld.ClassOld", renamedClass.NameOld);
@@ -328,9 +328,8 @@ namespace MappingParser.Tests
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
       Assert.AreEqual(1, renamedItem.MethodParams.Count);
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
-      Assert.AreEqual("System.Int32&", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Int32&", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32&", renamedItem.MethodParams[0].NameNew.ToString());
       Assert.AreEqual("System.Int32&", renamedItem.MethodParams[0].ToString());
       Assert.IsNotNull(renamedItem.Owner);
       Assert.AreEqual(renamedClass, renamedItem.Owner);
@@ -365,9 +364,8 @@ namespace MappingParser.Tests
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
       Assert.AreEqual(1, renamedItem.MethodParams.Count);
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
-      Assert.AreEqual("ref System.Int32", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("ref System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("ref System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
       Assert.AreEqual("ref System.Int32", renamedItem.MethodParams[0].ToString());
       Assert.IsNotNull(renamedItem.Owner);
       Assert.AreEqual(renamedClass, renamedItem.Owner);
@@ -401,9 +399,8 @@ namespace MappingParser.Tests
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
       Assert.AreEqual(1, renamedItem.MethodParams.Count);
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
-      Assert.AreEqual("System.Int32*", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Int32*", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32*", renamedItem.MethodParams[0].NameNew.ToString());
       Assert.AreEqual("System.Int32*", renamedItem.MethodParams[0].ToString());
       Assert.IsNotNull(renamedItem.Owner);
       Assert.AreEqual(renamedClass, renamedItem.Owner);
@@ -437,9 +434,8 @@ namespace MappingParser.Tests
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
       Assert.AreEqual(1, renamedItem.MethodParams.Count);
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameOld.ToString());
-      Assert.AreEqual("System.Int32", renamedItem.MethodParams[0].NameNew.ToString());
-      Assert.AreEqual("System.Int32*&", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Int32*&", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32*&", renamedItem.MethodParams[0].NameNew.ToString());
       Assert.AreEqual("System.Int32*&", renamedItem.MethodParams[0].ToString());
       Assert.IsNotNull(renamedItem.Owner);
       Assert.AreEqual(renamedClass, renamedItem.Owner);
@@ -457,6 +453,113 @@ namespace MappingParser.Tests
       Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(System.Int32*&) → void NsNew.ClassNew.RefPtrMethodNew(System.Int32*&)", renamedItem.TransformNameFull);
       Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(Int32*&) → void NsNew.ClassNew.RefPtrMethodNew(Int32*&)", renamedItem.TransformSimple);
       Assert.AreEqual("void NsOld.ClassOld.RefPtrMethodOld(Int32*&) → void NsNew.ClassNew.RefPtrMethodNew(Int32*&)", renamedItem.ToString());
+    }
+
+    [Test]
+    public void OneDimensionalArrayTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::ArrayOldSet1([mscorlib]System.Int32[]) -> ArrayNewSet1
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "ArrayNewSet1");
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Int32[]", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32[]", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Int32[]", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void ArrayOldSet1(Int32[])", renamedItem.NameOld);
+      Assert.AreEqual("void ArrayNewSet1(Int32[])", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.ArrayOldSet1", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.ArrayNewSet1", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet1(System.Int32[])", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.ArrayNewSet1(System.Int32[])", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet1(Int32[])", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.ArrayNewSet1(Int32[])", renamedItem.NameNewSimple);
+      Assert.AreEqual("void ArrayOldSet1(Int32[]) → void ArrayNewSet1(Int32[])", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet1(System.Int32[]) → void NsNew.ClassNew.ArrayNewSet1(System.Int32[])", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet1(Int32[]) → void NsNew.ClassNew.ArrayNewSet1(Int32[])", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet1(Int32[]) → void NsNew.ClassNew.ArrayNewSet1(Int32[])", renamedItem.ToString());
+    }
+
+    [Test]
+    public void TwoDimensionalArrayTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::ArrayOldSet2([mscorlib]System.Int32[][]) -> ArrayNewSet2
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "ArrayNewSet2");
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Int32[][]", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32[][]", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Int32[][]", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void ArrayOldSet2(Int32[][])", renamedItem.NameOld);
+      Assert.AreEqual("void ArrayNewSet2(Int32[][])", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.ArrayOldSet2", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.ArrayNewSet2", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet2(System.Int32[][])", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.ArrayNewSet2(System.Int32[][])", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet2(Int32[][])", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.ArrayNewSet2(Int32[][])", renamedItem.NameNewSimple);
+      Assert.AreEqual("void ArrayOldSet2(Int32[][]) → void ArrayNewSet2(Int32[][])", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet2(System.Int32[][]) → void NsNew.ClassNew.ArrayNewSet2(System.Int32[][])", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet2(Int32[][]) → void NsNew.ClassNew.ArrayNewSet2(Int32[][])", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.ArrayOldSet2(Int32[][]) → void NsNew.ClassNew.ArrayNewSet2(Int32[][])", renamedItem.ToString());
+    }
+
+    // no tests for square 2d array, as the obfuscar produces the same output as for 1d: System.Int32[]
+
+    [Test]
+    public void PtrArrayTest()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+
+      // [ModuleOld]NsOld.ClassOld::PtrArrayOldSet([mscorlib]System.Int32*[]) -> PtrArrayNewSet
+      RenamedItem renamedItem = GetItemByNewName<RenamedItem>(renamedClass, "PtrArrayNewSet");
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Int32*[]", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Int32*[]", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Int32*[]", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void PtrArrayOldSet(Int32*[])", renamedItem.NameOld);
+      Assert.AreEqual("void PtrArrayNewSet(Int32*[])", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.PtrArrayOldSet", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.PtrArrayNewSet", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.PtrArrayOldSet(System.Int32*[])", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.PtrArrayNewSet(System.Int32*[])", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.PtrArrayOldSet(Int32*[])", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.PtrArrayNewSet(Int32*[])", renamedItem.NameNewSimple);
+      Assert.AreEqual("void PtrArrayOldSet(Int32*[]) → void PtrArrayNewSet(Int32*[])", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.PtrArrayOldSet(System.Int32*[]) → void NsNew.ClassNew.PtrArrayNewSet(System.Int32*[])", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.PtrArrayOldSet(Int32*[]) → void NsNew.ClassNew.PtrArrayNewSet(Int32*[])", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.PtrArrayOldSet(Int32*[]) → void NsNew.ClassNew.PtrArrayNewSet(Int32*[])", renamedItem.ToString());
     }
 
     [Test]
@@ -510,9 +613,8 @@ namespace MappingParser.Tests
       Assert.IsNull(renamedItem.ResultType);
       Assert.IsNotNull(renamedItem.MethodParams);
       Assert.AreEqual(1, renamedItem.MethodParams.Count);
-      Assert.AreEqual("System.Nullable<System.Int32>", renamedItem.MethodParams[0].NameOld.ToString());
-      Assert.AreEqual("System.Nullable<System.Int32>", renamedItem.MethodParams[0].NameNew.ToString());
-      Assert.AreEqual("System.Nullable<System.Int32>&", renamedItem.MethodParams[0].ToString());
+      Assert.AreEqual("System.Nullable<System.Int32>&", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Nullable<System.Int32>&", renamedItem.MethodParams[0].NameNew.ToString());
       Assert.AreEqual("System.Nullable<System.Int32>&", renamedItem.MethodParams[0].ToString());
       Assert.IsNotNull(renamedItem.Owner);
       Assert.AreEqual(renamedClass, renamedItem.Owner);
@@ -799,7 +901,7 @@ namespace MappingParser.Tests
     public void StatisticsTest()
     {
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\NamingTestMapping.xml"));
-      Assert.AreEqual(13, mapping.TotalMethodsCount);
+      Assert.AreEqual(16, mapping.TotalMethodsCount);
       Assert.AreEqual(4, mapping.TotalClassesCount);
       Assert.AreEqual(3, mapping.TotalSubclassesCount);
       Assert.AreEqual(1, mapping.NamespacesCount);
@@ -862,6 +964,74 @@ namespace MappingParser.Tests
       Assert.AreEqual("NsNew.ClassNew.GenericFieldNew2", renamedItem.NameNewPlain);
       Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>> NsOld.ClassOld._callSiteSetters", renamedItem.NameOldFull);
       Assert.AreEqual("NsOld.ClassSecondOld<System.String, System.Runtime.CompilerServices.CallSite<System.Func<System.Runtime.CompilerServices.CallSite, System.Object, System.Object, System.Object>>> NsNew.ClassNew.GenericFieldNew2", renamedItem.NameNewFull);
+    }
+
+    [Test]
+    public void RealNamingTest3()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RealNamingTest.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+      Configs.Instance.SimplifyNullable = false;
+
+      // [ModuleOld]System.Nullable`1<NsOld.ClassSecondOld>[] NsOld.ClassOld::GenericFieldOld3
+      // -> GenericFieldNew3
+
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[2];
+      Assert.AreEqual(EntityType.Field, renamedItem.EntityType);
+      Assert.IsNotNull(renamedItem.ResultType);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[]", renamedItem.ResultType.NameOld.ToString());
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[]", renamedItem.ResultType.NameNew.ToString());
+      Assert.IsNull(renamedItem.MethodParams);
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("Nullable<ClassSecondOld>[] GenericFieldOld3", renamedItem.NameOld);
+      Assert.AreEqual("Nullable<ClassSecondOld>[] GenericFieldNew3", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.GenericFieldOld3", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericFieldNew3", renamedItem.NameNewPlain);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[] NsOld.ClassOld.GenericFieldOld3", renamedItem.NameOldFull);
+      Assert.AreEqual("System.Nullable<NsOld.ClassSecondOld>[] NsNew.ClassNew.GenericFieldNew3", renamedItem.NameNewFull);
+    }
+
+    [Test]
+    public void RealNamingTest4()
+    {
+      Configs.Instance.SimplifySystemNames = false;
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RealNamingTest.xml"));
+      Assert.AreEqual(1, mapping.Classes.Count);
+      RenamedClass renamedClass = mapping.Classes[0];
+      Configs.Instance.SimplifyNullable = false;
+
+      // [ModuleOld]NsOld.ClassOld::GenericMethodOld1(System.Nullable<System.Int64>[])
+      // -> GenericMethodNew1
+
+      RenamedItem renamedItem = (RenamedItem)renamedClass.Items[3];
+      Assert.AreEqual(EntityType.Method, renamedItem.EntityType);
+      Assert.IsNull(renamedItem.ResultType);
+      Assert.IsNotNull(renamedItem.MethodParams);
+      Assert.AreEqual(1, renamedItem.MethodParams.Count);
+      Assert.AreEqual("System.Nullable<System.Int64>[]", renamedItem.MethodParams[0].NameOld.ToString());
+      Assert.AreEqual("System.Nullable<System.Int64>[]", renamedItem.MethodParams[0].NameNew.ToString());
+      Assert.AreEqual("System.Nullable<System.Int64>[]", renamedItem.MethodParams[0].ToString());
+      Assert.IsNotNull(renamedItem.Owner);
+      Assert.AreEqual(renamedClass, renamedItem.Owner);
+      Assert.AreEqual("ModuleOld", renamedItem.ModuleOld);
+      Assert.AreEqual("ModuleNew", renamedItem.ModuleNew);
+      Assert.AreEqual("void GenericMethodOld1(Nullable<Int64>[])", renamedItem.NameOld);
+      Assert.AreEqual("void GenericMethodNew1(Nullable<Int64>[])", renamedItem.NameNew);
+      Assert.AreEqual("NsOld.ClassOld.GenericMethodOld1", renamedItem.NameOldPlain);
+      Assert.AreEqual("NsNew.ClassNew.GenericMethodNew1", renamedItem.NameNewPlain);
+      Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(System.Nullable<System.Int64>[])", renamedItem.NameOldFull);
+      Assert.AreEqual("void NsNew.ClassNew.GenericMethodNew1(System.Nullable<System.Int64>[])", renamedItem.NameNewFull);
+      Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(Nullable<Int64>[])", renamedItem.NameOldSimple);
+      Assert.AreEqual("void NsNew.ClassNew.GenericMethodNew1(Nullable<Int64>[])", renamedItem.NameNewSimple);
+      Assert.AreEqual("void GenericMethodOld1(Nullable<Int64>[]) → void GenericMethodNew1(Nullable<Int64>[])", renamedItem.TransformName);
+      Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(System.Nullable<System.Int64>[]) → void NsNew.ClassNew.GenericMethodNew1(System.Nullable<System.Int64>[])", renamedItem.TransformNameFull);
+      Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(Nullable<Int64>[]) → void NsNew.ClassNew.GenericMethodNew1(Nullable<Int64>[])", renamedItem.TransformSimple);
+      Assert.AreEqual("void NsOld.ClassOld.GenericMethodOld1(Nullable<Int64>[]) → void NsNew.ClassNew.GenericMethodNew1(Nullable<Int64>[])", renamedItem.ToString());
     }
   }
 }

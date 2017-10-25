@@ -56,7 +56,7 @@
       if (nameNew.Namespace == null)
         return;
 
-      // some optimize
+      // some optimization
       if (nameNew.Namespace.StartsWith("System") && !searcher.HaveSystemEntities)
         return;
 

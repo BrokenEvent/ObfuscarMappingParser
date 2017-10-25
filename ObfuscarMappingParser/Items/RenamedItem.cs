@@ -8,7 +8,7 @@ namespace ObfuscarMappingParser
   class RenamedItem: RenamedBase
   {
     private EntityType entityType;
-    private Renamed resultType;
+    private RenamedParam resultType;
     private RenamedClass owner;
     private List<RenamedParam> methodParams;
 
@@ -26,9 +26,9 @@ namespace ObfuscarMappingParser
           string s = str.Substring(0, i);
           int k = s.IndexOf('/');
           if (k != -1)
-            resultType = new Renamed(s.Substring(0, k) + "." + s.Substring(k + 1));
+            resultType = new RenamedParam(s.Substring(0, k) + "." + s.Substring(k + 1));
           else
-            resultType = new Renamed(s);
+            resultType = new RenamedParam(s);
           str = str.Substring(i + 1);
         }
 
@@ -96,7 +96,7 @@ namespace ObfuscarMappingParser
         else
           paramValue = SystemTypeProcessor.SimplifyType(methodParams[i].NameOld, !isShort);
 
-        sb.Append(methodParams[i].AddModifier(paramValue));
+        sb.Append(paramValue);
 
         if (i < methodParams.Count - 1)
           sb.Append(", ");

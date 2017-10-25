@@ -10,6 +10,7 @@ namespace ObfuscarMappingParser
     private string[] nsCache;
     private string name;
     private string module;
+    private string modifier;
     private EntityName[] genericParams;
 
     internal static IEnumerable<string> ParseList(string str, int index1, char endChar)
@@ -178,13 +179,19 @@ namespace ObfuscarMappingParser
         if (name == "Nullable" && Configs.Instance.SimplifyNullable)
           return SystemTypeProcessor.SimplifyType(genericParams[0], false) + "?";
 
-        return name + BuildGenericParams(false);
+        return AddModifier(name + BuildGenericParams(false), modifier);
       }
     }
 
     public string Module
     {
       get { return module; }
+    }
+
+    public string Modifier
+    {
+      get { return modifier; }
+      set { modifier = value; }
     }
 
     public string PathName
@@ -194,7 +201,7 @@ namespace ObfuscarMappingParser
         if (name == "Nullable" && Configs.Instance.SimplifyNullable)
           return SystemTypeProcessor.SimplifyType(genericParams[0], true) + "?";
 
-        return @namespace != null ? @namespace + "." + name + BuildGenericParams(true): name + BuildGenericParams(true);
+        return AddModifier(@namespace != null ? @namespace + "." + name + BuildGenericParams(true): name + BuildGenericParams(true), modifier);
       }
     }
 
@@ -230,6 +237,27 @@ namespace ObfuscarMappingParser
       if (string.IsNullOrEmpty(value))
         return null;
       return new EntityName(value);
+    }
+
+    public static string AddModifier(string target, string modifier)
+    {
+      if (modifier == null)
+        return target;
+
+      if (Configs.Instance.SimplifyRef)
+      {
+        int i = modifier.IndexOf('&');
+        if (i != -1)
+        {
+          target = "ref " + target;
+          if (i == modifier.Length - 1)
+            modifier = modifier.Substring(0, i);
+          else
+            modifier = modifier.Substring(0, i) + modifier.Substring(i + 1);
+        }
+      }
+
+      return target + modifier;
     }
 
     public bool Compare(EntityName to, bool ignoreNs)

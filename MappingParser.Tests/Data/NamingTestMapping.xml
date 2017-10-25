@@ -14,6 +14,9 @@
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::RefPtrMethodOld([mscorlib]System.Int32*&amp;)" newName="RefPtrMethodNew" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::NullableRefMethodOld([mscorlib]System.Nullable`1&lt;[mscorlib]System.Int32&gt;&amp;)" newName="NullableRefMethodNew" />
       <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::GenericSetOld[1]([mscorlib]System.Collections.Generic.Dictionary`2&lt;[mscorlib]System.String,[mscorlib]System.Collections.Generic.List`1&lt;[mscorlib]System.String&gt;&gt;)" newName="GenericSetNew" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::ArrayOldSet1([mscorlib]System.Int32[])" newName="ArrayNewSet1" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::ArrayOldSet2([mscorlib]System.Int32[][])" newName="ArrayNewSet2" />
+      <renamedMethod oldName="[ModuleOld]NsOld.ClassOld::PtrArrayOldSet([mscorlib]System.Int32*[])" newName="PtrArrayNewSet" />
     </renamedClass>
     <renamedClass oldName="[ModuleOld]NsOld.ClassOld/SubclassOld" newName="[ModuleNew]NsNew.ClassNew/SubclassNew">
       <renamedMethod oldName="[ModuleOld]System.String NsOld.ClassOld/SubclassOld::StringMethodOld()" newName="StringMethodNew" />
