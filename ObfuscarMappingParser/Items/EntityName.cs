@@ -177,7 +177,7 @@ namespace ObfuscarMappingParser
       get
       {
         if (name == "Nullable" && Configs.Instance.SimplifyNullable)
-          return SystemTypeProcessor.SimplifyType(genericParams[0], false) + "?";
+          return AddModifier(SystemTypeProcessor.SimplifyType(genericParams[0], false) + "?", modifier);
 
         return AddModifier(name + BuildGenericParams(false), modifier);
       }
@@ -199,7 +199,7 @@ namespace ObfuscarMappingParser
       get
       {
         if (name == "Nullable" && Configs.Instance.SimplifyNullable)
-          return SystemTypeProcessor.SimplifyType(genericParams[0], true) + "?";
+          return AddModifier(SystemTypeProcessor.SimplifyType(genericParams[0], true) + "?", modifier);
 
         return AddModifier(@namespace != null ? @namespace + "." + name + BuildGenericParams(true): name + BuildGenericParams(true), modifier);
       }
