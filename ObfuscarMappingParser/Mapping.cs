@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
@@ -13,6 +14,10 @@ namespace ObfuscarMappingParser
     private readonly string filename;
     private DateTime lastModified;
     private List<RenamedClass> classes = new List<RenamedClass>();
+    private Dictionary<EntityName, RenamedClass> classesNameOldDictionary = new Dictionary<EntityName, RenamedClass>();
+    private Dictionary<EntityName, RenamedClass> classesNameOldFullDictionary = new Dictionary<EntityName, RenamedClass>();
+    private Dictionary<EntityName, RenamedClass> classesNameNewDictionary = new Dictionary<EntityName, RenamedClass>();
+    private Dictionary<EntityName, RenamedClass> classesNameNewFullDictionary = new Dictionary<EntityName, RenamedClass>();
 
     private long timingXML;
     private long timingParsing;
@@ -24,9 +29,9 @@ namespace ObfuscarMappingParser
     private int subclassesCount;
     private int skippedCount;
 
-    private List<string> modules = new List<string>();
-    private List<string> namespaces = new List<string>();
-    private List<string> namespacesObfuscated = new List<string>();
+    private HashSet<string> modules = new HashSet<string>();
+    private HashSet<string> namespaces = new HashSet<string>();
+    private HashSet<string> namespacesObfuscated = new HashSet<string>();
 
     private static string[] emptyArray = new string[0];
 
@@ -59,6 +64,10 @@ namespace ObfuscarMappingParser
       namespaces.Clear();
       namespacesObfuscated.Clear();
       classes.Clear();
+      classesNameOldDictionary.Clear();
+      classesNameOldFullDictionary.Clear();
+      classesNameNewDictionary.Clear();
+      classesNameNewFullDictionary.Clear();
       haveSystemEntities = false;
       methodsCount = classesCount = subclassesCount = skippedCount = 0;
       lastModified = File.GetLastWriteTime(filename);
@@ -81,12 +90,24 @@ namespace ObfuscarMappingParser
             else
               subclasses.Add(c);
 
+            if (!classesNameOldDictionary.ContainsKey(c.NameOld))
+              classesNameOldDictionary.Add(c.NameOld, c);
+
+            if (!classesNameOldFullDictionary.ContainsKey(c.NameOldFull))
+              classesNameOldFullDictionary.Add(c.NameOldFull, c);
+
+            if (!classesNameNewDictionary.ContainsKey(c.NameNew))
+              classesNameNewDictionary.Add(c.NameNew, c);
+
+            if (!classesNameNewFullDictionary.ContainsKey(c.NameNewFull))
+              classesNameNewFullDictionary.Add(c.NameNewFull, c);
+
             methodsCount += c.MethodsCount;
-            if (c.ModuleNew != null && !modules.Contains(c.ModuleNew))
+            if (c.ModuleNew != null)
               modules.Add(c.ModuleNew);
-            if (c.Name.NameOld != null && !string.IsNullOrEmpty(c.Name.NameOld.Namespace) && !namespaces.Contains(c.Name.NameOld.Namespace))
+            if (c.Name.NameOld != null && !string.IsNullOrEmpty(c.Name.NameOld.Namespace))
               namespaces.Add(c.Name.NameOld.Namespace);
-            if (c.Name.NameNew != null && !string.IsNullOrEmpty(c.Name.NameNew.Namespace) && !namespacesObfuscated.Contains(c.Name.NameNew.Namespace))
+            if (c.Name.NameNew != null && !string.IsNullOrEmpty(c.Name.NameNew.Namespace))
               namespacesObfuscated.Add(c.Name.NameNew.Namespace);
           }
         }
@@ -165,17 +186,17 @@ namespace ObfuscarMappingParser
       get { return classes; }
     }
 
-    public List<string> Modules
+    public IEnumerable<string> Modules
     {
       get { return modules; }
     }
 
-    public List<string> Namespaces
+    public IEnumerable<string> Namespaces
     {
       get { return namespaces; }
     }
 
-    public List<string> NamespacesObfuscated
+    public IEnumerable<string> NamespacesObfuscated
     {
       get { return namespacesObfuscated; }
     }
@@ -207,7 +228,7 @@ namespace ObfuscarMappingParser
       foreach (RenamedClass renamedClass in classes)
         foreach (RenamedBase item in renamedClass.GetChildItems())
           if (item.Name.NameOld != null)
-          result.Add(item.NameOldPlain);
+            result.Add(item.NameOldPlain);
 
       return result;
     }
@@ -413,11 +434,11 @@ namespace ObfuscarMappingParser
 
     public RenamedBase SearchForNewName(EntityName target)
     {
-      foreach (RenamedClass renamedClass in classes)
+      RenamedClass renamedClass;
+      if (classesNameNewDictionary.TryGetValue(target, out renamedClass)
+         || classesNameNewFullDictionary.TryGetValue(target, out renamedClass))
       {
-        RenamedClass c = renamedClass.SearchForNewName(target);
-        if (c != null)
-          return c;
+        return renamedClass;
       }
 
       return null;
@@ -425,11 +446,11 @@ namespace ObfuscarMappingParser
 
     public RenamedBase SearchForOldName(EntityName target)
     {
-      foreach (RenamedClass renamedClass in classes)
+      RenamedClass renamedClass;
+      if (classesNameOldDictionary.TryGetValue(target, out renamedClass)
+          || classesNameOldFullDictionary.TryGetValue(target, out renamedClass))
       {
-        RenamedClass c = renamedClass.SearchForOldName(target);
-        if (c != null)
-          return c;
+        return renamedClass;
       }
 
       return null;
