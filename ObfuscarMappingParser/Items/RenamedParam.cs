@@ -1,15 +1,18 @@
-﻿namespace ObfuscarMappingParser
+﻿using System;
+
+namespace ObfuscarMappingParser
 {
   class RenamedParam: Renamed
   {
-    public RenamedParam(string nameOld)
+    public static EntityName ParseParam(string nameOld)
     {
       int modifierIndex = nameOld.Length - 1;
+
       do
       {
         if (nameOld[modifierIndex] == '&' || nameOld[modifierIndex] == '*')
           modifierIndex--;
-        else if (nameOld[modifierIndex] == ']' || nameOld[modifierIndex - 1] == '[')
+        else if (modifierIndex > 0 && nameOld.Length > 1 && (nameOld[modifierIndex] == ']' || nameOld[modifierIndex - 1] == '['))
           modifierIndex -= 2;
         else
           break;
@@ -25,10 +28,16 @@
         nameOld = nameOld.Substring(0, modifierIndex);
       }
 
-      this.nameOld = new EntityName(nameOld);
-      this.nameOld.Modifier = modifier;
+      EntityName result = new EntityName(nameOld);
+      result.Modifier = modifier;
+      return result;
+    }
+
+    public RenamedParam(string nameOld)
+    {
+      this.nameOld = ParseParam(nameOld);
       nameNew = (EntityName)this.nameOld.Clone();
-      nameNew.Modifier = modifier;
+      nameNew.Modifier = this.nameOld.Modifier;
     }
 
     public string Modifier

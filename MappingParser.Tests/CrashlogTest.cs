@@ -138,9 +138,9 @@ namespace MappingParser.Tests
           results,
           0,
           "AntiFreeze.NET",
-          "void DwmSetWindowAttribute(IntPtr, Int32, Int32&, Int32)",
-          "void BrokenEvent.Shared.AeroPeekModifier.DwmSetWindowAttribute(IntPtr, Int32, Int32&, Int32)",
-          "void BrokenEvent.Shared.AeroPeekModifier.DwmSetWindowAttribute(System.IntPtr, System.Int32, System.Int32&, System.Int32)"
+          "void DwmSetWindowAttribute(IntPtr, Int32, ref Int32, Int32)",
+          "void BrokenEvent.Shared.AeroPeekModifier.DwmSetWindowAttribute(IntPtr, Int32, ref Int32, Int32)",
+          "void BrokenEvent.Shared.AeroPeekModifier.DwmSetWindowAttribute(System.IntPtr, System.Int32, ref System.Int32, System.Int32)"
         );
     }
 

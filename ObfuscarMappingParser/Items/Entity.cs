@@ -62,7 +62,10 @@ namespace ObfuscarMappingParser
         {
           string s2 = s1.Trim(' ');
           int k = s2.IndexOf(' ');
-          result.Add(k == -1 ? s2 : s2.Substring(0, k));
+          if (k != -1)
+            s2 = s2.Substring(0, k);
+
+          result.Add(RenamedParam.ParseParam(s2));
         }
       }
 
@@ -83,6 +86,11 @@ namespace ObfuscarMappingParser
     public static implicit operator Entity(string s)
     {
       return new Entity(s);
+    }
+
+    public override string ToString()
+    {
+      return name.ToString();
     }
 
     #region INamedEntity
