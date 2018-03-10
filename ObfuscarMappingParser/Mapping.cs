@@ -24,9 +24,9 @@ namespace ObfuscarMappingParser
     private int subclassesCount;
     private int skippedCount;
 
-    private List<string> modules = new List<string>();
-    private List<string> namespaces = new List<string>();
-    private List<string> namespacesObfuscated = new List<string>();
+    private HashSet<string> modules = new HashSet<string>();
+    private HashSet<string> namespaces = new HashSet<string>();
+    private HashSet<string> namespacesObfuscated = new HashSet<string>();
 
     private static string[] emptyArray = new string[0];
 
@@ -165,17 +165,17 @@ namespace ObfuscarMappingParser
       get { return classes; }
     }
 
-    public List<string> Modules
+    public IEnumerable<string> Modules
     {
       get { return modules; }
     }
 
-    public List<string> Namespaces
+    public IEnumerable<string> Namespaces
     {
       get { return namespaces; }
     }
 
-    public List<string> NamespacesObfuscated
+    public IEnumerable<string> NamespacesObfuscated
     {
       get { return namespacesObfuscated; }
     }
@@ -207,7 +207,7 @@ namespace ObfuscarMappingParser
       foreach (RenamedClass renamedClass in classes)
         foreach (RenamedBase item in renamedClass.GetChildItems())
           if (item.Name.NameOld != null)
-          result.Add(item.NameOldPlain);
+            result.Add(item.NameOldPlain);
 
       return result;
     }

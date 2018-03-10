@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace ObfuscarMappingParser
 {
-  class EntityName: ICloneable
+  class EntityName: ICloneable, IEquatable<EntityName>
   {
     private string @namespace;
     private string[] nsCache;
@@ -285,13 +286,18 @@ namespace ObfuscarMappingParser
       return Compare(target, false);
     }
 
+    [SuppressMessage("ReSharper", "NonReadonlyMemberInGetHashCode")]
     public override int GetHashCode()
     {
-      int code = 0;
-      if (@namespace != null)
-        code = @namespace.GetHashCode();
-      code += name.GetHashCode();
-      return code;
+      unchecked
+      {
+        int code = (int)2166136261;
+        if (@namespace != null)
+          code = (code * 16777619) ^ @namespace.GetHashCode();
+
+        code = (code * 16777619) ^ name.GetHashCode();
+        return code;
+      }
     }
 
     public object Clone()
@@ -350,6 +356,11 @@ namespace ObfuscarMappingParser
           genericParams[i].UpdateGenericParams(searcher);
         }
       }
+    }
+
+    public bool Equals(EntityName other)
+    {
+      return Compare(other, false);
     }
   }
 }
