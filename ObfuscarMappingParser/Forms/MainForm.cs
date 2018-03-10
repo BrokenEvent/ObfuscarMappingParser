@@ -64,6 +64,9 @@ namespace ObfuscarMappingParser
       AddIcon(Resources.IconMultiple, out ICON_MULTIPLE);
       AddIcon(Resources.IconPdb, out ICON_PDB);
 
+      ptvElements.Highlights.Add(new ListHighlight(Color.DarkRed));
+      ptvElements.Highlights.Add(new ListHighlight(Color.DarkBlue));
+
       try
       {
         Icon = Icon.ExtractAssociatedIcon(Assembly.GetEntryAssembly().Location);
@@ -872,7 +875,7 @@ namespace ObfuscarMappingParser
 
     private void DoUpdateVersion()
     {
-      BaseForm.OpenUrl(this, Configs.Instance.UpdateHelper.UpdateAvailable.InstallUrl.ToString());
+      BaseForm.OpenUrl(this, Configs.Instance.UpdateHelper.UpdateAvailable.InstallerUrl.ToString());
     }
 
     private void miUpdateVersion_Click(object sender, EventArgs e)

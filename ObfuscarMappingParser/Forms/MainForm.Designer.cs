@@ -31,8 +31,6 @@
       this.components = new System.ComponentModel.Container();
       BrokenEvent.Shared.Controls.PineappleTreeColumn pineappleTreeColumn1 = new BrokenEvent.Shared.Controls.PineappleTreeColumn();
       BrokenEvent.Shared.Controls.PineappleTreeColumn pineappleTreeColumn2 = new BrokenEvent.Shared.Controls.PineappleTreeColumn();
-      BrokenEvent.Shared.Controls.ListHighlight listHighlight1 = new BrokenEvent.Shared.Controls.ListHighlight();
-      BrokenEvent.Shared.Controls.ListHighlight listHighlight2 = new BrokenEvent.Shared.Controls.ListHighlight();
       this.odMapping = new System.Windows.Forms.OpenFileDialog();
       this.statusStrip = new System.Windows.Forms.StatusStrip();
       this.spbLoading = new System.Windows.Forms.ToolStripProgressBar();
@@ -570,16 +568,17 @@
       // 
       this.ptvElements.AllowIgnoreColumns = true;
       this.ptvElements.AutoScroll = true;
-      this.ptvElements.AutoScrollMinSize = new System.Drawing.Size(727, 0);
       this.ptvElements.BackColor = System.Drawing.SystemColors.ControlLightLight;
       this.ptvElements.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
+      this.ptvElements.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       pineappleTreeColumn1.Autosize = true;
       pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(1);
       pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.HeaderText = "Classname";
+      pineappleTreeColumn1.Multiline = true;
       pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.Width = 477;
-      pineappleTreeColumn2.ContentPadding = new System.Windows.Forms.Padding(2);
+      pineappleTreeColumn2.ContentPadding = new System.Windows.Forms.Padding(0);
       pineappleTreeColumn2.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn2.HeaderText = "Renamed";
       pineappleTreeColumn2.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
@@ -590,14 +589,11 @@
       this.ptvElements.DisabledColor = System.Drawing.SystemColors.Control;
       this.ptvElements.Dock = System.Windows.Forms.DockStyle.Fill;
       this.ptvElements.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
+      this.ptvElements.EmptyListText = "";
       this.ptvElements.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.ptvElements.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.ptvElements.FullRowSelect = true;
       this.ptvElements.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      listHighlight1.Color = System.Drawing.Color.DarkRed;
-      listHighlight2.Color = System.Drawing.Color.DarkBlue;
-      this.ptvElements.Highlights.Add(listHighlight1);
-      this.ptvElements.Highlights.Add(listHighlight2);
       this.ptvElements.ImageList = this.ilIcons;
       this.ptvElements.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.ptvElements.Location = new System.Drawing.Point(0, 49);
@@ -606,7 +602,8 @@
       this.ptvElements.Size = new System.Drawing.Size(727, 479);
       this.ptvElements.TabIndex = 5;
       this.ptvElements.Text = "pineappleTreeView1";
-      this.ptvElements.UseThemes = true;
+      this.ptvElements.WatermarkImage = null;
+      this.ptvElements.WatermarkLocation = new System.Drawing.Point(0, 0);
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
       // 

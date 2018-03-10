@@ -86,9 +86,9 @@
       this.lblCopyright.AutoSize = true;
       this.lblCopyright.Location = new System.Drawing.Point(12, 369);
       this.lblCopyright.Name = "lblCopyright";
-      this.lblCopyright.Size = new System.Drawing.Size(244, 13);
+      this.lblCopyright.Size = new System.Drawing.Size(241, 13);
       this.lblCopyright.TabIndex = 3;
-      this.lblCopyright.Text = "©2014-2017, Broken Event. All rights reserved.";
+      this.lblCopyright.Text = "©2014-2018 Broken Event. All rights reserved.";
       // 
       // lblMessage
       // 

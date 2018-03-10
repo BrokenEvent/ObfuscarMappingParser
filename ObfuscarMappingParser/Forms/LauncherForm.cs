@@ -2,7 +2,6 @@
 using System.Text;
 using System.Windows.Forms;
 using BrokenEvent.Shared;
-using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.Shared.Controls;
 
 using ObfuscarMappingParser.Properties;
@@ -11,11 +10,9 @@ namespace ObfuscarMappingParser
 {
   partial class LauncherForm : BaseForm
   {
-    private const int FILENAME_LENGTH = 70;
-
     private void AddItem(string name)
     {
-      BrokenListItem item = new BrokenListItem(PathUtils.ShortenPath(name, FILENAME_LENGTH));
+      BrokenListItem item = new BrokenListItem(name);
       item.Tag = name;
       item.ImageIndex = 0;
       item.ToolTipText = name;
@@ -31,7 +28,7 @@ namespace ObfuscarMappingParser
       blvFiles.BeginUpdate();
       foreach (string s in Configs.Instance.Recents)
       {
-        BrokenListItem item = new BrokenListItem(PathUtils.ShortenPath(s, FILENAME_LENGTH));
+        BrokenListItem item = new BrokenListItem(s);
         item.Tag = s;
         item.ImageIndex = 0;
 

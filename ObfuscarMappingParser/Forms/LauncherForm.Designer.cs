@@ -44,7 +44,7 @@
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
       this.btnOk.Enabled = false;
-      this.btnOk.Location = new System.Drawing.Point(237, 310);
+      this.btnOk.Location = new System.Drawing.Point(566, 531);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -55,7 +55,7 @@
       // 
       this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnCancel.Location = new System.Drawing.Point(343, 310);
+      this.btnCancel.Location = new System.Drawing.Point(672, 531);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
       this.btnCancel.TabIndex = 2;
@@ -71,7 +71,7 @@
       // btnBrowse
       // 
       this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.btnBrowse.Location = new System.Drawing.Point(15, 310);
+      this.btnBrowse.Location = new System.Drawing.Point(15, 531);
       this.btnBrowse.Name = "btnBrowse";
       this.btnBrowse.Size = new System.Drawing.Size(100, 23);
       this.btnBrowse.TabIndex = 6;
@@ -103,15 +103,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.blvFiles.AutoScroll = true;
-      this.blvFiles.AutoScrollMinSize = new System.Drawing.Size(429, 0);
+      this.blvFiles.AutoScrollMinSize = new System.Drawing.Size(758, 0);
       this.blvFiles.BackColor = System.Drawing.SystemColors.Window;
       this.blvFiles.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       brokenListColumn1.Autosize = true;
+      brokenListColumn1.CharacterWrap = true;
       brokenListColumn1.ContentPadding = new System.Windows.Forms.Padding(1);
       brokenListColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       brokenListColumn1.HeaderText = null;
+      brokenListColumn1.Multiline = true;
       brokenListColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
-      brokenListColumn1.Width = 429;
+      brokenListColumn1.Width = 758;
       this.blvFiles.Columns.Add(brokenListColumn1);
       this.blvFiles.DisabledColor = System.Drawing.Color.Empty;
       this.blvFiles.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
@@ -120,10 +122,11 @@
       this.blvFiles.ImageList = this.ilIcon;
       this.blvFiles.Location = new System.Drawing.Point(12, 82);
       this.blvFiles.Name = "blvFiles";
-      this.blvFiles.Size = new System.Drawing.Size(431, 207);
+      this.blvFiles.Size = new System.Drawing.Size(760, 428);
       this.blvFiles.TabIndex = 8;
       this.blvFiles.Text = "brokenListView1";
-      this.blvFiles.UseThemes = true;
+      this.blvFiles.WatermarkImage = null;
+      this.blvFiles.WatermarkLocation = new System.Drawing.Point(0, 0);
       this.blvFiles.ItemSelected += new System.EventHandler<BrokenEvent.Shared.Controls.ItemSelectEventArgs>(this.blvFiles_ItemSelected);
       this.blvFiles.DoubleClick += new System.EventHandler(this.blvFiles_DoubleClick);
       // 
@@ -134,7 +137,7 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnCancel;
-      this.ClientSize = new System.Drawing.Size(455, 340);
+      this.ClientSize = new System.Drawing.Size(784, 561);
       this.ControlBox = false;
       this.Controls.Add(this.blvFiles);
       this.Controls.Add(this.lblFiles);

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ObfuscarMappingParser
+﻿namespace ObfuscarMappingParser
 {
   class RenamedParam: Renamed
   {

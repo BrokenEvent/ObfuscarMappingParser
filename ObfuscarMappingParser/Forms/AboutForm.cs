@@ -21,7 +21,7 @@ namespace ObfuscarMappingParser
     private void llblUpdate_Click(object sender, EventArgs e)
     {
       if (Configs.Instance.UpdateHelper.UpdateAvailable != null)
-        OpenUrl(Configs.Instance.UpdateHelper.UpdateAvailable.InstallUrl.ToString());
+        OpenUrl(Configs.Instance.UpdateHelper.UpdateAvailable.InstallerUrl.ToString());
       else
         DoUpdateCheck();
     }
