@@ -54,11 +54,9 @@ namespace MappingParser.Tests
     [Test]
     public void TestStacktrace()
     {
-      string filename;
-
       Write(TestHelper.ReadAllText(@"Data\test1.txt") + "\r\n");
 
-      Assert.AreEqual(false, CommandLine.ProcessCommandline(out filename, new string[] { TestHelper.TranslatePath(@"Data\Mapping.xml"), "-c" }));
+      Assert.AreEqual(false, CommandLine.ProcessCommandline(out _, new string[] { TestHelper.TranslatePath(@"Data\Mapping.xml"), "-c" }));
       Expect(@"void AntiFreeze.Core.DataBase.GetReader(IDbCommand, string)
 void AntiFreeze.Core.DataBase.GetReader(string)
 void AntiFreeze.NET.NativeAPI.SetupNativeAPI()
@@ -70,8 +68,7 @@ void AntiFreeze.NET.MainForm.MainForm_Load(object, EventArgs)
     [Test]
     public void TestHelp()
     {
-      string filename;
-      Assert.AreEqual(false, CommandLine.ProcessCommandline(out filename, new string[] { "/?" }));
+      Assert.AreEqual(false, CommandLine.ProcessCommandline(out _, new string[] { "/?" }));
       Expect(CommandLine.HELP_STRING);
     }
   }
