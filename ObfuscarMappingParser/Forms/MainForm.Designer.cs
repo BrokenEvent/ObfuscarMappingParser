@@ -572,13 +572,11 @@
       this.ptvElements.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
       this.ptvElements.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       pineappleTreeColumn1.Autosize = true;
-      pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(1);
       pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.HeaderText = "Classname";
       pineappleTreeColumn1.Multiline = true;
       pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.Width = 477;
-      pineappleTreeColumn2.ContentPadding = new System.Windows.Forms.Padding(0);
       pineappleTreeColumn2.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn2.HeaderText = "Renamed";
       pineappleTreeColumn2.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
@@ -602,8 +600,6 @@
       this.ptvElements.Size = new System.Drawing.Size(727, 479);
       this.ptvElements.TabIndex = 5;
       this.ptvElements.Text = "pineappleTreeView1";
-      this.ptvElements.WatermarkImage = null;
-      this.ptvElements.WatermarkLocation = new System.Drawing.Point(0, 0);
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
       // 

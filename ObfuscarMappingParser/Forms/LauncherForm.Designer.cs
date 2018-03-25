@@ -30,6 +30,7 @@
     {
       this.components = new System.ComponentModel.Container();
       BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn1 = new BrokenEvent.Shared.Controls.BrokenListColumn();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LauncherForm));
       this.btnOk = new System.Windows.Forms.Button();
       this.btnCancel = new System.Windows.Forms.Button();
       this.odFile = new System.Windows.Forms.OpenFileDialog();
@@ -108,7 +109,6 @@
       this.blvFiles.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       brokenListColumn1.Autosize = true;
       brokenListColumn1.CharacterWrap = true;
-      brokenListColumn1.ContentPadding = new System.Windows.Forms.Padding(1);
       brokenListColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       brokenListColumn1.HeaderText = null;
       brokenListColumn1.Multiline = true;
@@ -125,8 +125,7 @@
       this.blvFiles.Size = new System.Drawing.Size(760, 428);
       this.blvFiles.TabIndex = 8;
       this.blvFiles.Text = "brokenListView1";
-      this.blvFiles.WatermarkImage = null;
-      this.blvFiles.WatermarkLocation = new System.Drawing.Point(0, 0);
+      this.blvFiles.TextPadding = new System.Windows.Forms.Padding(1);
       this.blvFiles.ItemSelected += new System.EventHandler<BrokenEvent.Shared.Controls.ItemSelectEventArgs>(this.blvFiles_ItemSelected);
       this.blvFiles.DoubleClick += new System.EventHandler(this.blvFiles_DoubleClick);
       // 
@@ -149,6 +148,7 @@
       this.HeaderColor = System.Drawing.Color.White;
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "Open File";
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "LauncherForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Obfuscar Mapping Parser Launcher";

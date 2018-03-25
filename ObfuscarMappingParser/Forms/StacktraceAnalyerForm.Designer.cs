@@ -163,17 +163,17 @@
       this.pineappleTreeView.Backlights.Add(listHighlight2);
       this.pineappleTreeView.Backlights.Add(listHighlight3);
       this.pineappleTreeView.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
+      this.pineappleTreeView.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       pineappleTreeColumn1.Autosize = true;
-      pineappleTreeColumn1.ContentPadding = new System.Windows.Forms.Padding(2);
-      pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.HeaderText = null;
       pineappleTreeColumn1.Multiline = true;
-      pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      pineappleTreeColumn1.TextPadding = new System.Windows.Forms.Padding(2);
       pineappleTreeColumn1.Width = 612;
       this.pineappleTreeView.Columns.Add(pineappleTreeColumn1);
       this.pineappleTreeView.DisabledColor = System.Drawing.SystemColors.Control;
       this.pineappleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
       this.pineappleTreeView.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
+      this.pineappleTreeView.EmptyListText = "";
       this.pineappleTreeView.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.pineappleTreeView.FullRowSelect = true;
       this.pineappleTreeView.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -184,7 +184,6 @@
       this.pineappleTreeView.Size = new System.Drawing.Size(612, 347);
       this.pineappleTreeView.TabIndex = 1;
       this.pineappleTreeView.Text = "pineappleTreeView1";
-      this.pineappleTreeView.UseThemes = true;
       this.pineappleTreeView.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.pineappleTreeView_NodeSelect);
       // 
       // StacktraceAnalyerForm

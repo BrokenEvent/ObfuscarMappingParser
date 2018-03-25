@@ -29,7 +29,8 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn2 = new BrokenEvent.Shared.Controls.BrokenListColumn();
+      BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn1 = new BrokenEvent.Shared.Controls.BrokenListColumn();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
       this.lblVS = new System.Windows.Forms.Label();
       this.cbSimplifySystemNames = new System.Windows.Forms.CheckBox();
       this.cbShowUnicode = new System.Windows.Forms.CheckBox();
@@ -65,7 +66,8 @@
       // lblVS
       // 
       this.lblVS.AutoSize = true;
-      this.lblVS.Location = new System.Drawing.Point(6, 3);
+      this.lblVS.Location = new System.Drawing.Point(6, 6);
+      this.lblVS.Margin = new System.Windows.Forms.Padding(3);
       this.lblVS.Name = "lblVS";
       this.lblVS.Size = new System.Drawing.Size(186, 13);
       this.lblVS.TabIndex = 0;
@@ -233,26 +235,26 @@
       this.blvEditors.AutoScrollMinSize = new System.Drawing.Size(521, 0);
       this.blvEditors.BackColor = System.Drawing.SystemColors.Window;
       this.blvEditors.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
-      brokenListColumn2.Autosize = true;
-      brokenListColumn2.ContentPadding = new System.Windows.Forms.Padding(4);
-      brokenListColumn2.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
-      brokenListColumn2.HeaderText = null;
-      brokenListColumn2.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
-      brokenListColumn2.Width = 521;
-      this.blvEditors.Columns.Add(brokenListColumn2);
+      brokenListColumn1.Autosize = true;
+      brokenListColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn1.HeaderText = null;
+      brokenListColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn1.Width = 521;
+      this.blvEditors.Columns.Add(brokenListColumn1);
       this.blvEditors.DisabledColor = System.Drawing.Color.Empty;
+      this.blvEditors.DrawBorder = false;
       this.blvEditors.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.blvEditors.EmptyListText = "No editors found.";
+      this.blvEditors.Font = new System.Drawing.Font("Segoe UI", 10F);
       this.blvEditors.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-      this.blvEditors.IconPadding = new System.Windows.Forms.Padding(0, -2, 0, -2);
+      this.blvEditors.IconPadding = new System.Windows.Forms.Padding(2);
       this.blvEditors.ImageList = this.imageList;
-      this.blvEditors.Location = new System.Drawing.Point(7, 19);
+      this.blvEditors.Location = new System.Drawing.Point(7, 25);
       this.blvEditors.Name = "blvEditors";
       this.blvEditors.SelectMode = BrokenEvent.Shared.Controls.BrokenListView.SelectionMode.AlwaysSelected;
-      this.blvEditors.Size = new System.Drawing.Size(523, 342);
+      this.blvEditors.Size = new System.Drawing.Size(523, 336);
       this.blvEditors.TabIndex = 4;
       this.blvEditors.Text = "brokenListView1";
-      this.blvEditors.UseThemes = true;
       // 
       // tpSettings
       // 
@@ -410,6 +412,7 @@
       this.HeaderColor = System.Drawing.Color.White;
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "Settings";
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "SettingsForm";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
