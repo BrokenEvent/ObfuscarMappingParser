@@ -196,7 +196,7 @@ namespace ObfuscarMappingParser
       pdbfiles.Clear();
       BuildMapping();
       EnableMappingActions(true);
-      EndLoading("Mapping loaded in " + mapping.TimingTotal + " ms");
+      EndLoading("Mapping loaded in " + mapping.LoadTime + " ms");
 
       AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Filename), false);
       AttachRelatedPdbs(pdbToAttach, true);
@@ -224,7 +224,7 @@ namespace ObfuscarMappingParser
 
       BuildMapping();
       EnableMappingActions(true);
-      EndLoading("Mapping reloaded in " + mapping.TimingTotal + " ms");
+      EndLoading("Mapping reloaded in " + mapping.LoadTime + " ms");
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
     }
 

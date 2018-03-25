@@ -120,6 +120,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Items\RenamedParam.cs" />
+    <Compile Include="LoadTimer.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="Items\EntityName.cs" />
     <Compile Include="ObfuscarParserException.cs" />

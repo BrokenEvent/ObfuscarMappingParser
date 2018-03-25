@@ -14,10 +14,9 @@ namespace ObfuscarMappingParser
     private DateTime lastModified;
     private List<RenamedClass> classes = new List<RenamedClass>();
 
-    private long timingXML;
-    private long timingParsing;
-    private long timingSubclasses;
-    private long timingUpdateNewNames;
+    private Dictionary<string, RenamedClass> classesCache = new Dictionary<string, RenamedClass>();
+
+    private long loadTime;
 
     private int methodsCount;
     private int classesCount;
@@ -42,15 +41,13 @@ namespace ObfuscarMappingParser
     }
 
     private void LoadFile()
-    {      
-      Stopwatch sw = new Stopwatch();
-      sw.Start();
+    {
+      loadTime = 0;
+      LoadTimer timer = new LoadTimer("XML Parsing");
       NanoXmlDocument xml = NanoXmlDocument.LoadFromFile(filename);
 
-      timingXML = sw.ElapsedMilliseconds;
-      Debug.WriteLine("XML Loading: " + timingXML + " ms");
-      sw.Reset();
-      sw.Start();
+      loadTime += timer.Stop();
+      timer = new LoadTimer("Items Processing");
 
       NanoXmlElement doc = xml.DocumentElement;
       NanoXmlElement types = (NanoXmlElement)doc["renamedTypes"];
@@ -59,6 +56,7 @@ namespace ObfuscarMappingParser
       namespaces.Clear();
       namespacesObfuscated.Clear();
       classes.Clear();
+      classesCache.Clear();
       haveSystemEntities = false;
       methodsCount = classesCount = subclassesCount = skippedCount = 0;
       lastModified = File.GetLastWriteTime(filename);
@@ -82,12 +80,25 @@ namespace ObfuscarMappingParser
               subclasses.Add(c);
 
             methodsCount += c.MethodsCount;
-            if (c.ModuleNew != null && !modules.Contains(c.ModuleNew))
+
+            if (c.ModuleNew != null)
               modules.Add(c.ModuleNew);
-            if (c.Name.NameOld != null && !string.IsNullOrEmpty(c.Name.NameOld.Namespace) && !namespaces.Contains(c.Name.NameOld.Namespace))
-              namespaces.Add(c.Name.NameOld.Namespace);
-            if (c.Name.NameNew != null && !string.IsNullOrEmpty(c.Name.NameNew.Namespace) && !namespacesObfuscated.Contains(c.Name.NameNew.Namespace))
-              namespacesObfuscated.Add(c.Name.NameNew.Namespace);
+            if (c.Name.NameOld != null)
+            {
+              classesCache[c.NameOld] = c;
+              classesCache[c.NameOldFull] = c;
+
+              if (!string.IsNullOrEmpty(c.Name.NameOld.Namespace))
+                namespaces.Add(c.Name.NameOld.Namespace);
+            }
+            if (c.Name.NameNew != null)
+            {
+              classesCache[c.NameNew] = c;
+              classesCache[c.NameNewFull] = c;
+
+              if (!string.IsNullOrEmpty(c.Name.NameNew.Namespace))
+                namespacesObfuscated.Add(c.Name.NameNew.Namespace);
+            }
           }
         }
 
@@ -103,21 +114,18 @@ namespace ObfuscarMappingParser
               classes.Add(c);
             else
               subclasses.Add(c);
+
+            classesCache[c.NameOld] = c;
+            classesCache[c.NameOldFull] = c;
           }
 
-
-      timingParsing = sw.ElapsedMilliseconds;
-      Debug.WriteLine("Parsing: " + timingParsing + " ms");
-      sw.Reset();
-      sw.Start();
+      loadTime += timer.Stop();
+      timer = new LoadTimer("Subclasses Processing");
 
       foreach (RenamedClass subclass in subclasses)
       {
-        RenamedClass c = (RenamedClass)SearchForOldName(subclass.OwnerClassName);
-        if (c == null)
-          c = (RenamedClass)SearchForNewName(subclass.OwnerClassName);
-
-        if (c != null)
+        RenamedClass c;
+        if (classesCache.TryGetValue(subclass.OwnerClassName, out c))
         {
           c.Items.Add(subclass);
           subclass.OwnerClass = c;
@@ -129,18 +137,14 @@ namespace ObfuscarMappingParser
         classes.Add(subclass);
       }
 
-      timingSubclasses = sw.ElapsedMilliseconds;
-      Debug.WriteLine("Subclasses processing: " + timingSubclasses + " ms");
-      sw.Reset();
-      sw.Start();
+      loadTime += timer.Stop();
+      timer = new LoadTimer("Values Updating");
 
       foreach (RenamedClass c in classes)
         c.UpdateNewNames(this);
 
-      timingUpdateNewNames = sw.ElapsedMilliseconds;
-      Debug.WriteLine("Values updating: " + timingUpdateNewNames + " ms");
-      Debug.WriteLine("Total elapsed: " + TimingTotal + " ms");
-      sw.Stop();
+      loadTime += timer.Stop();
+      Debug.WriteLine("Total Elapsed: {0} ms", loadTime);
     }
 
     public void Reload()
@@ -379,7 +383,7 @@ namespace ObfuscarMappingParser
 
     #endregion
 
-    #region Crashlog processing
+    #region Crashlog Processing
 
     public string ProcessCrashlogText(string text, bool filterPrefix = true)
     {
@@ -413,24 +417,22 @@ namespace ObfuscarMappingParser
 
     public RenamedBase SearchForNewName(EntityName target)
     {
-      foreach (RenamedClass renamedClass in classes)
-      {
-        RenamedClass c = renamedClass.SearchForNewName(target);
-        if (c != null)
-          return c;
-      }
+      RenamedClass c;
+      if (classesCache.TryGetValue(target.Name, out c))
+        return c;
+      if (classesCache.TryGetValue(target.FullName, out c))
+        return c;
 
       return null;
     }
 
     public RenamedBase SearchForOldName(EntityName target)
     {
-      foreach (RenamedClass renamedClass in classes)
-      {
-        RenamedClass c = renamedClass.SearchForOldName(target);
-        if (c != null)
-          return c;
-      }
+      RenamedClass c;
+      if (classesCache.TryGetValue(target.Name, out c))
+        return c;
+      if (classesCache.TryGetValue(target.FullName, out c))
+        return c;
 
       return null;
     }
@@ -442,34 +444,10 @@ namespace ObfuscarMappingParser
 
     #endregion
 
-    #region Timings
-
-    public long TimingXml
+    public long LoadTime
     {
-      get { return timingXML; }
+      get { return loadTime; }
     }
-
-    public long TimingParsing
-    {
-      get { return timingParsing; }
-    }
-
-    public long TimingSubclasses
-    {
-      get { return timingSubclasses; }
-    }
-
-    public long TimingUpdateNewNames
-    {
-      get { return timingUpdateNewNames; }
-    }
-
-    public long TimingTotal
-    {
-      get { return timingXML + timingParsing + timingSubclasses + timingUpdateNewNames; }
-    }
-
-    #endregion
 
     #region Statistics
 
