@@ -35,6 +35,8 @@
       this.statusStrip = new System.Windows.Forms.StatusStrip();
       this.spbLoading = new System.Windows.Forms.ToolStripProgressBar();
       this.slblSelected = new System.Windows.Forms.ToolStripStatusLabel();
+      this.slblType = new System.Windows.Forms.ToolStripStatusLabel();
+      this.slblModule = new System.Windows.Forms.ToolStripStatusLabel();
       this.ilIcons = new System.Windows.Forms.ImageList(this.components);
       this.tsTools = new System.Windows.Forms.ToolStrip();
       this.btnOpen = new System.Windows.Forms.ToolStripDropDownButton();
@@ -107,7 +109,9 @@
       this.statusStrip.AllowMerge = false;
       this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.spbLoading,
-            this.slblSelected});
+            this.slblSelected,
+            this.slblModule,
+            this.slblType});
       this.statusStrip.Location = new System.Drawing.Point(0, 528);
       this.statusStrip.Name = "statusStrip";
       this.statusStrip.ShowItemToolTips = true;
@@ -125,9 +129,26 @@
       // 
       // slblSelected
       // 
+      this.slblSelected.AutoSize = false;
       this.slblSelected.Name = "slblSelected";
       this.slblSelected.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-      this.slblSelected.Size = new System.Drawing.Size(0, 17);
+      this.slblSelected.Size = new System.Drawing.Size(279, 17);
+      this.slblSelected.Spring = true;
+      this.slblSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      // 
+      // slblType
+      // 
+      this.slblType.AutoSize = false;
+      this.slblType.Name = "slblType";
+      this.slblType.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+      this.slblType.Size = new System.Drawing.Size(100, 17);
+      // 
+      // slblModule
+      // 
+      this.slblModule.AutoSize = false;
+      this.slblModule.Name = "slblModule";
+      this.slblModule.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+      this.slblModule.Size = new System.Drawing.Size(200, 17);
       // 
       // ilIcons
       // 
@@ -572,14 +593,10 @@
       this.ptvElements.CollapseImage = global::ObfuscarMappingParser.Properties.Resources.Collapse;
       this.ptvElements.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       pineappleTreeColumn1.Autosize = true;
-      pineappleTreeColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.HeaderText = "Classname";
       pineappleTreeColumn1.Multiline = true;
-      pineappleTreeColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn1.Width = 477;
-      pineappleTreeColumn2.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn2.HeaderText = "Renamed";
-      pineappleTreeColumn2.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       pineappleTreeColumn2.Width = 250;
       this.ptvElements.Columns.Add(pineappleTreeColumn1);
       this.ptvElements.Columns.Add(pineappleTreeColumn2);
@@ -697,6 +714,8 @@
     private System.Windows.Forms.ToolStripMenuItem miReport;
     private System.Windows.Forms.ToolStripMenuItem miVersionHistory;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+    private System.Windows.Forms.ToolStripStatusLabel slblType;
+    private System.Windows.Forms.ToolStripStatusLabel slblModule;
   }
 }
 

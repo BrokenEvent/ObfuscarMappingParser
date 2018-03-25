@@ -135,6 +135,10 @@ namespace ObfuscarMappingParser
     {
       this.SetTaskbarProgressState(Taskbar.ThumbnailProgressState.Indeterminate);
       spbLoading.Visible = true;
+      slblType.Visible = false;
+      slblType.Text = "";
+      slblModule.Visible = false;
+      slblModule.Text = "";
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = false;
       commandManager.BeginDisable();
       slblSelected.Text = operation;
@@ -144,6 +148,7 @@ namespace ObfuscarMappingParser
     {
       menuStrip.Enabled = ptvElements.Enabled = tsTools.Enabled = true;
       spbLoading.Visible = false;
+      slblType.Visible = slblModule.Visible = true;
       commandManager.EndDisable();
       slblSelected.Text = result;
       this.SetTaskbarProgressState(Taskbar.ThumbnailProgressState.NoProgress);
@@ -177,7 +182,7 @@ namespace ObfuscarMappingParser
       Text = $"{APP_TITLE} - {PathUtils.GetFilename(filename)}";
       Configs.Instance.AddRecent(filename);
 
-      BeginLoading("Loading: " + filename);
+      BeginLoading($"Loading: {filename}");
 
       while (openedForms.Count > 0)
         openedForms[0].Close();
@@ -196,7 +201,7 @@ namespace ObfuscarMappingParser
       pdbfiles.Clear();
       BuildMapping();
       EnableMappingActions(true);
-      EndLoading("Mapping loaded in " + mapping.LoadTime + " ms");
+      EndLoading($"Mapping loaded in {mapping.LoadTime} ms");
 
       AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Filename), false);
       AttachRelatedPdbs(pdbToAttach, true);
@@ -207,7 +212,7 @@ namespace ObfuscarMappingParser
 
     private async void ReloadFile()
     {
-      BeginLoading("Reloading: " + mapping.Filename);
+      BeginLoading($"Reloading: {mapping.Filename}");
       while (openedForms.Count > 0)
         openedForms[0].Close();
 
@@ -224,7 +229,7 @@ namespace ObfuscarMappingParser
 
       BuildMapping();
       EnableMappingActions(true);
-      EndLoading("Mapping reloaded in " + mapping.LoadTime + " ms");
+      EndLoading($"Mapping reloaded in {mapping.LoadTime} ms");
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
     }
 
@@ -258,7 +263,7 @@ namespace ObfuscarMappingParser
       ptvElements.CollapseAll();
       ptvElements.EndUpdate();
       sw.Stop();
-      Debug.WriteLine("Tree building: " + sw.ElapsedMilliseconds + " ms");
+      Debug.WriteLine($"Tree building: {sw.ElapsedMilliseconds} ms");
     }
 
     private void tbSearch_KeyDown(object sender, KeyEventArgs e)
@@ -414,6 +419,8 @@ namespace ObfuscarMappingParser
 
       EnableSelectionActions(focusedItem != null);
       slblSelected.Text = focusedItem == null ? "" : focusedItem.TransformSimple;
+      slblType.Text = focusedItem == null ? "" : focusedItem.EntityType.ToString();
+      slblModule.Text = focusedItem == null ? "" : focusedItem.ModuleOld;
       commandManager.SetEnabled(Actions.OpenInEditor, focusedItem != null && DetectMarkersForVS(out focusedFilename, out focusedLine, focusedItem));
     }
 
@@ -928,5 +935,6 @@ namespace ObfuscarMappingParser
       process.WaitForInputIdle();
       File.Delete(filename);
     }
+
   }
 }

@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PDBManagerForm));
       this.lvList = new System.Windows.Forms.ListView();
       this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.chGuid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -95,15 +96,15 @@
       this.btnAttach.Name = "btnAttach";
       this.btnAttach.Size = new System.Drawing.Size(100, 23);
       this.btnAttach.TabIndex = 3;
-      this.btnAttach.Text = "Attach";
+      this.btnAttach.Text = "Attach...";
       this.btnAttach.UseVisualStyleBackColor = true;
       this.btnAttach.Click += new System.EventHandler(this.btnAttach_Click);
       // 
       // btnDetach
       // 
-      this.btnDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.btnDetach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnDetach.Enabled = false;
-      this.btnDetach.Location = new System.Drawing.Point(121, 291);
+      this.btnDetach.Location = new System.Drawing.Point(283, 291);
       this.btnDetach.Name = "btnDetach";
       this.btnDetach.Size = new System.Drawing.Size(100, 23);
       this.btnDetach.TabIndex = 4;

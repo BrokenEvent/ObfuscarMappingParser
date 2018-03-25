@@ -412,7 +412,6 @@
       this.HeaderColor = System.Drawing.Color.White;
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "Settings";
-      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "SettingsForm";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;

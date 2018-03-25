@@ -148,7 +148,6 @@
       this.HeaderColor = System.Drawing.Color.White;
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "Open File";
-      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "LauncherForm";
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Obfuscar Mapping Parser Launcher";

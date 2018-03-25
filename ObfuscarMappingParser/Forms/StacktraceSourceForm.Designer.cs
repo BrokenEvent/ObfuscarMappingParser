@@ -200,7 +200,6 @@ namespace ObfuscarMappingParser
       this.HeaderColor = System.Drawing.Color.White;
       this.HeaderPosition = new System.Drawing.Point(55, 7);
       this.HeaderText = "Select Stacktrace Source";
-      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "StacktraceSourceForm";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
