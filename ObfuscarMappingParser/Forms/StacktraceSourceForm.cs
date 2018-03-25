@@ -180,6 +180,10 @@ namespace ObfuscarMappingParser
     private void StacktraceSourceForm_Activated(object sender, EventArgs e)
     {
       rbClipboard.Enabled = Clipboard.ContainsText();
+      if (rbClipboard.Enabled)
+        lblClipboardPreview.Text = Clipboard.GetText();
+      else
+        lblClipboardPreview.Text = "<no text in clipboard>";
     }
   }
 }
