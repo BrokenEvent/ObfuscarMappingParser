@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.WinApi;
 
 namespace ObfuscarMappingParser

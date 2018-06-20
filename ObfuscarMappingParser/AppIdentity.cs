@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Rest;
 
 namespace ObfuscarMappingParser
 {
-  class AppIdentity : IAppIdentity
+  class AppIdentity : IAppIdentity, BaseForm.IBaseFormThemeProvider
   {
     public static IWin32Window MainForm { get; set; }
 
@@ -45,6 +46,25 @@ namespace ObfuscarMappingParser
     {
       get { return MainForm; }
     }
+
+    #region BaseForm.IBaseFormThemeProvider
+
+    public Color HeaderFillColor
+    {
+      get { return AccentColor; }
+    }
+
+    public Color HeaderTextColor
+    {
+      get { return AccentTextColor; }
+    }
+
+    public Color BackgroundColor
+    {
+      get { return SystemColors.ButtonFace; }
+    }
+
+    #endregion
 
   }
 }

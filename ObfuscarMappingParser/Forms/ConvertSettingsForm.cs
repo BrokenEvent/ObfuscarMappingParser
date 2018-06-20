@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Algorithms;
 
 namespace ObfuscarMappingParser

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 
 namespace ObfuscarMappingParser
 {

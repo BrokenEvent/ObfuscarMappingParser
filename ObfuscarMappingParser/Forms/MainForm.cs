@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
 using BrokenEvent.PDBReader;
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.Rest;

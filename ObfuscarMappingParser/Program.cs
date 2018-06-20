@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Rest;
 
 namespace ObfuscarMappingParser
@@ -20,7 +21,9 @@ namespace ObfuscarMappingParser
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
 
-      RestApi.Init(new AppIdentity());
+      AppIdentity identity = new AppIdentity();
+      RestApi.Init(identity);
+      BaseForm.ThemeProvider = identity;
 
       string filename;
       if (!CommandLine.ProcessCommandline(out filename, args))

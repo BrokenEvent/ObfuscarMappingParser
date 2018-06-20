@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.TaskDialogs;
 using BrokenEvent.TaskDialogs.Dialogs;

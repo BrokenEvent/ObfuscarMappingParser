@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.WinApi;
 

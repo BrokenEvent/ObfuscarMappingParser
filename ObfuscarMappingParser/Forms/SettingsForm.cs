@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+
 using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.CommandManager;
 using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.Rest;

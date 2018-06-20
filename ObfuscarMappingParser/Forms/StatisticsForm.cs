@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 
-using BrokenEvent.Shared;
+using BrokenEvent.Shared.Forms;
 
 namespace ObfuscarMappingParser
 {
