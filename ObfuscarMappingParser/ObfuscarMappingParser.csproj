@@ -230,6 +230,10 @@
     <EmbeddedResource Include="Forms\StatisticsForm.resx">
       <DependentUpon>StatisticsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="..\Libs\BrokenEvent.Dependency.License.md">
+      <Link>BrokenEvent.Dependency.License.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -294,9 +298,10 @@
     <None Include="res\FullView.png" />
     <None Include="res\ShortView.png" />
     <None Include="res\SimpleView.png" />
-    <Content Include="LICENSE.txt">
+    <ContentWithTargetPath Include="LICENSE.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+      <TargetPath>BrokenEvent.ObfuscarMappingParser.License.txt</TargetPath>
+    </ContentWithTargetPath>
     <Content Include="mainicon.ico" />
   </ItemGroup>
   <ItemGroup>
