@@ -40,6 +40,9 @@ To get the original .NET obfuscation tool please follow here:
 
 All copyrights to the *"Obfuscar"* name are reserved to its author.
 
+## Support
+You can support the development or just say "thanks" at [donation page](http://brokenevent.com/projects/obfuscarparser/donate).
+
 ## P.S.
 
 Official web-page: [brokenevent.com/projects/obfuscarparser](http://brokenevent.com/projects/obfuscarparser)
