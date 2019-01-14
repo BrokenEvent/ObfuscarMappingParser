@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Broken Event")]
 [assembly: AssemblyProduct("ObfuscarMappingParser")]
-[assembly: AssemblyCopyright("Copyright © 2014-2019 Broken Event")]
+[assembly: AssemblyCopyright("© 2014-2019 Broken Event. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

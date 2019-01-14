@@ -61,7 +61,7 @@ namespace ObfuscarMappingParser
 
     public Color BackgroundColor
     {
-      get { return SystemColors.ButtonFace; }
+      get { return Color.White; }
     }
 
     #endregion

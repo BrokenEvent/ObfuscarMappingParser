@@ -35,8 +35,8 @@
       this.statusStrip = new System.Windows.Forms.StatusStrip();
       this.spbLoading = new System.Windows.Forms.ToolStripProgressBar();
       this.slblSelected = new System.Windows.Forms.ToolStripStatusLabel();
-      this.slblType = new System.Windows.Forms.ToolStripStatusLabel();
       this.slblModule = new System.Windows.Forms.ToolStripStatusLabel();
+      this.slblType = new System.Windows.Forms.ToolStripStatusLabel();
       this.ilIcons = new System.Windows.Forms.ImageList(this.components);
       this.tsTools = new System.Windows.Forms.ToolStrip();
       this.btnOpen = new System.Windows.Forms.ToolStripDropDownButton();
@@ -84,6 +84,8 @@
       this.miVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
       this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
+      this.miRequestFeature = new System.Windows.Forms.ToolStripMenuItem();
+      this.miDonate = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.miOpenVS = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -94,6 +96,7 @@
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.Controls.PineappleTreeView();
+      this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -132,16 +135,9 @@
       this.slblSelected.AutoSize = false;
       this.slblSelected.Name = "slblSelected";
       this.slblSelected.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-      this.slblSelected.Size = new System.Drawing.Size(279, 17);
+      this.slblSelected.Size = new System.Drawing.Size(412, 17);
       this.slblSelected.Spring = true;
       this.slblSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-      // 
-      // slblType
-      // 
-      this.slblType.AutoSize = false;
-      this.slblType.Name = "slblType";
-      this.slblType.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
-      this.slblType.Size = new System.Drawing.Size(100, 17);
       // 
       // slblModule
       // 
@@ -149,6 +145,13 @@
       this.slblModule.Name = "slblModule";
       this.slblModule.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
       this.slblModule.Size = new System.Drawing.Size(200, 17);
+      // 
+      // slblType
+      // 
+      this.slblType.AutoSize = false;
+      this.slblType.Name = "slblType";
+      this.slblType.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+      this.slblType.Size = new System.Drawing.Size(100, 17);
       // 
       // ilIcons
       // 
@@ -485,9 +488,12 @@
       // 
       this.mmHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miUpdateVersion,
-            this.miReport,
             this.miVersionHistory,
+            this.toolStripSeparator11,
+            this.miReport,
+            this.miRequestFeature,
             this.toolStripSeparator10,
+            this.miDonate,
             this.miAbout});
       this.mmHelp.Name = "mmHelp";
       this.mmHelp.Size = new System.Drawing.Size(44, 20);
@@ -497,34 +503,48 @@
       // 
       this.miUpdateVersion.Enabled = false;
       this.miUpdateVersion.Name = "miUpdateVersion";
-      this.miUpdateVersion.Size = new System.Drawing.Size(166, 22);
+      this.miUpdateVersion.Size = new System.Drawing.Size(210, 22);
       this.miUpdateVersion.Text = "Update";
       this.miUpdateVersion.Click += new System.EventHandler(this.miUpdateVersion_Click);
       // 
       // miReport
       // 
       this.miReport.Name = "miReport";
-      this.miReport.Size = new System.Drawing.Size(166, 22);
+      this.miReport.Size = new System.Drawing.Size(210, 22);
       this.miReport.Text = "Report a Problem";
       this.miReport.Click += new System.EventHandler(this.miReport_Click);
       // 
       // miVersionHistory
       // 
       this.miVersionHistory.Name = "miVersionHistory";
-      this.miVersionHistory.Size = new System.Drawing.Size(166, 22);
+      this.miVersionHistory.Size = new System.Drawing.Size(210, 22);
       this.miVersionHistory.Text = "Version History";
       this.miVersionHistory.Click += new System.EventHandler(this.miVersionHistory_Click);
       // 
       // toolStripSeparator10
       // 
       this.toolStripSeparator10.Name = "toolStripSeparator10";
-      this.toolStripSeparator10.Size = new System.Drawing.Size(163, 6);
+      this.toolStripSeparator10.Size = new System.Drawing.Size(207, 6);
       // 
       // miAbout
       // 
       this.miAbout.Name = "miAbout";
-      this.miAbout.Size = new System.Drawing.Size(166, 22);
+      this.miAbout.Size = new System.Drawing.Size(210, 22);
       this.miAbout.Text = "About";
+      // 
+      // miRequestFeature
+      // 
+      this.miRequestFeature.Name = "miRequestFeature";
+      this.miRequestFeature.Size = new System.Drawing.Size(210, 22);
+      this.miRequestFeature.Text = "Request a Feature";
+      this.miRequestFeature.Click += new System.EventHandler(this.miRequestFeature_Click);
+      // 
+      // miDonate
+      // 
+      this.miDonate.Name = "miDonate";
+      this.miDonate.Size = new System.Drawing.Size(210, 22);
+      this.miDonate.Text = "Support the Development";
+      this.miDonate.Click += new System.EventHandler(this.miDonate_Click);
       // 
       // contextMenuStrip
       // 
@@ -619,6 +639,11 @@
       this.ptvElements.Text = "pineappleTreeView1";
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
+      // 
+      // toolStripSeparator11
+      // 
+      this.toolStripSeparator11.Name = "toolStripSeparator11";
+      this.toolStripSeparator11.Size = new System.Drawing.Size(207, 6);
       // 
       // MainForm
       // 
@@ -716,6 +741,9 @@
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
     private System.Windows.Forms.ToolStripStatusLabel slblType;
     private System.Windows.Forms.ToolStripStatusLabel slblModule;
+    private System.Windows.Forms.ToolStripMenuItem miRequestFeature;
+    private System.Windows.Forms.ToolStripMenuItem miDonate;
+    private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
   }
 }
 

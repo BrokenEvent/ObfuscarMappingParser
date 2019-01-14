@@ -178,6 +178,7 @@
     </Compile>
     <Compile Include="SystemTypeProcessor.cs" />
     <Compile Include="TreeBuilder.cs" />
+    <Content Include="res\support.png" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>

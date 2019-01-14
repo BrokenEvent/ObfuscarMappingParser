@@ -936,5 +936,14 @@ namespace ObfuscarMappingParser
       File.Delete(filename);
     }
 
+    private void miRequestFeature_Click(object sender, EventArgs e)
+    {
+      BaseForm.OpenUrl(this, "https://trello.com/c/BCIHDF4b/22-feature-requests");
+    }
+
+    private void miDonate_Click(object sender, EventArgs e)
+    {
+      BaseForm.OpenUrl(this, "https://www.buymeacoffee.com/BrokenEvent");
+    }
   }
 }

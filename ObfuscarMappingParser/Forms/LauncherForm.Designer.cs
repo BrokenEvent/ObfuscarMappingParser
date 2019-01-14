@@ -37,6 +37,7 @@
       this.ilIcon = new System.Windows.Forms.ImageList(this.components);
       this.lblFiles = new BrokenEvent.Shared.Controls.ThemedLabel();
       this.blvFiles = new BrokenEvent.Shared.Controls.BrokenListView();
+      this.lblDnDHint = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // btnOk
@@ -71,7 +72,7 @@
       // btnBrowse
       // 
       this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.btnBrowse.Location = new System.Drawing.Point(15, 531);
+      this.btnBrowse.Location = new System.Drawing.Point(12, 531);
       this.btnBrowse.Name = "btnBrowse";
       this.btnBrowse.Size = new System.Drawing.Size(100, 23);
       this.btnBrowse.TabIndex = 6;
@@ -91,11 +92,11 @@
       this.lblFiles.BackColor = System.Drawing.Color.Transparent;
       this.lblFiles.CharacterWrap = false;
       this.lblFiles.Font = new System.Drawing.Font("Segoe UI", 11F);
-      this.lblFiles.Location = new System.Drawing.Point(12, 55);
+      this.lblFiles.Location = new System.Drawing.Point(12, 59);
       this.lblFiles.Name = "lblFiles";
-      this.lblFiles.Size = new System.Drawing.Size(189, 21);
+      this.lblFiles.Size = new System.Drawing.Size(192, 21);
       this.lblFiles.TabIndex = 7;
-      this.lblFiles.Text = "Select mapping file to open";
+      this.lblFiles.Text = "Select mapping file to open:";
       // 
       // blvFiles
       // 
@@ -119,14 +120,24 @@
       this.blvFiles.EmptyListText = "No recent items found.";
       this.blvFiles.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.blvFiles.ImageList = this.ilIcon;
-      this.blvFiles.Location = new System.Drawing.Point(12, 82);
+      this.blvFiles.Location = new System.Drawing.Point(12, 86);
       this.blvFiles.Name = "blvFiles";
-      this.blvFiles.Size = new System.Drawing.Size(760, 428);
+      this.blvFiles.Size = new System.Drawing.Size(760, 424);
       this.blvFiles.TabIndex = 8;
       this.blvFiles.Text = "brokenListView1";
       this.blvFiles.TextPadding = new System.Windows.Forms.Padding(1);
       this.blvFiles.ItemSelected += new System.EventHandler<BrokenEvent.Shared.Controls.ItemSelectEventArgs>(this.blvFiles_ItemSelected);
       this.blvFiles.DoubleClick += new System.EventHandler(this.blvFiles_DoubleClick);
+      // 
+      // lblDnDHint
+      // 
+      this.lblDnDHint.AutoSize = true;
+      this.lblDnDHint.ForeColor = System.Drawing.Color.Gray;
+      this.lblDnDHint.Location = new System.Drawing.Point(118, 536);
+      this.lblDnDHint.Name = "lblDnDHint";
+      this.lblDnDHint.Size = new System.Drawing.Size(249, 13);
+      this.lblDnDHint.TabIndex = 9;
+      this.lblDnDHint.Text = "You can drop mapping files from Explorer here.";
       // 
       // LauncherForm
       // 
@@ -137,6 +148,7 @@
       this.CancelButton = this.btnCancel;
       this.ClientSize = new System.Drawing.Size(784, 561);
       this.ControlBox = false;
+      this.Controls.Add(this.lblDnDHint);
       this.Controls.Add(this.blvFiles);
       this.Controls.Add(this.lblFiles);
       this.Controls.Add(this.btnBrowse);
@@ -166,5 +178,6 @@
     private BrokenEvent.Shared.Controls.ThemedLabel lblFiles;
     private System.Windows.Forms.ImageList ilIcon;
     private BrokenEvent.Shared.Controls.BrokenListView blvFiles;
+    private System.Windows.Forms.Label lblDnDHint;
   }
 }

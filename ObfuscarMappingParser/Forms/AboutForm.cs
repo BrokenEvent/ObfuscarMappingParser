@@ -50,7 +50,7 @@ namespace ObfuscarMappingParser
           lblUpdateState.Visible = false;
         }
         else
-          lblUpdateState.Text = "You are using an actual version.";
+          lblUpdateState.Text = "You are using the most recent version.";
       }
       else
       {
@@ -62,7 +62,13 @@ namespace ObfuscarMappingParser
 
     private void AboutForm_Load(object sender, EventArgs e)
     {
+      lblCopyright.Text = GetCopyrightString();
       DoUpdateCheck();
+    }
+
+    private void pbLogo_Click(object sender, EventArgs e)
+    {
+      OpenUrl("http://brokenevent.com");
     }
   }
 }
