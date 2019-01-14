@@ -228,8 +228,8 @@
       // openFileDialog
       // 
       this.openFileDialog.DefaultExt = "txt";
-      this.openFileDialog.FileName = "Select File";
       this.openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
+      this.openFileDialog.Title = "Select File";
       // 
       // saveFileDialog
       // 

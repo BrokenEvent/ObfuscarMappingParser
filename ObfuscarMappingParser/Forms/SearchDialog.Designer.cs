@@ -52,7 +52,7 @@
       this.lvResults.Name = "lvResults";
       this.lvResults.ShowItemToolTips = true;
       this.lvResults.Size = new System.Drawing.Size(463, 158);
-      this.lvResults.TabIndex = 5;
+      this.lvResults.TabIndex = 2;
       this.lvResults.UseCompatibleStateImageBehavior = false;
       this.lvResults.View = System.Windows.Forms.View.Details;
       this.lvResults.DoubleClick += new System.EventHandler(this.lvResults_DoubleClick);
@@ -66,7 +66,7 @@
       this.btnSearch.Location = new System.Drawing.Point(400, 76);
       this.btnSearch.Name = "btnSearch";
       this.btnSearch.Size = new System.Drawing.Size(75, 24);
-      this.btnSearch.TabIndex = 4;
+      this.btnSearch.TabIndex = 1;
       this.btnSearch.Text = "Search";
       this.btnSearch.UseVisualStyleBackColor = true;
       this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -90,7 +90,7 @@
       this.tbSearch.Location = new System.Drawing.Point(12, 77);
       this.tbSearch.Name = "tbSearch";
       this.tbSearch.Size = new System.Drawing.Size(382, 22);
-      this.tbSearch.TabIndex = 3;
+      this.tbSearch.TabIndex = 0;
       this.tbSearch.Enter += new System.EventHandler(this.Control_Enter);
       this.tbSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbSearch_KeyDown);
       // 
@@ -110,7 +110,7 @@
       this.btnClose.Location = new System.Drawing.Point(375, 306);
       this.btnClose.Name = "btnClose";
       this.btnClose.Size = new System.Drawing.Size(100, 23);
-      this.btnClose.TabIndex = 1;
+      this.btnClose.TabIndex = 3;
       this.btnClose.Text = "Close";
       this.btnClose.UseVisualStyleBackColor = true;
       this.btnClose.Enter += new System.EventHandler(this.Control_Enter);

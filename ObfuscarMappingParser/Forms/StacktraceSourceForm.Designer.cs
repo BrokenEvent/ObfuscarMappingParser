@@ -31,7 +31,6 @@ namespace ObfuscarMappingParser
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StacktraceSourceForm));
       this.btnBrowse = new System.Windows.Forms.Button();
       this.tbFilename = new System.Windows.Forms.TextBox();
       this.tbURL = new System.Windows.Forms.TextBox();
@@ -51,7 +50,7 @@ namespace ObfuscarMappingParser
       this.btnBrowse.Location = new System.Drawing.Point(383, 144);
       this.btnBrowse.Name = "btnBrowse";
       this.btnBrowse.Size = new System.Drawing.Size(75, 23);
-      this.btnBrowse.TabIndex = 6;
+      this.btnBrowse.TabIndex = 5;
       this.btnBrowse.Text = "Browse";
       this.btnBrowse.UseVisualStyleBackColor = true;
       this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
@@ -75,7 +74,7 @@ namespace ObfuscarMappingParser
       this.tbURL.Location = new System.Drawing.Point(12, 81);
       this.tbURL.Name = "tbURL";
       this.tbURL.Size = new System.Drawing.Size(446, 22);
-      this.tbURL.TabIndex = 3;
+      this.tbURL.TabIndex = 1;
       this.tbURL.Enter += new System.EventHandler(this.Control_Enter);
       // 
       // rbClipboard
@@ -84,7 +83,7 @@ namespace ObfuscarMappingParser
       this.rbClipboard.Margin = new System.Windows.Forms.Padding(3, 16, 3, 3);
       this.rbClipboard.Name = "rbClipboard";
       this.rbClipboard.Size = new System.Drawing.Size(439, 17);
-      this.rbClipboard.TabIndex = 2;
+      this.rbClipboard.TabIndex = 6;
       this.rbClipboard.Text = "Get from clipboard";
       this.rbClipboard.UseVisualStyleBackColor = true;
       this.rbClipboard.Click += new System.EventHandler(this.RadioButton_Click);
@@ -97,7 +96,7 @@ namespace ObfuscarMappingParser
       this.rbFile.Margin = new System.Windows.Forms.Padding(3, 16, 3, 3);
       this.rbFile.Name = "rbFile";
       this.rbFile.Size = new System.Drawing.Size(439, 17);
-      this.rbFile.TabIndex = 1;
+      this.rbFile.TabIndex = 3;
       this.rbFile.TabStop = true;
       this.rbFile.Text = "Load from file:";
       this.rbFile.UseVisualStyleBackColor = true;
@@ -121,7 +120,7 @@ namespace ObfuscarMappingParser
       this.btnOk.Location = new System.Drawing.Point(252, 236);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
-      this.btnOk.TabIndex = 1;
+      this.btnOk.TabIndex = 7;
       this.btnOk.Text = "OK";
       this.btnOk.UseVisualStyleBackColor = true;
       this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -134,7 +133,7 @@ namespace ObfuscarMappingParser
       this.btnCancel.Location = new System.Drawing.Point(358, 236);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
-      this.btnCancel.TabIndex = 2;
+      this.btnCancel.TabIndex = 8;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
       this.btnCancel.Enter += new System.EventHandler(this.Control_Enter);
@@ -169,9 +168,9 @@ namespace ObfuscarMappingParser
       this.lblClipboardPreview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.lblClipboardPreview.Enabled = false;
-      this.lblClipboardPreview.Location = new System.Drawing.Point(12, 206);
+      this.lblClipboardPreview.Location = new System.Drawing.Point(9, 206);
       this.lblClipboardPreview.Name = "lblClipboardPreview";
-      this.lblClipboardPreview.Size = new System.Drawing.Size(446, 13);
+      this.lblClipboardPreview.Size = new System.Drawing.Size(449, 13);
       this.lblClipboardPreview.TabIndex = 9;
       this.lblClipboardPreview.Text = "label1";
       // 

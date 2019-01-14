@@ -28,7 +28,6 @@
     /// </summary>
     private void InitializeComponent()
     {
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PDBManagerForm));
       this.lvList = new System.Windows.Forms.ListView();
       this.chFilename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
       this.chGuid = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -92,7 +91,7 @@
       // btnAttach
       // 
       this.btnAttach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.btnAttach.Location = new System.Drawing.Point(15, 291);
+      this.btnAttach.Location = new System.Drawing.Point(12, 291);
       this.btnAttach.Name = "btnAttach";
       this.btnAttach.Size = new System.Drawing.Size(100, 23);
       this.btnAttach.TabIndex = 3;
