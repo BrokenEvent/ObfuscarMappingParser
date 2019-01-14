@@ -92,19 +92,19 @@ namespace ObfuscarMappingParser
         recent.Save(recentsEl.AppendChild(new NanoXmlElement("Item")));
 
       NanoXmlElement settingsEl = doc.AppendChild(new NanoXmlElement("Settings"));
-      settingsEl.AppendChild("ShowModules", showModules);
-      settingsEl.AppendChild("GroupNamespaces", groupNamespaces);
-      settingsEl.AppendChild("GroupModules", groupModules);
-      settingsEl.AppendChild("UseColumns", useColumns);
-      settingsEl.AppendChild("ShowOriginal", showOriginal);
-      settingsEl.AppendChild("ShowUnicode", showUnicode);
-      settingsEl.AppendChild("SimplifySystem", simplifySystemNames);
-      settingsEl.AppendChild("SimplifyNullable", simplifyNullable);
-      settingsEl.AppendChild("SimplyfyRef", simplifyRef);
-      settingsEl.AppendChild("SortingType", sortingType);
-      settingsEl.AppendChild("Editor", editor);
-      settingsEl.AppendChild("DoubleClickAction", doubleClickAction);
-      settingsEl.AppendChild("WatchClipboard", watchClipboard);
+      settingsEl.AppendElement("ShowModules", showModules);
+      settingsEl.AppendElement("GroupNamespaces", groupNamespaces);
+      settingsEl.AppendElement("GroupModules", groupModules);
+      settingsEl.AppendElement("UseColumns", useColumns);
+      settingsEl.AppendElement("ShowOriginal", showOriginal);
+      settingsEl.AppendElement("ShowUnicode", showUnicode);
+      settingsEl.AppendElement("SimplifySystem", simplifySystemNames);
+      settingsEl.AppendElement("SimplifyNullable", simplifyNullable);
+      settingsEl.AppendElement("SimplyfyRef", simplifyRef);
+      settingsEl.AppendElement("SortingType", sortingType);
+      settingsEl.AppendElement("Editor", editor);
+      settingsEl.AppendElement("DoubleClickAction", doubleClickAction);
+      settingsEl.AppendElement("WatchClipboard", watchClipboard);
 
       if (commandsElement != null)
         doc.AppendChild(commandsElement);

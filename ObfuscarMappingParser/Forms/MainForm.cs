@@ -862,7 +862,7 @@ namespace ObfuscarMappingParser
       {
         miUpdateVersion.Text = "Check for Updates";
         if (!silent)
-          MessageBox.Show(this, $"You are using an actual version of the {APP_TITLE}.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          MessageBox.Show(this, $"You are using the most recent version of the {APP_TITLE}.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
         return;
       }
 
@@ -901,7 +901,7 @@ namespace ObfuscarMappingParser
     private async void miVersionHistory_Click(object sender, EventArgs e)
     {
       BeginLoading("Receiving version history");
-      RestResponse<HistoryResponse> response = await RestApi.Instance.GetVersionHistoryAsync();
+      RestResponse<HistoryResponse> response = await Task.Run((Func<RestResponse<HistoryResponse>>)RestApi.Instance.GetVersionHistory);
 
       if (response.Result == null)
       {
