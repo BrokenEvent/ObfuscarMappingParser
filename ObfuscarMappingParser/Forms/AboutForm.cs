@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Threading.Tasks;
 
 using BrokenEvent.Shared.Forms;
+using BrokenEvent.Shared.Rest;
 
 namespace ObfuscarMappingParser
 {
@@ -37,27 +37,28 @@ namespace ObfuscarMappingParser
       llblUpdate.Visible = false;
       lblUpdateState.Visible = true;
 
-      bool updateCheckSuccess = await Task.Run(() => Configs.Instance.UpdateHelper.CheckForUpdates(true));
+      UpdateHelper.UpdateCheckResult result = await Configs.Instance.UpdateHelper.CheckForUpdates();
 
-      indUpdate.IndicatorEnabled = false;
-
-      if (updateCheckSuccess)
+      switch (result)
       {
-        if (Configs.Instance.UpdateHelper.UpdateAvailable != null)
-        {
+        case UpdateHelper.UpdateCheckResult.UpdateFound:
           llblUpdate.Visible = true;
           llblUpdate.Text = $"Update to {Configs.Instance.UpdateHelper.UpdateAvailable.Version}";
           lblUpdateState.Visible = false;
-        }
-        else
+          break;
+
+        case UpdateHelper.UpdateCheckResult.NoUpdates:
           lblUpdateState.Text = "You are using the most recent version.";
+          break;
+
+        default:
+          llblUpdate.Visible = true;
+          llblUpdate.Text = "Update check failed. Check again?";
+          lblUpdateState.Visible = false;
+          break;
       }
-      else
-      {
-        llblUpdate.Visible = true;
-        llblUpdate.Text = "Update check failed. Check again?";
-        lblUpdateState.Visible = false;
-      }
+
+      indUpdate.IndicatorEnabled = false;
     }
 
     private void AboutForm_Load(object sender, EventArgs e)
@@ -68,7 +69,7 @@ namespace ObfuscarMappingParser
 
     private void pbLogo_Click(object sender, EventArgs e)
     {
-      OpenUrl("http://brokenevent.com");
+      OpenUrl("https://brokenevent.com");
     }
   }
 }

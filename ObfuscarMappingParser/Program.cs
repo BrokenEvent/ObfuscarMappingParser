@@ -38,10 +38,12 @@ namespace ObfuscarMappingParser
       }
 
       MainForm form = new MainForm(filename);
+      Configs.Instance.UpdateHelper.Initialize();
       AppIdentity.MainForm = form;
       Application.Run(form);
 
       Configs.Instance.SaveConfigs();
+      Configs.Instance.UpdateHelper.Shutdown();
     }
   }
 }

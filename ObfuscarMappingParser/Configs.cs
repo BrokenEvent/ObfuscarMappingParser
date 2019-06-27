@@ -133,7 +133,7 @@ namespace ObfuscarMappingParser
     private bool watchClipboard = false;
     private DoubleClickActions doubleClickAction = DoubleClickActions.OpenInEditor;
     private NanoXmlElement commandsElement;
-    private UpdateHelper updateHelper = new UpdateHelper(UpdateHelper.CheckInterval.TenDays);
+    private UpdateHelper updateHelper = new UpdateHelper { CheckInterval = UpdateHelper.UpdateCheckInterval.TenDays };
 
     [Obfuscation(Exclude = true)]
     public enum SortingTypes

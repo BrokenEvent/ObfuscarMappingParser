@@ -60,7 +60,7 @@ namespace ObfuscarMappingParser
       cbWatchClipboard.Checked = Configs.Instance.WatchClipboard;
 
       EnumHelper.FillCombobox(cbDoubleClick, Configs.Instance.DoubleClickAction);
-      EnumHelper.FillCombobox(cbUpdateInterval, Configs.Instance.UpdateHelper.Interval);
+      EnumHelper.FillCombobox(cbUpdateInterval, Configs.Instance.UpdateHelper.CheckInterval);
 
       commandSelector.CommandManager = commandManager;
       commandSelector.CommandType = typeof(Actions);
@@ -84,7 +84,7 @@ namespace ObfuscarMappingParser
       Configs.Instance.UseColumns = cbUseColumns.Checked;
       Configs.Instance.WatchClipboard = cbWatchClipboard.Checked;
       Configs.Instance.DoubleClickAction = ((EnumHelper.EnumWrapper<Configs.DoubleClickActions>)cbDoubleClick.SelectedItem).Value;
-      Configs.Instance.UpdateHelper.Interval = ((EnumHelper.EnumWrapper<UpdateHelper.CheckInterval>)cbUpdateInterval.SelectedItem).Value;
+      Configs.Instance.UpdateHelper.CheckInterval = ((EnumHelper.EnumWrapper<UpdateHelper.UpdateCheckInterval>)cbUpdateInterval.SelectedItem).Value;
 
       DialogResult = DialogResult.OK;
     }

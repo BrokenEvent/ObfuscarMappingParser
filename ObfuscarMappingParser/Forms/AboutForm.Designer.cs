@@ -158,10 +158,10 @@
       this.llblProjectPage.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblProjectPage.Location = new System.Drawing.Point(40, 148);
       this.llblProjectPage.Name = "llblProjectPage";
-      this.llblProjectPage.Size = new System.Drawing.Size(258, 15);
+      this.llblProjectPage.Size = new System.Drawing.Size(263, 15);
       this.llblProjectPage.TabIndex = 13;
-      this.llblProjectPage.Text = "http://brokenevent.com/projects/obfuscarparser";
-      this.llblProjectPage.Url = "http://brokenevent.com/projects/obfuscarparser";
+      this.llblProjectPage.Text = "https://brokenevent.com/projects/obfuscarparser";
+      this.llblProjectPage.Url = "https://brokenevent.com/projects/obfuscarparser";
       // 
       // llblProjectPageDesc
       // 
@@ -311,10 +311,10 @@
       this.llblSupport.Cursor = System.Windows.Forms.Cursors.Hand;
       this.llblSupport.Location = new System.Drawing.Point(40, 236);
       this.llblSupport.Name = "llblSupport";
-      this.llblSupport.Size = new System.Drawing.Size(300, 15);
+      this.llblSupport.Size = new System.Drawing.Size(305, 15);
       this.llblSupport.TabIndex = 27;
-      this.llblSupport.Text = "http://brokenevent.com/projects/obfuscarparser/donate";
-      this.llblSupport.Url = "http://brokenevent.com/projects/obfuscarparser/donate";
+      this.llblSupport.Text = "https://brokenevent.com/projects/obfuscarparser/donate";
+      this.llblSupport.Url = "https://brokenevent.com/projects/obfuscarparser/donate";
       // 
       // AboutForm
       // 

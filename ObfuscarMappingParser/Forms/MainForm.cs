@@ -25,6 +25,7 @@ namespace ObfuscarMappingParser
 {
   partial class MainForm : Form
   {
+    private string mappingFilename;
     private Mapping mapping;
     private ClipboardWatcher clipboardWatcher;
     private const string APP_TITLE = "Obfuscar Mapping Parser";
@@ -171,14 +172,14 @@ namespace ObfuscarMappingParser
           );
       else
         RestApi.Instance.SendCrashReport(
-            new CrashReport("Mapping loading thread failed handler", "Error on loading document") { Exception = e },
-            RestApi.CrashType.JustReport,
+            new CrashReport("Mapping loading thread failed handler", "Error on loading document", CrashType.JustReport) { Exception = e },
             this
           );
     }
 
     private async void OpenFile(string filename)
     {
+      mappingFilename = filename;
       Text = $"{APP_TITLE} - {PathUtils.GetFilename(filename)}";
       Configs.Instance.AddRecent(filename);
 
@@ -193,12 +194,14 @@ namespace ObfuscarMappingParser
       }
       catch (Exception e)
       {
+        EnableMappingActions(false);
+        commandManager.SetEnabled(Actions.ReloadFile, true);
         HandleMappingLoadingException(e, filename);
         EndLoading("Loading failed.");
         return;
       }
 
-      pdbfiles.Clear();
+      pdbFiles.Clear();
       BuildMapping();
       EnableMappingActions(true);
       EndLoading($"Mapping loaded in {mapping.LoadTime} ms");
@@ -212,17 +215,20 @@ namespace ObfuscarMappingParser
 
     private async void ReloadFile()
     {
-      BeginLoading($"Reloading: {mapping.Filename}");
+      BeginLoading($"Reloading: {mappingFilename}");
       while (openedForms.Count > 0)
         openedForms[0].Close();
 
       try
       {
-        await Task.Run(()=> mapping.Reload());
+        if (mapping != null)
+          await Task.Run(() => mapping.Reload());
+        else
+          mapping = await Task.Run(() => new Mapping(mappingFilename));
       }
       catch (Exception e)
       {
-        HandleMappingLoadingException(e, mapping.Filename);
+        HandleMappingLoadingException(e, mappingFilename);
         EndLoading("Reloading failed.");
         return;
       }
@@ -251,8 +257,7 @@ namespace ObfuscarMappingParser
       catch (Exception e)
       {
         RestApi.Instance.SendCrashReport(
-            new CrashReport("Mapping tree builder", "Error on building classes tree"){ Exception = e},
-            RestApi.CrashType.JustReport,
+            new CrashReport("Mapping tree builder", "Error on building classes tree", CrashType.JustReport){ Exception = e},
             this
           );
       }
@@ -391,7 +396,7 @@ namespace ObfuscarMappingParser
 
     public bool HavePdb
     {
-      get { return pdbfiles.Count > 0; }
+      get { return pdbFiles.Count > 0; }
     }
 
     #endregion
@@ -516,7 +521,7 @@ namespace ObfuscarMappingParser
 
     #region PDB
 
-    private List<PdbFile> pdbfiles = new List<PdbFile>();
+    private List<PdbFile> pdbFiles = new List<PdbFile>();
     private List<string> pdbToAttach;
 
     private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
@@ -582,7 +587,7 @@ namespace ObfuscarMappingParser
 
     private bool SearchForLoadedPdb(string filename)
     {
-      foreach (PdbFile file in pdbfiles)
+      foreach (PdbFile file in pdbFiles)
         if (string.Compare(file.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
           return true;
 
@@ -599,7 +604,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        pdbfiles.Add(new PdbFile(filename));
+        pdbFiles.Add(new PdbFile(filename));
       }
       catch (Exception ex)
       {
@@ -625,7 +630,7 @@ namespace ObfuscarMappingParser
       string itemName = s.Substring(i + 1);
       CodeLocation location = null;
 
-      foreach (PdbFile file in pdbfiles)
+      foreach (PdbFile file in pdbFiles)
       {
         location = file.Resolver.FindLocation(className, itemName);
         if (location != null)
@@ -645,7 +650,7 @@ namespace ObfuscarMappingParser
       filename = null;
       lineNumber = -1;
 
-      if (pdbfiles.Count == 0 || item.EntityType != EntityType.Method)
+      if (pdbFiles.Count == 0 || item.EntityType != EntityType.Method)
         return false;
 
       return SearchInPdb(out filename, out lineNumber, item);
@@ -808,7 +813,7 @@ namespace ObfuscarMappingParser
       if (mapping == null)
         return;
 
-      foreach (PdbFile pdbFile in pdbfiles)
+      foreach (PdbFile pdbFile in pdbFiles)
         if (pdbFile.CheckFileModification() &&
             TaskDialogHelper.ShowTaskDialog(
                   Handle,

@@ -178,7 +178,7 @@ namespace ObfuscarMappingParser
     private void Action_ManagePDB(Actions command)
     {
       lockDragNDrop = true;
-      using (PDBManagerForm form = new PDBManagerForm(pdbfiles, this))
+      using (PDBManagerForm form = new PDBManagerForm(pdbFiles, this))
         form.ShowDialog(this);
       lockDragNDrop = false;
     }
