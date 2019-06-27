@@ -24,6 +24,10 @@
 
     public static string SimplifyType(EntityName value, bool fullName)
     {
+      // fallback for case which should never happen
+      if (value == null)
+        return "??";
+
       if (Configs.Instance.SimplifySystemNames && (string.IsNullOrEmpty(value.Namespace) || value.Namespace == "System"))
       {
         string result = TryReplace(value.Name);
