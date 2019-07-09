@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2014-2018 Broken Event
+Copyright (c) 2014-2019 Broken Event
 http://brokenevent.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

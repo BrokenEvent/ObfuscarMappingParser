@@ -80,7 +80,7 @@ namespace ObfuscarMappingParser
 
       commandsElement = doc.GetElement("Actions");
 
-      NanoXmlElement updateEl = doc.GetElement("Update");
+      NanoXmlElement updateEl = doc.GetElement("update");
       if (updateEl != null)
         updateHelper.Load(updateEl);
     }

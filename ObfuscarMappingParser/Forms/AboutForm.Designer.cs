@@ -41,9 +41,6 @@
       this.llblGitHubDesc = new System.Windows.Forms.Label();
       this.llblTrello = new BrokenEvent.Shared.Controls.ThemedLink();
       this.lblTrelloBoardDesc = new System.Windows.Forms.Label();
-      this.indUpdate = new BrokenEvent.Shared.Controls.Indicator();
-      this.lblUpdateState = new System.Windows.Forms.Label();
-      this.llblUpdate = new BrokenEvent.Shared.Controls.ThemedLink();
       this.imgSupport = new System.Windows.Forms.PictureBox();
       this.pbLogo = new System.Windows.Forms.PictureBox();
       this.imgTrello = new System.Windows.Forms.PictureBox();
@@ -61,7 +58,7 @@
       // btnOk
       // 
       this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnOk.Location = new System.Drawing.Point(455, 369);
+      this.btnOk.Location = new System.Drawing.Point(455, 355);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
       this.btnOk.TabIndex = 1;
@@ -84,7 +81,7 @@
       // 
       this.lblCopyright.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.lblCopyright.AutoSize = true;
-      this.lblCopyright.Location = new System.Drawing.Point(12, 374);
+      this.lblCopyright.Location = new System.Drawing.Point(12, 360);
       this.lblCopyright.Name = "lblCopyright";
       this.lblCopyright.Size = new System.Drawing.Size(241, 13);
       this.lblCopyright.TabIndex = 3;
@@ -94,7 +91,7 @@
       // 
       this.lblWarning.AutoSize = true;
       this.lblWarning.ForeColor = System.Drawing.Color.Gray;
-      this.lblWarning.Location = new System.Drawing.Point(12, 304);
+      this.lblWarning.Location = new System.Drawing.Point(12, 279);
       this.lblWarning.Margin = new System.Windows.Forms.Padding(3, 12, 3, 0);
       this.lblWarning.Name = "lblWarning";
       this.lblWarning.Size = new System.Drawing.Size(340, 26);
@@ -108,18 +105,18 @@
       this.llblObfuscar.BackColor = System.Drawing.Color.Transparent;
       this.llblObfuscar.CharacterWrap = false;
       this.llblObfuscar.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblObfuscar.Location = new System.Drawing.Point(15, 333);
+      this.llblObfuscar.Location = new System.Drawing.Point(15, 308);
       this.llblObfuscar.Margin = new System.Windows.Forms.Padding(3, 3, 3, 12);
       this.llblObfuscar.Name = "llblObfuscar";
-      this.llblObfuscar.Size = new System.Drawing.Size(143, 15);
+      this.llblObfuscar.Size = new System.Drawing.Size(148, 15);
       this.llblObfuscar.TabIndex = 8;
-      this.llblObfuscar.Text = "http://www.obfuscar.com/";
-      this.llblObfuscar.Url = "http://www.obfuscar.com/";
+      this.llblObfuscar.Text = "https://www.obfuscar.com/";
+      this.llblObfuscar.Url = "https://www.obfuscar.com/";
       // 
       // lblMSImageLibrary
       // 
       this.lblMSImageLibrary.AutoSize = true;
-      this.lblMSImageLibrary.Location = new System.Drawing.Point(12, 279);
+      this.lblMSImageLibrary.Location = new System.Drawing.Point(12, 254);
       this.lblMSImageLibrary.Margin = new System.Windows.Forms.Padding(3, 4, 3, 0);
       this.lblMSImageLibrary.Name = "lblMSImageLibrary";
       this.lblMSImageLibrary.Size = new System.Drawing.Size(373, 13);
@@ -129,7 +126,7 @@
       // lblPdbCopyright
       // 
       this.lblPdbCopyright.AutoSize = true;
-      this.lblPdbCopyright.Location = new System.Drawing.Point(12, 262);
+      this.lblPdbCopyright.Location = new System.Drawing.Point(12, 237);
       this.lblPdbCopyright.Margin = new System.Windows.Forms.Padding(3, 8, 3, 0);
       this.lblPdbCopyright.Name = "lblPdbCopyright";
       this.lblPdbCopyright.Size = new System.Drawing.Size(449, 13);
@@ -143,7 +140,7 @@
       this.llblGitHub.BackColor = System.Drawing.Color.Transparent;
       this.llblGitHub.CharacterWrap = false;
       this.llblGitHub.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblGitHub.Location = new System.Drawing.Point(40, 104);
+      this.llblGitHub.Location = new System.Drawing.Point(40, 79);
       this.llblGitHub.Name = "llblGitHub";
       this.llblGitHub.Size = new System.Drawing.Size(306, 15);
       this.llblGitHub.TabIndex = 12;
@@ -156,7 +153,7 @@
       this.llblProjectPage.BackColor = System.Drawing.Color.Transparent;
       this.llblProjectPage.CharacterWrap = false;
       this.llblProjectPage.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblProjectPage.Location = new System.Drawing.Point(40, 148);
+      this.llblProjectPage.Location = new System.Drawing.Point(40, 123);
       this.llblProjectPage.Name = "llblProjectPage";
       this.llblProjectPage.Size = new System.Drawing.Size(263, 15);
       this.llblProjectPage.TabIndex = 13;
@@ -166,7 +163,7 @@
       // llblProjectPageDesc
       // 
       this.llblProjectPageDesc.AutoSize = true;
-      this.llblProjectPageDesc.Location = new System.Drawing.Point(37, 132);
+      this.llblProjectPageDesc.Location = new System.Drawing.Point(37, 107);
       this.llblProjectPageDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.llblProjectPageDesc.Name = "llblProjectPageDesc";
       this.llblProjectPageDesc.Size = new System.Drawing.Size(115, 13);
@@ -176,7 +173,7 @@
       // llblGitHubDesc
       // 
       this.llblGitHubDesc.AutoSize = true;
-      this.llblGitHubDesc.Location = new System.Drawing.Point(37, 88);
+      this.llblGitHubDesc.Location = new System.Drawing.Point(37, 63);
       this.llblGitHubDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.llblGitHubDesc.Name = "llblGitHubDesc";
       this.llblGitHubDesc.Size = new System.Drawing.Size(102, 13);
@@ -189,7 +186,7 @@
       this.llblTrello.BackColor = System.Drawing.Color.Transparent;
       this.llblTrello.CharacterWrap = false;
       this.llblTrello.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblTrello.Location = new System.Drawing.Point(40, 192);
+      this.llblTrello.Location = new System.Drawing.Point(40, 167);
       this.llblTrello.Name = "llblTrello";
       this.llblTrello.Size = new System.Drawing.Size(286, 15);
       this.llblTrello.TabIndex = 16;
@@ -199,55 +196,17 @@
       // lblTrelloBoardDesc
       // 
       this.lblTrelloBoardDesc.AutoSize = true;
-      this.lblTrelloBoardDesc.Location = new System.Drawing.Point(37, 176);
+      this.lblTrelloBoardDesc.Location = new System.Drawing.Point(37, 151);
       this.lblTrelloBoardDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.lblTrelloBoardDesc.Name = "lblTrelloBoardDesc";
       this.lblTrelloBoardDesc.Size = new System.Drawing.Size(140, 13);
       this.lblTrelloBoardDesc.TabIndex = 17;
       this.lblTrelloBoardDesc.Text = "Trello board for feedback:";
       // 
-      // indUpdate
-      // 
-      this.indUpdate.BackColor = System.Drawing.Color.Transparent;
-      this.indUpdate.ForeColor = System.Drawing.Color.RoyalBlue;
-      this.indUpdate.IndicatorType = BrokenEvent.Shared.Controls.Indicator.Indicators.ClassicRotater;
-      this.indUpdate.LinkedControl = null;
-      this.indUpdate.Location = new System.Drawing.Point(15, 58);
-      this.indUpdate.Name = "indUpdate";
-      this.indUpdate.Size = new System.Drawing.Size(16, 16);
-      this.indUpdate.TabIndex = 22;
-      this.indUpdate.Text = "indicator1";
-      // 
-      // lblUpdateState
-      // 
-      this.lblUpdateState.AutoSize = true;
-      this.lblUpdateState.Location = new System.Drawing.Point(37, 59);
-      this.lblUpdateState.Margin = new System.Windows.Forms.Padding(3, 6, 3, 6);
-      this.lblUpdateState.Name = "lblUpdateState";
-      this.lblUpdateState.Size = new System.Drawing.Size(127, 13);
-      this.lblUpdateState.TabIndex = 23;
-      this.lblUpdateState.Text = "Checking for updates...";
-      // 
-      // llblUpdate
-      // 
-      this.llblUpdate.AutoOpen = false;
-      this.llblUpdate.AutoSizeLabel = true;
-      this.llblUpdate.BackColor = System.Drawing.Color.Transparent;
-      this.llblUpdate.CharacterWrap = false;
-      this.llblUpdate.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblUpdate.Location = new System.Drawing.Point(40, 58);
-      this.llblUpdate.Name = "llblUpdate";
-      this.llblUpdate.Size = new System.Drawing.Size(38, 15);
-      this.llblUpdate.TabIndex = 24;
-      this.llblUpdate.Text = "Update";
-      this.llblUpdate.Url = "Update";
-      this.llblUpdate.Visible = false;
-      this.llblUpdate.Click += new System.EventHandler(this.llblUpdate_Click);
-      // 
       // imgSupport
       // 
       this.imgSupport.Image = global::ObfuscarMappingParser.Properties.Resources.IconSupport;
-      this.imgSupport.Location = new System.Drawing.Point(15, 220);
+      this.imgSupport.Location = new System.Drawing.Point(15, 195);
       this.imgSupport.Name = "imgSupport";
       this.imgSupport.Size = new System.Drawing.Size(16, 16);
       this.imgSupport.TabIndex = 25;
@@ -269,7 +228,7 @@
       // imgTrello
       // 
       this.imgTrello.Image = global::ObfuscarMappingParser.Properties.Resources.LogoTrello;
-      this.imgTrello.Location = new System.Drawing.Point(15, 176);
+      this.imgTrello.Location = new System.Drawing.Point(15, 151);
       this.imgTrello.Name = "imgTrello";
       this.imgTrello.Size = new System.Drawing.Size(16, 16);
       this.imgTrello.TabIndex = 20;
@@ -278,7 +237,7 @@
       // imgProject
       // 
       this.imgProject.Image = global::ObfuscarMappingParser.Properties.Resources.LogoBrokenEvent;
-      this.imgProject.Location = new System.Drawing.Point(15, 132);
+      this.imgProject.Location = new System.Drawing.Point(15, 107);
       this.imgProject.Name = "imgProject";
       this.imgProject.Size = new System.Drawing.Size(16, 16);
       this.imgProject.TabIndex = 19;
@@ -287,7 +246,7 @@
       // imgGitHub
       // 
       this.imgGitHub.Image = global::ObfuscarMappingParser.Properties.Resources.LogoGithub;
-      this.imgGitHub.Location = new System.Drawing.Point(15, 88);
+      this.imgGitHub.Location = new System.Drawing.Point(15, 63);
       this.imgGitHub.Name = "imgGitHub";
       this.imgGitHub.Size = new System.Drawing.Size(16, 16);
       this.imgGitHub.TabIndex = 18;
@@ -296,7 +255,7 @@
       // lblSupportDesc
       // 
       this.lblSupportDesc.AutoSize = true;
-      this.lblSupportDesc.Location = new System.Drawing.Point(37, 220);
+      this.lblSupportDesc.Location = new System.Drawing.Point(37, 195);
       this.lblSupportDesc.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
       this.lblSupportDesc.Name = "lblSupportDesc";
       this.lblSupportDesc.Size = new System.Drawing.Size(142, 13);
@@ -309,7 +268,7 @@
       this.llblSupport.BackColor = System.Drawing.Color.Transparent;
       this.llblSupport.CharacterWrap = false;
       this.llblSupport.Cursor = System.Windows.Forms.Cursors.Hand;
-      this.llblSupport.Location = new System.Drawing.Point(40, 236);
+      this.llblSupport.Location = new System.Drawing.Point(40, 211);
       this.llblSupport.Name = "llblSupport";
       this.llblSupport.Size = new System.Drawing.Size(305, 15);
       this.llblSupport.TabIndex = 27;
@@ -321,14 +280,11 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackColor = System.Drawing.Color.White;
-      this.ClientSize = new System.Drawing.Size(567, 400);
+      this.ClientSize = new System.Drawing.Size(567, 386);
       this.ControlBox = false;
       this.Controls.Add(this.llblSupport);
       this.Controls.Add(this.lblSupportDesc);
       this.Controls.Add(this.imgSupport);
-      this.Controls.Add(this.llblUpdate);
-      this.Controls.Add(this.lblUpdateState);
-      this.Controls.Add(this.indUpdate);
       this.Controls.Add(this.pbLogo);
       this.Controls.Add(this.imgTrello);
       this.Controls.Add(this.imgProject);
@@ -350,12 +306,11 @@
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
       this.HeaderColor = System.Drawing.Color.White;
-      this.HeaderText = "Opfuscar Mapping Parser";
+      this.HeaderText = "Obfuscar Mapping Parser";
       this.Name = "AboutForm";
       this.ShowInTaskbar = false;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "About Obfuscar Mapping Parser";
-      this.Load += new System.EventHandler(this.AboutForm_Load);
       ((System.ComponentModel.ISupportInitialize)(this.imgSupport)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pbLogo)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.imgTrello)).EndInit();
@@ -385,9 +340,6 @@
     private System.Windows.Forms.PictureBox imgProject;
     private System.Windows.Forms.PictureBox imgTrello;
     private System.Windows.Forms.PictureBox pbLogo;
-    private BrokenEvent.Shared.Controls.Indicator indUpdate;
-    private System.Windows.Forms.Label lblUpdateState;
-    private BrokenEvent.Shared.Controls.ThemedLink llblUpdate;
     private System.Windows.Forms.PictureBox imgSupport;
     private System.Windows.Forms.Label lblSupportDesc;
     private BrokenEvent.Shared.Controls.ThemedLink llblSupport;
