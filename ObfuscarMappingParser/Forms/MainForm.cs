@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
@@ -844,7 +843,7 @@ namespace ObfuscarMappingParser
     private void MainForm_Load(object sender, EventArgs e)
     {
       commandManager.WindowHandle = Handle;
-      CheckForUpdates(true);
+      Configs.Instance.UpdateHelper.Initialize(UpdateFound);
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -854,48 +853,83 @@ namespace ObfuscarMappingParser
       Configs.Instance.CommandsElement = el;
     }
 
-    private async void CheckForUpdates(bool silent)
+    private void UpdateFound(UpdateHelper updateHelper)
     {
-      miUpdateVersion.Enabled = false;
-      VersionResponse oldVersion = Configs.Instance.UpdateHelper.UpdateAvailable;
-      await Task.Run(() => Configs.Instance.UpdateHelper.CheckForUpdates());
+      TaskDialogResult result = TaskDialogHelper.ShowTaskDialog(
+          Handle,
+          "Update is Available",
+          $"The Obfuscar Mapping Parser update to {updateHelper.UpdateAvailable.Version} is available. Update now?",
+          updateHelper.UpdateAvailable.Description,
+          TaskDialogStandardIcon.Information,
+          new string[] { "Update Now", "Schedule Update", "Ignore Update", "Cancel" },
+          new string[] { "Perform update and restart app", "Perform update when app is closed", "Don't update to this version", null },
+          new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.Ok, TaskDialogResult.No, TaskDialogResult.Cancel, }
+        );
 
-      VersionResponse version = Configs.Instance.UpdateHelper.UpdateAvailable;
-      miUpdateVersion.Enabled = true;
-
-      if (version == null || version == oldVersion)
+      switch (result)
       {
-        miUpdateVersion.Text = "Check for Updates";
-        if (!silent)
-          MessageBox.Show(this, $"You are using the most recent version of the {APP_TITLE}.", "Update Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        return;
+        // update now
+        case TaskDialogResult.Yes:
+          updateHelper.ScheduleUpdate(
+              UpdateHelper.BuildCommandLine(
+                  null,
+                  new Dictionary<string, string>
+                  {
+                    { "doRestart", null },
+                    { "restartCmd", mappingFilename }
+                  }
+                )
+            );
+          Close();
+          break;
+
+        // schedule
+        case TaskDialogResult.Ok:
+          // run updater silently
+          updateHelper.ScheduleUpdate(updateHelper.SilentCommandline);
+          break;
+
+        // ignore
+        case TaskDialogResult.No:
+          updateHelper.IgnoreUpdate();
+          break;
       }
+    }
 
-      miUpdateVersion.Text = $"Update to {version.Version}...";
-      if (TaskDialogHelper.ShowTaskDialog(
+    private async void miUpdateVersion_Click(object sender, EventArgs e)
+    {
+      BeginLoading("Checking for updates");
+      UpdateHelper.UpdateCheckResult result = await Configs.Instance.UpdateHelper.CheckForUpdates();
+
+      switch (result)
+      {
+        case UpdateHelper.UpdateCheckResult.NoUpdates:
+          EndLoading("");
+          TaskDialogHelper.ShowMessageBox(
               Handle,
-              "Update is Available",
-              "The Obfuscar Mapping Parser update is available. Update now?",
-              version.Description,
-              TaskDialogStandardIcon.Information, 
-              new string[]{"Update now", "Don't update"},
+              "No Updates",
+              $"You are using the most recent version of the {APP_TITLE}.",
               null,
-              new TaskDialogResult[]{TaskDialogResult.Yes, TaskDialogResult.No }
-            ) == TaskDialogResult.Yes)
-        DoUpdateVersion();
-    }
+              TaskDialogStandardIcon.Information
+            );
+          break;
 
-    private void DoUpdateVersion()
-    {
-      BaseForm.OpenUrl(this, Configs.Instance.UpdateHelper.UpdateAvailable.InstallerUrl.ToString());
-    }
+        case UpdateHelper.UpdateCheckResult.UpdateFound:
+          EndLoading("");
+          UpdateFound(Configs.Instance.UpdateHelper);
+          break;
 
-    private void miUpdateVersion_Click(object sender, EventArgs e)
-    {
-      if (Configs.Instance.UpdateHelper.UpdateAvailable != null)
-        DoUpdateVersion();
-      else
-        CheckForUpdates(false);
+        case UpdateHelper.UpdateCheckResult.Failure:
+          EndLoading("Failed to check for updates.");
+          TaskDialogHelper.ShowMessageBox(
+              Handle,
+              "Failure",
+              "Unable to check for updates.",
+              null,
+              TaskDialogStandardIcon.Error
+            );
+          break;
+      }
     }
 
     private void miReport_Click(object sender, EventArgs e)
@@ -906,39 +940,8 @@ namespace ObfuscarMappingParser
     private async void miVersionHistory_Click(object sender, EventArgs e)
     {
       BeginLoading("Receiving version history");
-      RestResponse<HistoryResponse> response = await Task.Run((Func<RestResponse<HistoryResponse>>)RestApi.Instance.GetVersionHistory);
-
-      if (response.Result == null)
-      {
-        EndLoading("Failed to receive history.");
-        return;
-      }
-
+      await UpdateHelper.ShowVersionHistory();
       EndLoading("");
-      StringBuilder sb = new StringBuilder();
-
-      for (int i = response.Result.History.Count - 1; i >= 0; i--)
-      {
-        HistoryResponse.VersionInfo info = response.Result.History[i];
-        sb.Append("Version: ").Append(info.Version).Append("; ");
-        sb.Append("Branch: ").Append(info.Branch).Append("; ");
-        sb.Append("Date: ").Append(info.ReleaseDate.ToLongDateString());
-        sb.AppendLine(". Changes:");
-
-        string[] lines = info.Description.Split('\n');
-        foreach (string s in lines)
-          sb.AppendLine(s);
-        sb.AppendLine();
-      }
-
-      string filename = Path.GetTempFileName() + ".txt";
-      File.WriteAllText(filename, sb.ToString(), Encoding.UTF8);
-      ProcessStartInfo startInfo = new ProcessStartInfo(filename);
-      startInfo.Verb = "open";
-      startInfo.UseShellExecute = true;
-      Process process = Process.Start(startInfo);
-      process.WaitForInputIdle();
-      File.Delete(filename);
     }
 
     private void miRequestFeature_Click(object sender, EventArgs e)
@@ -948,7 +951,12 @@ namespace ObfuscarMappingParser
 
     private void miDonate_Click(object sender, EventArgs e)
     {
-      BaseForm.OpenUrl(this, "https://www.buymeacoffee.com/BrokenEvent");
+      BaseForm.OpenUrl(this, "https://brokenevent.com/projects/obfuscarparser/donate");
+    }
+
+    private void miGitHub_Click(object sender, EventArgs e)
+    {
+      BaseForm.OpenUrl(this, "https://github.com/BrokenEvent/ObfuscarMappingParser");
     }
   }
 }

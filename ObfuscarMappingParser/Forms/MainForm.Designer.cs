@@ -80,12 +80,13 @@
       this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.mmHelp = new System.Windows.Forms.ToolStripMenuItem();
       this.miUpdateVersion = new System.Windows.Forms.ToolStripMenuItem();
-      this.miReport = new System.Windows.Forms.ToolStripMenuItem();
       this.miVersionHistory = new System.Windows.Forms.ToolStripMenuItem();
-      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-      this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+      this.miReport = new System.Windows.Forms.ToolStripMenuItem();
       this.miRequestFeature = new System.Windows.Forms.ToolStripMenuItem();
+      this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
       this.miDonate = new System.Windows.Forms.ToolStripMenuItem();
+      this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
       this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.miOpenVS = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
@@ -96,7 +97,7 @@
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.Controls.PineappleTreeView();
-      this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+      this.miGitHub = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -492,6 +493,7 @@
             this.toolStripSeparator11,
             this.miReport,
             this.miRequestFeature,
+            this.miGitHub,
             this.toolStripSeparator10,
             this.miDonate,
             this.miAbout});
@@ -501,18 +503,10 @@
       // 
       // miUpdateVersion
       // 
-      this.miUpdateVersion.Enabled = false;
       this.miUpdateVersion.Name = "miUpdateVersion";
       this.miUpdateVersion.Size = new System.Drawing.Size(210, 22);
-      this.miUpdateVersion.Text = "Update";
+      this.miUpdateVersion.Text = "Check for Updates";
       this.miUpdateVersion.Click += new System.EventHandler(this.miUpdateVersion_Click);
-      // 
-      // miReport
-      // 
-      this.miReport.Name = "miReport";
-      this.miReport.Size = new System.Drawing.Size(210, 22);
-      this.miReport.Text = "Report a Problem";
-      this.miReport.Click += new System.EventHandler(this.miReport_Click);
       // 
       // miVersionHistory
       // 
@@ -521,16 +515,17 @@
       this.miVersionHistory.Text = "Version History";
       this.miVersionHistory.Click += new System.EventHandler(this.miVersionHistory_Click);
       // 
-      // toolStripSeparator10
+      // toolStripSeparator11
       // 
-      this.toolStripSeparator10.Name = "toolStripSeparator10";
-      this.toolStripSeparator10.Size = new System.Drawing.Size(207, 6);
+      this.toolStripSeparator11.Name = "toolStripSeparator11";
+      this.toolStripSeparator11.Size = new System.Drawing.Size(207, 6);
       // 
-      // miAbout
+      // miReport
       // 
-      this.miAbout.Name = "miAbout";
-      this.miAbout.Size = new System.Drawing.Size(210, 22);
-      this.miAbout.Text = "About";
+      this.miReport.Name = "miReport";
+      this.miReport.Size = new System.Drawing.Size(210, 22);
+      this.miReport.Text = "Report a Problem";
+      this.miReport.Click += new System.EventHandler(this.miReport_Click);
       // 
       // miRequestFeature
       // 
@@ -539,12 +534,23 @@
       this.miRequestFeature.Text = "Request a Feature";
       this.miRequestFeature.Click += new System.EventHandler(this.miRequestFeature_Click);
       // 
+      // toolStripSeparator10
+      // 
+      this.toolStripSeparator10.Name = "toolStripSeparator10";
+      this.toolStripSeparator10.Size = new System.Drawing.Size(207, 6);
+      // 
       // miDonate
       // 
       this.miDonate.Name = "miDonate";
       this.miDonate.Size = new System.Drawing.Size(210, 22);
       this.miDonate.Text = "Support the Development";
       this.miDonate.Click += new System.EventHandler(this.miDonate_Click);
+      // 
+      // miAbout
+      // 
+      this.miAbout.Name = "miAbout";
+      this.miAbout.Size = new System.Drawing.Size(210, 22);
+      this.miAbout.Text = "About";
       // 
       // contextMenuStrip
       // 
@@ -640,10 +646,12 @@
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
       // 
-      // toolStripSeparator11
+      // miGitHub
       // 
-      this.toolStripSeparator11.Name = "toolStripSeparator11";
-      this.toolStripSeparator11.Size = new System.Drawing.Size(207, 6);
+      this.miGitHub.Name = "miGitHub";
+      this.miGitHub.Size = new System.Drawing.Size(210, 22);
+      this.miGitHub.Text = "GitHub";
+      this.miGitHub.Click += new System.EventHandler(this.miGitHub_Click);
       // 
       // MainForm
       // 
@@ -744,6 +752,7 @@
     private System.Windows.Forms.ToolStripMenuItem miRequestFeature;
     private System.Windows.Forms.ToolStripMenuItem miDonate;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+    private System.Windows.Forms.ToolStripMenuItem miGitHub;
   }
 }
 
