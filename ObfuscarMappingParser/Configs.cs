@@ -80,7 +80,9 @@ namespace ObfuscarMappingParser
 
       commandsElement = doc.GetElement("Actions");
 
-      NanoXmlElement updateEl = doc.GetElement("update");
+      NanoXmlElement updateEl = doc.GetElement("Update");
+      if (updateEl == null)
+        updateEl = doc.GetElement("update");
       if (updateEl != null)
         updateHelper.Load(updateEl);
     }
@@ -109,7 +111,7 @@ namespace ObfuscarMappingParser
       if (commandsElement != null)
         doc.AppendChild(commandsElement);
 
-      updateHelper.Save(doc.AppendChild(new NanoXmlElement("update")));
+      updateHelper.Save(doc.AppendChild(new NanoXmlElement("Update")));
     }
 
     protected override void LoadDefaults()
