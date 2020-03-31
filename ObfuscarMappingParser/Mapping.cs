@@ -154,9 +154,17 @@ namespace ObfuscarMappingParser
 
     public bool CheckModifications()
     {
-      DateTime m = lastModified;
-      lastModified = File.GetLastWriteTime(filename);
-      return File.GetLastWriteTime(filename) > m;
+      try
+      {
+        DateTime m = lastModified;
+        lastModified = File.GetLastWriteTime(filename);
+        return lastModified > m;
+      }
+      catch
+      {
+        // ignore all IO errors
+        return false;
+      }
     }
 
     public string Filename

@@ -30,7 +30,15 @@ namespace ObfuscarMappingParser
 
     public bool CheckFileModification()
     {
-      return File.GetLastWriteTime(filename) > changeDate;
+      try
+      {
+        return File.GetLastWriteTime(filename) > changeDate;
+      }
+      catch
+      {
+        // ignore any IO errors
+        return false;
+      }
     }
 
     public void ReloadFile()
