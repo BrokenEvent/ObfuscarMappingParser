@@ -7,8 +7,11 @@ namespace ObfuscarMappingParser
 {
   partial class SearchResultsForm : Form
   {
+    private readonly MainForm mainForm;
+
     public SearchResultsForm(MainForm mainForm, SearchResults items, string name)
     {
+      this.mainForm = mainForm;
       InitializeComponent();
       lvItems.SmallImageList = mainForm.IconsList;
 
@@ -21,7 +24,7 @@ namespace ObfuscarMappingParser
         lv.ImageIndex = TreeBuilder.GetIconForEntity(item.EntityType, mainForm);
         lv.Tag = item;
         lvItems.Items.Add(lv);
-        lv.ToolTipText = ((RenamedBase)item).TreeNode.ToolTipText + "Double-click to select in classes tree."; ;
+        lv.ToolTipText = $"{mainForm.Mapping.FindNode((RenamedBase)item).ToolTipText} Double-click to select in classes tree.";
       }
 
       chItem.Width = lvItems.ClientSize.Width;
@@ -32,7 +35,7 @@ namespace ObfuscarMappingParser
       if (lvItems.SelectedItems.Count == 0)
         return;
 
-      PineappleTreeNode node = ((RenamedBase)lvItems.SelectedItems[0].Tag).TreeNode;
+      PineappleTreeNode node =  mainForm.Mapping.FindNode((RenamedBase)lvItems.SelectedItems[0].Tag);
       node.TreeView.SelectedNode = node;
       node.EnsureVisible();
     }

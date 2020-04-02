@@ -30,7 +30,7 @@ namespace ObfuscarMappingParser
       if (value == null)
         return "??";
 
-      if (Configs.Instance.SimplifySystemNames && (string.IsNullOrEmpty(value.Namespace) || value.Namespace == "System"))
+      if (ParserConfigs.Instance.SimplifySystemNames && (string.IsNullOrEmpty(value.Namespace) || value.Namespace == "System"))
       {
         string result;
         if (replacements.TryGetValue(value.Name, out result))

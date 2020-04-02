@@ -3,7 +3,7 @@
 namespace ObfuscarMappingParser
 {
   [Obfuscation(Exclude = true)]
-  enum EntityType
+  public enum EntityType
   {
     Constructor,
     Method,

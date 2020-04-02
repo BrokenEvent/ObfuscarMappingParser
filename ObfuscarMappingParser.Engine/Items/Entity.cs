@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ObfuscarMappingParser
 {
-  class Entity: INamedEntity
+  public class Entity: INamedEntity
   {
     private List<EntityName> methodParams;
     private EntityName result;

@@ -5,7 +5,7 @@ using BrokenEvent.NanoXml;
 
 namespace ObfuscarMappingParser
 {
-  class RenamedItem: RenamedBase
+  public class RenamedItem: RenamedBase
   {
     private EntityType entityType;
     private RenamedParam resultType;

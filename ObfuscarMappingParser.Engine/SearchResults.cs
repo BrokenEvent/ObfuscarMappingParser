@@ -2,7 +2,7 @@
 
 namespace ObfuscarMappingParser
 {
-  class SearchResults
+  public class SearchResults
   {
     private List<INamedEntity> results;
     private INamedEntity resultItem;

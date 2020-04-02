@@ -3,7 +3,7 @@
 namespace ObfuscarMappingParser
 {
   [Obfuscation(Exclude = true)]
-  enum SearchResultMessage: uint
+  public enum SearchResultMessage: uint
   {
     Normal,
     Ambiguous,

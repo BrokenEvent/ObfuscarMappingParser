@@ -72,7 +72,7 @@ namespace ObfuscarMappingParser
       {
         PdbFile file = (PdbFile)item.Tag;
         files.Remove(file);
-        Configs.Instance.RemoveRecentPdb(mainForm.Mapping.Filename, file.Filename);
+        Configs.Instance.RemoveRecentPdb(mainForm.Mapping.Mapping.Filename, file.Filename);
         item.Remove();
       }
     }
@@ -119,7 +119,7 @@ namespace ObfuscarMappingParser
         {
           if (mainForm.AttachPDB(pdb, this))
           {
-            Configs.Instance.AddRecentPdb(mainForm.Mapping.Filename, pdb);
+            Configs.Instance.AddRecentPdb(mainForm.Mapping.Mapping.Filename, pdb);
             havePdb = true;
           }
         }

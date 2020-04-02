@@ -1,6 +1,6 @@
 ﻿namespace ObfuscarMappingParser
 {
-  interface INamedEntity
+  public interface INamedEntity
   {
     EntityName EntityName { get; }
     EntityType EntityType { get; }

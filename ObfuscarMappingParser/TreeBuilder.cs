@@ -6,10 +6,10 @@ using BrokenEvent.Shared.Controls;
 
 namespace ObfuscarMappingParser
 {
-  class TreeBuilder :IEqualityComparer<string>
+  class TreeBuilder: IEqualityComparer<string>
   {
     private PineappleTreeView tree;
-    private Mapping mapping;
+    private MappingWrapper mapping;
     private bool groupNamespaces;
     private bool showModules;
     private bool groupModules;
@@ -47,7 +47,7 @@ namespace ObfuscarMappingParser
     private Dictionary<string, ModuleData> moduleNamespaces;
     private PineappleTreeNode noNsNode;
 
-    public TreeBuilder(PineappleTreeView tree, Mapping mapping, MainForm mainForm)
+    public TreeBuilder(PineappleTreeView tree, MappingWrapper mapping, MainForm mainForm)
     {
       this.tree = tree;
       this.mapping = mapping;
@@ -84,7 +84,7 @@ namespace ObfuscarMappingParser
         noNsNode.ImageIndex = mainForm.ICON_NO_NAMESPACE;
       }
 
-      foreach (RenamedClass c in mapping.Classes)
+      foreach (RenamedClass c in mapping.Mapping.Classes)
         BuildClass(c);
 
       if (groupModules)
@@ -126,7 +126,8 @@ namespace ObfuscarMappingParser
       classNode.Tag = c;
 
       classNode.ToolTipText = BuildHintForClass(c);
-      c.TreeNode = classNode;
+      mapping.MapRenamed(c, classNode);
+
       string subItemText = null;
       if (c.NameNew != null)
       {
@@ -163,7 +164,8 @@ namespace ObfuscarMappingParser
         classNode.Nodes.Add(node);
         node.ImageIndex = GetIconForEntity(item.EntityType, mainForm);
         node.Tag = item;
-        item.TreeNode = node;
+
+        mapping.MapRenamed(item, node);
 
         node.ToolTipText = BuildHintForItem(item);
         subItemText = null;

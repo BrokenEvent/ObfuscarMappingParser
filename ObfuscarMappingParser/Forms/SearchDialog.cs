@@ -83,15 +83,18 @@ namespace ObfuscarMappingParser
     {
       lvResults.Items.Clear();
 
-      SearchResults results = searchOriginal ? mainForm.Mapping.SearchOriginal(tbSearch.Text) : mainForm.Mapping.Search(tbSearch.Text, false, false);
+      SearchResults results = searchOriginal ? mainForm.Mapping.Mapping.SearchOriginal(tbSearch.Text) : mainForm.Mapping.Mapping.Search(tbSearch.Text, false, false);
       if (results == null || !results.HasValue)
         return;
 
       if (results.IsSingleResult)
         BuildResult((RenamedBase)results.SingleResult);
       else
-        foreach (RenamedBase result in results.Results)
-          BuildResult(result);
+        foreach (INamedEntity entity in results.Results)
+        {
+          if (entity is RenamedBase result)
+            BuildResult(result);
+        }
 
       tbSearch.Clear();
 
@@ -142,7 +145,7 @@ namespace ObfuscarMappingParser
       if (lvResults.SelectedItems.Count == 0)
         return;
 
-      PineappleTreeNode node = ((ItemDescriptor)lvResults.SelectedItems[0].Tag).Item.TreeNode;
+      PineappleTreeNode node = mainForm.Mapping.FindNode(((ItemDescriptor)lvResults.SelectedItems[0].Tag).Item);
       node.TreeView.SelectedNode = node;
       node.EnsureVisible();
       Close();

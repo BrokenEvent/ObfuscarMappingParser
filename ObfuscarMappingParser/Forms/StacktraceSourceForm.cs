@@ -10,14 +10,14 @@ namespace ObfuscarMappingParser
 {
   internal partial class StacktraceSourceForm : BaseForm
   {
-    private readonly Mapping mapping;
+    private readonly MappingWrapper mapping;
     private string result;
     private string resultSource;
 
     private const string RECENT_URLS = "StacktraceURL";
     private const string RECENT_FILES = "StacktraceFile";
 
-    public StacktraceSourceForm(Mapping mapping)
+    public StacktraceSourceForm(MappingWrapper mapping)
     {
       this.mapping = mapping;
       InitializeComponent();
@@ -27,10 +27,10 @@ namespace ObfuscarMappingParser
 
       controlHighlight.OwnerForm = this;
 
-      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Filename, RECENT_URLS))
+      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Mapping.Filename, RECENT_URLS))
         tbURL.AutoCompleteCustomSource.Add(s);
 
-      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Filename, RECENT_FILES))
+      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Mapping.Filename, RECENT_FILES))
         tbFilename.AutoCompleteCustomSource.Add(s);
     }
 
@@ -75,7 +75,7 @@ namespace ObfuscarMappingParser
       {
         result = await new WebClient().DownloadStringTaskAsync(tbURL.Text);
         resultSource = "URL";
-        Configs.Instance.AddRecentAdditional(mapping.Filename, RECENT_URLS, tbURL.Text);
+        Configs.Instance.AddRecentAdditional(mapping.Mapping.Filename, RECENT_URLS, tbURL.Text);
         return true;
       }
       catch (Exception e)
@@ -114,7 +114,7 @@ namespace ObfuscarMappingParser
         return false;
       }
 
-      Configs.Instance.AddRecentAdditional(mapping.Filename, RECENT_FILES, tbFilename.Text);
+      Configs.Instance.AddRecentAdditional(mapping.Mapping.Filename, RECENT_FILES, tbFilename.Text);
       return true;
     }
 

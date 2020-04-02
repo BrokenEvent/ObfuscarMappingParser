@@ -1,6 +1,6 @@
 ﻿namespace ObfuscarMappingParser
 {
-  class Renamed
+  public class Renamed
   {
     protected EntityName nameOld;
     protected EntityName nameNew;

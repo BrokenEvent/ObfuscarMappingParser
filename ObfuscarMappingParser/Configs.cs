@@ -10,7 +10,7 @@ using BrokenEvent.VisualStudioOpener;
 
 namespace ObfuscarMappingParser
 {
-  internal class Configs: DefaultConfigs
+  internal class Configs: DefaultConfigs, IParserConfigs
   {
     #region Singletone
 
@@ -22,6 +22,9 @@ namespace ObfuscarMappingParser
       {
         if (instance == null)
           instance = new Configs();
+
+        if (ParserConfigs.Instance == null)
+          ParserConfigs.Instance = instance;
         return instance;
       }
     }

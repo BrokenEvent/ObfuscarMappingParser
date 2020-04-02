@@ -25,7 +25,7 @@ namespace ObfuscarMappingParser
   partial class MainForm : Form
   {
     private string mappingFilename;
-    private Mapping mapping;
+    private MappingWrapper mapping;
     private ClipboardWatcher clipboardWatcher;
     private const string APP_TITLE = "Obfuscar Mapping Parser";
 
@@ -117,7 +117,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        stacktrace = mapping.ProcessCrashlogText(stacktrace, skipPrefixes);
+        stacktrace = mapping.Mapping.ProcessCrashlogText(stacktrace, skipPrefixes);
         if (form != null && stacktrace == form.Value)
           return;
       }
@@ -189,7 +189,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        mapping = await Task.Run(() => new Mapping(filename));
+        mapping = await Task.Run(() => new MappingWrapper(filename));
       }
       catch (Exception e)
       {
@@ -203,9 +203,9 @@ namespace ObfuscarMappingParser
       pdbFiles.Clear();
       BuildMapping();
       EnableMappingActions(true);
-      EndLoading($"Mapping loaded in {mapping.LoadTime} ms");
+      EndLoading($"Mapping loaded in {mapping.Mapping.LoadTime} ms");
 
-      AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Filename), false);
+      AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Mapping.Filename), false);
       AttachRelatedPdbs(pdbToAttach, true);
       pdbToAttach = null;
 
@@ -221,9 +221,9 @@ namespace ObfuscarMappingParser
       try
       {
         if (mapping != null)
-          await Task.Run(() => mapping.Reload());
+          await Task.Run(() => mapping.Mapping.Reload());
         else
-          mapping = await Task.Run(() => new Mapping(mappingFilename));
+          mapping = await Task.Run(() => new MappingWrapper(mappingFilename));
       }
       catch (Exception e)
       {
@@ -234,7 +234,7 @@ namespace ObfuscarMappingParser
 
       BuildMapping();
       EnableMappingActions(true);
-      EndLoading($"Mapping reloaded in {mapping.LoadTime} ms");
+      EndLoading($"Mapping reloaded in {mapping.Mapping.LoadTime} ms");
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
     }
 
@@ -275,7 +275,7 @@ namespace ObfuscarMappingParser
       if (e.KeyCode != Keys.Enter || mapping == null) // how??
         return;
 
-      SearchResults result = mapping.Search(tbSearch.Text, false, false);
+      SearchResults result = mapping.Mapping.Search(tbSearch.Text, false, false);
 
       if (result == null || !result.HasValue)
         return;
@@ -284,7 +284,7 @@ namespace ObfuscarMappingParser
 
       if (result.IsSingleResult)
       {
-        ptvElements.SelectedNode = ((RenamedBase)result.SingleResult).TreeNode;
+        ptvElements.SelectedNode = mapping.FindNode((RenamedBase)result.SingleResult);
         ptvElements.SelectedNode.EnsureVisible();
         return;
       }
@@ -388,7 +388,7 @@ namespace ObfuscarMappingParser
       get { return ilIcons; }
     }
 
-    public Mapping Mapping
+    public MappingWrapper Mapping
     {
       get { return mapping; }
     }
@@ -560,7 +560,7 @@ namespace ObfuscarMappingParser
         {
           case TaskDialogResult.Yes:
             if (AttachPDB(s, this) && addToRecent)
-              Configs.Instance.AddRecentPdb(mapping.Filename, s);
+              Configs.Instance.AddRecentPdb(mapping.Mapping.Filename, s);
             break;
 
           case TaskDialogResult.No:
@@ -579,7 +579,7 @@ namespace ObfuscarMappingParser
 
       foreach (string fileName in odPDB.FileNames)
         if (AttachPDB(fileName, owner))
-          Configs.Instance.AddRecentPdb(mapping.Filename, fileName);
+          Configs.Instance.AddRecentPdb(mapping.Mapping.Filename, fileName);
 
       return true;
     }
@@ -681,7 +681,7 @@ namespace ObfuscarMappingParser
 
         filename = odSourceFile.FileName;
       }
-      string vs = Configs.Instance.GetRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR);
+      string vs = Configs.Instance.GetRecentProperty(mapping.Mapping.Filename, Configs.PROPERTY_EDITOR);
       if (vs == null)
         vs = Configs.Instance.Editor;
       IVisualStudioInfo visualStudio = VisualStudioDetector.GetVisualStudioInfo(vs);
@@ -826,12 +826,12 @@ namespace ObfuscarMappingParser
                 ) == TaskDialogResult.Yes)
           pdbFile.ReloadFile();
 
-      if (mapping.CheckModifications() &&
+      if (mapping.Mapping.CheckModifications() &&
             TaskDialogHelper.ShowTaskDialog(
                   Handle,
                   "Mapping File Change Detected",
                   "External mapping file change detected. Reload?",
-                  mapping.Filename,
+                  mapping.Mapping.Filename,
                   TaskDialogStandardIcon.Information,
                   new string[] { "Reload", "Don't reload" },
                   null,

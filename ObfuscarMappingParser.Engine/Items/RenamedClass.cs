@@ -4,7 +4,7 @@ using BrokenEvent.NanoXml;
 
 namespace ObfuscarMappingParser
 {
-  class RenamedClass: RenamedBase
+  public class RenamedClass: RenamedBase
   {
     private readonly List<RenamedBase> items = new List<RenamedBase>();
     private string ownerClassName;
@@ -354,14 +354,6 @@ namespace ObfuscarMappingParser
 
         return result;
       }
-    }
-
-    public override void PurgeTreeNodes()
-    {
-      base.PurgeTreeNodes();
-
-      foreach (RenamedBase item in items)
-        item.PurgeTreeNodes();
     }
 
     public override IEnumerable<RenamedBase> GetChildItems()

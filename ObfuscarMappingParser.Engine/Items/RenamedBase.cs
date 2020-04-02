@@ -1,21 +1,12 @@
 ﻿using System.Collections.Generic;
 
-using BrokenEvent.Shared.Controls;
-
 namespace ObfuscarMappingParser
 {
-  abstract class RenamedBase: INamedEntity
+  public abstract class RenamedBase: INamedEntity
   {
-    private PineappleTreeNode treeNode;
     protected Renamed name;
 
     public const string UNKNOWN_NAME = "n/a";
-
-    public PineappleTreeNode TreeNode
-    {
-      get { return treeNode; }
-      set { treeNode = value; }
-    }
 
     public Renamed Name
     {
@@ -87,11 +78,6 @@ namespace ObfuscarMappingParser
     }
 
     public abstract void UpdateNewNames(IEntitySearcher searcher);
-
-    public virtual void PurgeTreeNodes()
-    {
-      treeNode = null;
-    }
 
     public virtual IEnumerable<RenamedBase> GetChildItems()
     {

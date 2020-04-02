@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Windows.Forms;
 using BrokenEvent.NanoXml;
 
 namespace ObfuscarMappingParser
 {
-  internal class Mapping: IEntitySearcher
+  public class Mapping: IEntitySearcher
   {
     private readonly string filename;
     private DateTime lastModified;
@@ -191,40 +190,6 @@ namespace ObfuscarMappingParser
     {
       get { return namespacesObfuscated; }
     }
-
-    public void PurgeTreeNodes()
-    {
-      foreach (RenamedClass renamedClass in classes)
-        renamedClass.PurgeTreeNodes();
-    }
-
-    #region Autocomplete
-
-    public AutoCompleteStringCollection GetNewNamesCollection()
-    {
-      AutoCompleteStringCollection result = new AutoCompleteStringCollection();
-      foreach (RenamedClass renamedClass in classes)
-        foreach (RenamedBase item in renamedClass.GetChildItems())
-        {
-          if (item.Name.NameNew != null)
-            result.Add(item.NameNewPlain);
-        }
-
-      return result;
-    }
-
-    public AutoCompleteStringCollection GetOldNamesCollection()
-    {
-      AutoCompleteStringCollection result = new AutoCompleteStringCollection();
-      foreach (RenamedClass renamedClass in classes)
-        foreach (RenamedBase item in renamedClass.GetChildItems())
-          if (item.Name.NameOld != null)
-            result.Add(item.NameOldPlain);
-
-      return result;
-    }
-
-    #endregion
 
     #region Search
 

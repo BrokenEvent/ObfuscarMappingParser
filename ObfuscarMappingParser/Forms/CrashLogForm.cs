@@ -9,9 +9,9 @@ namespace ObfuscarMappingParser
 {
   partial class CrashLogForm : Form
   {
-    private Mapping mapping;
+    private MappingWrapper mapping;
 
-    public CrashLogForm(Mapping mapping)
+    public CrashLogForm(MappingWrapper mapping)
     {
       this.mapping = mapping;
       InitializeComponent();
@@ -21,7 +21,7 @@ namespace ObfuscarMappingParser
     {
       try
       {
-        tbValue.Text = mapping.ProcessCrashlogText(tbValue.Text, btnSkipPrefix.Checked);
+        tbValue.Text = mapping.Mapping.ProcessCrashlogText(tbValue.Text, btnSkipPrefix.Checked);
       }
       catch (Exception ex)
       {

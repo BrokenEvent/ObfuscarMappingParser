@@ -25,7 +25,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        results = mainForm.Mapping.ProcessCrashlog(data);
+        results = mainForm.Mapping.Mapping.ProcessCrashlog(data);
       }
       catch (Exception e)
       {
@@ -267,7 +267,7 @@ namespace ObfuscarMappingParser
       if (descriptor == null || descriptor.Renamed == null)
         return;
 
-      PineappleTreeNode node = descriptor.Renamed.TreeNode;
+      PineappleTreeNode node = mainForm.Mapping.FindNode(descriptor.Renamed);
       node.TreeView.SelectedNode = node;
       node.EnsureVisible();
       Close();
@@ -294,7 +294,7 @@ namespace ObfuscarMappingParser
     {
       try
       {
-        results = mainForm.Mapping.ProcessCrashlog(data, !tbtnSkipPrefix.Checked);
+        results = mainForm.Mapping.Mapping.ProcessCrashlog(data, !tbtnSkipPrefix.Checked);
       }
       catch (Exception)
       {

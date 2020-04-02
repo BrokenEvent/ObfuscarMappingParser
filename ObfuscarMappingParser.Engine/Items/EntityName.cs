@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ObfuscarMappingParser
 {
-  class EntityName: ICloneable, IEquatable<EntityName>
+  public class EntityName: ICloneable, IEquatable<EntityName>
   {
     private string @namespace;
     private string[] nsCache;
@@ -177,7 +177,7 @@ namespace ObfuscarMappingParser
     {
       get
       {
-        if (name == "Nullable" && Configs.Instance.SimplifyNullable)
+        if (name == "Nullable" && ParserConfigs.Instance.SimplifyNullable)
           return AddModifier(SystemTypeProcessor.SimplifyType(genericParams[0], false) + "?", modifier);
 
         return AddModifier(name + BuildGenericParams(false), modifier);
@@ -199,7 +199,7 @@ namespace ObfuscarMappingParser
     {
       get
       {
-        if (name == "Nullable" && Configs.Instance.SimplifyNullable)
+        if (name == "Nullable" && ParserConfigs.Instance.SimplifyNullable)
           return AddModifier(SystemTypeProcessor.SimplifyType(genericParams[0], true) + "?", modifier);
 
         return AddModifier(@namespace != null ? @namespace + "." + name + BuildGenericParams(true): name + BuildGenericParams(true), modifier);
@@ -245,7 +245,7 @@ namespace ObfuscarMappingParser
       if (modifier == null)
         return target;
 
-      if (Configs.Instance.SimplifyRef)
+      if (ParserConfigs.Instance.SimplifyRef)
       {
         int i = modifier.IndexOf('&');
         if (i != -1)
