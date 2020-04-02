@@ -35,6 +35,8 @@ namespace ObfuscarMappingParser
           name = new Renamed(str);
 
         skipReason = el.GetAttribute("reason");
+
+        ParseMembers(el);
       }
       catch (Exception e)
       {
@@ -67,13 +69,18 @@ namespace ObfuscarMappingParser
         throw new ObfuscarParserException("Failed to process class element: ", e, el.Path);
       }
 
+      ParseMembers(el);    
+    }
+
+    private void ParseMembers(NanoXmlElement el)
+    {
       foreach (NanoXmlElement element in el.ChildElements)
       {
         if (!element.Name.StartsWith("renamed"))
           continue;
 
         items.Add(new RenamedItem(element, this));
-      }     
+      }
     }
 
     public string SkipReason
@@ -118,7 +125,7 @@ namespace ObfuscarMappingParser
 
     public IEnumerable<RenamedBase> Search(string[] values, int index)
     {
-      if (!name.HaveNewName) // unable to search, no new name
+      if (!name.HaveNewName && items.Count == 0) // unable to search, no new name, no children
         yield break;
 
       if (!name.NameNew.CompareNamespace(values, ref index)) // namespace check

@@ -1,0 +1,10 @@
+<mapping><renamedTypes />
+<skippedTypes><skippedClass name="[lib]lib.SomethingFancy" reason="KeepPublicApi option in configuration"><renamedMethod oldName="[lib]lib.SomethingFancy::SomeSecretStuff[1]([netstandard]System.String)" newName="A" />
+<renamedMethod oldName="[lib]lib.SomethingFancy::MakeUpperCase[1]([netstandard]System.String)" newName="a" />
+<skippedMethod name="[lib]lib.SomethingFancy::DoIt[0]()" reason="KeepPublicApi option in configuration" />
+<skippedMethod name="[lib]lib.SomethingFancy::.ctor[0]()" reason="special name" />
+</skippedClass>
+</skippedTypes>
+<renamedResources />
+<skippedResources />
+</mapping>

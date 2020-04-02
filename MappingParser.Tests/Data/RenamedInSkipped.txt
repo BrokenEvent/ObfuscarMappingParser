@@ -1,0 +1,4 @@
+   at lib.SomethingFancy.a(String )
+   at lib.SomethingFancy.A(String )
+   at lib.SomethingFancy.DoIt()
+   at app.Program.Main(String[] args)

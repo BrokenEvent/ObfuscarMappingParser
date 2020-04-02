@@ -801,5 +801,31 @@ namespace MappingParser.Tests
           "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, String, String)"
         );
     }
+
+    [Test]
+    public void RenamedInSkipped()
+    {
+      Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\RenamedInSkipped.xml"));
+      List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\RenamedInSkipped.txt"));
+      Assert.AreEqual(4, results.Count);
+
+      ResultTestHelperOk(
+          results,
+          0,
+          "lib",
+          "void MakeUpperCase(string)",
+          "void lib.SomethingFancy.MakeUpperCase(string)",
+          "void lib.SomethingFancy.MakeUpperCase(string)"
+        );
+
+      ResultTestHelperOk(
+          results,
+          1,
+          "lib",
+          "void SomeSecretStuff(string)",
+          "void lib.SomethingFancy.SomeSecretStuff(string)",
+          "void lib.SomethingFancy.SomeSecretStuff(string)"
+        );
+    }
   }
 }

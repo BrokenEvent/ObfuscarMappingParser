@@ -281,7 +281,7 @@ namespace ObfuscarMappingParser
         resultType.UpdateNewName(searcher);
 
       if (methodParams != null)
-        foreach (Renamed param in methodParams)
+        foreach (RenamedParam param in methodParams)
           param.UpdateNewName(searcher);
     }
 
