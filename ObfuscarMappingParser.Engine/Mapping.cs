@@ -13,7 +13,6 @@ namespace ObfuscarMappingParser.Engine
   public class Mapping: IEntitySearcher
   {
     private readonly string filename;
-    private DateTime lastModified;
     private List<RenamedClass> classes = new List<RenamedClass>();
 
     private Dictionary<string, RenamedClass> classesCache = new Dictionary<string, RenamedClass>();
@@ -61,7 +60,6 @@ namespace ObfuscarMappingParser.Engine
       classesCache.Clear();
       haveSystemEntities = false;
       methodsCount = classesCount = subclassesCount = skippedCount = 0;
-      lastModified = File.GetLastWriteTime(filename);
 
       List<RenamedClass> subclasses = new List<RenamedClass>();
 
@@ -152,21 +150,6 @@ namespace ObfuscarMappingParser.Engine
     public void Reload()
     {
       LoadFile();
-    }
-
-    public bool CheckModifications()
-    {
-      try
-      {
-        DateTime m = lastModified;
-        lastModified = File.GetLastWriteTime(filename);
-        return lastModified > m;
-      }
-      catch
-      {
-        // ignore all IO errors
-        return false;
-      }
     }
 
     public string Filename

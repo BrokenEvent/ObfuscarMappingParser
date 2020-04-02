@@ -828,7 +828,7 @@ namespace ObfuscarMappingParser
                 ) == TaskDialogResult.Yes)
           pdbFile.ReloadFile();
 
-      if (mapping.Mapping.CheckModifications() &&
+      if (mapping.CheckModifications() &&
             TaskDialogHelper.ShowTaskDialog(
                   Handle,
                   "Mapping File Change Detected",

@@ -104,7 +104,6 @@
     <Compile Include="Forms\TextViewerForm.Designer.cs">
       <DependentUpon>TextViewerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IEntitySearcher.cs" />
     <Compile Include="Forms\LauncherForm.cs">
       <SubType>Form</SubType>
     </Compile>

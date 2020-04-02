@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 using BrokenEvent.Shared.Controls;
@@ -11,10 +13,12 @@ namespace ObfuscarMappingParser
   class MappingWrapper
   {
     private Dictionary<RenamedBase, PineappleTreeNode> nodesMap = new Dictionary<RenamedBase, PineappleTreeNode>();
+    private DateTime lastModified;
 
     public MappingWrapper(string filename)
     {
       Mapping = new Mapping(filename);
+      lastModified = File.GetLastWriteTime(filename);
     }
 
     public Mapping Mapping { get; }
@@ -32,6 +36,21 @@ namespace ObfuscarMappingParser
     public void PurgeTreeNodes()
     {
       nodesMap.Clear();
+    }
+
+    public bool CheckModifications()
+    {
+      try
+      {
+        DateTime m = lastModified;
+        lastModified = File.GetLastWriteTime(Mapping.Filename);
+        return lastModified > m;
+      }
+      catch
+      {
+        // ignore all IO errors
+        return false;
+      }
     }
 
     #region Autocomplete
