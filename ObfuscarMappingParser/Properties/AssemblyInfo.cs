@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Broken Event")]
 [assembly: AssemblyProduct("ObfuscarMappingParser")]
-[assembly: AssemblyCopyright("© 2014-2019 Broken Event. All rights reserved.")]
+[assembly: AssemblyCopyright("© 2014-2020 Broken Event. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.3.3050")]
-[assembly: AssemblyFileVersion("1.0.3.3050")]
+[assembly: AssemblyVersion("1.0.3.3357")]
+[assembly: AssemblyFileVersion("1.0.3.3357")]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("MappingParser.Tests", AllInternalsVisible = true)]
