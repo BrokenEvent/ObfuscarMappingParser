@@ -8,6 +8,8 @@ using BrokenEvent.Shared;
 using BrokenEvent.Shared.Rest;
 using BrokenEvent.VisualStudioOpener;
 
+using ObfuscarMappingParser.Engine;
+
 namespace ObfuscarMappingParser
 {
   internal class Configs: DefaultConfigs, IParserConfigs

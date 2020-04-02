@@ -1,4 +1,6 @@
-﻿namespace ObfuscarMappingParser
+﻿using ObfuscarMappingParser.Engine.Items;
+
+namespace ObfuscarMappingParser.Engine
 {
   public interface IEntitySearcher
   {

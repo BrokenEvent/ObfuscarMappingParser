@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using BrokenEvent.NanoXml;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine.Items
 {
   public class RenamedClass: RenamedBase
   {

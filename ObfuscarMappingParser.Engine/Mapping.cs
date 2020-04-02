@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+
 using BrokenEvent.NanoXml;
 
-namespace ObfuscarMappingParser
+using ObfuscarMappingParser.Engine.Items;
+
+namespace ObfuscarMappingParser.Engine
 {
   public class Mapping: IEntitySearcher
   {

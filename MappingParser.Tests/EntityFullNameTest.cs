@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using ObfuscarMappingParser;
+using ObfuscarMappingParser.Engine.Items;
 
 namespace MappingParser.Tests
 {

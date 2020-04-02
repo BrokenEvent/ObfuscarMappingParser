@@ -4,6 +4,8 @@ using System.Text;
 
 using BrokenEvent.Shared.Controls;
 
+using ObfuscarMappingParser.Engine.Items;
+
 namespace ObfuscarMappingParser
 {
   class TreeBuilder: IEqualityComparer<string>

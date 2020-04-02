@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine.Items
 {
   [Obfuscation(Exclude = true)]
   public enum EntityType

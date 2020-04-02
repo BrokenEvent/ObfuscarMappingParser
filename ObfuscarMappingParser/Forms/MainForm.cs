@@ -18,6 +18,8 @@ using BrokenEvent.TaskDialogs;
 using BrokenEvent.TaskDialogs.Dialogs;
 using BrokenEvent.VisualStudioOpener;
 
+using ObfuscarMappingParser.Engine;
+using ObfuscarMappingParser.Engine.Items;
 using ObfuscarMappingParser.Properties;
 
 namespace ObfuscarMappingParser

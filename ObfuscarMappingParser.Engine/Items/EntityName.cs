@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine.Items
 {
   public class EntityName: ICloneable, IEquatable<EntityName>
   {

@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 
 using NUnit.Framework;
-using ObfuscarMappingParser;
+using ObfuscarMappingParser.Engine;
+using ObfuscarMappingParser.Engine.Items;
 
 namespace MappingParser.Tests
 {
@@ -70,10 +71,16 @@ namespace MappingParser.Tests
       Assert.AreEqual(nameFull + POSTFIX, results.ToString(OutputType.Full), "ToString(Full)");
     }
 
+    [SetUp]
+    public void SetUp()
+    {
+      ParserConfigs.Instance = new ParserConfigsImpl();
+    }
+
     [Test]
     public void Test1()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test1.txt"));
 
@@ -128,7 +135,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test2()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test2.txt"));
 
@@ -147,7 +154,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test3()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test3.txt"));
 
@@ -214,7 +221,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test4()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test4.txt"));
       Assert.AreEqual(9, results.Count);
@@ -299,7 +306,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test5()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5.txt"));
       Assert.AreEqual(3, results.Count);
@@ -334,7 +341,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test5Ru()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5_ru.txt"));
       Assert.AreEqual(3, results.Count);
@@ -369,7 +376,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test5Nl()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5_nl.txt"));
       Assert.AreEqual(3, results.Count);
@@ -404,7 +411,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test1Broken()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test1_broken.txt"), false);
 
@@ -455,7 +462,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test6()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping_Parser.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test6.txt"));
 
@@ -514,7 +521,7 @@ namespace MappingParser.Tests
     [Test]
     public void Test6Simpify()
     {
-      Configs.Instance.SimplifySystemNames = true;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = true;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\Mapping_Parser.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test6.txt"));
 
@@ -573,7 +580,7 @@ namespace MappingParser.Tests
     [Test]
     public void UnicodeTest1()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\unicode_mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\unicode_test1.txt"));
 
@@ -623,7 +630,7 @@ namespace MappingParser.Tests
     [Test]
     public void UnicodeTest1Simplify()
     {
-      Configs.Instance.SimplifySystemNames = true;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = true;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\unicode_mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\unicode_test1.txt"));
 
@@ -673,7 +680,7 @@ namespace MappingParser.Tests
     [Test]
     public void UnicodeTest2()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\unicode_mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\unicode_test2.txt"));
 
@@ -714,7 +721,7 @@ namespace MappingParser.Tests
     [Test]
     public void KoreanTest1()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\korean_mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\korean_test1.txt"));
 
@@ -764,7 +771,7 @@ namespace MappingParser.Tests
     [Test]
     public void KoreanTest2()
     {
-      Configs.Instance.SimplifySystemNames = false;
+      ((ParserConfigsImpl)ParserConfigs.Instance).SimplifySystemNames = false;
       Mapping mapping = new Mapping(TestHelper.TranslatePath(@"Data\korean_mapping.xml"));
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\korean_test2.txt"));
 

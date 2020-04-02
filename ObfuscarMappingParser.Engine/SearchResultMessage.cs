@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine
 {
   [Obfuscation(Exclude = true)]
   public enum SearchResultMessage: uint

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace ObfuscarMappingParser
+using ObfuscarMappingParser.Engine.Items;
+
+namespace ObfuscarMappingParser.Engine
 {
   public class SearchResults
   {

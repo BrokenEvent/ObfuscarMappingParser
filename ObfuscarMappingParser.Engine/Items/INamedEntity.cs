@@ -1,4 +1,4 @@
-﻿namespace ObfuscarMappingParser
+﻿namespace ObfuscarMappingParser.Engine.Items
 {
   public interface INamedEntity
   {

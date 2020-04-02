@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine
 {
   class ObfuscarParserException: Exception
   {

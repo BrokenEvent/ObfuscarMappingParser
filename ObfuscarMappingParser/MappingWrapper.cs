@@ -3,6 +3,9 @@ using System.Windows.Forms;
 
 using BrokenEvent.Shared.Controls;
 
+using ObfuscarMappingParser.Engine;
+using ObfuscarMappingParser.Engine.Items;
+
 namespace ObfuscarMappingParser
 {
   class MappingWrapper

@@ -4,6 +4,9 @@ using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.WinApi;
 
+using ObfuscarMappingParser.Engine;
+using ObfuscarMappingParser.Engine.Items;
+
 namespace ObfuscarMappingParser
 {
   partial class SearchDialog : BaseForm

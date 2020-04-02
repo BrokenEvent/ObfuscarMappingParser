@@ -2,6 +2,8 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
+using ObfuscarMappingParser.Engine;
+
 namespace ObfuscarMappingParser
 {
   internal static class CommandLine

@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using NUnit.Framework;
 using ObfuscarMappingParser;
+using ObfuscarMappingParser.Engine;
 
 namespace MappingParser.Tests
 {
@@ -17,6 +18,8 @@ namespace MappingParser.Tests
     [SetUp]
     public void Setup()
     {
+      ParserConfigs.Instance = new ParserConfigsImpl();
+
       outBuilder = new StringBuilder();
       outWriter = new StringWriter(outBuilder);
       Console.SetOut(outWriter);

@@ -1,4 +1,4 @@
-﻿namespace ObfuscarMappingParser
+﻿namespace ObfuscarMappingParser.Engine
 {
   public interface IParserConfigs
   {

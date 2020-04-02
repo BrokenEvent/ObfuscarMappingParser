@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine.Items
 {
   public abstract class RenamedBase: INamedEntity
   {

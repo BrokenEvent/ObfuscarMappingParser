@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace ObfuscarMappingParser
+namespace ObfuscarMappingParser.Engine
 {
   public struct LoadTimer
   {

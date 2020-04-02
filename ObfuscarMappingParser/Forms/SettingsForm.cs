@@ -9,6 +9,8 @@ using BrokenEvent.Shared.Controls;
 using BrokenEvent.Shared.Rest;
 using BrokenEvent.VisualStudioOpener;
 
+using ObfuscarMappingParser.Engine;
+
 namespace ObfuscarMappingParser
 {
   partial class SettingsForm : BaseForm

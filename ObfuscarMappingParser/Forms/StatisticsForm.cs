@@ -4,6 +4,8 @@ using System.Windows.Forms;
 
 using BrokenEvent.Shared.Forms;
 
+using ObfuscarMappingParser.Engine;
+
 namespace ObfuscarMappingParser
 {
   partial class StatisticsForm : BaseForm
