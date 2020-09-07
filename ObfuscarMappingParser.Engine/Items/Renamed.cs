@@ -1,4 +1,6 @@
-﻿namespace ObfuscarMappingParser.Engine.Items
+﻿using System;
+
+namespace ObfuscarMappingParser.Engine.Items
 {
   public class Renamed
   {
@@ -16,16 +18,25 @@
       get { return nameNew; }
     }
 
-    public Renamed(EntityName nameOld, EntityName nameNew)
+    public Renamed(string nameOld, string nameNew = null)
     {
-      this.nameOld = nameOld;
-      this.nameNew = nameNew;
+      if (string.IsNullOrWhiteSpace(nameOld))
+        throw new ArgumentNullException(nameof(nameOld));
+
+      this.nameOld = new EntityName(nameOld);
+      this.nameNew = string.IsNullOrWhiteSpace(nameNew) ? (EntityName)this.nameOld.Clone() : new EntityName(nameNew);
     }
 
-    public Renamed(EntityName nameOld)
+    public Renamed(EntityName nameOld, EntityName nameNew)
     {
+      if (nameOld == null)
+        throw new ArgumentNullException(nameof(nameOld));
+
       this.nameOld = nameOld;
-      nameNew = (EntityName)nameOld.Clone();
+      this.nameNew = nameNew;
+
+      if (this.nameNew == null)
+        this.nameNew = (EntityName)nameOld.Clone();
     }
 
     protected Renamed() { }
@@ -65,7 +76,7 @@
 
       RenamedBase r = searcher.SearchForOldName(nameNew);
       if (r != null)
-        nameNew.AssignName(r.NameNew);
+        nameNew.AssignName(r.Name.NameNew);
     }
   }
 }

@@ -233,13 +233,6 @@ namespace ObfuscarMappingParser.Engine.Items
       return PathName;
     }
 
-    public static implicit operator EntityName(string value)
-    {
-      if (string.IsNullOrEmpty(value))
-        return null;
-      return new EntityName(value);
-    }
-
     public static string AddModifier(string target, string modifier)
     {
       if (modifier == null)

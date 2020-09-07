@@ -238,7 +238,7 @@ namespace ObfuscarMappingParser.Engine.Items
     {
       int i = name.IndexOf('(');
 
-      EntityName ename = name.Substring(0, i);
+      EntityName ename = new EntityName(name.Substring(0, i));
       if (!ename.Compare(this.name.NameNew, false))
         return false;
 
@@ -254,7 +254,7 @@ namespace ObfuscarMappingParser.Engine.Items
         if (s == "*")
           continue;
 
-        EntityName e = s;
+        EntityName e = new EntityName(s);
         if (!e.Compare(methodParams[k].NameNew, true))
           return false;
       }

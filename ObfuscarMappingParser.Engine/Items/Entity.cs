@@ -16,13 +16,13 @@ namespace ObfuscarMappingParser.Engine.Items
       s = s.TrimEnd(' ');
       int i = s.IndexOf(' ');
       if (i == -1)
-        name = s;
+        name = new EntityName(s);
       else
       {
         string res = s.Substring(0, i);
         if (res != "void")
-          result = res;
-        name = s.Substring(i).TrimStart(' ');
+          result = new EntityName(res);
+        name = new EntityName(s.Substring(i).TrimStart(' '));
       }
     }
 
@@ -30,14 +30,14 @@ namespace ObfuscarMappingParser.Engine.Items
     {
       methodParams = new List<EntityName>(entity.methodParams);
       result = entity.result;
-      name = item.NameOldFull + "." + entity.name.Name;
+      name = new EntityName(item.NameOldFull + "." + entity.name.Name);
     }
 
     public Entity(Entity entity, RenamedBase item, IList<EntityName> methodParams)
     {
       this.methodParams = new List<EntityName>(methodParams);
       result = entity.result;
-      name = item.NameOldFull + "." + entity.name.Name;
+      name = new EntityName(item.NameOldFull + "." + entity.name.Name);
     }
 
     private static List<EntityName> BuildParams(ref string s)
