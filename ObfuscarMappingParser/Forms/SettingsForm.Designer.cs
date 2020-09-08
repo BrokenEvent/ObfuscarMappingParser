@@ -47,6 +47,7 @@
       this.tbEditor = new System.Windows.Forms.TabPage();
       this.blvEditors = new BrokenEvent.Shared.Controls.BrokenListView();
       this.tpSettings = new System.Windows.Forms.TabPage();
+      this.cbShowResources = new System.Windows.Forms.CheckBox();
       this.lblHeaderOther = new BrokenEvent.Shared.Controls.ThemedLabel();
       this.lblHeaderGrouping = new BrokenEvent.Shared.Controls.ThemedLabel();
       this.lblHeaderVisual = new BrokenEvent.Shared.Controls.ThemedLabel();
@@ -56,7 +57,7 @@
       this.lblUpdate = new System.Windows.Forms.Label();
       this.tpHotkeys = new System.Windows.Forms.TabPage();
       this.commandSelector = new BrokenEvent.Shared.CommandManager.CommandSelector();
-      this.cbShowResources = new System.Windows.Forms.CheckBox();
+      this.cbShowSkipped = new System.Windows.Forms.CheckBox();
       this.tabControl.SuspendLayout();
       this.tbEditor.SuspendLayout();
       this.tpSettings.SuspendLayout();
@@ -135,7 +136,7 @@
       this.cbSimplifyNullable.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifyNullable.Name = "cbSimplifyNullable";
       this.cbSimplifyNullable.Size = new System.Drawing.Size(213, 17);
-      this.cbSimplifyNullable.TabIndex = 3;
+      this.cbSimplifyNullable.TabIndex = 4;
       this.cbSimplifyNullable.Text = "Simplify nullable (Nullable<A> → A?)";
       this.cbSimplifyNullable.UseVisualStyleBackColor = true;
       // 
@@ -146,7 +147,7 @@
       this.cbGroupByModules.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByModules.Name = "cbGroupByModules";
       this.cbGroupByModules.Size = new System.Drawing.Size(121, 17);
-      this.cbGroupByModules.TabIndex = 6;
+      this.cbGroupByModules.TabIndex = 7;
       this.cbGroupByModules.Text = "Group by modules";
       this.cbGroupByModules.UseVisualStyleBackColor = true;
       // 
@@ -157,7 +158,7 @@
       this.cbGroupByNamespaces.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByNamespaces.Name = "cbGroupByNamespaces";
       this.cbGroupByNamespaces.Size = new System.Drawing.Size(182, 17);
-      this.cbGroupByNamespaces.TabIndex = 5;
+      this.cbGroupByNamespaces.TabIndex = 6;
       this.cbGroupByNamespaces.Text = "Group by original namespaces";
       this.cbGroupByNamespaces.UseVisualStyleBackColor = true;
       // 
@@ -168,7 +169,7 @@
       this.cbUseColumns.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbUseColumns.Name = "cbUseColumns";
       this.cbUseColumns.Size = new System.Drawing.Size(127, 17);
-      this.cbUseColumns.TabIndex = 7;
+      this.cbUseColumns.TabIndex = 8;
       this.cbUseColumns.Text = "Use columns in tree";
       this.cbUseColumns.UseVisualStyleBackColor = true;
       // 
@@ -197,7 +198,7 @@
       this.cbDoubleClick.Location = new System.Drawing.Point(220, 355);
       this.cbDoubleClick.Name = "cbDoubleClick";
       this.cbDoubleClick.Size = new System.Drawing.Size(311, 21);
-      this.cbDoubleClick.TabIndex = 10;
+      this.cbDoubleClick.TabIndex = 11;
       // 
       // tabControl
       // 
@@ -259,6 +260,7 @@
       // 
       // tpSettings
       // 
+      this.tpSettings.Controls.Add(this.cbShowSkipped);
       this.tpSettings.Controls.Add(this.cbShowResources);
       this.tpSettings.Controls.Add(this.lblHeaderOther);
       this.tpSettings.Controls.Add(this.lblHeaderGrouping);
@@ -282,6 +284,16 @@
       this.tpSettings.TabIndex = 1;
       this.tpSettings.Text = "UI Settings";
       this.tpSettings.UseVisualStyleBackColor = true;
+      // 
+      // cbShowResources
+      // 
+      this.cbShowResources.AutoSize = true;
+      this.cbShowResources.Location = new System.Drawing.Point(282, 39);
+      this.cbShowResources.Name = "cbShowResources";
+      this.cbShowResources.Size = new System.Drawing.Size(110, 17);
+      this.cbShowResources.TabIndex = 1;
+      this.cbShowResources.Text = "Show Resources";
+      this.cbShowResources.UseVisualStyleBackColor = true;
       // 
       // lblHeaderOther
       // 
@@ -329,7 +341,7 @@
       this.cbSimplifyRef.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifyRef.Name = "cbSimplifyRef";
       this.cbSimplifyRef.Size = new System.Drawing.Size(204, 17);
-      this.cbSimplifyRef.TabIndex = 4;
+      this.cbSimplifyRef.TabIndex = 5;
       this.cbSimplifyRef.Text = "Simplify ref args (int& a → ref int a)";
       this.cbSimplifyRef.UseMnemonic = false;
       this.cbSimplifyRef.UseVisualStyleBackColor = true;
@@ -341,7 +353,7 @@
       this.cbWatchClipboard.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbWatchClipboard.Name = "cbWatchClipboard";
       this.cbWatchClipboard.Size = new System.Drawing.Size(346, 17);
-      this.cbWatchClipboard.TabIndex = 8;
+      this.cbWatchClipboard.TabIndex = 9;
       this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor (experimental)";
       this.cbWatchClipboard.UseVisualStyleBackColor = true;
       // 
@@ -354,7 +366,7 @@
       this.cbUpdateInterval.Location = new System.Drawing.Point(220, 328);
       this.cbUpdateInterval.Name = "cbUpdateInterval";
       this.cbUpdateInterval.Size = new System.Drawing.Size(311, 21);
-      this.cbUpdateInterval.TabIndex = 9;
+      this.cbUpdateInterval.TabIndex = 10;
       // 
       // lblUpdate
       // 
@@ -397,15 +409,15 @@
       this.commandSelector.Text = "commandSelector1";
       this.commandSelector.UseThemes = true;
       // 
-      // cbShowResources
+      // cbShowSkipped
       // 
-      this.cbShowResources.AutoSize = true;
-      this.cbShowResources.Location = new System.Drawing.Point(282, 39);
-      this.cbShowResources.Name = "cbShowResources";
-      this.cbShowResources.Size = new System.Drawing.Size(110, 17);
-      this.cbShowResources.TabIndex = 1;
-      this.cbShowResources.Text = "Show Resources";
-      this.cbShowResources.UseVisualStyleBackColor = true;
+      this.cbShowSkipped.AutoSize = true;
+      this.cbShowSkipped.Location = new System.Drawing.Point(282, 68);
+      this.cbShowSkipped.Name = "cbShowSkipped";
+      this.cbShowSkipped.Size = new System.Drawing.Size(175, 17);
+      this.cbShowSkipped.TabIndex = 3;
+      this.cbShowSkipped.Text = "Show skipped class members";
+      this.cbShowSkipped.UseVisualStyleBackColor = true;
       // 
       // SettingsForm
       // 
@@ -467,5 +479,6 @@
     private BrokenEvent.Shared.Controls.ThemedLabel lblHeaderVisual;
     private System.Windows.Forms.CheckBox cbSimplifyRef;
     private System.Windows.Forms.CheckBox cbShowResources;
+    private System.Windows.Forms.CheckBox cbShowSkipped;
   }
 }

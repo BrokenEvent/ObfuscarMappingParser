@@ -16,6 +16,7 @@ namespace ObfuscarMappingParser
     private bool showModules;
     private bool groupModules;
     private bool showResources;
+    private bool showSkippedMembers;
     private readonly MainForm mainForm;
 
     private struct NamingValue
@@ -79,6 +80,12 @@ namespace ObfuscarMappingParser
     {
       get { return showResources; }
       set { showResources = value; }
+    }
+
+    public bool ShowSkippedMembers
+    {
+      get { return showSkippedMembers; }
+      set { showSkippedMembers = value; }
     }
 
     public void Build()
@@ -202,6 +209,9 @@ namespace ObfuscarMappingParser
 
         RenamedItem item = (RenamedItem)renamedItem;
 
+        if (item.SkipReason != null && !showSkippedMembers)
+          continue;
+
         PineappleTreeNode node = new PineappleTreeNode(item.NameOld);
         classNode.Nodes.Add(node);
         node.ImageIndex = GetIconForEntity(item.EntityType, mainForm);
@@ -273,6 +283,11 @@ namespace ObfuscarMappingParser
       sb.AppendLine(CheckIfUnicode(item.NameNewSimple));
       sb.AppendLine("Owner class:");
       sb.AppendLine(CheckIfUnicode(item.Owner.TransformNameFull));
+      if (item.SkipReason != null)
+      {
+        sb.AppendLine("Skip reason:");
+        sb.AppendLine(item.SkipReason);
+      }
       return sb.ToString();
     }
 

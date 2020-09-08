@@ -12,6 +12,7 @@ namespace ObfuscarMappingParser.Engine.Items
     private RenamedParam resultType;
     private RenamedClass owner;
     private List<RenamedParam> methodParams;
+    private string skipReason;
 
     public RenamedItem(IMappingEntity reader, RenamedClass owner)
     {
@@ -62,6 +63,10 @@ namespace ObfuscarMappingParser.Engine.Items
           name = new Renamed(str, strNew);
         else
           name = new Renamed(str);
+
+        skipReason = reader.SkipReason;
+        if (name.NameOld.Name == "ctor")
+          entityType = EntityType.Constructor;
       }
       catch (Exception e)
       {
@@ -234,6 +239,11 @@ namespace ObfuscarMappingParser.Engine.Items
     public override string ModuleNew
     {
       get { return owner.ModuleNew; }
+    }
+
+    public string SkipReason
+    {
+      get { return skipReason; }
     }
 
     public bool Compare(string name)

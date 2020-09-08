@@ -39,12 +39,7 @@ namespace ObfuscarMappingParser.Engine.Items
         name = new Renamed(nameOld, nameNew);
 
         foreach (IMappingEntity subEntity in reader.SubEntities)
-        {
-          if (subEntity.SkipReason != null)
-            continue; // FIXME do we really need to skip these?
-
           items.Add(new RenamedItem(subEntity, this));
-        }
       }
       catch (ObfuscarParserException)
       {
