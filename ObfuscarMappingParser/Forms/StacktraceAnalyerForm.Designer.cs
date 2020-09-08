@@ -154,7 +154,6 @@
       // pineappleTreeView
       // 
       this.pineappleTreeView.AutoScroll = true;
-      this.pineappleTreeView.AutoScrollMinSize = new System.Drawing.Size(612, 0);
       this.pineappleTreeView.BackColor = System.Drawing.SystemColors.ControlLightLight;
       listHighlight1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
       listHighlight2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(255)))), ((int)(((byte)(224)))));
@@ -172,6 +171,7 @@
       this.pineappleTreeView.Columns.Add(pineappleTreeColumn1);
       this.pineappleTreeView.DisabledColor = System.Drawing.SystemColors.Control;
       this.pineappleTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.pineappleTreeView.DrawBorder = false;
       this.pineappleTreeView.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.pineappleTreeView.EmptyListText = "";
       this.pineappleTreeView.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;

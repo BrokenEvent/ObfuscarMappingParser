@@ -113,19 +113,23 @@
       brokenListColumn1.HeaderText = null;
       brokenListColumn1.Multiline = true;
       brokenListColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
+      brokenListColumn1.TextPadding = new System.Windows.Forms.Padding(2, 4, 2, 2);
       brokenListColumn1.Width = 758;
       this.blvFiles.Columns.Add(brokenListColumn1);
       this.blvFiles.DisabledColor = System.Drawing.Color.Empty;
+      this.blvFiles.DrawBorder = false;
       this.blvFiles.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.blvFiles.EmptyListText = "No recent items found.";
+      this.blvFiles.GroupsFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.blvFiles.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.blvFiles.ImageList = this.ilIcon;
       this.blvFiles.Location = new System.Drawing.Point(12, 86);
       this.blvFiles.Name = "blvFiles";
+      this.blvFiles.SelectMode = BrokenEvent.Shared.Controls.BrokenListView.SelectionMode.AlwaysSelected;
       this.blvFiles.Size = new System.Drawing.Size(760, 424);
       this.blvFiles.TabIndex = 8;
       this.blvFiles.Text = "brokenListView1";
-      this.blvFiles.TextPadding = new System.Windows.Forms.Padding(1);
+      this.blvFiles.TextPadding = new System.Windows.Forms.Padding(2);
       this.blvFiles.ItemSelected += new System.EventHandler<BrokenEvent.Shared.Controls.ItemSelectEventArgs>(this.blvFiles_ItemSelected);
       this.blvFiles.DoubleClick += new System.EventHandler(this.blvFiles_DoubleClick);
       // 

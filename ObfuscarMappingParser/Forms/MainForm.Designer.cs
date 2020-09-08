@@ -84,6 +84,7 @@
       this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
       this.miReport = new System.Windows.Forms.ToolStripMenuItem();
       this.miRequestFeature = new System.Windows.Forms.ToolStripMenuItem();
+      this.miGitHub = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
       this.miDonate = new System.Windows.Forms.ToolStripMenuItem();
       this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,7 +98,6 @@
       this.odPDB = new System.Windows.Forms.OpenFileDialog();
       this.odSourceFile = new System.Windows.Forms.OpenFileDialog();
       this.ptvElements = new BrokenEvent.Shared.Controls.PineappleTreeView();
-      this.miGitHub = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip.SuspendLayout();
       this.tsTools.SuspendLayout();
       this.menuStrip.SuspendLayout();
@@ -162,6 +162,7 @@
       // 
       // tsTools
       // 
+      this.tsTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.tsTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOpen,
             this.btnCrashLogs,
@@ -170,7 +171,9 @@
             this.tbSearch});
       this.tsTools.Location = new System.Drawing.Point(0, 24);
       this.tsTools.Name = "tsTools";
+      this.tsTools.Padding = new System.Windows.Forms.Padding(0);
       this.tsTools.Size = new System.Drawing.Size(727, 25);
+      this.tsTools.Stretch = true;
       this.tsTools.TabIndex = 4;
       this.tsTools.Text = "toolStrip1";
       // 
@@ -534,6 +537,13 @@
       this.miRequestFeature.Text = "Request a Feature";
       this.miRequestFeature.Click += new System.EventHandler(this.miRequestFeature_Click);
       // 
+      // miGitHub
+      // 
+      this.miGitHub.Name = "miGitHub";
+      this.miGitHub.Size = new System.Drawing.Size(210, 22);
+      this.miGitHub.Text = "GitHub";
+      this.miGitHub.Click += new System.EventHandler(this.miGitHub_Click);
+      // 
       // toolStripSeparator10
       // 
       this.toolStripSeparator10.Name = "toolStripSeparator10";
@@ -621,20 +631,24 @@
       pineappleTreeColumn1.Autosize = true;
       pineappleTreeColumn1.HeaderText = "Classname";
       pineappleTreeColumn1.Multiline = true;
+      pineappleTreeColumn1.TextPadding = new System.Windows.Forms.Padding(2);
       pineappleTreeColumn1.Width = 477;
       pineappleTreeColumn2.HeaderText = "Renamed";
+      pineappleTreeColumn2.TextPadding = new System.Windows.Forms.Padding(2);
       pineappleTreeColumn2.Width = 250;
       this.ptvElements.Columns.Add(pineappleTreeColumn1);
       this.ptvElements.Columns.Add(pineappleTreeColumn2);
       this.ptvElements.ContextMenuStrip = this.contextMenuStrip;
       this.ptvElements.DisabledColor = System.Drawing.SystemColors.Control;
       this.ptvElements.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.ptvElements.DrawBorder = false;
       this.ptvElements.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.ptvElements.EmptyListText = "";
       this.ptvElements.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.ptvElements.Font = new System.Drawing.Font("Segoe UI", 8.25F);
       this.ptvElements.FullRowSelect = true;
       this.ptvElements.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.ptvElements.IconPadding = new System.Windows.Forms.Padding(2, 2, 0, 0);
       this.ptvElements.ImageList = this.ilIcons;
       this.ptvElements.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.ptvElements.Location = new System.Drawing.Point(0, 49);
@@ -643,15 +657,9 @@
       this.ptvElements.Size = new System.Drawing.Size(727, 479);
       this.ptvElements.TabIndex = 5;
       this.ptvElements.Text = "pineappleTreeView1";
+      this.ptvElements.TextPadding = new System.Windows.Forms.Padding(0, 2, 0, 2);
       this.ptvElements.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.ptvElements_NodeSelect);
       this.ptvElements.DoubleClick += new System.EventHandler(this.ptvElements_DoubleClick);
-      // 
-      // miGitHub
-      // 
-      this.miGitHub.Name = "miGitHub";
-      this.miGitHub.Size = new System.Drawing.Size(210, 22);
-      this.miGitHub.Text = "GitHub";
-      this.miGitHub.Click += new System.EventHandler(this.miGitHub_Click);
       // 
       // MainForm
       // 
