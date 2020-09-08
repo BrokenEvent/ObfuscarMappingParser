@@ -172,7 +172,7 @@ namespace ObfuscarMappingParser.Engine
           s = s.Substring(i).TrimStart(' ');
       }
 
-      Entity entity = s;
+      Entity entity = new Entity(s);
       if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
         return new SearchResults(s, entity, SearchItem(entity.Name));
 
@@ -184,7 +184,7 @@ namespace ObfuscarMappingParser.Engine
       if (string.IsNullOrEmpty(s))
         return null;
 
-      Entity entity = s;
+      Entity entity = new Entity(s);
       if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
         return new SearchResults(s, entity, SearchItemOriginal(entity.Name));
 

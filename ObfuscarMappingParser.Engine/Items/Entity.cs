@@ -83,11 +83,6 @@ namespace ObfuscarMappingParser.Engine.Items
       get { return methodParams; }
     }
 
-    public static implicit operator Entity(string s)
-    {
-      return new Entity(s);
-    }
-
     public override string ToString()
     {
       return name.ToString();

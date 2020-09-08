@@ -9,7 +9,7 @@ namespace MappingParser.Tests
     [Test]
     public void SimpleMethodTest()
     {
-      Entity name = "a.aM.A(IDbCommand , String )";
+      Entity name = new Entity("a.aM.A(IDbCommand , String )");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Method, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -26,7 +26,7 @@ namespace MappingParser.Tests
     [Test]
     public void SimpleMethodWithColonTest()
     {
-      Entity name = "a.aM:A(IDbCommand , String )";
+      Entity name = new Entity("a.aM:A(IDbCommand , String )");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Method, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -43,7 +43,7 @@ namespace MappingParser.Tests
     [Test]
     public void SimpleMethodWithSpaceTest()
     {
-      Entity name = "a.aM.A ( IDbCommand , String )";
+      Entity name = new Entity("a.aM.A ( IDbCommand , String )");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Method, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -60,7 +60,7 @@ namespace MappingParser.Tests
     [Test]
     public void ConstructorTest()
     {
-      Entity name = "a.aM.ctor(IDbCommand , String )";
+      Entity name = new Entity("a.aM.ctor(IDbCommand , String )");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Constructor, name.EntityType);
       Assert.AreEqual("a.aM.ctor", name.Name.PathName);
@@ -77,7 +77,7 @@ namespace MappingParser.Tests
     [Test]
     public void NsMethodTest()
     {
-      Entity name = "System.String   a.aM.A(IDbCommand a, System.String b)";
+      Entity name = new Entity("System.String   a.aM.A(IDbCommand a, System.String b)");
       Assert.AreEqual("System.String", name.EntityResultType.ToString());
       Assert.AreEqual(EntityType.Method, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -94,7 +94,7 @@ namespace MappingParser.Tests
     [Test]
     public void VoidMethodTest()
     {
-      Entity name = "void   a.aM.A()";
+      Entity name = new Entity("void   a.aM.A()");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Method, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -109,7 +109,7 @@ namespace MappingParser.Tests
     [Test]
     public void ClassTest()
     {
-      Entity name = "a.aM.A";
+      Entity name = new Entity("a.aM.A");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Class, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -124,7 +124,7 @@ namespace MappingParser.Tests
     [Test]
     public void FieldTest()
     {
-      Entity name = "System.String a.aM.A";
+      Entity name = new Entity("System.String a.aM.A");
       Assert.AreEqual("System.String", name.EntityResultType.ToString());
       Assert.AreEqual(EntityType.Field, name.EntityType);
       Assert.AreEqual("a.aM.A", name.Name.PathName);
@@ -139,7 +139,7 @@ namespace MappingParser.Tests
     [Test]
     public void SimpleNameTest()
     {
-      Entity name = "A";
+      Entity name = new Entity("A");
       Assert.IsNull(name.EntityResultType);
       Assert.AreEqual(EntityType.Class, name.EntityType);
       Assert.AreEqual("A", name.Name.PathName);
