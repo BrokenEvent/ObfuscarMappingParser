@@ -76,7 +76,7 @@ namespace ObfuscarMappingParser.Engine.Items
 
       RenamedBase r = searcher.SearchForOldName(nameNew);
       if (r != null)
-        nameNew.AssignName(r.Name.NameNew);
+        nameNew.AssignName(new EntityName(r.NameNew));
     }
   }
 }

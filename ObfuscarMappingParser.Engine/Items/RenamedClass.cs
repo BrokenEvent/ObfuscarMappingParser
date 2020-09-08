@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using BrokenEvent.NanoXml;
+using ObfuscarMappingParser.Engine.Reader;
 
 namespace ObfuscarMappingParser.Engine.Items
 {
@@ -12,75 +12,47 @@ namespace ObfuscarMappingParser.Engine.Items
     private RenamedClass ownerClass;
     private string skipReason;
 
-    public RenamedClass(NanoXmlElement el, Mapping owner)
+    private string ProcessName(string str)
     {
-      if (string.Compare(el.Name, "skippedClass", StringComparison.Ordinal) == 0)
-        ParseSkipped(el);
-      else
-        ParseClass(el, owner);
+      int j = str.IndexOf('/');
+      if (j != -1)
+      {
+        ownerClassName = str.Substring(0, j);
+        return str.Substring(j + 1);
+      }
+
+      return str;
     }
 
-    private void ParseSkipped(NanoXmlElement el)
+    public RenamedClass(IMappingEntity reader, Mapping owner)
     {
       try
       {
-        string str = el.GetAttribute("name");
+        string nameOld = ProcessName(reader.Name);
 
-        int j = str.IndexOf('/');
-        if (j != -1)
+        string nameNew = null;
+
+        skipReason = reader.SkipReason;
+        if (skipReason == null)
+          nameNew = ProcessName(reader.NewName);
+
+        name = new Renamed(nameOld, nameNew);
+
+        foreach (IMappingEntity subEntity in reader.SubEntities)
         {
-          ownerClassName = str.Substring(0, j);
-          name = new Renamed(str.Substring(j + 1));
+          if (subEntity.SkipReason != null)
+            continue; // FIXME do we really need to skip these?
+
+          items.Add(new RenamedItem(subEntity, this));
         }
-        else
-          name = new Renamed(str);
-
-        skipReason = el.GetAttribute("reason");
-
-        ParseMembers(el);
+      }
+      catch (ObfuscarParserException)
+      {
+        throw;
       }
       catch (Exception e)
       {
-        throw new ObfuscarParserException("Failed to process element", e, el.Path);
-      }
-    }
-
-    private void ParseClass(NanoXmlElement el, Mapping owner)
-    {
-      try
-      {
-        string newName = el.GetAttribute("newName");
-        int j = newName.IndexOf('/');
-        if (j != -1)
-          newName = newName.Substring(j + 1);
-
-        string str = el.GetAttribute("oldName");
-
-        j = str.IndexOf('/');
-        if (j != -1)
-        {
-          ownerClassName = str.Substring(0, j);
-          name = new Renamed(str.Substring(j + 1), newName);
-        }
-        else
-          name = new Renamed(str, newName);
-      }
-      catch (Exception e)
-      {
-        throw new ObfuscarParserException("Failed to process class element: ", e, el.Path);
-      }
-
-      ParseMembers(el);    
-    }
-
-    private void ParseMembers(NanoXmlElement el)
-    {
-      foreach (NanoXmlElement element in el.ChildElements)
-      {
-        if (!element.Name.StartsWith("renamed"))
-          continue;
-
-        items.Add(new RenamedItem(element, this));
+        throw new ObfuscarParserException("Failed to process element", e, reader.Path);
       }
     }
 

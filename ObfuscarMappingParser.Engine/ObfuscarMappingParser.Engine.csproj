@@ -55,6 +55,9 @@
     <Compile Include="ObfuscarParserException.cs" />
     <Compile Include="ParserConfigs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reader\IMappingEntity.cs" />
+    <Compile Include="Reader\IMappingReader.cs" />
+    <Compile Include="Reader\XmlMappingReader.cs" />
     <Compile Include="SearchResultMessage.cs" />
     <Compile Include="SearchResults.cs" />
     <Compile Include="SystemTypeProcessor.cs" />

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-using BrokenEvent.NanoXml;
+using ObfuscarMappingParser.Engine.Reader;
 
 namespace ObfuscarMappingParser.Engine.Items
 {
@@ -13,13 +13,15 @@ namespace ObfuscarMappingParser.Engine.Items
     private RenamedClass owner;
     private List<RenamedParam> methodParams;
 
-    public RenamedItem(NanoXmlElement el, RenamedClass owner)
+    public RenamedItem(IMappingEntity reader, RenamedClass owner)
     {
+      this.owner = owner;
+
       try
       {
         this.owner = owner;
-        entityType = (EntityType)Enum.Parse(typeof (EntityType), el.Name.Substring(7));
-        string str = el.GetAttribute("oldName");
+        entityType = reader.Type;
+        string str = reader.Name;
 
         int i;
         if ((i = str.IndexOf(' ')) != -1)
@@ -55,7 +57,7 @@ namespace ObfuscarMappingParser.Engine.Items
             str = str.Substring(0, i);
         }
 
-        string strNew = el.GetAttribute("newName");
+        string strNew = reader.NewName;
         if (strNew != "dropped")
           name = new Renamed(str, strNew);
         else
@@ -63,7 +65,7 @@ namespace ObfuscarMappingParser.Engine.Items
       }
       catch (Exception e)
       {
-        throw new ObfuscarParserException("Failed to process item element", e, el.Path);
+        throw new ObfuscarParserException("Failed to process item element", e, reader.Path);
       }
     }
 

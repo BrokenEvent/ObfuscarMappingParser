@@ -4,9 +4,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-using BrokenEvent.NanoXml;
-
 using ObfuscarMappingParser.Engine.Items;
+using ObfuscarMappingParser.Engine.Reader;
 
 namespace ObfuscarMappingParser.Engine
 {
@@ -38,20 +37,17 @@ namespace ObfuscarMappingParser.Engine
         throw new ObfuscarParserException("File not exists", filename);
 
       this.filename = filename;
-      LoadFile();
+      LoadFile(new XmlMappingReader(filename)); // FIXME format switch
     }
 
-    private void LoadFile()
+    private void LoadFile(IMappingReader reader)
     {
       loadTime = 0;
-      LoadTimer timer = new LoadTimer("XML Parsing");
-      NanoXmlDocument xml = NanoXmlDocument.LoadFromFile(filename);
+      LoadTimer timer = new LoadTimer("File Parsing");
+      reader.Load();
 
       loadTime += timer.Stop();
       timer = new LoadTimer("Items Processing");
-
-      NanoXmlElement doc = xml.DocumentElement;
-      NanoXmlElement types = (NanoXmlElement)doc["renamedTypes"];
 
       modules.Clear();
       namespaces.Clear();
@@ -63,61 +59,44 @@ namespace ObfuscarMappingParser.Engine
 
       List<RenamedClass> subclasses = new List<RenamedClass>();
 
-      if (types != null)
-        foreach (NanoXmlElement element in types.ChildElements)
+      foreach (IMappingEntity entity in reader.Entities)
+      {
+        RenamedClass c = new RenamedClass(entity, this);
+        classesCount++;
+
+        if (c.SkipReason != null)
+          skippedCount++;
+
+        if (c.OwnerClassName == null)
         {
-          if (string.Compare(element.Name, "renamedClass", StringComparison.Ordinal) == 0)
-          {
-            RenamedClass c = new RenamedClass(element, this);
-            classesCount++;
-            if (c.OwnerClassName == null)
-            {
-              classes.Add(c);
-              if (c.Name.NameOld != null && c.Name.NameOld.Namespace != null)
-                haveSystemEntities |= c.Name.NameOld.Namespace.StartsWith("System.");
-            }
-            else
-              subclasses.Add(c);
-
-            methodsCount += c.MethodsCount;
-
-            if (c.ModuleNew != null)
-              modules.Add(c.ModuleNew);
-            if (c.Name.NameOld != null)
-            {
-              classesCache[c.NameOld] = c;
-              classesCache[c.NameOldFull] = c;
-
-              if (!string.IsNullOrEmpty(c.Name.NameOld.Namespace))
-                namespaces.Add(c.Name.NameOld.Namespace);
-            }
-            if (c.Name.NameNew != null)
-            {
-              classesCache[c.NameNew] = c;
-              classesCache[c.NameNewFull] = c;
-
-              if (!string.IsNullOrEmpty(c.Name.NameNew.Namespace))
-                namespacesObfuscated.Add(c.Name.NameNew.Namespace);
-            }
-          }
+          classes.Add(c);
+          if (c.Name.NameOld != null && c.Name.NameOld.Namespace != null)
+            haveSystemEntities |= c.Name.NameOld.Namespace.StartsWith("System.");
         }
+        else
+          subclasses.Add(c);
 
-      types = (NanoXmlElement)doc["skippedTypes"];
-      if (types != null)
-        foreach (NanoXmlElement element in types.ChildElements)
-          if (string.Compare(element.Name, "skippedClass", StringComparison.Ordinal) == 0)
-          {
-            skippedCount++;
-            classesCount++;
-            RenamedClass c = new RenamedClass(element, this);
-            if (c.OwnerClassName == null)
-              classes.Add(c);
-            else
-              subclasses.Add(c);
+        methodsCount += c.MethodsCount;
 
-            classesCache[c.NameOld] = c;
-            classesCache[c.NameOldFull] = c;
-          }
+        if (c.ModuleNew != null)
+          modules.Add(c.ModuleNew);
+        if (c.Name.NameOld != null)
+        {
+          classesCache[c.NameOld] = c;
+          classesCache[c.NameOldFull] = c;
+
+          if (!string.IsNullOrEmpty(c.Name.NameOld.Namespace))
+            namespaces.Add(c.Name.NameOld.Namespace);
+        }
+        if (c.Name.NameNew != null)
+        {
+          classesCache[c.NameNew] = c;
+          classesCache[c.NameNewFull] = c;
+
+          if (!string.IsNullOrEmpty(c.Name.NameNew.Namespace))
+            namespacesObfuscated.Add(c.Name.NameNew.Namespace);
+        }
+      }
 
       loadTime += timer.Stop();
       timer = new LoadTimer("Subclasses Processing");
@@ -149,7 +128,7 @@ namespace ObfuscarMappingParser.Engine
 
     public void Reload()
     {
-      LoadFile();
+      LoadFile(new XmlMappingReader(filename)); // FIXME format switch
     }
 
     public string Filename

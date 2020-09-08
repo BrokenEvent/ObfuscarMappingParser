@@ -84,7 +84,6 @@ namespace ObfuscarMappingParser.Engine.Items
       yield return this;
     }
 
-
     #region INamedEntity
 
     public EntityName EntityName
