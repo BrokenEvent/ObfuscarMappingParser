@@ -100,11 +100,46 @@ namespace ObfuscarMappingParser
       else
         if (noNsNode.Nodes.Count > 0)
           tree.Nodes.Add(noNsNode);
+
+      // TODO checkbox?
+
+      if (mapping.Mapping.Resources.Count > 0)
+      {
+        PineappleTreeNode resourcesNode = CreateNode("Resources");
+        resourcesNode.ImageIndex = mainForm.ICON_RESOURCES;
+        tree.Nodes.Add(resourcesNode);
+
+        foreach (RenamedResource resource in mapping.Mapping.Resources)
+          BuildResource(resource, resourcesNode);
+      }
     }
 
     private static PineappleTreeNode CreateNode(string name)
     {
       return new PineappleTreeNode(name);
+    }
+
+    private void BuildResource(RenamedResource resource, PineappleTreeNode ownerNode)
+    {
+      PineappleTreeNode node = CreateNode(resource.NameOld);
+      node.Tag = resource;
+      node.ImageIndex = mainForm.ICON_RESOURCE;
+      node.ToolTipText = BuildHintForResource(resource);
+      ownerNode.Nodes.Add(node);
+
+      string subItemText = null;
+      if (resource.NameNew != null)
+        subItemText = resource.NameNew;
+      else
+        node.HighlightColorIndex = (int)Highlights.NotRenamed;
+
+      if (subItemText != null)
+      {
+        if (Configs.Instance.UseColumns)
+          node.Subitems.Add(new PineappleTreeSubitem(subItemText));
+        else
+          node.Text += "\n" + subItemText;
+      }
     }
 
     private void BuildClass(RenamedClass c)
@@ -233,6 +268,25 @@ namespace ObfuscarMappingParser
       sb.AppendLine(CheckIfUnicode(item.NameNewSimple));
       sb.AppendLine("Owner class:");
       sb.AppendLine(CheckIfUnicode(item.Owner.TransformNameFull));
+      return sb.ToString();
+    }
+
+    public static string BuildHintForResource(RenamedResource resource)
+    {
+      StringBuilder sb = new StringBuilder();
+      sb.AppendLine("Old name:");
+      sb.AppendLine(resource.NameOld);
+
+      if (resource.SkipReason != null)
+      {
+        sb.AppendLine("Skip reason:");
+        sb.AppendLine(resource.SkipReason);
+      }
+      else
+      {
+        sb.AppendLine("New name:");
+        sb.AppendLine(resource.NameNew);
+      }
       return sb.ToString();
     }
 

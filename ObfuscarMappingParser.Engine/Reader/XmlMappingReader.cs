@@ -27,24 +27,26 @@ namespace ObfuscarMappingParser.Engine.Reader
     {
       get
       {
-        NanoXmlElement e;
+        foreach (IMappingEntity entity in ParseGroup("renamedTypes"))
+          yield return entity;
 
-        e = xml.GetElement("renamedTypes");
-        if (e != null)
-          foreach (IMappingEntity entity in ParseGroup(e))
-            yield return entity;
+        foreach (IMappingEntity entity in ParseGroup("skippedTypes"))
+          yield return entity;
 
-        e = xml.GetElement("skippedTypes");
-        if (e != null)
-          foreach (IMappingEntity entity in ParseGroup(e))
-            yield return entity;
+        foreach (IMappingEntity entity in ParseGroup("renamedResources"))
+          yield return entity;
 
-        // TODO: renamedResources, skippedResources
+        foreach (IMappingEntity entity in ParseGroup("skippedResources"))
+          yield return entity;
       }
     }
 
-    private static IEnumerable<IMappingEntity> ParseGroup(NanoXmlElement el)
+    private IEnumerable<IMappingEntity> ParseGroup(string name)
     {
+      NanoXmlElement el = xml.GetElement(name);
+      if (el == null)
+        yield break;
+
       foreach (NanoXmlElement e in el.ChildElements)
         yield return new XmlMappingEntity(e);
     }

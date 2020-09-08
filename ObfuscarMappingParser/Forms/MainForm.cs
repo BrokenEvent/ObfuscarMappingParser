@@ -42,6 +42,8 @@ namespace ObfuscarMappingParser
     public readonly int ICON_ASSEMBLY;
     public readonly int ICON_MULTIPLE;
     public readonly int ICON_PDB;
+    public readonly int ICON_RESOURCES;
+    public readonly int ICON_RESOURCE;
 
     private void AddIcon(Bitmap bmp, out int index)
     {
@@ -65,6 +67,8 @@ namespace ObfuscarMappingParser
       AddIcon(Resources.IconAssembly, out ICON_ASSEMBLY);
       AddIcon(Resources.IconMultiple, out ICON_MULTIPLE);
       AddIcon(Resources.IconPdb, out ICON_PDB);
+
+      ICON_RESOURCE = ICON_RESOURCES = ICON_CLASS;
 
       ptvElements.Highlights.Add(new ListHighlight(Color.DarkRed));
       ptvElements.Highlights.Add(new ListHighlight(Color.DarkBlue));

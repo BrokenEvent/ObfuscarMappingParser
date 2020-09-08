@@ -11,5 +11,6 @@ namespace ObfuscarMappingParser.Engine.Items
     Field,
     Class,
     Event,
-  } // TODO resource
+    Resource,
+  }
 }

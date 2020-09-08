@@ -13,6 +13,7 @@ namespace ObfuscarMappingParser.Engine
   {
     private readonly string filename;
     private List<RenamedClass> classes = new List<RenamedClass>();
+    private List<RenamedResource> resources = new List<RenamedResource>();
 
     private Dictionary<string, RenamedClass> classesCache = new Dictionary<string, RenamedClass>();
 
@@ -61,6 +62,13 @@ namespace ObfuscarMappingParser.Engine
 
       foreach (IMappingEntity entity in reader.Entities)
       {
+        if (entity.Type == EntityType.Resource)
+        {
+          RenamedResource resource = new RenamedResource(entity);
+          resources.Add(resource);
+          continue;
+        }
+
         RenamedClass c = new RenamedClass(entity, this);
         classesCount++;
 
@@ -136,7 +144,7 @@ namespace ObfuscarMappingParser.Engine
       get { return filename; }
     }
 
-    public List<RenamedClass> Classes
+    public IReadOnlyList<RenamedClass> Classes
     {
       get { return classes; }
     }
@@ -154,6 +162,11 @@ namespace ObfuscarMappingParser.Engine
     public IEnumerable<string> NamespacesObfuscated
     {
       get { return namespacesObfuscated; }
+    }
+
+    public IReadOnlyList<RenamedResource> Resources
+    {
+      get { return resources; }
     }
 
     #region Search

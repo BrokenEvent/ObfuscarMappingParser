@@ -50,6 +50,7 @@
     <Compile Include="Items\RenamedClass.cs" />
     <Compile Include="Items\RenamedItem.cs" />
     <Compile Include="Items\RenamedParam.cs" />
+    <Compile Include="Items\RenamedResource.cs" />
     <Compile Include="LoadTimer.cs" />
     <Compile Include="Mapping.cs" />
     <Compile Include="ObfuscarParserException.cs" />
