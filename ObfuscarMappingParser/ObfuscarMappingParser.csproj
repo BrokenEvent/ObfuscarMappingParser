@@ -166,6 +166,8 @@
     </Compile>
     <Compile Include="TreeBuilder.cs" />
     <Content Include="res\support.png" />
+    <Content Include="res\TreeIcons\Resource.png" />
+    <Content Include="res\TreeIcons\Resources.png" />
     <EmbeddedResource Include="Forms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>

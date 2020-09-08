@@ -134,6 +134,7 @@ namespace ObfuscarMappingParser
     private bool useColumns = true;
     private bool showOriginal = true;
     private bool showUnicode;
+    private bool showResources = true;
     private bool simplifySystemNames = true;
     private bool simplifyNullable = true;
     private bool simplifyRef = true;
@@ -182,6 +183,12 @@ namespace ObfuscarMappingParser
     {
       get { return groupModules; }
       set { groupModules = value; }
+    }
+
+    public bool ShowResources
+    {
+      get { return showResources; }
+      set { showResources = value; }
     }
 
     public bool UseColumns

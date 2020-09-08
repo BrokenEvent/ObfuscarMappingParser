@@ -67,8 +67,8 @@ namespace ObfuscarMappingParser
       AddIcon(Resources.IconAssembly, out ICON_ASSEMBLY);
       AddIcon(Resources.IconMultiple, out ICON_MULTIPLE);
       AddIcon(Resources.IconPdb, out ICON_PDB);
-
-      ICON_RESOURCE = ICON_RESOURCES = ICON_CLASS;
+      AddIcon(Resources.IconResources, out ICON_RESOURCES);
+      AddIcon(Resources.IconResource, out ICON_RESOURCE);
 
       ptvElements.Highlights.Add(new ListHighlight(Color.DarkRed));
       ptvElements.Highlights.Add(new ListHighlight(Color.DarkBlue));
@@ -255,6 +255,7 @@ namespace ObfuscarMappingParser
       builder.GroupNamespaces = Configs.Instance.GroupNamespaces;
       builder.GroupModules = Configs.Instance.GroupModules;
       builder.ShowModules = Configs.Instance.ShowModules;
+      builder.ShowResources = Configs.Instance.ShowResources;
       try
       {
         builder.Build();

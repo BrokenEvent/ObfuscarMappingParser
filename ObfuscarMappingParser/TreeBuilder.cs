@@ -15,6 +15,7 @@ namespace ObfuscarMappingParser
     private bool groupNamespaces;
     private bool showModules;
     private bool groupModules;
+    private bool showResources;
     private readonly MainForm mainForm;
 
     private struct NamingValue
@@ -74,6 +75,12 @@ namespace ObfuscarMappingParser
       set { groupModules = value; }
     }
 
+    public bool ShowResources
+    {
+      get { return showResources; }
+      set { showResources = value; }
+    }
+
     public void Build()
     {
       tree.Nodes.Clear();
@@ -101,9 +108,7 @@ namespace ObfuscarMappingParser
         if (noNsNode.Nodes.Count > 0)
           tree.Nodes.Add(noNsNode);
 
-      // TODO checkbox?
-
-      if (mapping.Mapping.Resources.Count > 0)
+      if (showResources && mapping.Mapping.Resources.Count > 0)
       {
         PineappleTreeNode resourcesNode = CreateNode("Resources");
         resourcesNode.ImageIndex = mainForm.ICON_RESOURCES;

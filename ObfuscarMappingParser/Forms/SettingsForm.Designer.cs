@@ -30,7 +30,6 @@
     {
       this.components = new System.ComponentModel.Container();
       BrokenEvent.Shared.Controls.BrokenListColumn brokenListColumn1 = new BrokenEvent.Shared.Controls.BrokenListColumn();
-      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
       this.lblVS = new System.Windows.Forms.Label();
       this.cbSimplifySystemNames = new System.Windows.Forms.CheckBox();
       this.cbShowUnicode = new System.Windows.Forms.CheckBox();
@@ -57,6 +56,7 @@
       this.lblUpdate = new System.Windows.Forms.Label();
       this.tpHotkeys = new System.Windows.Forms.TabPage();
       this.commandSelector = new BrokenEvent.Shared.CommandManager.CommandSelector();
+      this.cbShowResources = new System.Windows.Forms.CheckBox();
       this.tabControl.SuspendLayout();
       this.tbEditor.SuspendLayout();
       this.tpSettings.SuspendLayout();
@@ -80,7 +80,7 @@
       this.cbSimplifySystemNames.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifySystemNames.Name = "cbSimplifySystemNames";
       this.cbSimplifySystemNames.Size = new System.Drawing.Size(241, 17);
-      this.cbSimplifySystemNames.TabIndex = 1;
+      this.cbSimplifySystemNames.TabIndex = 2;
       this.cbSimplifySystemNames.Text = "Simplify system names (System.Int32 → int)";
       this.cbSimplifySystemNames.UseVisualStyleBackColor = true;
       // 
@@ -101,7 +101,7 @@
       this.btnOk.Location = new System.Drawing.Point(351, 501);
       this.btnOk.Name = "btnOk";
       this.btnOk.Size = new System.Drawing.Size(100, 23);
-      this.btnOk.TabIndex = 1;
+      this.btnOk.TabIndex = 11;
       this.btnOk.Text = "OK";
       this.btnOk.UseVisualStyleBackColor = true;
       this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -113,7 +113,7 @@
       this.btnCancel.Location = new System.Drawing.Point(457, 501);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(100, 23);
-      this.btnCancel.TabIndex = 2;
+      this.btnCancel.TabIndex = 12;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = true;
       // 
@@ -135,7 +135,7 @@
       this.cbSimplifyNullable.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifyNullable.Name = "cbSimplifyNullable";
       this.cbSimplifyNullable.Size = new System.Drawing.Size(213, 17);
-      this.cbSimplifyNullable.TabIndex = 4;
+      this.cbSimplifyNullable.TabIndex = 3;
       this.cbSimplifyNullable.Text = "Simplify nullable (Nullable<A> → A?)";
       this.cbSimplifyNullable.UseVisualStyleBackColor = true;
       // 
@@ -146,7 +146,7 @@
       this.cbGroupByModules.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByModules.Name = "cbGroupByModules";
       this.cbGroupByModules.Size = new System.Drawing.Size(121, 17);
-      this.cbGroupByModules.TabIndex = 5;
+      this.cbGroupByModules.TabIndex = 6;
       this.cbGroupByModules.Text = "Group by modules";
       this.cbGroupByModules.UseVisualStyleBackColor = true;
       // 
@@ -157,7 +157,7 @@
       this.cbGroupByNamespaces.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbGroupByNamespaces.Name = "cbGroupByNamespaces";
       this.cbGroupByNamespaces.Size = new System.Drawing.Size(182, 17);
-      this.cbGroupByNamespaces.TabIndex = 6;
+      this.cbGroupByNamespaces.TabIndex = 5;
       this.cbGroupByNamespaces.Text = "Group by original namespaces";
       this.cbGroupByNamespaces.UseVisualStyleBackColor = true;
       // 
@@ -232,20 +232,21 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
       this.blvEditors.AutoScroll = true;
-      this.blvEditors.AutoScrollMinSize = new System.Drawing.Size(521, 0);
+      this.blvEditors.AutoScrollMinSize = new System.Drawing.Size(523, 0);
       this.blvEditors.BackColor = System.Drawing.SystemColors.Window;
       this.blvEditors.ColumnHeaderStyle = BrokenEvent.Shared.Controls.ColumnHeaderStyle.None;
       brokenListColumn1.Autosize = true;
       brokenListColumn1.HeaderAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
       brokenListColumn1.HeaderText = null;
       brokenListColumn1.TextAlignment = ((BrokenEvent.Shared.Controls.ItemTextAlignment)((BrokenEvent.Shared.Controls.ItemTextAlignment.HorizontalLeft | BrokenEvent.Shared.Controls.ItemTextAlignment.VerticalTop)));
-      brokenListColumn1.Width = 521;
+      brokenListColumn1.Width = 523;
       this.blvEditors.Columns.Add(brokenListColumn1);
       this.blvEditors.DisabledColor = System.Drawing.Color.Empty;
       this.blvEditors.DrawBorder = false;
       this.blvEditors.DropHoverIndicatorColor = System.Drawing.Color.CornflowerBlue;
       this.blvEditors.EmptyListText = "No editors found.";
       this.blvEditors.Font = new System.Drawing.Font("Segoe UI", 10F);
+      this.blvEditors.GroupsFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.blvEditors.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
       this.blvEditors.IconPadding = new System.Windows.Forms.Padding(2);
       this.blvEditors.ImageList = this.imageList;
@@ -258,6 +259,7 @@
       // 
       // tpSettings
       // 
+      this.tpSettings.Controls.Add(this.cbShowResources);
       this.tpSettings.Controls.Add(this.lblHeaderOther);
       this.tpSettings.Controls.Add(this.lblHeaderGrouping);
       this.tpSettings.Controls.Add(this.lblHeaderVisual);
@@ -327,7 +329,7 @@
       this.cbSimplifyRef.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbSimplifyRef.Name = "cbSimplifyRef";
       this.cbSimplifyRef.Size = new System.Drawing.Size(204, 17);
-      this.cbSimplifyRef.TabIndex = 14;
+      this.cbSimplifyRef.TabIndex = 4;
       this.cbSimplifyRef.Text = "Simplify ref args (int& a → ref int a)";
       this.cbSimplifyRef.UseMnemonic = false;
       this.cbSimplifyRef.UseVisualStyleBackColor = true;
@@ -339,7 +341,7 @@
       this.cbWatchClipboard.Margin = new System.Windows.Forms.Padding(6, 6, 3, 6);
       this.cbWatchClipboard.Name = "cbWatchClipboard";
       this.cbWatchClipboard.Size = new System.Drawing.Size(346, 17);
-      this.cbWatchClipboard.TabIndex = 13;
+      this.cbWatchClipboard.TabIndex = 8;
       this.cbWatchClipboard.Text = "Watch clipboard and open Stacktrace Processor (experimental)";
       this.cbWatchClipboard.UseVisualStyleBackColor = true;
       // 
@@ -352,7 +354,7 @@
       this.cbUpdateInterval.Location = new System.Drawing.Point(220, 328);
       this.cbUpdateInterval.Name = "cbUpdateInterval";
       this.cbUpdateInterval.Size = new System.Drawing.Size(311, 21);
-      this.cbUpdateInterval.TabIndex = 12;
+      this.cbUpdateInterval.TabIndex = 9;
       // 
       // lblUpdate
       // 
@@ -394,6 +396,16 @@
       this.commandSelector.TabIndex = 0;
       this.commandSelector.Text = "commandSelector1";
       this.commandSelector.UseThemes = true;
+      // 
+      // cbShowResources
+      // 
+      this.cbShowResources.AutoSize = true;
+      this.cbShowResources.Location = new System.Drawing.Point(282, 39);
+      this.cbShowResources.Name = "cbShowResources";
+      this.cbShowResources.Size = new System.Drawing.Size(110, 17);
+      this.cbShowResources.TabIndex = 1;
+      this.cbShowResources.Text = "Show Resources";
+      this.cbShowResources.UseVisualStyleBackColor = true;
       // 
       // SettingsForm
       // 
@@ -454,5 +466,6 @@
     private BrokenEvent.Shared.Controls.ThemedLabel lblHeaderGrouping;
     private BrokenEvent.Shared.Controls.ThemedLabel lblHeaderVisual;
     private System.Windows.Forms.CheckBox cbSimplifyRef;
+    private System.Windows.Forms.CheckBox cbShowResources;
   }
 }
