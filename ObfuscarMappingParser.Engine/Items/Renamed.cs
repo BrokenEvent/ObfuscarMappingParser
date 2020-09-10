@@ -20,11 +20,11 @@ namespace ObfuscarMappingParser.Engine.Items
 
     public Renamed(string nameOld, string nameNew = null)
     {
-      if (string.IsNullOrWhiteSpace(nameOld))
+      if (string.IsNullOrEmpty(nameOld))
         throw new ArgumentNullException(nameof(nameOld));
 
       this.nameOld = new EntityName(nameOld);
-      this.nameNew = string.IsNullOrWhiteSpace(nameNew) ? (EntityName)this.nameOld.Clone() : new EntityName(nameNew);
+      this.nameNew = string.IsNullOrEmpty(nameNew) ? (EntityName)this.nameOld.Clone() : new EntityName(nameNew);
     }
 
     public Renamed(EntityName nameOld, EntityName nameNew)
