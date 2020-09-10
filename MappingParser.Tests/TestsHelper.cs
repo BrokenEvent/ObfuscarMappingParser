@@ -3,6 +3,9 @@ using System.Text;
 
 using NUnit.Framework;
 
+using ObfuscarMappingParser.Engine;
+using ObfuscarMappingParser.Engine.Items;
+
 namespace MappingParser.Tests
 {
   static class TestHelper
@@ -20,6 +23,15 @@ namespace MappingParser.Tests
     public static string TranslatePath(string filename)
     {
       return Path.Combine(TestContext.CurrentContext.TestDirectory, filename);
+    }
+
+    public static void AssertResult(string methodPath, SearchResults results)
+    {
+      INamedEntity result = results.SingleResult;
+      Assert.IsNotNull(result, "Have result");
+      Assert.IsTrue(results.IsSingleResult, "Single result");
+      Assert.AreEqual(SearchResultMessage.Normal, results.Message, "Result type");
+      Assert.AreEqual(methodPath, result.NameFull);
     }
   }
 }

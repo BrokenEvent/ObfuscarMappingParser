@@ -139,7 +139,7 @@ namespace ObfuscarMappingParser
     private bool showOriginal = true;
     private bool showUnicode;
     private bool showResources = true;
-    private bool showSkipped; // TODO saveload
+    private bool showSkipped;
     private bool simplifySystemNames = true;
     private bool simplifyNullable = true;
     private bool simplifyRef = true;

@@ -6,12 +6,17 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObfuscarMappingParser", "ObfuscarMappingParser\ObfuscarMappingParser.csproj", "{1305E207-81A7-4B6E-8D89-2B7D2C7A375E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MappingParser.Tests", "MappingParser.Tests\MappingParser.Tests.csproj", "{0A764630-61A5-41DC-9BBA-4012339A16B0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7427BEBF-CEDA-47F4-978E-607CF595F0B2} = {7427BEBF-CEDA-47F4-978E-607CF595F0B2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudioOpener", "BrokenEvent.VisualStudioOpener\VisualStudioOpener\VisualStudioOpener.csproj", "{890FD391-EE51-4E34-8A6F-3DB98AE3C210}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrokenEvent.PDBReader", "BrokenEvent.PDBReader\BrokenEvent.PDBReader\BrokenEvent.PDBReader.csproj", "{65A50051-BFB8-4F13-A609-4056343E4D45}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObfuscarMappingParser.Engine", "ObfuscarMappingParser.Engine\ObfuscarMappingParser.Engine.csproj", "{5FAFF102-26BD-43E4-A6E5-CB427013294C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ObfuscarMappingParser.TestAssembly", "ObfuscarMappingParser.TestAssembly\ObfuscarMappingParser.TestAssembly.csproj", "{7427BEBF-CEDA-47F4-978E-607CF595F0B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +43,10 @@ Global
 		{5FAFF102-26BD-43E4-A6E5-CB427013294C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FAFF102-26BD-43E4-A6E5-CB427013294C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FAFF102-26BD-43E4-A6E5-CB427013294C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7427BEBF-CEDA-47F4-978E-607CF595F0B2}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{7427BEBF-CEDA-47F4-978E-607CF595F0B2}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{7427BEBF-CEDA-47F4-978E-607CF595F0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7427BEBF-CEDA-47F4-978E-607CF595F0B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
