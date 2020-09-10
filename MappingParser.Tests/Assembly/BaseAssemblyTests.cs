@@ -1,38 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 
 using NUnit.Framework;
 
 using ObfuscarMappingParser.Engine;
 
-using TestAssembly;
-
-namespace MappingParser.Tests
+namespace MappingParser.Tests.Assembly
 {
-  [TestFixture]
-  class AssemblyTests
+  abstract class BaseAssemblyTests
   {
     private Mapping mapping;
+    private System.Reflection.Assembly assembly;
+    private Type testType;
 
-    [SetUp]
-    public void SetUp()
+    protected void PreLoad(string testFolder, string mappingName)
     {
       ParserConfigs.Instance = new ParserConfigsImpl();
-      mapping = new Mapping(TestHelper.TranslatePath("Mapping.xml"));
+      mapping = new Mapping(TestHelper.TranslatePath($"Assembly\\{testFolder}\\{mappingName}"));
+
+      assembly = System.Reflection.Assembly.LoadFile(TestHelper.TranslatePath($"Assembly\\{testFolder}\\ObfuscarMappingParser.TestAssembly.dll"));
+
+      testType = assembly.GetType("TestAssembly.PublicClass1");
     }
 
-    private void DoTest(Action action, params Result[] expectedMethods)
+    protected void DoTest(string methodName, params Result[] expectedMethods)
     {
       string stackTrace = null;
 
       try
       {
-        action();
-        Assert.Fail("Test action didn't fail.");
+        object instance = Activator.CreateInstance(testType);
+        MethodInfo method = testType.GetMethod(methodName);
+        Assert.NotNull(method, $"Test method not found: {methodName}");
+
+        method.Invoke(instance, new object[0]);
+        Assert.Fail("Test method didn't fail.");
       }
       catch (Exception e)
       {
-        stackTrace = e.StackTrace;
+        stackTrace = e.InnerException.StackTrace;
       }
 
       // sanity
@@ -48,7 +55,7 @@ namespace MappingParser.Tests
     public void PublicCrash()
     {
       DoTest(
-          () => new PublicClass1().PublicCrash(),
+          "PublicCrash",
           new Result("void TestAssembly.PublicClass1.PublicCrash()", true)
         );
     }
@@ -57,7 +64,7 @@ namespace MappingParser.Tests
     public void PrivateCrash()
     {
       DoTest(
-          () => new PublicClass1().PrivateCrash(),
+          "PrivateCrash",
           new Result("void TestAssembly.PrivateClass1.Crash()"),
           new Result("void TestAssembly.PublicClass1.PrivateCrash()", true)
         );
@@ -67,7 +74,7 @@ namespace MappingParser.Tests
     public void PrivateCrashDeeper()
     {
       DoTest(
-          () => new PublicClass1().PrivateCrashDeeper(),
+          "PrivateCrashDeeper",
           new Result("void TestAssembly.PrivateClass1.Crash()"),
           new Result("void TestAssembly.PrivateClass1.CrashDeeper()"),
           new Result("void TestAssembly.PublicClass1.PrivateCrashDeeper()", true)
@@ -78,7 +85,7 @@ namespace MappingParser.Tests
     public void PrivateCrashSubclass()
     {
       DoTest(
-          () => new PublicClass1().PrivateCrashSubclass(),
+          "PrivateCrashSubclass",
           new Result("void TestAssembly.PrivateClass1.SubClass.Crash()"),
           new Result("void TestAssembly.PrivateClass1.CrashSubclass()"),
           new Result("void TestAssembly.PublicClass1.PrivateCrashSubclass()", true)
@@ -89,7 +96,7 @@ namespace MappingParser.Tests
     public void PrivateCrashSubclassDeeper()
     {
       DoTest(
-          () => new PublicClass1().PrivateCrashSubclassDeeper(),
+          "PrivateCrashSubclassDeeper",
           new Result("void TestAssembly.PrivateClass1.SubClass.Crash()"),
           new Result("void TestAssembly.PrivateClass1.SubClass.CrashDeeper()"),
           new Result("void TestAssembly.PrivateClass1.CrashSubclassDeeper()"),
@@ -101,7 +108,7 @@ namespace MappingParser.Tests
     public void PrivateCrashSubclassParam()
     {
       DoTest(
-          () => new PublicClass1().PrivateCrashSubclassParam(),
+          "PrivateCrashSubclassParam",
           new Result("void TestAssembly.PrivateClass1.SubClass.Crash()"),
           new Result("void TestAssembly.PrivateClass1.Crash(TestAssembly.PrivateClass1.SubClass)"),
           new Result("void TestAssembly.PrivateClass1.CrashSubclassParam()"),

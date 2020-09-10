@@ -2,11 +2,14 @@
 <Obfuscator>
   <!-- https://docs.obfuscar.com/getting-started/configuration.html -->
   <Var name="InPath" value="bin/Release" />
-  <Var name="OutPath" value="$(InPath)/obfuscated" />
+  <Var name="OutPath" value="$(InPath)/normal" />
   <Var name="KeepPublicApi" value="true" />
   <Var name="HidePrivateApi" value="true" />
-  <Var name="XmlMapping" value="true" />
   <Var name="HideStrings" value="false"/>
   <Var name="OptimizeMethods" value="false"/>
+  
+  <Var name="XmlMapping" value="true" />
+  <Var name="LogFile" value="$(OutPath)/mapping.xml" />
+  
   <Module file="$(InPath)/ObfuscarMappingParser.TestAssembly.dll" />
 </Obfuscator>

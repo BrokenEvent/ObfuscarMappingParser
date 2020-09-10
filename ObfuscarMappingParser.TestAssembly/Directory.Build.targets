@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">  
+  
+  <PropertyGroup>
+    <ObfuscarPath>$(SolutionDir)packages\Obfuscar.2.2.28\tools\Obfuscar.Console.exe</ObfuscarPath>
+  </PropertyGroup>
+
+  <Target Name="CheckPrerequisites">
+    <Error Condition="$(ObfuscarPath) == ''" Text="Obfuscar path is empty"/>
+    <Error Condition="!Exists($(ObfuscarPath))" Text="Obfuscar is missing"/>
+  </Target>
+  
+  <ItemGroup>
+    <ObfuscarConfig Include="Normal"/>
+    <ObfuscarConfig Include="Unicode"/>
+    <ObfuscarConfig Include="Korean"/>
+  </ItemGroup>
+
+  <Target Name="Obfuscator" 
+          AfterTargets="AfterBuild" 
+          DependsOnTargets="CheckPrerequisites" 
+          Inputs="@(ObfuscarConfig)" 
+          Outputs="$(ProjectDir)bin\Release\%(Identity)\ObfuscarMappingParser.TestAssembly.dll">
+
+    <PropertyGroup>
+      <Config>$(ProjectDir)Obfuscar.%(ObfuscarConfig.Identity).xml</Config>
+    </PropertyGroup>
+    <Message Text="Config: $(Config)" Importance="high"/>
+    
+    <Exec WorkingDirectory="$(ProjectDir)" Command="$(ObfuscarPath) &quot;$(Config)&quot; -s" />
+  </Target>
+</Project>
