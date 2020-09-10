@@ -9,7 +9,7 @@ namespace MappingParser.Tests
   [TestFixture]
   class CrashlogTest
   {
-    private static void ResultTestHelperOk(List<SearchResults> list, int index, string module, string name, string nameSimple, string nameFull)
+    private static void AssertResult(List<SearchResults> list, int index, string module, string name, string nameSimple, string nameFull)
     {
       SearchResults results = list[index];
       INamedEntity result = results.SingleResult;
@@ -27,7 +27,7 @@ namespace MappingParser.Tests
       Assert.AreEqual(nameFull, results.ToString(OutputType.Full), "ToString(Full)");
     }
 
-    private static void ResultTestHelper(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
+    private static void AssertResult(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
     {
       SearchResults results = list[index];
       INamedEntity result = results.SingleResult;
@@ -40,7 +40,7 @@ namespace MappingParser.Tests
       Assert.AreEqual(nameFull, results.ToString(OutputType.Full), "ToString(Full)");
     }
 
-    private static void ResultTestHelperSubstitution(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
+    private static void AssertSubstitution(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
     {
       SearchResults results = list[index];
       INamedEntity result = results.SingleResult;
@@ -57,7 +57,7 @@ namespace MappingParser.Tests
       Assert.AreEqual(nameFull, results.ToString(OutputType.Full), "ToString(Full)");
     }
 
-    private static void ResultTestHelperMultiple(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
+    private static void AssertAmbigous(List<SearchResults> list, int index, string name, string nameSimple, string nameFull)
     {
       const string POSTFIX = "/* ambiguous */";
       SearchResults results = list[index];
@@ -86,7 +86,7 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(5, results.Count);
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           0,
           "AntiFreeze.Core",
@@ -95,7 +95,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.DataBase.GetReader(System.Data.IDbCommand, System.String)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "AntiFreeze.Core",
@@ -104,7 +104,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.DataBase.GetReader(System.String)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           2,
           "AntiFreeze.NET",
@@ -113,7 +113,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.NET.NativeAPI.SetupNativeAPI()"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           3,
           "AntiFreeze.NET",
@@ -122,7 +122,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.NET.MainForm.Startup()"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "AntiFreeze.NET",
@@ -141,7 +141,7 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(1, results.Count);
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           0,
           "AntiFreeze.NET",
@@ -160,7 +160,7 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(7, results.Count);
 
-      ResultTestHelper(
+      AssertResult(
           results,
           0,
           "void StartWithShellExecuteEx(ProcessStartInfo)",
@@ -168,7 +168,7 @@ namespace MappingParser.Tests
           "void System.Diagnostics.Process.StartWithShellExecuteEx(ProcessStartInfo)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           1,
           "void Start()",
@@ -176,7 +176,7 @@ namespace MappingParser.Tests
           "void System.Diagnostics.Process.Start()"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           2,
           "void Start(ProcessStartInfo)",
@@ -184,7 +184,7 @@ namespace MappingParser.Tests
           "void System.Diagnostics.Process.Start(ProcessStartInfo)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           3,
           "void Start(String)",
@@ -192,7 +192,7 @@ namespace MappingParser.Tests
           "void System.Diagnostics.Process.Start(String)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "AntiFreeze.NET",
@@ -201,7 +201,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.NET.AboutForm.llblSupportEmail_LinkClicked(System.Object, System.Windows.Forms.LinkLabelLinkClickedEventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           5,
           "void OnLinkClicked(LinkLabelLinkClickedEventArgs)",
@@ -209,7 +209,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.LinkLabel.OnLinkClicked(LinkLabelLinkClickedEventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           6,
           "void OnMouseUp(MouseEventArgs)",
@@ -226,7 +226,7 @@ namespace MappingParser.Tests
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test4.txt"));
       Assert.AreEqual(9, results.Count);
 
-      ResultTestHelper(
+      AssertResult(
           results,
           0,
           "void WaitForWaitHandle(WaitHandle)",
@@ -234,7 +234,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.Control.WaitForWaitHandle(WaitHandle)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           1,
           "void MarshaledInvoke(Control, Delegate, Object[], Boolean)",
@@ -242,7 +242,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.Control.MarshaledInvoke(Control, Delegate, Object[], Boolean)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           2,
           "void Invoke(Delegate, Object[])",
@@ -250,7 +250,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.Control.Invoke(Delegate, Object[])"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           3,
           "void Invoke(Delegate)",
@@ -258,7 +258,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.Control.Invoke(Delegate)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "AntiFreeze.NET",
@@ -293,7 +293,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Basic.TrafficMonitorThread.l()"
         );*/ // test will not pass, this is a method of superclass but app have no idea about it for now
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           8,
           "AntiFreeze.Core",
@@ -311,7 +311,7 @@ namespace MappingParser.Tests
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5.txt"));
       Assert.AreEqual(3, results.Count);
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           0,
           "AntiFreeze.Basic",
@@ -320,7 +320,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Basic.PingResultPanel.DrawGraph(System.Drawing.Rectangle, System.Single, System.Single, System.Drawing.Graphics)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "AntiFreeze.Core",
@@ -329,12 +329,13 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.GraphResultPanel.Draw(System.Drawing.Graphics)"
         );
 
-      ResultTestHelperSubstitution(
+      AssertResult(
           results,
           2,
+          "AntiFreeze.NET",
           "void OnPaint(PaintEventArgs)",
           "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)",
-          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)"
+          "void AntiFreeze.NET.WorkPanel.OnPaint(System.Windows.Forms.PaintEventArgs)"
         );
     }
 
@@ -346,7 +347,7 @@ namespace MappingParser.Tests
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5_ru.txt"));
       Assert.AreEqual(3, results.Count);
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           0,
           "AntiFreeze.Basic",
@@ -355,7 +356,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Basic.PingResultPanel.DrawGraph(System.Drawing.Rectangle, System.Single, System.Single, System.Drawing.Graphics)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "AntiFreeze.Core",
@@ -364,12 +365,13 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.GraphResultPanel.Draw(System.Drawing.Graphics)"
         );
 
-      ResultTestHelperSubstitution(
+      AssertResult(
           results,
           2,
+          "AntiFreeze.NET",
           "void OnPaint(PaintEventArgs)",
           "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)",
-          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)"
+          "void AntiFreeze.NET.WorkPanel.OnPaint(System.Windows.Forms.PaintEventArgs)"
         );
     }
 
@@ -381,7 +383,7 @@ namespace MappingParser.Tests
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\test5_nl.txt"));
       Assert.AreEqual(3, results.Count);
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           0,
           "AntiFreeze.Basic",
@@ -390,7 +392,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Basic.PingResultPanel.DrawGraph(System.Drawing.Rectangle, System.Single, System.Single, System.Drawing.Graphics)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "AntiFreeze.Core",
@@ -399,12 +401,13 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.GraphResultPanel.Draw(System.Drawing.Graphics)"
         );
 
-      ResultTestHelperSubstitution(
+      AssertResult(
           results,
           2,
+          "AntiFreeze.NET",
           "void OnPaint(PaintEventArgs)",
           "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)",
-          "void AntiFreeze.NET.WorkPanel.OnPaint(PaintEventArgs)"
+          "void AntiFreeze.NET.WorkPanel.OnPaint(System.Windows.Forms.PaintEventArgs)"
         );
     }
 
@@ -417,7 +420,7 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(5, results.Count);
 
-      ResultTestHelperMultiple(
+      AssertAmbigous(
           results,
           0,
           "void get_IsNewDataBase()",
@@ -425,7 +428,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.DataBase.get_IsNewDataBase()"
         );
 
-      ResultTestHelperMultiple(
+      AssertAmbigous(
           results,
           1,
           "void get_Command()",
@@ -433,7 +436,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.Core.DataBase.get_Command()"
         );
 
-      ResultTestHelperMultiple(
+      AssertAmbigous(
           results,
           2,
           "void SetupNativeAPI()",
@@ -441,7 +444,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.NET.NativeAPI.SetupNativeAPI()"
         );
 
-      ResultTestHelperMultiple(
+      AssertAmbigous(
           results,
           3,
           "void ThreadActionItem_Click(Object, EventArgs)",
@@ -449,7 +452,7 @@ namespace MappingParser.Tests
           "void AntiFreeze.NET.MainForm.ThreadActionItem_Click(System.Object, System.EventArgs)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "AntiFreeze.NET",
@@ -468,7 +471,7 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(6, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(MainForm, String, String)",
@@ -476,7 +479,7 @@ namespace MappingParser.Tests
           "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, String, String)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -485,7 +488,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.MainForm.miStacktrace_Click(System.Object, System.EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           2,
           "void RaiseEvent(Object, EventArgs)",
@@ -493,7 +496,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.ToolStripItem.RaiseEvent(Object, EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           3,
           "void OnClick(EventArgs)",
@@ -501,7 +504,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.ToolStripMenuItem.OnClick(EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           4,
           "void HandleClick(EventArgs)",
@@ -509,7 +512,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.ToolStripItem.HandleClick(EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           5,
           "void HandleMouseUp(MouseEventArgs)",
@@ -527,7 +530,7 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(6, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(MainForm, string, string)",
@@ -535,7 +538,7 @@ namespace MappingParser.Tests
           "ObfuscarMappingParser.StacktraceAnalyerForm.ctor(ObfuscarMappingParser.MainForm, string, string)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -544,7 +547,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.MainForm.miStacktrace_Click(object, System.EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           2,
           "void RaiseEvent(object, EventArgs)",
@@ -552,7 +555,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.ToolStripItem.RaiseEvent(object, EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           3,
           "void OnClick(EventArgs)",
@@ -560,7 +563,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.ToolStripMenuItem.OnClick(EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           4,
           "void HandleClick(EventArgs)",
@@ -568,7 +571,7 @@ namespace MappingParser.Tests
           "void System.Windows.Forms.ToolStripItem.HandleClick(EventArgs)"
         );
 
-      ResultTestHelper(
+      AssertResult(
           results,
           5,
           "void HandleMouseUp(MouseEventArgs)",
@@ -586,14 +589,14 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(5, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -601,7 +604,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
           "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           2,
           "ObfuscarMappingParser",
@@ -609,7 +612,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           3,
           "ObfuscarMappingParser",
@@ -617,7 +620,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(String)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(System.String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "ObfuscarMappingParser",
@@ -636,14 +639,14 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(5, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(string)",
           "ObfuscarMappingParser.Entity.ctor(string)",
           "ObfuscarMappingParser.Entity.ctor(string)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -651,7 +654,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.Search(string, bool)",
           "void ObfuscarMappingParser.Mapping.Search(string, bool)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           2,
           "ObfuscarMappingParser",
@@ -659,7 +662,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(string)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(string)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           3,
           "ObfuscarMappingParser",
@@ -667,7 +670,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(string)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(string)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "ObfuscarMappingParser",
@@ -686,14 +689,14 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(4, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -701,7 +704,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
           "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           2,
           "ObfuscarMappingParser",
@@ -709,7 +712,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
         );
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           3,
           "ctor(MainForm, String, String)",
@@ -727,14 +730,14 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(5, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -742,7 +745,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
           "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           2,
           "ObfuscarMappingParser",
@@ -750,7 +753,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           3,
           "ObfuscarMappingParser",
@@ -758,7 +761,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(String)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlogText(System.String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           4,
           "ObfuscarMappingParser",
@@ -777,14 +780,14 @@ namespace MappingParser.Tests
 
       Assert.AreEqual(4, results.Count);
 
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           0,
           "ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)",
           "ObfuscarMappingParser.Entity.ctor(String)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "ObfuscarMappingParser",
@@ -792,7 +795,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.Search(String, Boolean)",
           "void ObfuscarMappingParser.Mapping.Search(System.String, System.Boolean)"
         );
-      ResultTestHelperOk(
+      AssertResult(
           results,
           2,
           "ObfuscarMappingParser",
@@ -800,7 +803,7 @@ namespace MappingParser.Tests
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(String)",
           "void ObfuscarMappingParser.Mapping.ProcessCrashlog(System.String)"
         );
-      ResultTestHelperSubstitution(
+      AssertSubstitution(
           results,
           3,
           "ctor(MainForm, String, String)",
@@ -816,7 +819,7 @@ namespace MappingParser.Tests
       List<SearchResults> results = mapping.ProcessCrashlog(TestHelper.ReadAllText(@"Data\RenamedInSkipped.txt"));
       Assert.AreEqual(4, results.Count);
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           0,
           "lib",
@@ -825,7 +828,7 @@ namespace MappingParser.Tests
           "void lib.SomethingFancy.MakeUpperCase(string)"
         );
 
-      ResultTestHelperOk(
+      AssertResult(
           results,
           1,
           "lib",
