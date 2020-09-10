@@ -21,7 +21,7 @@ namespace MappingParser.Tests
       mapping = new Mapping(TestHelper.TranslatePath("Mapping.xml"));
     }
 
-    private void DoTest(Action action, params string[] expectedMethods)
+    private void DoTest(Action action, params Result[] expectedMethods)
     {
       string stackTrace = null;
 
@@ -40,8 +40,8 @@ namespace MappingParser.Tests
 
       List<SearchResults> results = mapping.ProcessCrashlog(stackTrace);
 
-      for(int i = 0; i < expectedMethods.Length; i++)
-      TestHelper.AssertResult(expectedMethods[i], results[i]);
+      for (int i = 0; i < expectedMethods.Length; i++)
+        TestHelper.AssertResult(expectedMethods[i], results[i]);
     }
 
     [Test]
@@ -49,7 +49,7 @@ namespace MappingParser.Tests
     {
       DoTest(
           () => new PublicClass1().PublicCrash(),
-          "void TestAssembly.PublicClass1.PublicCrash()"
+          new Result("void TestAssembly.PublicClass1.PublicCrash()", true)
         );
     }
 
@@ -58,8 +58,8 @@ namespace MappingParser.Tests
     {
       DoTest(
           () => new PublicClass1().PrivateCrash(),
-          "void TestAssembly.PrivateClass1.Crash()",
-          "void TestAssembly.PublicClass1.PrivateCrash()"
+          new Result("void TestAssembly.PrivateClass1.Crash()"),
+          new Result("void TestAssembly.PublicClass1.PrivateCrash()", true)
         );
     }
 
@@ -68,9 +68,9 @@ namespace MappingParser.Tests
     {
       DoTest(
           () => new PublicClass1().PrivateCrashDeeper(),
-          "void TestAssembly.PrivateClass1.Crash()",
-          "void TestAssembly.PrivateClass1.CrashDeeper()",
-          "void TestAssembly.PublicClass1.PrivateCrashDeeper()"
+          new Result("void TestAssembly.PrivateClass1.Crash()"),
+          new Result("void TestAssembly.PrivateClass1.CrashDeeper()"),
+          new Result("void TestAssembly.PublicClass1.PrivateCrashDeeper()", true)
         );
     }
 
@@ -79,9 +79,9 @@ namespace MappingParser.Tests
     {
       DoTest(
           () => new PublicClass1().PrivateCrashSubclass(),
-          "void TestAssembly.PrivateClass1.SubClass.Crash()",
-          "void TestAssembly.PrivateClass1.CrashSubclass()",
-          "void TestAssembly.PublicClass1.PrivateCrashSubclass()"
+          new Result("void TestAssembly.PrivateClass1.SubClass.Crash()"),
+          new Result("void TestAssembly.PrivateClass1.CrashSubclass()"),
+          new Result("void TestAssembly.PublicClass1.PrivateCrashSubclass()", true)
         );
     }
 
@@ -90,10 +90,10 @@ namespace MappingParser.Tests
     {
       DoTest(
           () => new PublicClass1().PrivateCrashSubclassDeeper(),
-          "void TestAssembly.PrivateClass1.SubClass.Crash()",
-          "void TestAssembly.PrivateClass1.SubClass.CrashDeeper()",
-          "void TestAssembly.PrivateClass1.CrashSubclassDeeper()",
-          "void TestAssembly.PublicClass1.PrivateCrashSubclassDeeper()"
+          new Result("void TestAssembly.PrivateClass1.SubClass.Crash()"),
+          new Result("void TestAssembly.PrivateClass1.SubClass.CrashDeeper()"),
+          new Result("void TestAssembly.PrivateClass1.CrashSubclassDeeper()"),
+          new Result("void TestAssembly.PublicClass1.PrivateCrashSubclassDeeper()", true)
         );
     }
 
@@ -102,10 +102,10 @@ namespace MappingParser.Tests
     {
       DoTest(
           () => new PublicClass1().PrivateCrashSubclassParam(),
-          "void TestAssembly.PrivateClass1.SubClass.Crash()",
-          "void TestAssembly.PrivateClass1.Crash(TestAssembly.PrivateClass1.SubClass)",
-          "void TestAssembly.PrivateClass1.CrashSubclassParam()",
-          "void TestAssembly.PublicClass1.PrivateCrashSubclassParam()"
+          new Result("void TestAssembly.PrivateClass1.SubClass.Crash()"),
+          new Result("void TestAssembly.PrivateClass1.Crash(TestAssembly.PrivateClass1.SubClass)"),
+          new Result("void TestAssembly.PrivateClass1.CrashSubclassParam()"),
+          new Result("void TestAssembly.PublicClass1.PrivateCrashSubclassParam()", true)
         );
     }
   }
