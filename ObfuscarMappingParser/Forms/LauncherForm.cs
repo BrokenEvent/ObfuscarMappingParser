@@ -13,6 +13,17 @@ namespace ObfuscarMappingParser
   {
     private void AddItem(string name)
     {
+      for (int i = 0; i < blvFiles.Items.Count; i++)
+      {
+        BrokenListItem li = blvFiles.Items[i];
+
+        if (((string)li.Tag).Equals(name, StringComparison.InvariantCultureIgnoreCase))
+        {
+          blvFiles.SelectedItem = li;
+          return;
+        }
+      }
+
       BrokenListItem item = new BrokenListItem(name);
       item.Tag = name;
       item.ImageIndex = 0;
