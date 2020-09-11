@@ -12,7 +12,6 @@ namespace ObfuscarMappingParser
   partial class SearchDialog : BaseForm
   {
     private readonly MainForm mainForm;
-    private readonly bool searchOriginal;
 
     private class ItemDescriptor
     {
@@ -43,27 +42,35 @@ namespace ObfuscarMappingParser
       }
     }
 
-    public SearchDialog(MainForm mainForm, bool searchOriginal)
+    public SearchDialog(MainForm mainForm)
     {
       this.mainForm = mainForm;
-      this.searchOriginal = searchOriginal;
       InitializeComponent();
       lvResults_Resize(null, EventArgs.Empty);
       lvResults.SmallImageList = mainForm.IconsList;
 
       tbSearch.SetCueText("Type name of the obfuscated element");
+      UpdateOldNewState();
 
-      if (searchOriginal)
+      controlHighlight.OwnerForm = this;
+    }
+
+    private void UpdateOldNewState()
+    {
+      if (cbOldName.Checked)
       {
         Text = "Search for Original Name";
         HeaderText = "Search for Original Name";
       }
+      else
+      {
+        Text = "Search for New Name";
+        HeaderText = "Search for New Name";
+      }
 
-      tbSearch.AutoCompleteCustomSource = searchOriginal ?
+      tbSearch.AutoCompleteCustomSource = cbOldName.Checked ?
         mainForm.Mapping.GetOldNamesCollection() :
         mainForm.Mapping.GetNewNamesCollection();
-
-      controlHighlight.OwnerForm = this;
     }
 
     private void lvResults_Resize(object sender, EventArgs e)
@@ -86,7 +93,10 @@ namespace ObfuscarMappingParser
     {
       lvResults.Items.Clear();
 
-      SearchResults results = searchOriginal ? mainForm.Mapping.Mapping.SearchOriginal(tbSearch.Text) : mainForm.Mapping.Mapping.Search(tbSearch.Text, false, false);
+      SearchResults results = cbOldName.Checked ?
+        mainForm.Mapping.Mapping.SearchForOldName(tbSearch.Text) :
+        mainForm.Mapping.Mapping.SearchForNewName(tbSearch.Text, false, false);
+
       if (results == null || !results.HasValue)
         return;
 
@@ -185,6 +195,11 @@ namespace ObfuscarMappingParser
     private void SearchDialog_Click(object sender, EventArgs e)
     {
       controlHighlight.Hide();
+    }
+
+    private void cbOldName_CheckedChanged(object sender, EventArgs e)
+    {
+      UpdateOldNewState();
     }
   }
 }

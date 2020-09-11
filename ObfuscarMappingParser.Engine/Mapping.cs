@@ -171,7 +171,7 @@ namespace ObfuscarMappingParser.Engine
 
     #region Search
 
-    public SearchResults Search(string s, bool allowSubstitution, bool filterPrefix)
+    public SearchResults SearchForNewName(string s, bool allowSubstitution, bool filterPrefix)
     {
       if (string.IsNullOrEmpty(s))
         return null;
@@ -187,27 +187,27 @@ namespace ObfuscarMappingParser.Engine
 
       Entity entity = new Entity(s);
       if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
-        return new SearchResults(s, entity, SearchItem(entity.Name));
+        return new SearchResults(s, entity, SearchItemNew(entity.Name));
 
-      return new SearchResults(s, entity, SearchMethod(entity, allowSubstitution));
+      return new SearchResults(s, entity, SearchMethodNew(entity, allowSubstitution));
     }
 
-    public SearchResults SearchOriginal(string s)
+    public SearchResults SearchForOldName(string s)
     {
       if (string.IsNullOrEmpty(s))
         return null;
 
       Entity entity = new Entity(s);
       if (entity.EntityType != EntityType.Method && entity.EntityType != EntityType.Constructor)
-        return new SearchResults(s, entity, SearchItemOriginal(entity.Name));
+        return new SearchResults(s, entity, SearchItemOld(entity.Name));
 
-      return new SearchResults(s, entity, SearchMethodOriginal(entity));
+      return new SearchResults(s, entity, SearchMethodOld(entity));
     }
 
-    private IEnumerable<INamedEntity> SearchMethod(Entity entity, bool allowSubstitution)
+    private IEnumerable<INamedEntity> SearchMethodNew(Entity entity, bool allowSubstitution)
     {
       bool hasAdded = false;
-      foreach (RenamedBase item in SearchItem(entity.Name))
+      foreach (RenamedBase item in SearchItemNew(entity.Name))
       {
         if (item.EntityType != EntityType.Method)
           continue;
@@ -230,14 +230,14 @@ namespace ObfuscarMappingParser.Engine
 
       foreach (RenamedClass renamedClass in classes)
       {
-        foreach (RenamedBase item in renamedClass.Search(values, 0))
+        foreach (RenamedBase item in renamedClass.SearchForNewName(values, 0))
           yield return new Entity(entity, item, methodParams);
       }
     }
 
-    private IEnumerable<INamedEntity> SearchMethodOriginal(Entity entity)
+    private IEnumerable<INamedEntity> SearchMethodOld(Entity entity)
     {
-      foreach (RenamedBase item in SearchItemOriginal(entity.Name))
+      foreach (RenamedBase item in SearchItemOld(entity.Name))
       {
         if (item.EntityType != EntityType.Method)
           continue;
@@ -259,7 +259,7 @@ namespace ObfuscarMappingParser.Engine
         try
         {
           string[] values = p[i].PathName.Split('.');
-          foreach (RenamedBase item in SearchItem(values))
+          foreach (RenamedBase item in SearchItemNew(values))
             paramName = item.Name.NameOld;
         }
         catch { }
@@ -273,16 +273,16 @@ namespace ObfuscarMappingParser.Engine
       }
     }
 
-    private IEnumerable<RenamedBase> SearchItem(string[] values)
+    private IEnumerable<RenamedBase> SearchItemNew(string[] values)
     {
       foreach (RenamedClass renamedClass in classes)
       {
-        foreach (RenamedBase item in renamedClass.Search(values, 0))
+        foreach (RenamedBase item in renamedClass.SearchForNewName(values, 0))
           yield return item;
       }
     }
 
-    private IEnumerable<RenamedBase> SearchItem(EntityName name)
+    private IEnumerable<RenamedBase> SearchItemNew(EntityName name)
     {
       string[] values;
       try
@@ -294,20 +294,20 @@ namespace ObfuscarMappingParser.Engine
         yield break;
       }
 
-      foreach (RenamedBase renamedItem in SearchItem(values))
+      foreach (RenamedBase renamedItem in SearchItemNew(values))
         yield return renamedItem;
     }
 
-    private IEnumerable<RenamedBase> SearchItemOriginal(string[] values)
+    private IEnumerable<RenamedBase> SearchItemOld(string[] values)
     {
       foreach (RenamedClass renamedClass in classes)
       {
-        foreach (RenamedBase item in renamedClass.SearchOriginal(values, 0))
+        foreach (RenamedBase item in renamedClass.SearchForOldName(values, 0))
           yield return item;
       }
     }
 
-    private IEnumerable<RenamedBase> SearchItemOriginal(EntityName name)
+    private IEnumerable<RenamedBase> SearchItemOld(EntityName name)
     {
       string[] values;
       try
@@ -319,7 +319,7 @@ namespace ObfuscarMappingParser.Engine
         yield break;
       }
 
-      foreach (RenamedBase renamedItem in SearchItemOriginal(values))
+      foreach (RenamedBase renamedItem in SearchItemOld(values))
         yield return renamedItem;
     }
 
@@ -359,7 +359,7 @@ namespace ObfuscarMappingParser.Engine
 
     private SearchResults ProcessCrashlogLine(string text, bool filterPrefix)
     {
-      return Search(text, true, filterPrefix);
+      return SearchForNewName(text, true, filterPrefix);
     }
 
     #endregion

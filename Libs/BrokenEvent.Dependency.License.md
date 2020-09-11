@@ -1,6 +1,6 @@
 # BrokenEvent Dependency License
 
-Copyright (c) 2019 [Broken Event](https://brokenevent.com)
+Copyright (c) 2020 [Broken Event](https://brokenevent.com)
 
 This license is applied to following binary files (the "Binaries") and their documentation:
 

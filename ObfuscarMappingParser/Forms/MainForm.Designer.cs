@@ -75,7 +75,6 @@
       this.miStacktrace = new System.Windows.Forms.ToolStripMenuItem();
       this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
       this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
-      this.miSearchOriginal = new System.Windows.Forms.ToolStripMenuItem();
       this.mmTools = new System.Windows.Forms.ToolStripMenuItem();
       this.miConvert = new System.Windows.Forms.ToolStripMenuItem();
       this.mmHelp = new System.Windows.Forms.ToolStripMenuItem();
@@ -268,55 +267,55 @@
       this.miOpen.Image = global::ObfuscarMappingParser.Properties.Resources.Open;
       this.miOpen.Name = "miOpen";
       this.miOpen.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-      this.miOpen.Size = new System.Drawing.Size(169, 22);
-      this.miOpen.Text = "Open...";
+      this.miOpen.Size = new System.Drawing.Size(206, 22);
+      this.miOpen.Text = "Open Mapping...";
       // 
       // miRecents
       // 
       this.miRecents.Name = "miRecents";
-      this.miRecents.Size = new System.Drawing.Size(169, 22);
-      this.miRecents.Text = "Recent";
+      this.miRecents.Size = new System.Drawing.Size(206, 22);
+      this.miRecents.Text = "Recent Files";
       // 
       // toolStripSeparator9
       // 
       this.toolStripSeparator9.Name = "toolStripSeparator9";
-      this.toolStripSeparator9.Size = new System.Drawing.Size(166, 6);
+      this.toolStripSeparator9.Size = new System.Drawing.Size(203, 6);
       // 
       // miReload
       // 
       this.miReload.Image = global::ObfuscarMappingParser.Properties.Resources.Reload;
       this.miReload.Name = "miReload";
-      this.miReload.Size = new System.Drawing.Size(169, 22);
-      this.miReload.Text = "Reload";
+      this.miReload.Size = new System.Drawing.Size(206, 22);
+      this.miReload.Text = "Reload Mapping";
       // 
       // toolStripSeparator6
       // 
       this.toolStripSeparator6.Name = "toolStripSeparator6";
-      this.toolStripSeparator6.Size = new System.Drawing.Size(166, 6);
+      this.toolStripSeparator6.Size = new System.Drawing.Size(203, 6);
       // 
       // miManagePDBs
       // 
       this.miManagePDBs.Enabled = false;
       this.miManagePDBs.Name = "miManagePDBs";
-      this.miManagePDBs.Size = new System.Drawing.Size(169, 22);
-      this.miManagePDBs.Text = "Manage .PDB files";
+      this.miManagePDBs.Size = new System.Drawing.Size(206, 22);
+      this.miManagePDBs.Text = "Manage .pdb Files";
       // 
       // miAttachPDB
       // 
       this.miAttachPDB.Enabled = false;
       this.miAttachPDB.Name = "miAttachPDB";
-      this.miAttachPDB.Size = new System.Drawing.Size(169, 22);
-      this.miAttachPDB.Text = "Attach .PDB file...";
+      this.miAttachPDB.Size = new System.Drawing.Size(206, 22);
+      this.miAttachPDB.Text = "Attach .pdb File...";
       // 
       // toolStripSeparator2
       // 
       this.toolStripSeparator2.Name = "toolStripSeparator2";
-      this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
+      this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
       // 
       // miExit
       // 
       this.miExit.Name = "miExit";
-      this.miExit.Size = new System.Drawing.Size(169, 22);
+      this.miExit.Size = new System.Drawing.Size(206, 22);
       this.miExit.Text = "Exit";
       // 
       // miView
@@ -432,8 +431,7 @@
             this.miCrashlogs,
             this.miStacktrace,
             this.toolStripSeparator8,
-            this.miSearch,
-            this.miSearchOriginal});
+            this.miSearch});
       this.mmSearch.Name = "mmSearch";
       this.mmSearch.Size = new System.Drawing.Size(54, 20);
       this.mmSearch.Text = "Search";
@@ -466,13 +464,6 @@
       this.miSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
       this.miSearch.Size = new System.Drawing.Size(246, 22);
       this.miSearch.Text = "Search...";
-      // 
-      // miSearchOriginal
-      // 
-      this.miSearchOriginal.Image = global::ObfuscarMappingParser.Properties.Resources.Search;
-      this.miSearchOriginal.Name = "miSearchOriginal";
-      this.miSearchOriginal.Size = new System.Drawing.Size(246, 22);
-      this.miSearchOriginal.Text = "Search for Original";
       // 
       // mmTools
       // 
@@ -747,7 +738,6 @@
     private System.Windows.Forms.OpenFileDialog odSourceFile;
     private System.Windows.Forms.ToolStripMenuItem miManagePDBs;
     private System.Windows.Forms.ToolStripMenuItem miReload;
-    private System.Windows.Forms.ToolStripMenuItem miSearchOriginal;
     private System.Windows.Forms.ToolStripMenuItem mmTools;
     private System.Windows.Forms.ToolStripMenuItem miConvert;
     private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;

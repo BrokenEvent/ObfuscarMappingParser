@@ -14,7 +14,6 @@ namespace ObfuscarMappingParser
       Actions.AttachPdb, 
       Actions.ManagePdb, 
       Actions.Search,
-      Actions.SearchForOriginal,
       Actions.Statistics,
       Actions.ReloadFile,
     };
@@ -51,8 +50,6 @@ namespace ObfuscarMappingParser
         .AddItem(miStacktrace);
       commandManager.RegisterHotkey(Actions.Search, Action_Search, ModifierKey.Ctrl, Keys.F)
         .AddItem(miSearch);
-      commandManager.RegisterHotkey(Actions.SearchForOriginal, Action_SearchOriginal, ModifierKey.Ctrl | ModifierKey.Shift, Keys.F)
-        .AddItem(miSearchOriginal);
       commandManager.RegisterHotkey(Actions.Convert, Action_Convert, ModifierKey.None, Keys.None)
         .AddItem(miConvert);
       commandManager.RegisterHotkey(Actions.About, Action_About, ModifierKey.None, Keys.None)
@@ -121,15 +118,9 @@ namespace ObfuscarMappingParser
         form.ShowDialog(this);
     }
 
-    private void Action_SearchOriginal(Actions command)
-    {
-      using (SearchDialog form = new SearchDialog(this, true))
-        form.ShowDialog(this);
-    }
-
     private void Action_Search(Actions command)
     {
-      using (SearchDialog form = new SearchDialog(this, false))
+      using (SearchDialog form = new SearchDialog(this))
         form.ShowDialog(this);
     }
 

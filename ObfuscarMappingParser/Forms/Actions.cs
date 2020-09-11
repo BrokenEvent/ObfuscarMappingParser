@@ -44,10 +44,6 @@ namespace ObfuscarMappingParser
     [Category("Tools")]
     Search,
 
-    [Description("Search for original name")]
-    [Category("Tools")]
-    SearchForOriginal,
-
     [Description("Convert RAW data")]
     [Category("Tools")]
     Convert,

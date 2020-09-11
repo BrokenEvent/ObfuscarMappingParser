@@ -286,7 +286,7 @@ namespace ObfuscarMappingParser
       if (e.KeyCode != Keys.Enter || mapping == null) // how??
         return;
 
-      SearchResults result = mapping.Mapping.Search(tbSearch.Text, false, false);
+      SearchResults result = mapping.Mapping.SearchForNewName(tbSearch.Text, false, false);
 
       if (result == null || !result.HasValue)
         return;

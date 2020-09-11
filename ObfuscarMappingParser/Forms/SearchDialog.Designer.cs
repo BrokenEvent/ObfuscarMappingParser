@@ -37,6 +37,7 @@
       this.lblSearch = new System.Windows.Forms.Label();
       this.btnClose = new System.Windows.Forms.Button();
       this.controlHighlight = new BrokenEvent.Shared.Controls.ControlHighlight(this.components);
+      this.cbOldName = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
       // lvResults
@@ -110,7 +111,7 @@
       this.btnClose.Location = new System.Drawing.Point(375, 306);
       this.btnClose.Name = "btnClose";
       this.btnClose.Size = new System.Drawing.Size(100, 23);
-      this.btnClose.TabIndex = 3;
+      this.btnClose.TabIndex = 4;
       this.btnClose.Text = "Close";
       this.btnClose.UseVisualStyleBackColor = true;
       this.btnClose.Enter += new System.EventHandler(this.Control_Enter);
@@ -126,12 +127,25 @@
       this.controlHighlight.TextColor = System.Drawing.Color.White;
       this.controlHighlight.TextPadding = new System.Windows.Forms.Padding(4);
       // 
+      // cbOldName
+      // 
+      this.cbOldName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+      this.cbOldName.AutoSize = true;
+      this.cbOldName.Location = new System.Drawing.Point(15, 310);
+      this.cbOldName.Name = "cbOldName";
+      this.cbOldName.Size = new System.Drawing.Size(221, 17);
+      this.cbOldName.TabIndex = 3;
+      this.cbOldName.Text = "Search for old (non-obfuscated) name";
+      this.cbOldName.UseVisualStyleBackColor = true;
+      this.cbOldName.CheckedChanged += new System.EventHandler(this.cbOldName_CheckedChanged);
+      // 
       // SearchDialog
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnClose;
       this.ClientSize = new System.Drawing.Size(487, 337);
+      this.Controls.Add(this.cbOldName);
       this.Controls.Add(this.lblSearch);
       this.Controls.Add(this.tbSearch);
       this.Controls.Add(this.lblSearchResults);
@@ -149,6 +163,7 @@
       this.Name = "SearchDialog";
       this.ShowIcon = false;
       this.ShowInTaskbar = false;
+      this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
       this.Text = "Search";
       this.Click += new System.EventHandler(this.SearchDialog_Click);
@@ -167,6 +182,6 @@
     private System.Windows.Forms.Label lblSearch;
     private System.Windows.Forms.Button btnClose;
     private BrokenEvent.Shared.Controls.ControlHighlight controlHighlight;
-
+    private System.Windows.Forms.CheckBox cbOldName;
   }
 }

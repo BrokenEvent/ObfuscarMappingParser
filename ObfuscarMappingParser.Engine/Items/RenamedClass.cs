@@ -91,7 +91,7 @@ namespace ObfuscarMappingParser.Engine.Items
       get { return EntityType.Class; }
     }
 
-    public IEnumerable<RenamedBase> Search(string[] values, int index)
+    public IEnumerable<RenamedBase> SearchForNewName(string[] values, int index)
     {
       if (!name.HaveNewName && items.Count == 0) // unable to search, no new name, no children
         yield break;
@@ -131,12 +131,12 @@ namespace ObfuscarMappingParser.Engine.Items
         if (item.EntityType != EntityType.Class)
           continue; // only search subclasses
 
-        foreach (RenamedBase i in ((RenamedClass)item).Search(values, index))
+        foreach (RenamedBase i in ((RenamedClass)item).SearchForNewName(values, index))
           yield return i;
       }
     }
 
-    public IEnumerable<RenamedBase> SearchOriginal(string[] values, int index)
+    public IEnumerable<RenamedBase> SearchForOldName(string[] values, int index)
     {
       if (!name.NameOld.CompareNamespace(values, ref index)) // namespace check
         yield break;
@@ -173,7 +173,7 @@ namespace ObfuscarMappingParser.Engine.Items
         if (item.EntityType != EntityType.Class)
           continue; // only search subclasses
 
-        foreach (RenamedBase i in ((RenamedClass)item).SearchOriginal(values, index))
+        foreach (RenamedBase i in ((RenamedClass)item).SearchForOldName(values, index))
           yield return i;
       }
     }
