@@ -69,6 +69,7 @@ namespace ObfuscarMappingParser
       settingsEl.GetValueIfExists("ShowModules", ref showModules);
       settingsEl.GetValueIfExists("ShowSkipped", ref showSkipped);
       settingsEl.GetValueIfExists("ShowResources", ref showResources);
+      settingsEl.GetValueIfExists("GroupResources", ref groupResources);
       settingsEl.GetValueIfExists("GroupNamespaces", ref groupNamespaces);
       settingsEl.GetValueIfExists("GroupModules", ref groupModules);
       settingsEl.GetValueIfExists("UseColumns", ref useColumns);
@@ -104,6 +105,7 @@ namespace ObfuscarMappingParser
       settingsEl.AppendElement("ShowModules", showModules);
       settingsEl.AppendElement("ShowSkipped", showSkipped);
       settingsEl.AppendElement("ShowResources", showResources);
+      settingsEl.AppendElement("GroupResources", groupResources);
       settingsEl.AppendElement("GroupNamespaces", groupNamespaces);
       settingsEl.AppendElement("GroupModules", groupModules);
       settingsEl.AppendElement("UseColumns", useColumns);
@@ -140,6 +142,7 @@ namespace ObfuscarMappingParser
     private bool showUnicode;
     private bool showResources = true;
     private bool showSkipped;
+    private bool groupResources = true;
     private bool simplifySystemNames = true;
     private bool simplifyNullable = true;
     private bool simplifyRef = true;
@@ -194,6 +197,12 @@ namespace ObfuscarMappingParser
     {
       get { return showResources; }
       set { showResources = value; }
+    }
+
+    public bool GroupResources
+    {
+      get { return groupResources; }
+      set { groupResources = value; }
     }
 
     public bool UseColumns

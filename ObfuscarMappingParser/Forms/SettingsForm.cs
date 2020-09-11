@@ -55,6 +55,7 @@ namespace ObfuscarMappingParser
       cbShowUnicode.Checked = Configs.Instance.ShowUnicode;
       cbShowResources.Checked = Configs.Instance.ShowResources;
       cbShowSkipped.Checked = Configs.Instance.ShowSkipped;
+      cbGroupResources.Checked = Configs.Instance.GroupResources;
       cbSimplifySystemNames.Checked = Configs.Instance.SimplifySystemNames;
       cbSimplifyNullable.Checked = Configs.Instance.SimplifyNullable;
       cbSimplifyRef.Checked = Configs.Instance.SimplifyRef;
@@ -82,6 +83,7 @@ namespace ObfuscarMappingParser
       Configs.Instance.ShowUnicode = cbShowUnicode.Checked;
       Configs.Instance.ShowResources = cbShowResources.Checked;
       Configs.Instance.ShowSkipped = cbShowSkipped.Checked;
+      Configs.Instance.GroupResources = cbGroupResources.Checked;
       Configs.Instance.SimplifySystemNames = cbSimplifySystemNames.Checked;
       Configs.Instance.SimplifyNullable = cbSimplifyNullable.Checked;
       Configs.Instance.SimplifyRef = cbSimplifyRef.Checked;

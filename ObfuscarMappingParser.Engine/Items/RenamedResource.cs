@@ -29,5 +29,14 @@ namespace ObfuscarMappingParser.Engine.Items
     {
       get { return nameNew; }
     }
+
+    public string TryGetOwnerClassOld()
+    {
+      const string POSTFIX = ".resources";
+      if (nameOld.EndsWith(POSTFIX))
+        return nameOld.Substring(0, nameOld.Length - POSTFIX.Length);
+
+      return null;
+    }
   }
 }

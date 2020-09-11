@@ -256,6 +256,7 @@ namespace ObfuscarMappingParser
       builder.ShowModules = Configs.Instance.ShowModules;
       builder.ShowResources = Configs.Instance.ShowResources;
       builder.ShowSkippedMembers = Configs.Instance.ShowSkipped;
+      builder.GroupResources = Configs.Instance.GroupResources;
       try
       {
         builder.Build();

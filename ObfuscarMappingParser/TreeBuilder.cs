@@ -10,6 +10,8 @@ namespace ObfuscarMappingParser
 {
   class TreeBuilder: IEqualityComparer<string>
   {
+    private Dictionary<string, PineappleTreeNode> classNodesMap = new Dictionary<string, PineappleTreeNode>();
+
     private PineappleTreeView tree;
     private MappingViewModel mapping;
     private bool groupNamespaces;
@@ -17,6 +19,7 @@ namespace ObfuscarMappingParser
     private bool groupModules;
     private bool showResources;
     private bool showSkippedMembers;
+    private bool groupResources;
     private readonly MainForm mainForm;
 
     private struct NamingValue
@@ -88,6 +91,12 @@ namespace ObfuscarMappingParser
       set { showSkippedMembers = value; }
     }
 
+    public bool GroupResources
+    {
+      get { return groupResources; }
+      set { groupResources = value; }
+    }
+
     public void Build()
     {
       tree.Nodes.Clear();
@@ -117,12 +126,10 @@ namespace ObfuscarMappingParser
 
       if (showResources && mapping.Mapping.Resources.Count > 0)
       {
-        PineappleTreeNode resourcesNode = CreateNode("Resources");
-        resourcesNode.ImageIndex = mainForm.ICON_RESOURCES;
-        tree.Nodes.Add(resourcesNode);
+        PineappleTreeNode resourcesNode = null;
 
         foreach (RenamedResource resource in mapping.Mapping.Resources)
-          BuildResource(resource, resourcesNode);
+          BuildResource(resource, ref resourcesNode);
       }
     }
 
@@ -131,12 +138,27 @@ namespace ObfuscarMappingParser
       return new PineappleTreeNode(name);
     }
 
-    private void BuildResource(RenamedResource resource, PineappleTreeNode ownerNode)
+    private void BuildResource(RenamedResource resource, ref PineappleTreeNode resourcesNode)
     {
       PineappleTreeNode node = CreateNode(resource.NameOld);
       node.Tag = resource;
       node.ImageIndex = mainForm.ICON_RESOURCE;
       node.ToolTipText = BuildHintForResource(resource);
+
+      PineappleTreeNode ownerNode;
+      string ownerClass = resource.TryGetOwnerClassOld();
+      if (!groupResources || ownerClass == null || !classNodesMap.TryGetValue(ownerClass, out ownerNode))
+      {
+        if (resourcesNode == null)
+        {
+          resourcesNode = CreateNode("Resources");
+          resourcesNode.ImageIndex = mainForm.ICON_RESOURCES;
+          tree.Nodes.Add(resourcesNode);
+        }
+
+        ownerNode = resourcesNode;
+      }
+
       ownerNode.Nodes.Add(node);
 
       string subItemText = null;
@@ -158,6 +180,9 @@ namespace ObfuscarMappingParser
     {
       PineappleTreeNode classNode = CreateNode(c.NameOld);
       PineappleTreeNode owner = GetRootNodeForClass(c);
+
+      classNodesMap[c.NameOld] = classNode;
+
       owner.Nodes.Add(classNode);
       BuildClassContent(c, classNode);
     }
