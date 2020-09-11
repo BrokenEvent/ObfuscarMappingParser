@@ -122,8 +122,8 @@ namespace ObfuscarMappingParser
       ItemDescriptor d = new ItemDescriptor(item);
       l.Tag = d;
       string tip;
-      if (item is RenamedClass)
-        tip = TreeBuilder.BuildHintForClass((RenamedClass)item);
+      if (item is RenamedClass @class)
+        tip = TreeBuilder.BuildHintForClass(@class);
       else
         tip = TreeBuilder.BuildHintForItem((RenamedItem)item);
 
@@ -137,7 +137,7 @@ namespace ObfuscarMappingParser
         {
           string filename;
           int line;
-          if (mainForm.SearchInPdb(out filename, out line, item))
+          if (mainForm.Mapping.SearchInPdb(out filename, out line, item))
           {
             tip += "Source position:\n" + filename + ":" + line + " (Ctrl+Click to open)";
             d.Filename = filename;

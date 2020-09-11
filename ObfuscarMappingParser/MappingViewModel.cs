@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
+using BrokenEvent.PDBReader;
 using BrokenEvent.Shared.Controls;
 
 using ObfuscarMappingParser.Engine;
@@ -10,12 +11,14 @@ using ObfuscarMappingParser.Engine.Items;
 
 namespace ObfuscarMappingParser
 {
-  class MappingWrapper
+  class MappingViewModel
   {
     private Dictionary<RenamedBase, PineappleTreeNode> nodesMap = new Dictionary<RenamedBase, PineappleTreeNode>();
     private DateTime lastModified;
 
-    public MappingWrapper(string filename)
+    private List<PdbFile> pdbFiles = new List<PdbFile>();
+
+    public MappingViewModel(string filename)
     {
       Mapping = new Mapping(filename);
       lastModified = File.GetLastWriteTime(filename);
@@ -77,6 +80,64 @@ namespace ObfuscarMappingParser
             result.Add(item.NameOldPlain);
 
       return result;
+    }
+
+    #endregion
+
+    #region PDB
+
+    public List<PdbFile> PdbFiles
+    {
+      get { return pdbFiles; }
+    }
+
+    public bool SearchInPdb(out string filename, out int lineNumber, RenamedBase item)
+    {
+      filename = null;
+      lineNumber = -1;
+
+      string s = item.NameOldPlain;
+      int i = s.LastIndexOf('.');
+      if (i == -1)
+        return false;
+
+      string className = s.Substring(0, i);
+      string itemName = s.Substring(i + 1);
+      CodeLocation location = null;
+
+      foreach (PdbFile file in pdbFiles)
+      {
+        location = file.Resolver.FindLocation(className, itemName);
+        if (location != null)
+          break;
+      }
+
+      if (location == null)
+        return false;
+
+      filename = location.FileName;
+      lineNumber = (int)location.Line;
+      return true;
+    }
+
+    public bool IsPdbAttached(string filename)
+    {
+      foreach (PdbFile file in pdbFiles)
+        if (file.Filename.Equals(filename, StringComparison.InvariantCultureIgnoreCase))
+          return true;
+
+      return false;
+    }
+
+    public bool DetectMarkersForVS(out string filename, out int lineNumber, RenamedBase item)
+    {
+      filename = null;
+      lineNumber = -1;
+
+      if (pdbFiles.Count == 0 || item.EntityType != EntityType.Method)
+        return false;
+
+      return SearchInPdb(out filename, out lineNumber, item);
     }
 
     #endregion

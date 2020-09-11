@@ -177,7 +177,7 @@ namespace ObfuscarMappingParser
         return;
       string filename;
       int line;
-      if (mainForm.SearchInPdb(out filename, out line, d.Renamed))
+      if (mainForm.Mapping.SearchInPdb(out filename, out line, d.Renamed))
       {
         d.Filename = filename;
         d.Line = line;

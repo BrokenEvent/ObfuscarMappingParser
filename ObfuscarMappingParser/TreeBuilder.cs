@@ -11,7 +11,7 @@ namespace ObfuscarMappingParser
   class TreeBuilder: IEqualityComparer<string>
   {
     private PineappleTreeView tree;
-    private MappingWrapper mapping;
+    private MappingViewModel mapping;
     private bool groupNamespaces;
     private bool showModules;
     private bool groupModules;
@@ -51,7 +51,7 @@ namespace ObfuscarMappingParser
     private Dictionary<string, ModuleData> moduleNamespaces;
     private PineappleTreeNode noNsNode;
 
-    public TreeBuilder(PineappleTreeView tree, MappingWrapper mapping, MainForm mainForm)
+    public TreeBuilder(PineappleTreeView tree, MappingViewModel mapping, MainForm mainForm)
     {
       this.tree = tree;
       this.mapping = mapping;

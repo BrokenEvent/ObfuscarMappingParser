@@ -8,7 +8,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BrokenEvent.NanoXml;
-using BrokenEvent.PDBReader;
 using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Algorithms;
 using BrokenEvent.Shared.Controls;
@@ -27,8 +26,9 @@ namespace ObfuscarMappingParser
 {
   partial class MainForm : Form
   {
+    private readonly string fileToLoad;
     private string mappingFilename;
-    private MappingWrapper mapping;
+    private MappingViewModel mapping;
     private ClipboardWatcher clipboardWatcher;
     private const string APP_TITLE = "Obfuscar Mapping Parser";
 
@@ -54,6 +54,8 @@ namespace ObfuscarMappingParser
 
     public MainForm(string filename)
     {
+      fileToLoad = filename;
+
       InitializeComponent();
 
       // load manually from resources, as VS RESX always broke icon colors
@@ -95,10 +97,7 @@ namespace ObfuscarMappingParser
 
       InitCommandManager();
 
-      if (!string.IsNullOrEmpty(filename))
-        OpenFile(filename);
-      else
-        EnableMappingActions(false);
+      EnableMappingActions(false);
     }
 
     protected override void OnHandleCreated(EventArgs e)
@@ -185,7 +184,7 @@ namespace ObfuscarMappingParser
           );
     }
 
-    private async void OpenFile(string filename)
+    private async Task OpenFile(string filename)
     {
       mappingFilename = filename;
       Text = $"{APP_TITLE} - {PathUtils.GetFilename(filename)}";
@@ -198,7 +197,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        mapping = await Task.Run(() => new MappingWrapper(filename));
+        mapping = await Task.Run(() => new MappingViewModel(filename));
       }
       catch (Exception e)
       {
@@ -209,14 +208,11 @@ namespace ObfuscarMappingParser
         return;
       }
 
-      pdbFiles.Clear();
       BuildMapping();
       EnableMappingActions(true);
       EndLoading($"Mapping loaded in {mapping.Mapping.LoadTime} ms");
 
-      AttachRelatedPdbs(Configs.Instance.GetRecentPdb(mapping.Mapping.Filename), false);
-      AttachRelatedPdbs(pdbToAttach, true);
-      pdbToAttach = null;
+      AttachPDB(Configs.Instance.GetRecentPdb(mapping.Mapping.Filename), false);
 
       tbSearch.AutoCompleteCustomSource = mapping.GetNewNamesCollection();
     }
@@ -232,7 +228,7 @@ namespace ObfuscarMappingParser
         if (mapping != null)
           await Task.Run(() => mapping.Mapping.Reload());
         else
-          mapping = await Task.Run(() => new MappingWrapper(mappingFilename));
+          mapping = await Task.Run(() => new MappingViewModel(mappingFilename));
       }
       catch (Exception e)
       {
@@ -399,14 +395,14 @@ namespace ObfuscarMappingParser
       get { return ilIcons; }
     }
 
-    public MappingWrapper Mapping
+    public MappingViewModel Mapping
     {
       get { return mapping; }
     }
 
     public bool HavePdb
     {
-      get { return pdbFiles.Count > 0; }
+      get { return mapping.PdbFiles.Count > 0; }
     }
 
     #endregion
@@ -436,7 +432,7 @@ namespace ObfuscarMappingParser
       slblSelected.Text = focusedItem == null ? "" : focusedItem.TransformSimple;
       slblType.Text = focusedItem == null ? "" : focusedItem.EntityType.ToString();
       slblModule.Text = focusedItem == null ? "" : focusedItem.ModuleOld;
-      commandManager.SetEnabled(Actions.OpenInEditor, focusedItem != null && DetectMarkersForVS(out focusedFilename, out focusedLine, focusedItem));
+      commandManager.SetEnabled(Actions.OpenInEditor, focusedItem != null && mapping.DetectMarkersForVS(out focusedFilename, out focusedLine, focusedItem));
     }
 
     private void ptvElements_DoubleClick(object sender, EventArgs e)
@@ -481,7 +477,7 @@ namespace ObfuscarMappingParser
       miRecents.Enabled = miRecents.DropDownItems.Count > 0;
     }
 
-    private void RecentItem_Click(object sender, EventArgs eventArgs)
+    private async void RecentItem_Click(object sender, EventArgs eventArgs)
     {
       string filename = (string)((ToolStripMenuItem)sender).Tag;
       if (!File.Exists(filename))
@@ -490,7 +486,7 @@ namespace ObfuscarMappingParser
         return;
       }
 
-      OpenFile(filename);
+      await OpenFile(filename);
     }
 
     private void btnOpen_DropDownOpening(object sender, EventArgs e)
@@ -531,82 +527,104 @@ namespace ObfuscarMappingParser
 
     #region PDB
 
-    private List<PdbFile> pdbFiles = new List<PdbFile>();
-    private List<string> pdbToAttach;
-
-    private void AttachRelatedPdbs(IList<string> pdb, bool addToRecent)
+    public bool CallAttachPdb(IWin32Window owner)
     {
-      if (pdb == null)
+      if (mapping == null)
+        return false;
+
+      if (odPDB.ShowDialog(owner) != DialogResult.OK)
+        return false;
+
+      foreach (string fileName in odPDB.FileNames)
+        AttachPDB(fileName, owner, true);
+
+      return true;
+    }
+
+    private void AttachPDB(IList<string> files, bool addToRecent)
+    {
+      if (files == null || mapping == null)
         return;
 
-      TaskDialogResult allResult = TaskDialogResult.None;
-
-      foreach (string s in pdb)
+      // single file - different dialog
+      if (files.Count == 1)
       {
-        if (!File.Exists(s))
+        if (TaskDialogHelper.ShowTaskDialog(
+                Handle,
+                "Attach PDB File",
+                "Attach PDB file?",
+                files[0],
+                TaskDialogStandardIcon.Information,
+                new string[] { "Attach", "Don't attach" },
+                null,
+                new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No }
+              ) ==
+            TaskDialogResult.Yes)
+          AttachPDB(files[0], this, addToRecent);
+
+        return;
+      }
+
+      bool isYesToAll = false;
+
+      for (int i = 0; i < files.Count; i++)
+      {
+        string file = files[i];
+        if (!File.Exists(file))
           continue;
 
-        TaskDialogResult result = allResult;
+        if (mapping.IsPdbAttached(file))
+          continue;
 
-        if (result == TaskDialogResult.None)
-          using (TaskDialog dialog = TaskDialogHelper.ConstructTaskDialog(
+        TaskDialogResult result;
+
+        if (isYesToAll)
+          result = TaskDialogResult.Yes;
+        else if (i == files.Count - 1)
+          result = TaskDialogHelper.ShowTaskDialog(
               Handle,
               "Attach PDB File",
-              "Attach related PDB file?",
-              s,
-              TaskDialogStandardIcon.Information
-            ))
-          {
-            dialog.AddCommandLink(TaskDialogResult.Yes, "Attach");
-            dialog.AddCommandLink(TaskDialogResult.Yes, "Don't attach");
-            dialog.FooterCheckBoxText = "Do this for other PDBs of this mapping.";
-            dialog.FooterCheckBoxChecked = false;
-
-            result = dialog.Show();
-            if (dialog.FooterCheckBoxChecked.Value)
-              allResult = result;
-          }
+              "Attach PDB file?",
+              files[0],
+              TaskDialogStandardIcon.Information,
+              new string[] { "Attach", "Don't attach" },
+              null,
+              new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No }
+            );
+        else
+          result = TaskDialogHelper.ShowTaskDialog(
+              Handle,
+              "Attach PDB File",
+              "Attach PDB file?",
+              files[0],
+              TaskDialogStandardIcon.Information,
+              new string[] { "Attach", "Attach All", "Don't attach", "Cancel" },
+              null,
+              new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.Ok, TaskDialogResult.No, TaskDialogResult.Cancel,  }
+            );
 
         switch (result)
         {
-          case TaskDialogResult.Yes:
-            if (AttachPDB(s, this) && addToRecent)
-              Configs.Instance.AddRecentPdb(mapping.Mapping.Filename, s);
+          case TaskDialogResult.Yes: // "yes"
+            AttachPDB(file, this, addToRecent);
             break;
 
-          case TaskDialogResult.No:
-            break;
+          case TaskDialogResult.Ok: // "yes to all"
+            isYesToAll = true;
+            goto case TaskDialogResult.Yes;
 
-          default:
+          case TaskDialogResult.Cancel: // "cancel"
             return;
         }
       }
     }
 
-    public bool CallAttachPdb(IWin32Window owner)
+    public bool AttachPDB(string filename, IWin32Window owner, bool addToRecents)
     {
-      if (odPDB.ShowDialog(owner) != DialogResult.OK)
+      if (mapping == null)
         return false;
 
-      foreach (string fileName in odPDB.FileNames)
-        if (AttachPDB(fileName, owner))
-          Configs.Instance.AddRecentPdb(mapping.Mapping.Filename, fileName);
-
-      return true;
-    }
-
-    private bool SearchForLoadedPdb(string filename)
-    {
-      foreach (PdbFile file in pdbFiles)
-        if (string.Compare(file.Filename, filename, StringComparison.OrdinalIgnoreCase) == 0)
-          return true;
-
-      return false;
-    }
-
-    public bool AttachPDB(string filename, IWin32Window owner)
-    {
-      if (SearchForLoadedPdb(filename))
+      if (mapping.IsPdbAttached(filename))
       {
         slblSelected.Text = "PDB file already attached: " + PathUtils.GetFilename(filename);
         return false;
@@ -614,7 +632,7 @@ namespace ObfuscarMappingParser
 
       try
       {
-        pdbFiles.Add(new PdbFile(filename));
+        mapping.PdbFiles.Add(new PdbFile(filename));
       }
       catch (Exception ex)
       {
@@ -622,48 +640,10 @@ namespace ObfuscarMappingParser
         return false;
       }
 
+      if (addToRecents)
+        Configs.Instance.AddRecentPdb(mapping.Mapping.Filename, filename);
       slblSelected.Text = "PDB file attached: " + PathUtils.GetFilename(filename);
       return true;
-    }
-
-    public bool SearchInPdb(out string filename, out int lineNumber, RenamedBase item)
-    {
-      filename = null;
-      lineNumber = -1;
-
-      string s = item.NameOldPlain;
-      int i = s.LastIndexOf('.');
-      if (i == -1)
-        return false;
-
-      string className = s.Substring(0, i);
-      string itemName = s.Substring(i + 1);
-      CodeLocation location = null;
-
-      foreach (PdbFile file in pdbFiles)
-      {
-        location = file.Resolver.FindLocation(className, itemName);
-        if (location != null)
-          break;
-      }
-
-      if (location == null)
-        return false;
-
-      filename = location.FileName;
-      lineNumber = (int)location.Line;
-      return true;
-    }
-
-    private bool DetectMarkersForVS(out string filename, out int lineNumber, RenamedBase item)
-    {
-      filename = null;
-      lineNumber = -1;
-
-      if (pdbFiles.Count == 0 || item.EntityType != EntityType.Method)
-        return false;
-
-      return SearchInPdb(out filename, out lineNumber, item);
     }
 
     #endregion
@@ -747,7 +727,7 @@ namespace ObfuscarMappingParser
       e.Effect = FormatFactory.HasExtension(ext) || ext == ".pdb" ? DragDropEffects.Move : DragDropEffects.None;
     }
 
-    private void MainForm_DragDrop(object sender, DragEventArgs e)
+    private async void MainForm_DragDrop(object sender, DragEventArgs e)
     {
       IDataObject dataObject = e.Data;
 
@@ -755,6 +735,7 @@ namespace ObfuscarMappingParser
         return;
 
       List<string> files = new List<string>((string[])e.Data.GetData(DataFormats.FileDrop));
+      List<string> pdbFiles = null;
 
       string fileToOpen = null;
       int i = 0;
@@ -773,9 +754,9 @@ namespace ObfuscarMappingParser
         // search for pdb files to attach after open
         if (ext == ".pdb")
         {
-          if (pdbToAttach == null)
-            pdbToAttach = new List<string>();
-          pdbToAttach.Add(files[i]);
+          if (pdbFiles == null)
+            pdbFiles = new List<string>();
+          pdbFiles.Add(files[i]);
         }
 
         i++;
@@ -797,40 +778,14 @@ namespace ObfuscarMappingParser
           )
           return;
 
-        OpenFile(fileToOpen);
+        await OpenFile(fileToOpen);
         return;
       }
 
       if (mapping == null)
         return;
 
-      // attach pdb files
-      foreach (string file in files)
-      {
-        if (string.Compare(Path.GetExtension(file).ToLower(), ".pdb", StringComparison.Ordinal) == 0)
-        {
-          TaskDialogResult d = TaskDialogHelper.ShowTaskDialog(
-              Handle,
-              "Attach PDB File",
-              "Attach related PDB file?",
-              file,
-              TaskDialogStandardIcon.Information,
-              new string[] { "Attach", "Don't attach", "Cancel operation" },
-              null,
-              new TaskDialogResult[] { TaskDialogResult.Yes, TaskDialogResult.No, TaskDialogResult.Cancel, }
-            );
-          switch (d)
-          {
-            case TaskDialogResult.Yes:
-              AttachPDB(file, this);
-              break;
-            case TaskDialogResult.No:
-              break;
-            default:
-              return;
-          }
-        }
-      }
+      AttachPDB(pdbFiles, true);
     }
 
     #endregion
@@ -840,7 +795,7 @@ namespace ObfuscarMappingParser
       if (mapping == null)
         return;
 
-      foreach (PdbFile pdbFile in pdbFiles)
+      foreach (PdbFile pdbFile in mapping.PdbFiles)
         if (pdbFile.CheckFileModification() &&
             TaskDialogHelper.ShowTaskDialog(
                   Handle,
@@ -868,10 +823,13 @@ namespace ObfuscarMappingParser
         ReloadFile();
     }
 
-    private void MainForm_Load(object sender, EventArgs e)
+    private async void MainForm_Load(object sender, EventArgs e)
     {
       commandManager.WindowHandle = Handle;
       Configs.Instance.UpdateHelper.Initialize(UpdateFound);
+
+      if (!string.IsNullOrEmpty(fileToLoad))
+        await OpenFile(fileToLoad);
     }
 
     private void MainForm_FormClosed(object sender, FormClosedEventArgs e)

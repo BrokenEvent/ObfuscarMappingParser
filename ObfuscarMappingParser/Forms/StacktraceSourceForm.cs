@@ -10,14 +10,14 @@ namespace ObfuscarMappingParser
 {
   internal partial class StacktraceSourceForm : BaseForm
   {
-    private readonly MappingWrapper mapping;
+    private readonly MappingViewModel mapping;
     private string result;
     private string resultSource;
 
     private const string RECENT_URLS = "StacktraceURL";
     private const string RECENT_FILES = "StacktraceFile";
 
-    public StacktraceSourceForm(MappingWrapper mapping)
+    public StacktraceSourceForm(MappingViewModel mapping)
     {
       this.mapping = mapping;
       InitializeComponent();

@@ -9,9 +9,9 @@ namespace ObfuscarMappingParser
 {
   partial class CrashLogForm : Form
   {
-    private MappingWrapper mapping;
+    private MappingViewModel mapping;
 
-    public CrashLogForm(MappingWrapper mapping)
+    public CrashLogForm(MappingViewModel mapping)
     {
       this.mapping = mapping;
       InitializeComponent();

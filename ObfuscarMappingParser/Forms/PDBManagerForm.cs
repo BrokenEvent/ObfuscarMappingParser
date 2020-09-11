@@ -117,11 +117,8 @@ namespace ObfuscarMappingParser
       {
         if (string.Compare(Path.GetExtension(pdb), ".pdb", StringComparison.OrdinalIgnoreCase) == 0 && File.Exists(pdb))
         {
-          if (mainForm.AttachPDB(pdb, this))
-          {
-            Configs.Instance.AddRecentPdb(mainForm.Mapping.Mapping.Filename, pdb);
+          if (mainForm.AttachPDB(pdb, this, true))
             havePdb = true;
-          }
         }
       }
 

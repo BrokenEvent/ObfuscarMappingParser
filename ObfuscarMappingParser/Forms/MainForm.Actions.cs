@@ -170,7 +170,7 @@ namespace ObfuscarMappingParser
     private void Action_ManagePDB(Actions command)
     {
       lockDragNDrop = true;
-      using (PDBManagerForm form = new PDBManagerForm(pdbFiles, this))
+      using (PDBManagerForm form = new PDBManagerForm(mapping.PdbFiles, this))
         form.ShowDialog(this);
       lockDragNDrop = false;
     }
@@ -185,12 +185,12 @@ namespace ObfuscarMappingParser
       ReloadFile();
     }
 
-    private void Action_Open(Actions command)
+    private async void Action_Open(Actions command)
     {
       if (odMapping.ShowDialog(this) != DialogResult.OK)
         return;
 
-      OpenFile(odMapping.FileName);
+      await OpenFile(odMapping.FileName);
     }
   }
 }

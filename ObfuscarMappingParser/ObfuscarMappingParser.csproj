@@ -117,7 +117,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoadTimer.cs" />
-    <Compile Include="MappingWrapper.cs" />
+    <Compile Include="MappingViewModel.cs" />
     <Compile Include="ObfuscarParserException.cs" />
     <Compile Include="Forms\PDBManagerForm.cs">
       <SubType>Form</SubType>
