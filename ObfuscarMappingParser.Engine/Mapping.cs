@@ -38,7 +38,7 @@ namespace ObfuscarMappingParser.Engine
         throw new ObfuscarParserException("File not exists", filename);
 
       this.filename = filename;
-      LoadFile(new XmlMappingReader(filename)); // FIXME format switch
+      LoadFile(FormatFactory.CreateReader(filename));
     }
 
     private void LoadFile(IMappingReader reader)
@@ -136,7 +136,7 @@ namespace ObfuscarMappingParser.Engine
 
     public void Reload()
     {
-      LoadFile(new XmlMappingReader(filename)); // FIXME format switch
+      LoadFile(FormatFactory.CreateReader(filename));
     }
 
     public string Filename

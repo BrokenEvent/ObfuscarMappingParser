@@ -20,6 +20,7 @@ using BrokenEvent.VisualStudioOpener;
 
 using ObfuscarMappingParser.Engine;
 using ObfuscarMappingParser.Engine.Items;
+using ObfuscarMappingParser.Engine.Reader;
 using ObfuscarMappingParser.Properties;
 
 namespace ObfuscarMappingParser
@@ -72,6 +73,8 @@ namespace ObfuscarMappingParser
 
       ptvElements.Highlights.Add(new ListHighlight(Color.DarkRed));
       ptvElements.Highlights.Add(new ListHighlight(Color.DarkBlue));
+
+      odMapping.Filter = FormatFactory.BuildFilterList();
 
       try
       {
@@ -731,18 +734,24 @@ namespace ObfuscarMappingParser
 
     private void MainForm_DragEnter(object sender, DragEventArgs e)
     {
-      if (!lockDragNDrop && !e.Data.GetDataPresent(DataFormats.FileDrop))
+      IDataObject dataObject = e.Data;
+
+      if (lockDragNDrop || !dataObject.GetDataPresent(DataFormats.FileDrop))
       {
         e.Effect = DragDropEffects.None;
         return;
       }
 
-      e.Effect = DragDropEffects.Move;
+      string ext = Path.GetExtension(((string[])dataObject.GetData(DataFormats.FileDrop))[0]).ToLower();
+
+      e.Effect = FormatFactory.HasExtension(ext) || ext == ".pdb" ? DragDropEffects.Move : DragDropEffects.None;
     }
 
     private void MainForm_DragDrop(object sender, DragEventArgs e)
     {
-      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+      IDataObject dataObject = e.Data;
+
+      if (!dataObject.GetDataPresent(DataFormats.FileDrop))
         return;
 
       List<string> files = new List<string>((string[])e.Data.GetData(DataFormats.FileDrop));
@@ -751,8 +760,10 @@ namespace ObfuscarMappingParser
       int i = 0;
       do
       {
+        string ext = Path.GetExtension(files[i]).ToLower();
+
         // search for xml files to open
-        if (string.Compare(Path.GetExtension(files[i]).ToLower(), ".xml", StringComparison.Ordinal) == 0)
+        if (FormatFactory.HasExtension(ext))
         {
           fileToOpen = files[i];
           files.RemoveAt(i);
@@ -760,7 +771,7 @@ namespace ObfuscarMappingParser
         }
 
         // search for pdb files to attach after open
-        if (string.Compare(Path.GetExtension(files[i]).ToLower(), ".pdb", StringComparison.Ordinal) == 0)
+        if (ext == ".pdb")
         {
           if (pdbToAttach == null)
             pdbToAttach = new List<string>();
@@ -774,7 +785,16 @@ namespace ObfuscarMappingParser
       // open file if found. found pdbs will be attached after open (pdbToAttach)
       if (fileToOpen != null)
       {
-        if (MessageBox.Show(this, "Open file\n" + fileToOpen + "\n?", "Open file", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+        if (TaskDialogHelper.ShowMessageBox(
+                Handle,
+                "Open File",
+                "Open file?",
+                fileToOpen,
+                TaskDialogStandardIcon.Information,
+                TaskDialogStandardButtons.Yes | TaskDialogStandardButtons.No
+              ) !=
+            TaskDialogResult.Yes
+          )
           return;
 
         OpenFile(fileToOpen);

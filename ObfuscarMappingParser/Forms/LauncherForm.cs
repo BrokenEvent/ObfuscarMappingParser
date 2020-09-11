@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using BrokenEvent.Shared.Forms;
 using BrokenEvent.Shared.Controls;
 
+using ObfuscarMappingParser.Engine.Reader;
 using ObfuscarMappingParser.Properties;
 
 namespace ObfuscarMappingParser
@@ -18,6 +19,7 @@ namespace ObfuscarMappingParser
       item.ToolTipText = name;
 
       blvFiles.Items.Insert(0, item);
+      blvFiles.SelectedItem = item;
     }
 
     public LauncherForm()
@@ -87,16 +89,32 @@ namespace ObfuscarMappingParser
 
     private void LauncherForm_DragOver(object sender, DragEventArgs e)
     {
-      e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Move : DragDropEffects.None;
+      IDataObject dataObject = e.Data;
+
+      if (!dataObject.GetDataPresent(DataFormats.FileDrop))
+      {
+        e.Effect = DragDropEffects.None;
+        return;
+      }
+
+      string[] files = (string[])dataObject.GetData(DataFormats.FileDrop);
+
+      e.Effect = FormatFactory.IsOpenable(files[0]) ? DragDropEffects.Move : DragDropEffects.None;
     }
 
     private void LauncherForm_DragDrop(object sender, DragEventArgs e)
     {
-      if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+      IDataObject dataObject = e.Data;
+
+      if (!dataObject.GetDataPresent(DataFormats.FileDrop))
         return;
 
-      string s = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
-      AddItem(s);
+      string filename = ((string[])dataObject.GetData(DataFormats.FileDrop))[0];
+
+      if (!FormatFactory.IsOpenable(filename))
+        return;
+
+      AddItem(filename);
     }
   }
 }

@@ -248,7 +248,7 @@ namespace ObfuscarMappingParser
     public static string BuildHintForClass(RenamedClass c)
     {
       if (c.SkipReason != null)
-        return string.Format("Name: {0}\nSkip reason: {1}", c.NameOldFull, c.SkipReason);
+        return string.Format("Name:\r\n{0}\r\nSkip reason:\r\n{1}", c.NameOldFull, c.SkipReason);
 
       StringBuilder sb = new StringBuilder();
       sb.Append("Old name: ");
@@ -277,16 +277,25 @@ namespace ObfuscarMappingParser
       StringBuilder sb = new StringBuilder();
       sb.Append("Type: ");
       sb.AppendLine(item.EntityType.ToString());
-      sb.AppendLine("Old name:");
-      sb.AppendLine(item.NameOldSimple);
-      sb.AppendLine("New name:");
-      sb.AppendLine(CheckIfUnicode(item.NameNewSimple));
-      sb.AppendLine("Owner class:");
-      sb.AppendLine(CheckIfUnicode(item.Owner.TransformNameFull));
+
       if (item.SkipReason != null)
       {
+        sb.AppendLine("Name:");
+        sb.AppendLine(item.NameOldSimple);
         sb.AppendLine("Skip reason:");
         sb.AppendLine(item.SkipReason);
+      }
+      else
+      {
+        sb.AppendLine("Old name:");
+        sb.AppendLine(item.NameOldSimple);
+        sb.AppendLine("New name:");
+        sb.AppendLine(CheckIfUnicode(item.NameNewSimple));
+      }
+      if (item.Owner.SkipReason == null)
+      {
+        sb.AppendLine("Owner class:");
+        sb.AppendLine(CheckIfUnicode(item.Owner.TransformNameFull));
       }
       return sb.ToString();
     }
