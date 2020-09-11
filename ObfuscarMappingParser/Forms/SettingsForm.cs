@@ -72,7 +72,7 @@ namespace ObfuscarMappingParser
 
     private void btnOk_Click(object sender, EventArgs e)
     {
-      string editor = blvEditors.SelectedItem.Tag.ToString();
+      string editor = blvEditors.SelectedItem.GetTag<IVisualStudioInfo>().Description;
 
       if (cbApplyVsToProject.Checked)
         Configs.Instance.AddRecentProperty(mapping.Filename, Configs.PROPERTY_EDITOR, editor);
