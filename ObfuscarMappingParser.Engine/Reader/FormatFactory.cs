@@ -17,6 +17,7 @@ namespace ObfuscarMappingParser.Engine.Reader
     static FormatFactory()
     {
       RegisterFormat(new FormatDescriptor("XML Mapping", ".xml", s => new XmlMappingReader(s)));
+      RegisterFormat(new FormatDescriptor("TXT Mapping", ".txt", s => new TxtMappingReader(s)));
     }
 
     /// <summary>

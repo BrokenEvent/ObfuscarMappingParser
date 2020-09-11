@@ -14,6 +14,7 @@
     <ObfuscarConfig Include="Normal"/>
     <ObfuscarConfig Include="Unicode"/>
     <ObfuscarConfig Include="Korean"/>
+    <ObfuscarConfig Include="Normal_Txt"/>
   </ItemGroup>
 
   <Target Name="Obfuscator" 

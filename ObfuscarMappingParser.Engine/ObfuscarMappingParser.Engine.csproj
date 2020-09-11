@@ -59,6 +59,7 @@
     <Compile Include="Reader\IMappingEntity.cs" />
     <Compile Include="Reader\IMappingReader.cs" />
     <Compile Include="Reader\FormatFactory.cs" />
+    <Compile Include="Reader\TxtMappingReader.cs" />
     <Compile Include="Reader\XmlMappingReader.cs" />
     <Compile Include="SearchResultMessage.cs" />
     <Compile Include="SearchResults.cs" />

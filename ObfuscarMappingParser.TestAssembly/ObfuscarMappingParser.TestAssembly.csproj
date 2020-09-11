@@ -50,6 +50,7 @@
   <ItemGroup>
     <Content Include="Obfuscar.Korean.xml" />
     <Content Include="Obfuscar.Normal.xml" />
+    <Content Include="Obfuscar.Normal_Txt.xml" />
     <Content Include="Obfuscar.Unicode.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

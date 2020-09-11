@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Obfuscator>
+  <!-- https://docs.obfuscar.com/getting-started/configuration.html -->
+  <Var name="InPath" value="bin/Release" />
+  <Var name="OutPath" value="$(InPath)/normal_txt" />
+  <Var name="KeepPublicApi" value="true" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="HideStrings" value="false"/>
+  <Var name="OptimizeMethods" value="false"/>
+  <Var name="RenameProperties" value="true"/>
+  <Var name="RenameFields" value="true"/>
+  
+  <Var name="XmlMapping" value="false" />
+  <Var name="LogFile" value="$(OutPath)/mapping.txt" />
+  
+  <Module file="$(InPath)/ObfuscarMappingParser.TestAssembly.dll" />
+</Obfuscator>
