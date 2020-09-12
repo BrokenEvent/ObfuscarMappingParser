@@ -40,6 +40,8 @@
       // 
       // toolStrip1
       // 
+      this.toolStrip1.GripMargin = new System.Windows.Forms.Padding(0);
+      this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnProcess,
             this.btnOpen,
@@ -47,7 +49,7 @@
             this.btnCopy});
       this.toolStrip1.Location = new System.Drawing.Point(0, 0);
       this.toolStrip1.Name = "toolStrip1";
-      this.toolStrip1.Size = new System.Drawing.Size(587, 25);
+      this.toolStrip1.Size = new System.Drawing.Size(584, 25);
       this.toolStrip1.TabIndex = 0;
       this.toolStrip1.Text = "toolStrip1";
       // 
@@ -99,7 +101,7 @@
       this.tbValue.Location = new System.Drawing.Point(0, 25);
       this.tbValue.Multiline = true;
       this.tbValue.Name = "tbValue";
-      this.tbValue.Size = new System.Drawing.Size(587, 272);
+      this.tbValue.Size = new System.Drawing.Size(584, 336);
       this.tbValue.TabIndex = 1;
       this.tbValue.TextChanged += new System.EventHandler(this.tbValue_TextChanged);
       // 
@@ -112,7 +114,7 @@
       this.AllowDrop = true;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(587, 297);
+      this.ClientSize = new System.Drawing.Size(584, 361);
       this.Controls.Add(this.tbValue);
       this.Controls.Add(this.toolStrip1);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;

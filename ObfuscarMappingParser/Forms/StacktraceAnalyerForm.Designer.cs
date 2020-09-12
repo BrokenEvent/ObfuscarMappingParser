@@ -48,6 +48,7 @@
       // 
       // toolStrip
       // 
+      this.toolStrip.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
       this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tbtnOpenInTree,
             this.tbtnOpenInVS,
@@ -60,7 +61,7 @@
             this.tbtnSkipPrefix});
       this.toolStrip.Location = new System.Drawing.Point(0, 0);
       this.toolStrip.Name = "toolStrip";
-      this.toolStrip.Size = new System.Drawing.Size(612, 25);
+      this.toolStrip.Size = new System.Drawing.Size(784, 25);
       this.toolStrip.TabIndex = 0;
       this.toolStrip.Text = "toolStrip1";
       // 
@@ -166,7 +167,7 @@
       pineappleTreeColumn1.Autosize = true;
       pineappleTreeColumn1.HeaderText = null;
       pineappleTreeColumn1.Multiline = true;
-      pineappleTreeColumn1.TextPadding = new System.Windows.Forms.Padding(2);
+      pineappleTreeColumn1.TextPadding = new System.Windows.Forms.Padding(2, 4, 2, 4);
       pineappleTreeColumn1.Width = 612;
       this.pineappleTreeView.Columns.Add(pineappleTreeColumn1);
       this.pineappleTreeView.DisabledColor = System.Drawing.SystemColors.Control;
@@ -177,11 +178,12 @@
       this.pineappleTreeView.ExpandImage = global::ObfuscarMappingParser.Properties.Resources.Expand;
       this.pineappleTreeView.FullRowSelect = true;
       this.pineappleTreeView.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+      this.pineappleTreeView.IconPadding = new System.Windows.Forms.Padding(0, 8, 0, 0);
       this.pineappleTreeView.LineColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(139)))));
       this.pineappleTreeView.Location = new System.Drawing.Point(0, 25);
       this.pineappleTreeView.Name = "pineappleTreeView";
       this.pineappleTreeView.ShowToolTip = true;
-      this.pineappleTreeView.Size = new System.Drawing.Size(612, 347);
+      this.pineappleTreeView.Size = new System.Drawing.Size(784, 536);
       this.pineappleTreeView.TabIndex = 1;
       this.pineappleTreeView.Text = "pineappleTreeView1";
       this.pineappleTreeView.NodeSelect += new System.EventHandler<BrokenEvent.Shared.Controls.NodeSelectEventArgs>(this.pineappleTreeView_NodeSelect);
@@ -190,7 +192,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(612, 372);
+      this.ClientSize = new System.Drawing.Size(784, 561);
       this.Controls.Add(this.pineappleTreeView);
       this.Controls.Add(this.toolStrip);
       this.Font = new System.Drawing.Font("Segoe UI", 8.25F);

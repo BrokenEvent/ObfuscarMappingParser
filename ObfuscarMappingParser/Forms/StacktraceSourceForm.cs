@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -10,180 +11,292 @@ namespace ObfuscarMappingParser
 {
   internal partial class StacktraceSourceForm : BaseForm
   {
-    private readonly MappingViewModel mapping;
-    private string result;
-    private string resultSource;
+    private BaseStacktraceSource selectedSource;
 
-    private const string RECENT_URLS = "StacktraceURL";
-    private const string RECENT_FILES = "StacktraceFile";
+    private ClipboardStacktraceSource clipboardStacktraceSource = new ClipboardStacktraceSource();
+    private UrlStacktraceSource urlStacktraceSource = new UrlStacktraceSource();
+    private FileStacktraceSource fileStacktraceSource = new FileStacktraceSource();
+
+    public const string RECENT_URLS = "StacktraceURL";
 
     public StacktraceSourceForm(MappingViewModel mapping)
     {
-      this.mapping = mapping;
       InitializeComponent();
 
-      tbFilename.SetCueText("Select file to read stacktrace");
       tbURL.SetCueText("Type URL to get stacktrace");
-
-      controlHighlight.OwnerForm = this;
 
       foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Mapping.Filename, RECENT_URLS))
         tbURL.AutoCompleteCustomSource.Add(s);
 
-      foreach (string s in Configs.Instance.GetRecentAdditional(mapping.Mapping.Filename, RECENT_FILES))
-        tbFilename.AutoCompleteCustomSource.Add(s);
+      SelectedSource = clipboardStacktraceSource;
     }
 
-    private void RadioButton_Click(object sender, EventArgs e)
+    public BaseStacktraceSource SelectedSource
     {
-      tbURL.Enabled = rbURL.Checked;
-      tbFilename.Enabled = btnBrowse.Enabled = rbFile.Checked;
-    }
-
-    private async void btnOk_Click(object sender, EventArgs e)
-    {
-      if (rbClipboard.Checked)
+      get { return selectedSource; }
+      private set
       {
-        if (!Clipboard.ContainsText())
-          return;
+        selectedSource = value;
+        selectedSource.OnActivate();
 
-        result = Clipboard.GetText();
-        resultSource = "Clipboard";
+        tbURL.Enabled = btnUrlGet.Enabled = value == urlStacktraceSource;
+        lblFileName.Enabled = btnBrowse.Enabled = value == fileStacktraceSource;
+
+        UpdatePreview();
       }
+    }
 
-      if (rbFile.Checked && !LoadFile())
-        return;
+    private void UpdatePreview()
+    {
+      if (selectedSource.Error == null)
+      {
+        lblPreview.ForeColor = Color.Black;
+        lblPreview.Text = selectedSource.Content;
+        btnOk.Enabled = true;
+      }
+      else
+      {
+        lblPreview.ForeColor = Color.DarkRed;
+        lblPreview.Text = selectedSource.Error;
+        btnOk.Enabled = false;
+      }
+    }
 
-      if (rbURL.Checked && !await LoadURL())
-        return;
-
+    private void btnOk_Click(object sender, EventArgs e)
+    {
       DialogResult = DialogResult.OK;
       Close();
     }
 
-    private async Task<bool> LoadURL()
-    {
-      if (string.IsNullOrEmpty(tbURL.Text))
-      {
-        controlHighlight.Show(tbURL, "This field cannot be empty.");
-        return false;
-      }
-
-      Enabled = false;
-      lblStatus.Visible = true;
-      try
-      {
-        result = await new WebClient().DownloadStringTaskAsync(tbURL.Text);
-        resultSource = "URL";
-        Configs.Instance.AddRecentAdditional(mapping.Mapping.Filename, RECENT_URLS, tbURL.Text);
-        return true;
-      }
-      catch (Exception e)
-      {
-        controlHighlight.Show(tbURL, e.Message);
-        return false;
-      }
-      finally
-      {
-        Enabled = true;
-      }
-    }
-
-    private bool LoadFile()
-    {
-      if (string.IsNullOrEmpty(tbFilename.Text))
-      {
-        controlHighlight.Show(tbFilename, "This field cannot be empty.");
-        return false;
-      }
-
-      if (!File.Exists(tbFilename.Text))
-      {
-        controlHighlight.Show(tbFilename, "File not exists.");
-        return false;
-      }
-
-      try
-      {
-        result = File.ReadAllText(tbFilename.Text);
-        resultSource = tbFilename.Text;
-      }
-      catch (Exception)
-      {
-        controlHighlight.Show(tbFilename, "Unable to load file.");
-        return false;
-      }
-
-      Configs.Instance.AddRecentAdditional(mapping.Mapping.Filename, RECENT_FILES, tbFilename.Text);
-      return true;
-    }
-
-    public string Result
-    {
-      get { return result; }
-    }
-
-    public string ResultSource
-    {
-      get { return resultSource; }
-    }
-
-    private void btnBrowse_Click(object sender, EventArgs e)
-    {
-      openFileDialog.FileName = tbFilename.Text;
-      if (openFileDialog.ShowDialog(this) != DialogResult.OK)
-        return;
-
-      tbFilename.Text = openFileDialog.FileName;
-    }
-
     private void StacktraceSource_DragOver(object sender, DragEventArgs e)
     {
-      e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Text)
-                   ? DragDropEffects.Move
-                   : DragDropEffects.None;
+      e.Effect = selectedSource.CanDrop(e.Data) ? DragDropEffects.Move : DragDropEffects.None;
     }
 
-    private void StacktraceSource_DragDrop(object sender, DragEventArgs e)
+    private async void StacktraceSource_DragDrop(object sender, DragEventArgs e)
     {
-      if (e.Data.GetDataPresent(DataFormats.FileDrop))
-      {
-        rbFile.Checked = true;
-        tbFilename.Text = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
-        RadioButton_Click(sender, EventArgs.Empty);
-        return;
-      }
+      await selectedSource.Drop(e.Data);
 
-      if (e.Data.GetDataPresent(DataFormats.StringFormat))
-      {
-        Uri uri;
-        if (!Uri.TryCreate((string)e.Data.GetData(DataFormats.Text), UriKind.Absolute, out uri))
-          return;
-
-        rbURL.Checked = true;
-        tbURL.Text = uri.ToString();
-        RadioButton_Click(sender, EventArgs.Empty);
-        return;
-      }
-    }
-
-    private void Control_Enter(object sender, EventArgs e)
-    {
-      controlHighlight.Hide();
-    }
-
-    private void StacktraceSource_Click(object sender, EventArgs e)
-    {
-      controlHighlight.Hide();
+      if (selectedSource == urlStacktraceSource)
+        tbURL.Text = urlStacktraceSource.Url;
+      else if (selectedSource == fileStacktraceSource)
+        lblFileName.Text = fileStacktraceSource.Filename;
+      UpdatePreview();
     }
 
     private void StacktraceSourceForm_Activated(object sender, EventArgs e)
     {
-      rbClipboard.Enabled = Clipboard.ContainsText();
-      if (rbClipboard.Enabled)
-        lblClipboardPreview.Text = Clipboard.GetText();
-      else
-        lblClipboardPreview.Text = "<no text in clipboard>";
+      selectedSource.OnActivate();
+      UpdatePreview();
+    }
+
+    private void btnBrowse_Click(object sender, EventArgs e)
+    {
+      openFileDialog.FileName = fileStacktraceSource.Filename;
+      if (openFileDialog.ShowDialog(this) != DialogResult.OK)
+        return;
+
+      fileStacktraceSource.Load(lblFileName.Text = openFileDialog.FileName);
+      UpdatePreview();
+    }
+
+    private async void btnUrlGet_Click(object sender, EventArgs e)
+    {
+      lblPreview.Text = "Getting URL...";
+      lblPreview.ForeColor = Color.Navy;
+      await urlStacktraceSource.Get(tbURL.Text);
+      UpdatePreview();
+    }
+
+    private void rbClipboard_CheckedChanged(object sender, EventArgs e)
+    {
+      if (rbClipboard.Checked)
+        SelectedSource = clipboardStacktraceSource;
+    }
+
+    private void rbURL_CheckedChanged(object sender, EventArgs e)
+    {
+      if (rbURL.Checked)
+        SelectedSource = urlStacktraceSource;
+    }
+
+    private void rbFile_CheckedChanged(object sender, EventArgs e)
+    {
+      if (rbFile.Checked)
+        SelectedSource = fileStacktraceSource;
+    }
+  }
+
+  internal abstract class BaseStacktraceSource
+  {
+    private string content;
+    private string error;
+
+    public abstract string Name { get; }
+
+    public abstract bool CanDrop(IDataObject obj);
+
+    public abstract Task Drop(IDataObject obj);
+
+    public virtual void OnActivate()
+    {
+    }
+
+    public virtual void Commit(string mappingFilename)
+    {
+      
+    }
+
+    public string Content
+    {
+      get { return content; }
+      protected set
+      {
+        if (value == null)
+          content = null;
+        else if (string.IsNullOrWhiteSpace(value))
+        {
+          Error = "Content can't be empty";
+          content = null;
+        }
+        else
+        {
+          error = null;
+          content = value;
+        }
+      }
+    }
+
+    public string Error
+    {
+      get { return error; }
+      protected set
+      {
+        error = value;
+        content = null;
+      }
+    }
+  }
+
+  internal class ClipboardStacktraceSource: BaseStacktraceSource
+  {
+    public override string Name
+    {
+      get { return "Clipboard"; }
+    }
+
+    public override void OnActivate()
+    {
+      if (Clipboard.ContainsText())
+      {
+        Content = Clipboard.GetText();
+        return;
+      }
+
+      Error = "clipboard doesn't contain text data";
+    }
+
+    public override bool CanDrop(IDataObject obj)
+    {
+      return obj.GetDataPresent(DataFormats.Text);
+    }
+
+    public override Task Drop(IDataObject obj)
+    {
+      Content = (string)obj.GetData(DataFormats.Text);
+      return Task.FromResult(0);
+    }
+  }
+
+  internal class FileStacktraceSource: BaseStacktraceSource
+  {
+    private string filename;
+
+    public FileStacktraceSource()
+    {
+      Error = "<no file loaded>";
+    }
+
+    public override string Name
+    {
+      get { return $"File: {Path.GetFileName(filename)}"; }
+    }
+
+    public string Filename
+    {
+      get { return filename; }
+    }
+
+    public void Load(string filename)
+    {
+      this.filename = filename;
+      try
+      {
+        Content = File.ReadAllText(filename);
+      }
+      catch (Exception e)
+      {
+        Error = e.Message;
+      }
+    }
+
+    public override bool CanDrop(IDataObject obj)
+    {
+      return obj.GetDataPresent(DataFormats.FileDrop);
+    }
+
+    public override Task Drop(IDataObject obj)
+    {
+      Load(((string[])obj.GetData(DataFormats.FileDrop))[0]);
+      return Task.FromResult(0);
+    }
+  }
+
+  internal class UrlStacktraceSource: BaseStacktraceSource
+  {
+    private string url;
+
+    public UrlStacktraceSource()
+    {
+      Error = "<no content downloaded>";
+    }
+
+    public override string Name
+    {
+      get { return null; }
+    }
+
+    public string Url
+    {
+      get { return url; }
+    }
+
+    public async Task Get(string url)
+    {
+      this.url = url;
+      try
+      {
+        Content = await new WebClient().DownloadStringTaskAsync(url);
+      }
+      catch (Exception e)
+      {
+        Error = e.Message;
+      }
+    }
+
+    public override void Commit(string mappingFilename)
+    {
+      Configs.Instance.AddRecentAdditional(mappingFilename, StacktraceSourceForm.RECENT_URLS, url);
+    }
+
+    public override bool CanDrop(IDataObject obj)
+    {
+      return obj.GetDataPresent(DataFormats.Text);
+    }
+
+    public override Task Drop(IDataObject obj)
+    {
+      return Get((string)obj.GetData(DataFormats.StringFormat));
     }
   }
 }

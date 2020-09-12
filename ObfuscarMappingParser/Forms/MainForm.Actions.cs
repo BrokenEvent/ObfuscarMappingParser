@@ -130,9 +130,11 @@ namespace ObfuscarMappingParser
       if (source.ShowDialog(this) != DialogResult.OK)
         return;
 
+      source.SelectedSource.Commit(mappingFilename);
+
       try
       {
-        StacktraceAnalyerForm analyer = new StacktraceAnalyerForm(this, source.Result, source.ResultSource);
+        StacktraceAnalyerForm analyer = new StacktraceAnalyerForm(this, source.SelectedSource.Content, source.Name);
         analyer.ShowDialog(this);
       }
       catch (ObfuscarParserException ex)
